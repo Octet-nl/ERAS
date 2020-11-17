@@ -1,6 +1,5 @@
 .git
 .history
-config.php
 *.log
 *.bak
 *.code-workspace
