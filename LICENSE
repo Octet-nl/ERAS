@@ -1,0 +1,60 @@
+Copyright (c) 2019-2020 Hans de Rijck
+
+Permission is hereby granted, free of charge, to any person
+obtaining a copy of this software and associated documentation
+files (the "Software"), to deal in the Software without
+restriction, including without limitation the rights to use,
+copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following
+conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.
+
+Big thanks to the authors of the following packages:
+  Smarty template engine
+    License: LGPL for commercial use, 
+    Link:    https://www.smarty.net/docs/en/
+  Respect validation engine 
+    License: MIT
+    Link:    https://respect-validation.readthedocs.io/en/1.1/
+  Propel ORM 
+    License: MIT
+    Link:    http://propelorm.org/documentation/
+  tail.datetime
+    License: MIT
+	Link:	 https://github.com/pytesNET/tail.DateTime
+  the-datepicker
+    License: (niet vermeld)
+	Link:	 https://github.com/thedatepicker/thedatepicker
+  nicEdit
+    License: MIT
+	Link:	 http://nicedit.com/
+  FPDF
+    License: (niet vermeld)
+	Link:	 http://www.fpdf.org/nl/home.php
+  PHPMailer
+    License: LGPL-2.1
+	Link: 	 https://github.com/PHPMailer/PHPMailer
+  Menu/submenu
+    Article by Ray Messina
+    Link: https://css-tricks.com/targetting-menu-elements-submenus-navigation-bar/
+  Amaranth font
+    By: Gesine Todt
+    License: Open Font License
+    Link: https://fonts.google.com/specimen/Amaranth
+  Jura font
+    By: The Jura Font Project Authors (daniel@danieljohnson.name)
+    License: Open Font License
+    Link: https://fonts.google.com/specimen/Jura
+    

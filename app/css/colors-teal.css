@@ -1,0 +1,30 @@
+:root {
+  --body-achtergrond-kleur: #eff6f6;
+  --body-voorgrond-kleur: #012c24;
+  --table-achtergrond-kleur: #80CBC4;
+  --table-voorgrond-kleur: #013a30;
+  --table-border-kleur: #026855;
+  --button-achtergrond-kleur: #B2DFDB;
+  --button-voorgrond-kleur: #013a30;
+  --disabled-achtergrond-kleur: rgb(226, 227, 228);
+  --disabled-voorgrond-kleur: #013a30;
+  --status-achtergrond-kleur: #ccf3f0;
+  --status-voorgrond-kleur: #013a30;
+  --readonly-voorgrond-kleur: #013a30;
+  --readonly-achtergrond-kleur: rgb(233, 238, 243);
+  --input-achtergrond-kleur: #f0f7f7;
+  --input-voorgrond-kleur:#012c24;
+  --grijs-kleur:#026855;
+  --schaduw-kleur: rgba(128, 128, 128, 0.568);
+  --timeline-huidig-kleur:#c0ece8;
+  --timeline-verleden-kleur:rgb(225, 232, 240);
+  --tooltip-achtergrond-kleur:#c0ece8;
+  --tooltip-voorgrond-kleur:#013a30;
+  --link-voorgrond-kleur: #304FFE;
+  --link-visited-voorgrond-kleur:#6200EA;
+  --navigatie-text-kleur:#cef1ed;
+  --navigatie-achtergrond-kleur:#26A69A;
+  --navigatie-voorgrond-kleur:#cef1ed;
+  --navigatie-select-kleur:#009688;
+  --navigatie-select-voorgrond-kleur:#cef1ed;
+}

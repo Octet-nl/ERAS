@@ -1,0 +1,23 @@
+:root {
+    --font-family: 'Amaranth';
+}
+     @font-face {
+        font-family: Amaranth;
+        src: url(fonts/amaranth.regular.ttf);
+        font-weight: normal;
+        font-style: normal;
+      }
+      
+      @font-face {
+        font-family: Amaranth;
+        src: url(fonts/amaranth.bold.ttf);
+        font-weight: bold;
+        font-style: normal;
+      }
+      
+      @font-face {
+        font-family: Amaranth;
+        src: url(fonts/amaranth.italic.ttf);
+        font-weight: normal;
+        font-style: italic;
+      }

@@ -1,0 +1,595 @@
+<?php
+/**
+ * System      Inschrijvingen
+ * Module      Inschrijving bevestiging
+ * Doel        Gedetailleerde bevestigings PDF voor de inschrijving
+ * Auteur      Hans de Rijck (apps@octet.nl)
+ * Datum       20-05-2020
+ *
+ * Copyright (c) 2019-2020 Hans de Rijck
+ *
+ * Permission is hereby granted, free of charge, to any person
+ * obtaining a copy of this software and associated documentation
+ * files (the "Software"), to deal in the Software without
+ * restriction, including without limitation the rights to use,
+ * copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following
+ * conditions:
+ *
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALINGS IN THE SOFTWARE.
+ */
+
+require_once '../vendor/autoload.php';
+require_once 'constanten.php';
+require_once 'utilities.php';
+
+use fb_model\fb_model\BetaalwijzeQuery;
+use fb_model\fb_model\DeelnemerHeeftOptieQuery;
+use fb_model\fb_model\DeelnemerQuery;
+use fb_model\fb_model\EvenementQuery;
+use fb_model\fb_model\EvenementHeeftOptieQuery;
+use fb_model\fb_model\InschrijvingHeeftOptieQuery;
+use fb_model\fb_model\InschrijvingQuery;
+use fb_model\fb_model\OptieQuery;
+use fb_model\fb_model\PersoonQuery;
+use fb_model\fb_model\VoucherQuery;
+use fb_model\fb_model\MailinglistQuery;
+use fb_model\fb_model\CategorieQuery;
+
+class InschrijvingBevestiging
+{
+    private $inschrijfnummer = 0;
+    private $logger = null;
+    private $contactNaam = "";
+    private $contactAanschrijving = "";
+    private $contactAdres = "";
+    private $contactWoonplaats = "";
+    private $contactEmail = "";
+    private $messageBody = "";
+    private $ondersteRegels = "";
+    private $totaalBedrag = "0.00";
+    private $reedsBetaaldBedrag = "0.00";
+    private $nogTeBetalenBedrag = "0.00";
+    private $factuurArray = array();
+    private $evenementNaam = "";
+    private $betaalwijze = "";
+    private $evenementDatum = "";
+    private $aantalDeelnemers = 0;
+    private $evenementPrijs = 0.00;
+    private $errorTekst = "";
+
+    public function __construct()
+    {
+        $this->logger = new Logger();
+        $this->logger->level( LOGLEVEL );
+    }
+
+    public function setInschrijfnummer( $iis )
+    {
+        $this->inschrijfnummer = $iis;
+    }
+
+    public function getContactNaam()
+    {
+        return $this->contactNaam;
+    }
+
+    public function getContactAanschrijving()
+    {
+        return $this->contactAanschrijving;
+    }
+
+    public function getContactAdres()
+    {
+        return $this->contactAdres;
+    }
+
+    public function getContactWoonplaats()
+    {
+        return $this->contactWoonplaats;
+    }
+
+    public function getContactEmail()
+    {
+        return $this->contactEmail;
+    }
+
+    public function getErrorTekst()
+    {
+        return $this->errorTekst;
+    }
+
+    public function getMessageBody()
+    {
+        return $this->messageBody;
+    }
+
+    public function getOndersteRegels()
+    {
+        return $this->ondersteRegels;
+    }
+
+    public function getBetaalwijze()
+    {
+        return $this->betaalwijze;
+    }
+
+    public function getFactuurData()
+    {
+        return $this->factuurArray;
+    }
+
+    public function getEvenementNaam()
+    {
+        return $this->evenementNaam;
+    }
+
+    public function getEvenementDatum()
+    {
+        return $this->evenementDatum;
+    }
+
+    public function getEvenementPrijs()
+    {
+        return $this->evenementPrijs;
+    }
+
+    public function getAantalDeelnemers()
+    {
+        return $this->aantalDeelnemers;
+    }
+
+    public function getTotaalBedrag()
+    {
+        return $this->totaalBedrag;
+    }
+
+    public function getReedsBetaaldBedrag()
+    {
+        return rondNul( $this->reedsBetaaldBedrag );
+    }
+
+    public function getNogTeBetalenBedrag()
+    {
+        return rondNul( $this->nogTeBetalenBedrag );
+    }
+
+    public function go()
+    {
+
+        if ( $this->inschrijfnummer == 0 )
+        {
+            $this->logger->error( "Inschrijfnummer is niet gezet." );
+            return null;
+        }
+
+        $inschrijving = InschrijvingQuery::create()->findPk( $this->inschrijfnummer );
+
+        if ( $inschrijving == null )
+        {
+            $this->logger->error( "Inschrijfnummer " . $this->inschrijfnummer . " is niet gevonden." );
+            $this->errorTekst = "Inschrijfnummer " . $this->inschrijfnummer . " is niet gevonden.";
+            return null;
+        }
+
+        if ( $inschrijving->getStatus() != INSCHRIJVING_STATUS_DEFINITIEF )
+        {
+//            $this->logger->error( "Deze inschrijving (" . $this->inschrijfnummer . ") is niet definitief." );
+            //            $this->errorTekst = "Deze inschrijving (" . $this->inschrijfnummer . ") is niet definitief.";
+            //            return null;
+        }
+
+        $this->betaalwijze = $inschrijving->getBetaalwijze();
+
+        // Contactpersoon
+        $contactPersoon = PersoonQuery::create()->findPk( $inschrijving->getContactPersoonId() );
+        $this->contactNaam = $contactPersoon->getVoornaam() . " " . $contactPersoon->getTussenvoegsel() . " " . $contactPersoon->getAchternaam();
+        $this->contactAdres = $contactPersoon->getStraat() . " " . $contactPersoon->getHuisnummer() . " " . $contactPersoon->getToevoeging();
+        $this->contactWoonplaats = $contactPersoon->getPostcode() . " " . $contactPersoon->getWoonplaats();
+        $this->contactEmail = $contactPersoon->getEmail();
+
+        if ( $contactPersoon->getGeslacht() == GESLACHT_MAN )
+        {
+            $this->contactAanschrijving = "heer " . $contactPersoon->getTussenvoegsel() . " " . $contactPersoon->getAchternaam();
+        }
+        elseif ( $contactPersoon->getGeslacht() == GESLACHT_VROUW )
+        {
+            $this->contactAanschrijving = "mevrouw " . $contactPersoon->getTussenvoegsel() . " " . $contactPersoon->getAchternaam();
+        }
+        else
+        {
+            $this->contactAanschrijving = "mevrouw/mijnheer " . $contactPersoon->getTussenvoegsel() . " " . $contactPersoon->getAchternaam();
+        }
+
+        // Informatie over het evenement
+        $evenement = EvenementQuery::create()->findPk( $inschrijving->getEvenementId() );
+        $this->evenementNaam = $evenement->getNaam();
+        $this->evenementId = $evenement->getId();
+
+        $this->evenementDatum = $evenement->getDatumBegin( "d-m-Y" );
+        if ( $evenement->getDatumEind() != $evenement->getDatumBegin() )
+        {
+            $this->evenementDatum .= " - " . $evenement->getDatumEind( "d-m-Y" );
+        }
+
+        $categorie = CategorieQuery::create()->filterByCode( $evenement->getCategorie() )->findOne();
+
+        $this->messageBody .= "Uw inschrijfnummer is: " . $this->inschrijfnummer . "<br/>";
+        $this->messageBody .= 'Omschrijving: ' . $categorie->getNaam() . ' "' . $this->evenementNaam . '"<br/><br/>';
+
+        $deelnemers = DeelnemerQuery::create()->filterByInschrijvingId( $this->inschrijfnummer )->find();
+
+        $this->aantalDeelnemers = sizeof( $deelnemers );
+        $this->messageBody .= "Aantal deelnemers: " . $this->aantalDeelnemers . " x " . geldAnsi( $evenement->getPrijs() ) . " = " . geldAnsi( $this->aantalDeelnemers * $evenement->getPrijs() ) . "<br/><br/>";
+
+        $this->evenementPrijs = $evenement->getPrijs();
+        $totaalprijs = $this->aantalDeelnemers * $this->evenementPrijs;
+
+        foreach ( $deelnemers as $deelnemer )
+        {
+            $persoon = PersoonQuery::create()->findPk( $deelnemer->getPersoonId() );
+
+            $deelnemerNaam = $persoon->getVoornaam() . " " . $persoon->getTussenvoegsel() . " " . $persoon->getAchternaam();
+
+            $this->messageBody .= "<u>Deelnemer: " . $deelnemerNaam . "</u><br/>";
+
+            try
+            {
+                $opties = OptieQuery::create()
+                ->filterByPerDeelnemer( '1' )
+                ->useEvenementHeeftOptieQuery()
+                ->filterByEvenementId( $this->evenementId )
+                ->orderByVolgorde()
+                ->endUse()
+                ->useDeelnemerHeeftOptieQuery()
+                    ->filterByDeelnemerId( $deelnemer->getId() )
+                ->endUse()
+                ->orderByGroep()
+                ->find();                
+            }
+            catch( Exception $ex)
+            {
+                $this->logger->error( "Exceptie bij opvragen deelnemeropties en volgorde daarvan" );
+                $this->logger->errordump( $ex );
+                alert( "Er is een probleem opgetreden." );
+                exit;
+            }
+
+            $this->logger->debug( "Aantal deelnemer opties " . $opties->count() );
+            
+            if ( $opties->count() > 0 )
+            {
+                $this->logger->verbose( $opties );
+
+                foreach ( $opties as $optie )
+                {
+                    $messageRegel = "";
+                    $this->logger->debug( "Deelnemer optie " . $optie->getId() );
+
+                    $deelnemerOptie = DeelnemerHeeftOptieQuery::create()
+                        ->filterByDeelnemerId( $deelnemer->getId() )
+                        ->filterByOptieId( $optie->getId() )
+                        ->findOne();
+
+                    $this->logger->verbose( $deelnemerOptie );
+
+                    if ( $optie->getGroep() != "" )
+                    {
+                        if ( $optie->getPrijs() != 0 )
+                        {
+                            $regel = array( "deelnemer" => $deelnemerNaam, "naam" => $optie->getGroep(), "omschrijving" => $optie->getTekstVoor(), "aantal" => 1, "prijs" => $optie->getPrijs() );
+                            array_push( $this->factuurArray, $regel );
+                        }
+                        $messageRegel = "   " . $optie->getGroep() . ": " . $optie->getTekstVoor() . " " . geldAnsi( $optie->getPrijs() );
+                        $totaalprijs += $optie->getPrijs();
+                    }
+                    else
+                    {
+                        $messageRegel = "   " . $optie->getTekstVoor() . ": " . $deelnemerOptie->getWaarde();
+                        if ( $optie->getPrijs() != 0 )
+                        {
+                            if ( $optie->getOptieType() == OPTIETYPE_AANTAL )
+                            {
+                                if ( $deelnemerOptie->getWaarde() > 0 )
+                                {
+                                    $regel = array( "deelnemer" => $deelnemerNaam, "naam" => "", "omschrijving" => $optie->getTekstVoor(), "aantal" => $deelnemerOptie->getWaarde(), "prijs" => $optie->getPrijs() );
+                                    array_push( $this->factuurArray, $regel );
+
+                                    $messageRegel .= "   " . " x &agrave; " . geldAnsi( $optie->getPrijs() ) . " = " . geldAnsi( $optie->getPrijs() * $deelnemerOptie->getWaarde() );
+                                    $totaalprijs += $optie->getPrijs() * $deelnemerOptie->getWaarde();
+                                }
+                            }
+                            else
+                            {
+                                if ( $optie->getOptieType() == OPTIETYPE_KEUZE_JA_NEE )
+                                {
+                                    if ( $deelnemerOptie->getWaarde() == OPTIE_KEUZE_JA )
+                                    {
+                                        $regel = array( "deelnemer" => $deelnemerNaam, "naam" => $optie->getTekstVoor(), "omschrijving" => "", "aantal" => 1, "prijs" => $optie->getPrijs() );
+                                        array_push( $this->factuurArray, $regel );
+                                        $totaalprijs += $optie->getPrijs();
+                                    }
+                                }
+                                else
+                                {
+                                    $totaalprijs += $optie->getPrijs();
+                                }
+
+                                $messageRegel .= ", Prijs: " . geldAnsi( $optie->getPrijs() );
+                            }
+                        }
+                    }
+
+                    $this->logger->debug("deelnemerregel: " . $messageRegel );
+                    $this->messageBody .= $messageRegel;
+                    $this->messageBody .= "<br/>";
+
+                }
+            }
+        }
+
+        try
+        {
+            $opties = OptieQuery::create()
+              ->filterByPerDeelnemer( '0' )
+              ->useEvenementHeeftOptieQuery()
+              ->filterByEvenementId( $this->evenementId )
+              ->orderByVolgorde()
+              ->endUse()
+              ->useInschrijvingHeeftOptieQuery()
+                  ->filterByInschrijvingId( $this->inschrijfnummer )
+              ->endUse()
+              ->orderByGroep()
+              ->find();                
+        }
+        catch( Exception $ex)
+        {
+            $this->logger->error( "Exceptie bij opvragen deelnemeropties en volgorde daarvan" );
+            $this->logger->errordump( $ex );
+            exit;
+        }
+
+        $this->logger->debug( "Aantal inschrijving opties " . $opties->count() );
+
+        if ( $opties->count() > 0 )
+        {
+            $this->messageBody .= "<br/><u>Inschrijvingsopties</u><br/>";
+
+            foreach ( $opties as $optie )
+            {
+                $this->logger->debug( "Inschrijvings optie " . $optie->getId() );
+
+                $inschrijvingsOptie = InschrijvingHeeftOptieQuery::create()
+                ->filterByOptieId( $optie->getId() )
+                ->findOne();
+        
+                if ( $optie->getGroep() != "" )
+                {
+                    if ( $optie->getPrijs() != 0 )
+                    {
+                        $regel = array( "deelnemer" => "Algemeen", "naam" => $optie->getGroep(), "omschrijving" => $optie->getTekstVoor(), "aantal" => 1, "prijs" => $optie->getPrijs() );
+                        array_push( $this->factuurArray, $regel );
+                    }
+                    $this->messageBody .= "   " . $optie->getGroep() . ": " . $optie->getTekstVoor() . " " . geldAnsi( $optie->getPrijs() ) . "<br/>";
+                    $totaalprijs += $optie->getPrijs();
+                }
+                else
+                {
+                    $this->messageBody .= "   " . $optie->getTekstVoor() . ": " . $inschrijvingsOptie->getWaarde();
+                    if ( $optie->getPrijs() != 0 )
+                    {
+                        if ( $optie->getOptieType() == OPTIETYPE_AANTAL )
+                        {
+                            if ( $inschrijvingsOptie->getWaarde() > 0 )
+                            {
+                                $regel = array( "deelnemer" => "Algemeen", "naam" => $optie->getTekstVoor(), "omschrijving" => "", "aantal" => $inschrijvingsOptie->getWaarde(), "prijs" => $optie->getPrijs() );
+                                array_push( $this->factuurArray, $regel );
+
+                                $this->messageBody .= " x &agrave; " . geldAnsi( $optie->getPrijs() ) . " = " . geldAnsi( $optie->getPrijs() * $inschrijvingsOptie->getWaarde() );
+                                $totaalprijs += $optie->getPrijs() * $inschrijvingsOptie->getWaarde();
+                            }
+                        }
+                        else
+                        {
+                            if ( $optie->getOptieType() == OPTIETYPE_KEUZE_JA_NEE )
+                            {
+                                if ( $inschrijvingsOptie->getWaarde() == OPTIE_KEUZE_JA )
+                                {
+                                    $regel = array( "deelnemer" => "Algemeen", "naam" => "", "omschrijving" => $optie->getTekstVoor(), "aantal" => "1", "prijs" => $optie->getPrijs() );
+                                    array_push( $this->factuurArray, $regel );
+                                    $totaalprijs += $optie->getPrijs();
+                                }
+                            }
+                            else
+                            {
+                                $totaalprijs += $optie->getPrijs();
+                            }
+
+                            $this->messageBody .= ", Prijs: " . geldAnsi( $optie->getPrijs() );
+                        }
+                    }
+                    $this->messageBody .= "<br/>";
+                }
+            }
+        }
+
+        $this->messageBody .= "<br/><u>Afrekening</u><br/>Subtotaal: " . geldAnsi( $totaalprijs ) . "<br/><br/>";
+
+        $betaling = $inschrijving->getBetaalwijze();
+        $wijze = BetaalwijzeQuery::create()->filterByCode( $betaling )->findOne();
+
+        if ( $inschrijving->getAnnuleringsverzekering() == ANNULERINGSVERZEKERING_ALLRISK ||
+            $inschrijving->getAnnuleringsverzekering() == ANNULERINGSVERZEKERING_GEWOON ||
+            $inschrijving->getAnnuleringsverzekering() == ANNULERINGSVERZEKERING_GEEN )
+        {
+            require_once "annuleringsverzekering.php";
+            $annuleringsverzekering = new AnnuleringsVerzekering();
+            $avpremie = $annuleringsverzekering->bereken( $totaalprijs, $inschrijving->getAnnuleringsverzekering() );
+            $totaalprijs += $avpremie;
+            $this->messageBody .= "Annuleringsverzekering: " . annuleringsverzekeringNaam( $inschrijving->getAnnuleringsverzekering() ) . ", premie " . geldAnsi( $avpremie ) . "<br/>";
+
+            if ( $inschrijving->getAnnuleringsverzekering() != ANNULERINGSVERZEKERING_GEEN )
+            {
+                $regel = array( "deelnemer" => "Algemeen", "naam" => "Annuleringsverzekering", "omschrijving" => annuleringsverzekeringNaam( $inschrijving->getAnnuleringsverzekering() ), "aantal" => "1", "prijs" => $avpremie );
+                array_push( $this->factuurArray, $regel );
+            }
+        }
+
+        if ( $wijze->getKosten() > 0 )
+        {
+            $regel = array( "deelnemer" => "Algemeen", "naam" => "Incassokosten", "omschrijving" => "", "aantal" => "1", "prijs" => $wijze->getKosten() );
+            array_push( $this->factuurArray, $regel );
+
+            $totaalprijs += $wijze->getKosten();
+            $this->messageBody .= "Incassokosten " . geldAnsi( $wijze->getKosten() ) . "<br/>";
+        }
+
+        $this->messageBody .= "<br/>Totaalbedrag: " . geldAnsi( $totaalprijs ) . "<br/>";
+        $this->logger->verbose( $this->messageBody );
+
+        $this->reedsBetaaldBedrag = $inschrijving->getReedsBetaald();
+        $this->nogTeBetalenBedrag = $inschrijving->getNogTeBetalen();
+
+        if ( rondNul( $this->nogTeBetalenBedrag ) > 0 )
+        {
+            $this->messageBody .= "Betaalwijze: " . $wijze->getNaam();
+        }
+
+        if ( rondNul( $this->reedsBetaaldBedrag ) > 0 )
+        {
+            $this->messageBody .= "<br/>U heeft reeds betaald: " . geldAnsi( $this->reedsBetaaldBedrag ) . "<br/>";
+        }
+
+        // $inschrijving->getBetaaldPerVoucher > 0 , dan hier regel toevoegen hoeveel er betaald is.
+        if ( $inschrijving->getVoucherId() > 0 )
+        {
+            // Betaald per voucher > 0, dan tegoedbon
+            if ( $inschrijving->getBetaaldPerVoucher() > 0 )
+            {
+                $voucher = VoucherQuery::create()->findpk( $inschrijving->getVoucherId() );
+
+                if ( $voucher->getVoucherType() == VOUCHERTYPE_VOUCHER )
+                {
+                    $this->messageBody .= "<br/>U heeft met een tegoedbon/voucher betaald: " . geldAnsi( $inschrijving->getBetaaldPerVoucher() ) . "<br/><br/>";
+                }
+                elseif ( $voucher->getVoucherType() == VOUCHERTYPE_KORTING )
+                {
+                    $this->messageBody .= "<br/>U heeft met een kortingsbon betaald: " . geldAnsi( $inschrijving->getBetaaldPerVoucher() ) . "<br/><br/>";
+                }
+
+                $waarde = $voucher->getRestWaarde( );
+                if ( $voucher->getEmail() && $waarde > 0 )
+                {
+                    $this->messageBody .= "Op de voucher resteert nog een bedrag van " . geldAnsi( $waarde ) . "<br/><br/>";
+                }
+            }
+            else // Betaald per voucher == 0, dan kortingsbon
+            {
+                $voucher = VoucherQuery::create()->findpk( $inschrijving->getVoucherId() );
+                $waarde = $voucher->getRestWaarde( );
+                $type = $voucher->getVoucherType();
+                if ( $type == VOUCHERTYPE_KORTING )
+                {
+                    $this->messageBody .= "<br/>Korting: " . geldAnsi( $waarde ) . "<br/>";
+                    $regel = array( "deelnemer" => "Algemeen", "naam" => "Korting", "omschrijving" => "", "aantal" => 1, "prijs" => $waarde );
+                    array_push( $this->factuurArray, $regel );
+                }
+                else
+                {
+                    $this->logger->error( "Flow error. Geen bedrag betaald per voucher en ook geen kortingsbon" );
+                }
+            }
+        }
+
+        $ini = parse_ini_file( CONFIG_FILENAME, true );
+
+        if ( $this->nogTeBetalenBedrag > 0 )
+        {
+            $this->messageBody .= "<br/><strong>U moet nog betalen: " . geldAnsi( $this->nogTeBetalenBedrag ) . "</strong><br/><br/>";
+
+            if( $betaling == BETAALWIJZE_INCASSO )
+            {
+                $this->messageBody .= "<u>Betaling</u><br/><br>U heeft gekozen voor betaling in twee termijnen. Ongeveer een week na uw inschrijving ontvangt u van ons per mail een incassoformulier waarmee u toestemming geeft. De incassodata verschillen per evenement, kijk hiervoor op de inschrijfpagina. Bij de eerste incasso wordt een evenetuele annuleringsverzekering en de incassokosten volledig verrekend, de termijnbedragen worden op het incassoformulier vermeld<br/>";
+            } 
+            else if( $betaling == BETAALWIJZE_CONTANT )
+            {
+                $this->messageBody .= "<u>Betaling</u><br/><br>U kunt contant betalen bij de aanvang van het evenement<br/>";
+            } 
+            else 
+            {
+                $this->messageBody .= "<u>Betaling</u><br/><br/>";
+                $this->messageBody .= $ini['betaling']['voorwaarden'];
+            }
+        }
+        else
+        {
+            $verschil = $inschrijving->getTotaalBedrag() - $this->reedsBetaaldBedrag;
+            if ( $verschil < 0 )
+            {
+                $this->messageBody .= "Neem a.u.b. contact met ons op over het teveel betaalde bedrag van " . geldAnsi( 0-$verschil ) . "<br/><br/>";
+            }
+            else
+            {
+                $this->messageBody .= "Het volledige bedrag is voldaan<br/><br/>";
+            }
+        }
+
+        // Magic om de huidige URL te vinden
+        $requestUri = substr( $_SERVER['REQUEST_URI'], 0, strrpos($_SERVER['REQUEST_URI'], '/') + 1);
+        $url = 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . "{$_SERVER['HTTP_HOST']}/{$requestUri}";
+
+        $inschrijver = MailinglistQuery::create()
+                    ->filterByEvenementId( $this->evenementId )
+                    ->filterByEmail( $this->contactEmail )
+                    ->findOne();
+
+        if ( $inschrijver != null )
+        {
+            $unsubscribeLink = $url . '/mailing_afmelden.php?mail=' . $inschrijver->getEmail() . "&code=" . $inschrijver->getCode();
+            $adresRegel = '<div>' . $ini['pdf_factuur']['adresregel'] . '</div>';
+            $ondersteRegels = '<br/><br/><div align="center" style="font-size:0.8em;">U heeft zich aangemeld voor onze nieuwsbrief, u kunt zich <a href="' . $unsubscribeLink . '">hier</a> afmelden.<br/>' . $adresRegel . '</div>';
+        }
+        else
+        {
+            $adresRegel = '<div>' . $ini['pdf_factuur']['adresregel'] . '</div>';
+            $ondersteRegels = '<br/><br/><div align="center" style="font-size:0.8em;"><br/>' . $adresRegel . '</div>';
+        }
+
+        $this->ondersteRegels =  $ondersteRegels;
+
+
+        //////////////////////////////////////////////////////
+        // Controle of de nu berekende totaalprijs gelijk is aan wat de website berekend heeft.
+        // Staat wel heel slordig als de klant op z'n factuur een ander totaal ziet dan wat wij rekenen.
+        //////////////////////////////////////////////////////
+        if ( number_format( $totaalprijs, 2 ) != number_format( $inschrijving->getTotaalbedrag(), 2 ) )
+        {
+            $this->logger->error( "Berekeningsfout bij opstellen factuur. Voor factuur berekende prijs = " . geldAnsi( $totaalprijs ) . ", prijs bij inschrijving = " . geldAnsi( $inschrijving->getTotaalbedrag() ) );
+            $this->logger->error( "Totaalprijs ruw = " . $totaalprijs . ", prijs bij inschrijving ruw = " . $inschrijving->getTotaalbedrag() );
+            $this->logger->error( $this->messageBody );
+
+            $this->errorTekst = "Berekeningsfout bij het opstellen van uw factuur. Neem a.u.b. contact met ons op.";
+            return null;
+        }
+
+        $this->totaalBedrag = number_format( $inschrijving->getTotaalbedrag(), 2, ",", "" );
+
+        // Maak de inschrijving definitief.
+        // $inschrijving->setStatus( INSCHRIJVING_STATUS_DEFINITIEF );
+        // $inschrijving->save();
+
+        return 1;
+    }
+
+}

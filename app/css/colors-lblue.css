@@ -1,0 +1,31 @@
+:root {
+    --body-achtergrond-kleur: rgb(255, 255, 255);
+    --body-voorgrond-kleur: rgb(20,91,155);
+    --table-achtergrond-kleur: rgba(30, 166, 220, 0.294);
+    --table-voorgrond-kleur: rgb(20,91,155);
+    --table-border-kleur: rgb(204, 17, 17);
+    --button-achtergrond-kleur: rgba(30, 166, 220, 0.294);
+    --button-voorgrond-kleur: rgb(20,91,155);
+    --disabled-achtergrond-kleur: rgb(226, 227, 228);
+    --disabled-voorgrond-kleur: rgb(20,91,155);
+    --status-achtergrond-kleur: rgb(30, 166, 220);
+    --status-voorgrond-kleur: rgb(237, 240, 243);
+    --readonly-voorgrond-kleur: rgb(20,91,155);
+    --readonly-achtergrond-kleur: rgb(233, 238, 243);
+    --input-achtergrond-kleur: rgb(255, 255, 255);
+    --input-voorgrond-kleur:  rgb(20,91,155);
+    --grijs-kleur: rgb(20,91,155);
+    --schaduw-kleur: rgba(128, 128, 128, 0.568);
+    --timeline-huidig-kleur:rgba(30, 166, 220, 0.5);
+    --timeline-verleden-kleur:rgba(85, 180, 218, 0.274);
+    --tooltip-achtergrond-kleur:rgb(215, 229, 252);
+    --tooltip-voorgrond-kleur:rgb(20,91,155);
+    --link-voorgrond-kleur: #0000EE;
+    --link-visited-voorgrond-kleur:#551A8B;
+    --navigatie-text-kleur:rgb(20,91,155);
+    --navigatie-achtergrond-kleur:rgb(176, 222, 240);
+    /* voorgrond-kleur doet de pijltjes voor submenu */
+    --navigatie-voorgrond-kleur:rgb(21, 168, 226);
+    --navigatie-select-kleur:rgb(184, 225, 241);
+    --navigatie-select-voorgrond-kleur:rgb(45, 132, 231);
+  }

@@ -1,0 +1,23 @@
+:root {
+    --font-family: 'Jura';
+}
+     @font-face {
+        font-family: Jura;
+        src: url(fonts/Jura-Regular.ttf);
+        font-weight: normal;
+        font-style: normal;
+      }
+      
+      @font-face {
+        font-family: Jura;
+        src: url(fonts/Jura-Bold.ttf);
+        font-weight: bold;
+        font-style: normal;
+      }
+      
+      @font-face {
+        font-family: Jura;
+        src: url(fonts/Jura-Italic.ttf);
+        font-weight: normal;
+        font-style: italic;
+      }

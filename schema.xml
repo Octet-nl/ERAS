@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="utf-8"?>
+<database name="default" defaultIdMethod="native" namespace="fb_model" defaultPhpNamingMethod="underscore">
+  <table name="fb_annuleringsverzekering" idMethod="native" phpName="Annuleringsverzekering" namespace="fb_model">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="code" phpName="Code" type="INTEGER" size="2" required="true"/>
+    <column name="naam" phpName="Naam" type="VARCHAR" size="255" required="true"/>
+    <column name="afsluitkosten" phpName="Afsluitkosten" type="DECIMAL" size="4" scale="2"/>
+    <column name="percentage" phpName="Percentage" type="DECIMAL" size="5" scale="4"/>
+    <column name="btw" phpName="BTW" type="DECIMAL" size="4" scale="2"/>
+    <column name="gemaakt_datum" phpName="DatumGemaakt" type="TIMESTAMP" required="true"/>
+    <column name="gemaakt_door" phpName="GemaaktDoor" type="VARCHAR" size="255" required="true"/>
+    <column name="gewijzigd_datum" phpName="DatumGewijzigd" type="TIMESTAMP" required="true"/>
+    <column name="gewijzigd_door" phpName="GewijzigdDoor" type="VARCHAR" size="255" required="true"/>
+    <behavior name="timestampable">
+      <parameter name="create_column" value="gemaakt_datum" />
+      <parameter name="update_column" value="gewijzigd_datum" />
+    </behavior>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="fb_betaalwijze" idMethod="native" phpName="Betaalwijze" namespace="fb_model">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="code" phpName="Code" type="INTEGER" size="2" required="true"/>
+    <column name="naam" phpName="Naam" type="VARCHAR" size="255" required="true"/>
+    <column name="kosten" phpName="Kosten" type="DECIMAL" size="4" scale="2"/>
+    <column name="percentage" phpName="Percentage" type="DECIMAL" size="5" scale="4"/>
+    <column name="btw" phpName="BTW" type="DECIMAL" size="4" scale="2"/>
+    <column name="actief" phpName="IsActief" type="INTEGER" size="1" required="true"/>
+    <column name="gemaakt_datum" phpName="DatumGemaakt" type="TIMESTAMP" required="true"/>
+    <column name="gemaakt_door" phpName="GemaaktDoor" type="VARCHAR" size="255" required="true"/>
+    <column name="gewijzigd_datum" phpName="DatumGewijzigd" type="TIMESTAMP" required="true"/>
+    <column name="gewijzigd_door" phpName="GewijzigdDoor" type="VARCHAR" size="255" required="true"/>
+    <behavior name="timestampable">
+      <parameter name="create_column" value="gemaakt_datum" />
+      <parameter name="update_column" value="gewijzigd_datum" />
+    </behavior>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="fb_categorie" idMethod="native" phpName="Categorie" namespace="fb_model">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="code" phpName="Code" type="INTEGER" size="2" required="true"/>
+    <column name="naam" phpName="Naam" type="VARCHAR" size="255" required="true"/>
+    <column name="actief" phpName="IsActief" type="INTEGER" size="1" required="true"/>
+    <column name="gemaakt_datum" phpName="DatumGemaakt" type="TIMESTAMP" required="true"/>
+    <column name="gemaakt_door" phpName="GemaaktDoor" type="VARCHAR" size="255" required="true"/>
+    <column name="gewijzigd_datum" phpName="DatumGewijzigd" type="TIMESTAMP" required="true"/>
+    <column name="gewijzigd_door" phpName="GewijzigdDoor" type="VARCHAR" size="255" required="true"/>
+    <behavior name="timestampable">
+      <parameter name="create_column" value="gemaakt_datum" />
+      <parameter name="update_column" value="gewijzigd_datum" />
+    </behavior>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="fb_contactlog" idMethod="native" phpName="Contactlog" namespace="fb_model">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="persoon_id" phpName="PersoonId" type="INTEGER" size="11" required="true"/>
+    <column name="tekst" phpName="Tekst" type="VARCHAR" size="2048" required="true"/>
+    <column name="gemaakt_datum" phpName="DatumGemaakt" type="TIMESTAMP" required="true"/>
+    <column name="gemaakt_door" phpName="GemaaktDoor" type="VARCHAR" size="255" required="true"/>
+    <column name="gewijzigd_datum" phpName="DatumGewijzigd" type="TIMESTAMP" required="true"/>
+    <column name="gewijzigd_door" phpName="GewijzigdDoor" type="VARCHAR" size="255" required="true"/>
+    <behavior name="timestampable">
+      <parameter name="create_column" value="gemaakt_datum" />
+      <parameter name="update_column" value="gewijzigd_datum" />
+    </behavior>
+    <foreign-key foreignTable="fb_persoon" name="fk_persoon_log">
+      <reference local="persoon_id" foreign="id"/>
+    </foreign-key>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="fb_deelnemer" idMethod="native" phpName="Deelnemer" namespace="fb_model">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="inschrijving_id" phpName="InschrijvingId" type="INTEGER" required="true"/>
+    <column name="persoon_id" phpName="PersoonId" type="INTEGER" required="true"/>
+    <column name="totaalbedrag" phpName="Totaalbedrag" type="DECIMAL" size="9" scale="2"/>
+    <column name="status" phpName="Status" type="INTEGER" size="2" required="true"/>
+    <column name="gemaakt_datum" phpName="DatumGemaakt" type="TIMESTAMP" required="true"/>
+    <column name="gemaakt_door" phpName="GemaaktDoor" type="VARCHAR" size="255" required="true"/>
+    <column name="gewijzigd_datum" phpName="DatumGewijzigd" type="TIMESTAMP" required="true"/>
+    <column name="gewijzigd_door" phpName="GewijzigdDoor" type="VARCHAR" size="255" required="true"/>
+    <behavior name="timestampable">
+      <parameter name="create_column" value="gemaakt_datum" />
+      <parameter name="update_column" value="gewijzigd_datum" />
+    </behavior>
+    <foreign-key foreignTable="fb_inschrijving" name="fk_deelnemer_inschrijving1">
+      <reference local="inschrijving_id" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="fb_persoon" name="fk_deelnemer_persoon1">
+      <reference local="persoon_id" foreign="id"/>
+    </foreign-key>
+    <index name="fk_deelnemer_persoon1">
+      <index-column name="persoon_id"/>
+    </index>
+    <index name="fk_deelnemer_inschrijving1">
+      <index-column name="inschrijving_id"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="fb_deelnemer_heeft_optie" isCrossRef="true" idMethod="native" phpName="DeelnemerHeeftOptie" namespace="fb_model">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="optie_id" phpName="OptieId" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="deelnemer_id" phpName="DeelnemerId" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="waarde" phpName="Waarde" type="VARCHAR" size="512"/>
+    <column name="prijs" phpName="Prijs" type="DECIMAL" size="9" scale="2"/>
+    <column name="gemaakt_datum" phpName="DatumGemaakt" type="TIMESTAMP" required="true"/>
+    <column name="gemaakt_door" phpName="GemaaktDoor" type="VARCHAR" size="255" required="true"/>
+    <column name="gewijzigd_datum" phpName="DatumGewijzigd" type="TIMESTAMP" required="true"/>
+    <column name="gewijzigd_door" phpName="GewijzigdDoor" type="VARCHAR" size="255" required="true"/>
+    <behavior name="timestampable">
+      <parameter name="create_column" value="gemaakt_datum" />
+      <parameter name="update_column" value="gewijzigd_datum" />
+    </behavior>
+    <foreign-key foreignTable="fb_deelnemer">
+      <reference local="deelnemer_id" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="fb_optie">
+      <reference local="optie_id" foreign="id"/>
+    </foreign-key>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="fb_evenement" idMethod="native" phpName="Evenement" namespace="fb_model">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="naam" phpName="Naam" type="VARCHAR" size="255" required="true"/>
+    <column name="categorie" phpName="Categorie" type="VARCHAR" size="255" required="true"/>
+    <column name="korte_omschrijving" phpName="KorteOmschrijving" type="LONGVARCHAR" required="true"/>
+    <column name="lange_omschrijving" phpName="LangeOmschrijving" type="LONGVARCHAR" required="true"/>
+    <column name="datum_begin" phpName="DatumBegin" type="DATE" required="true"/>
+    <column name="datum_eind" phpName="DatumEind" type="DATE" required="true"/>
+    <column name="aantal_dagen" phpName="AantalDagen" type="INTEGER" size="3" required="true"/>
+    <column name="frequentie" phpName="Frequentie" type="VARCHAR" size="255" required="true"/>
+    <column name="inschrijving_begin" phpName="InschrijvingBegin" type="TIMESTAMP" required="true"/>
+    <column name="inschrijving_eind" phpName="InschrijvingEind" type="TIMESTAMP" required="true"/>
+    <column name="extra_deelnemer_gegevens" phpName="ExtraDeelnemerGegevens" type="INTEGER" size="2" required="true"/>
+    <column name="extra_contact_gegevens" phpName="ExtraContactGegevens" type="INTEGER" size="2" required="true"/>
+    <column name="prijs" phpName="Prijs" type="DECIMAL" size="9" scale="4" required="true"/>
+    <column name="betaalwijze" phpName="Betaalwijze" type="INTEGER" size="4" required="true"/>
+    <column name="max_deelnemers" phpName="MaxDeelnemers" type="INTEGER" required="true"/>
+    <column name="annuleringsverzekering" phpName="Annuleringsverzekering" type="INTEGER" size="1" required="true"/>
+    <column name="account_nodig" phpName="AccountNodig" type="INTEGER" size="1" required="true"/>
+    <column name="status" phpName="Status" type="INTEGER" size="2" required="true"/>
+    <column name="gemaakt_datum" phpName="DatumGemaakt" type="TIMESTAMP" required="true"/>
+    <column name="gemaakt_door" phpName="GemaaktDoor" type="VARCHAR" size="255" required="true"/>
+    <column name="gewijzigd_datum" phpName="DatumGewijzigd" type="TIMESTAMP" required="true"/>
+    <column name="gewijzigd_door" phpName="GewijzigdDoor" type="VARCHAR" size="255" required="true"/>
+    <behavior name="timestampable">
+      <parameter name="create_column" value="gemaakt_datum" />
+      <parameter name="update_column" value="gewijzigd_datum" />
+    </behavior>
+    <foreign-key foreignTable="fb_keuzes">
+      <reference local="status" foreign="id"/>
+    </foreign-key>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="fb_evenement_heeft_optie" isCrossRef="true" idMethod="native" phpName="EvenementHeeftOptie" namespace="fb_model">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="evenement_id" phpName="EvenementId" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="optie_id" phpName="OptieId" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="volgorde" phpName="Volgorde" type="INTEGER" defaultValue="0" required="true"/>
+    <column name="gemaakt_datum" phpName="DatumGemaakt" type="TIMESTAMP" required="true"/>
+    <column name="gemaakt_door" phpName="GemaaktDoor" type="VARCHAR" size="255" required="true"/>
+    <column name="gewijzigd_datum" phpName="DatumGewijzigd" type="TIMESTAMP" required="true"/>
+    <column name="gewijzigd_door" phpName="GewijzigdDoor" type="VARCHAR" size="255" required="true"/>
+    <behavior name="timestampable">
+      <parameter name="create_column" value="gemaakt_datum" />
+      <parameter name="update_column" value="gewijzigd_datum" />
+    </behavior>
+    <foreign-key foreignTable="fb_evenement">
+      <reference local="evenement_id" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="fb_optie">
+      <reference local="optie_id" foreign="id"/>
+    </foreign-key>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="fb_factuur" isCrossRef="true" idMethod="native" phpName="FactuurNummer" namespace="fb_model">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="inschrijving_id" phpName="InschrijvingId" type="INTEGER" required="true"/>
+    <column name="gemaakt_datum" phpName="DatumGemaakt" type="TIMESTAMP" required="true"/>
+    <column name="gemaakt_door" phpName="GemaaktDoor" type="VARCHAR" size="255" required="true"/>
+    <column name="gewijzigd_datum" phpName="DatumGewijzigd" type="TIMESTAMP" required="true"/>
+    <column name="gewijzigd_door" phpName="GewijzigdDoor" type="VARCHAR" size="255" required="true"/>
+    <behavior name="timestampable">
+      <parameter name="create_column" value="gemaakt_datum" />
+      <parameter name="update_column" value="gewijzigd_datum" />
+    </behavior>
+    <foreign-key foreignTable="fb_inschrijving">
+      <reference local="inschrijving_id" foreign="id"/>
+    </foreign-key>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="fb_gebruiker" idMethod="native" phpName="Gebruiker" namespace="fb_model">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="userid" phpName="UserId" type="VARCHAR" size="255" required="true"/>
+    <column name="persoon_id" phpName="PersoonId" type="INTEGER" required="true"/>
+    <column name="rol" phpName="Rol" type="INTEGER" required="true"/>
+    <column name="actief" phpName="IsActief" type="INTEGER" size="1" required="true"/>
+    <column name="wachtwoord" phpName="Wachtwoord" type="VARCHAR" size="255" required="true"/>
+    <column name="wachtwoord_wijzig_datum" phpName="DatumWachtwoordWijzig" type="TIMESTAMP"/>
+    <column name="laatste_login_datum" phpName="DatumLaatsteLogin" type="TIMESTAMP"/>
+    <column name="laatste_login_adres" phpName="LaatsteLoginAdres" type="VARCHAR" size="255"/>
+    <column name="gemaakt_datum" phpName="DatumGemaakt" type="TIMESTAMP" required="true"/>
+    <column name="gemaakt_door" phpName="GemaaktDoor" type="VARCHAR" size="255" required="true"/>
+    <column name="gewijzigd_datum" phpName="DatumGewijzigd" type="TIMESTAMP" required="true"/>
+    <column name="gewijzigd_door" phpName="GewijzigdDoor" type="VARCHAR" size="255" required="true"/>
+    <behavior name="timestampable">
+      <parameter name="create_column" value="gemaakt_datum" />
+      <parameter name="update_column" value="gewijzigd_datum" />
+    </behavior>
+    <foreign-key foreignTable="fb_persoon">
+      <reference local="persoon_id" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="fb_keuzes">
+      <reference local="rol" foreign="id"/>
+    </foreign-key>
+    <unique name="user_id">
+      <unique-column name="userid"/>
+    </unique>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="fb_inschrijving" idMethod="native" phpName="Inschrijving" namespace="fb_model">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="evenement_id" phpName="EvenementId" type="INTEGER" required="true"/>
+    <column name="contactpersoon_id" phpName="ContactPersoonId" type="INTEGER" required="true"/>
+    <column name="datum_inschrijving" phpName="DatumInschrijving" type="TIMESTAMP" required="true"/>
+    <column name="annuleringsverzekering_afgesloten" phpName="AnnuleringsverzekeringAfgesloten" type="TIMESTAMP"/>
+    <column name="totaalbedrag" phpName="Totaalbedrag" type="DECIMAL" size="9" scale="2" required="true"/>
+    <column name="reeds_betaald" phpName="ReedsBetaald" type="DECIMAL" size="9" scale="2" required="false"/>
+    <column name="nog_te_betalen" phpName="NogTeBetalen" type="DECIMAL" size="9" scale="2" required="false"/>
+    <column name="korting" phpName="Korting" type="DECIMAL" size="9" scale="2" required="false"/>
+    <column name="betaald_per_voucher" phpName="BetaaldPerVoucher" type="DECIMAL" size="9" scale="2"/>
+    <column name="voucher_id" phpName="VoucherId" type="INTEGER" required="false"/>
+    <column name="betaalwijze" phpName="Betaalwijze" type="INTEGER" size="1" required="false"/>
+    <column name="annuleringsverzekering" phpName="Annuleringsverzekering" type="INTEGER" size="1" required="false"/>
+    <column name="status" phpName="Status" type="INTEGER" size="2" required="true"/>
+    <column name="gemaakt_datum" phpName="DatumGemaakt" type="TIMESTAMP" required="true"/>
+    <column name="gemaakt_door" phpName="GemaaktDoor" type="VARCHAR" size="255" required="true"/>
+    <column name="gewijzigd_datum" phpName="DatumGewijzigd" type="TIMESTAMP" required="true"/>
+    <column name="gewijzigd_door" phpName="GewijzigdDoor" type="VARCHAR" size="255" required="true"/>
+    <behavior name="timestampable">
+      <parameter name="create_column" value="gemaakt_datum" />
+      <parameter name="update_column" value="gewijzigd_datum" />
+    </behavior>
+    <foreign-key foreignTable="fb_evenement" name="fk_inschrijving_evenement1">
+      <reference local="evenement_id" foreign="id"/>
+    </foreign-key>
+    <index name="fk_inschrijving_evenement1">
+      <index-column name="evenement_id"/>
+    </index>
+    <foreign-key foreignTable="fb_keuzes">
+      <reference local="status" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="fb_voucher">
+      <reference local="voucher_id" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="fb_persoon">
+      <reference local="contactpersoon_id" foreign="id"/>
+    </foreign-key>
+    <unique name="number">
+      <unique-column name="inschrijfnummer"/>
+    </unique>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="fb_inschrijving_heeft_optie" isCrossRef="true" idMethod="native" phpName="InschrijvingHeeftOptie" namespace="fb_model">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="optie_id" phpName="OptieId" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="inschrijving_id" phpName="InschrijvingId" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="waarde" phpName="Waarde" type="VARCHAR" size="512"/>
+    <column name="prijs" phpName="Prijs" type="DECIMAL" size="9" scale="2"/>
+    <column name="gemaakt_datum" phpName="DatumGemaakt" type="TIMESTAMP" required="true"/>
+    <column name="gemaakt_door" phpName="GemaaktDoor" type="VARCHAR" size="255" required="true"/>
+    <column name="gewijzigd_datum" phpName="DatumGewijzigd" type="TIMESTAMP" required="true"/>
+    <column name="gewijzigd_door" phpName="GewijzigdDoor" type="VARCHAR" size="255" required="true"/>
+    <behavior name="timestampable">
+      <parameter name="create_column" value="gemaakt_datum" />
+      <parameter name="update_column" value="gewijzigd_datum" />
+    </behavior>
+    <foreign-key foreignTable="fb_optie">
+      <reference local="optie_id" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="fb_inschrijving">
+      <reference local="inschrijving_id" foreign="id"/>
+    </foreign-key>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="fb_keuzes" idMethod="native" phpName="Keuzes" namespace="fb_model">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="code" phpName="Code" type="INTEGER" size="2" required="true"/>
+    <column name="keuzetype" phpName="KeuzeType" type="INTEGER" size="2" required="true"/>
+    <column name="naam" phpName="Naam" type="VARCHAR" size="255" required="true"/>
+    <column name="actief" phpName="IsActief" type="INTEGER" size="1" required="true"/>
+    <column name="gemaakt_datum" phpName="DatumGemaakt" type="TIMESTAMP" required="true"/>
+    <column name="gemaakt_door" phpName="GemaaktDoor" type="VARCHAR" size="255" required="true"/>
+    <column name="gewijzigd_datum" phpName="DatumGewijzigd" type="TIMESTAMP" required="true"/>
+    <column name="gewijzigd_door" phpName="GewijzigdDoor" type="VARCHAR" size="255" required="true"/>
+    <behavior name="timestampable">
+      <parameter name="create_column" value="gemaakt_datum" />
+      <parameter name="update_column" value="gewijzigd_datum" />
+    </behavior>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="fb_mailinglist" idMethod="native" phpName="Mailinglist" namespace="fb_model">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="evenement_id" phpName="EvenementId" type="INTEGER" required="true"/>
+    <column name="naam" phpName="Naam" type="VARCHAR" size="255" required="true"/>
+    <column name="email" phpName="Email" type="VARCHAR" size="255" required="true"/>
+    <column name="code" phpName="Code" type="VARCHAR" size="255" required="true"/>
+    <column name="gemaakt_datum" phpName="DatumGemaakt" type="TIMESTAMP" required="true"/>
+    <column name="gemaakt_door" phpName="GemaaktDoor" type="VARCHAR" size="255" required="true"/>
+    <column name="gewijzigd_datum" phpName="DatumGewijzigd" type="TIMESTAMP" required="true"/>
+    <column name="gewijzigd_door" phpName="GewijzigdDoor" type="VARCHAR" size="255" required="true"/>
+    <behavior name="timestampable">
+      <parameter name="create_column" value="gemaakt_datum" />
+      <parameter name="update_column" value="gewijzigd_datum" />
+    </behavior>
+    <foreign-key foreignTable="fb_evenement" name="fk_inschrijving_evenement1">
+      <reference local="evenement_id" foreign="id"/>
+    </foreign-key>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="fb_optie" idMethod="native" phpName="Optie" namespace="fb_model">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="per_deelnemer" phpName="PerDeelnemer" type="INTEGER" size="1"/>
+    <column name="naam" phpName="Naam" type="VARCHAR" size="255" required="true"/>
+    <column name="tekst_voor" phpName="TekstVoor" type="VARCHAR" size="255"/>
+    <column name="tekst_achter" phpName="TekstAchter" type="VARCHAR" size="255"/>
+    <column name="tooltip_tekst" phpName="TooltipTekst" type="VARCHAR" size="255"/>
+    <column name="heeft_hor_lijn" phpName="HeeftHorizontaleLijn" type="INTEGER" size="2" required="true"/>
+    <column name="optietype" phpName="OptieType" type="INTEGER" size="2"/>
+    <column name="groep" phpName="Groep" type="VARCHAR" size="255"/>
+    <column name="label" phpName="Label" type="VARCHAR" size="255"/>
+    <column name="is_default" phpName="IsDefault" type="INTEGER" size="1"/>
+    <column name="later_wijzigen" phpName="LaterWijzigen" type="INTEGER" defaultValue="1" size="1"/>
+    <column name="totaal_aantal" phpName="TotaalAantal" type="INTEGER"/>
+    <column name="prijs" phpName="Prijs" type="DECIMAL" size="9" scale="4"/>
+    <column name="status" phpName="Status" type="INTEGER" size="2" required="true"/>
+    <column name="intern_gebruik" phpName="InternGebruik" type="INTEGER" size="1"/>
+    <column name="gemaakt_datum" phpName="DatumGemaakt" type="TIMESTAMP" required="true"/>
+    <column name="gemaakt_door" phpName="GemaaktDoor" type="VARCHAR" size="255" required="true"/>
+    <column name="gewijzigd_datum" phpName="DatumGewijzigd" type="TIMESTAMP" required="true"/>
+    <column name="gewijzigd_door" phpName="GewijzigdDoor" type="VARCHAR" size="255" required="true"/>
+    <behavior name="timestampable">
+      <parameter name="create_column" value="gemaakt_datum" />
+      <parameter name="update_column" value="gewijzigd_datum" />
+    </behavior>
+    <foreign-key foreignTable="fb_type" name="fk_optie_type">
+      <reference local="optietype" foreign="id"/>
+    </foreign-key>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="fb_persoon" idMethod="native" phpName="Persoon" namespace="fb_model">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="voornaam" phpName="Voornaam" type="VARCHAR" size="255" required="true"/>
+    <column name="tussenvoegsel" phpName="Tussenvoegsel" type="VARCHAR" size="255" required="false"/>
+    <column name="achternaam" phpName="Achternaam" type="VARCHAR" size="255" required="true"/>
+    <column name="geboortedatum" phpName="GeboorteDatum" type="DATE" required="false"/>
+    <column name="geslacht" phpName="Geslacht" type="CHAR" size="1" required="true"/>
+    <column name="email" phpName="Email" type="VARCHAR" size="255" required="false"/>
+    <column name="telefoonnummer" phpName="Telefoonnummer" type="VARCHAR" size="255" required="false"/>
+    <column name="straat" phpName="Straat" type="VARCHAR" size="255" required="true"/>
+    <column name="huisnummer" phpName="Huisnummer" type="INTEGER" required="true"/>
+    <column name="toevoeging" phpName="Toevoeging" type="VARCHAR" size="255" required="false"/>
+    <column name="postcode" phpName="Postcode" type="VARCHAR" size="255" required="true"/>
+    <column name="woonplaats" phpName="Woonplaats" type="VARCHAR" size="255" required="true"/>
+    <column name="landnaam" phpName="Landnaam" type="VARCHAR" size="255" required="false"/>
+    <column name="gemaakt_datum" phpName="DatumGemaakt" type="TIMESTAMP" required="true"/>
+    <column name="gemaakt_door" phpName="GemaaktDoor" type="VARCHAR" size="255" required="true"/>
+    <column name="gewijzigd_datum" phpName="DatumGewijzigd" type="TIMESTAMP" required="true"/>
+    <column name="gewijzigd_door" phpName="GewijzigdDoor" type="VARCHAR" size="255" required="true"/>
+    <behavior name="timestampable">
+      <parameter name="create_column" value="gemaakt_datum" />
+      <parameter name="update_column" value="gewijzigd_datum" />
+    </behavior>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="fb_system" idMethod="native" phpName="System" namespace="fb_model">
+    <column name="naam" phpName="Naam" type="VARCHAR" size="255"  required="true"/>
+    <column name="version_major" phpName="VersionMajor" type="VARCHAR" size="10"  required="true"/>
+    <column name="version_minor" phpName="VersionMinor" type="VARCHAR" size="10"  required="true"/>
+    <column name="otap" phpName="Otap" type="INTEGER" size="1" required="true"/>
+    <column name="debug" phpName="Debug" type="INTEGER" size="1" required="true"/>
+    <column name="deploy_directory" phpName="DeployDirectory" type="VARCHAR" size="255" required="true"/>
+    <column name="db_version_major" phpName="DbVersionMajor" type="VARCHAR" size="10" required="true"/>
+    <column name="db_version_minor" phpName="DbVersionMinor" type="VARCHAR" size="10" required="true"/>
+    <column name="gemaakt_datum" phpName="DatumGemaakt" type="TIMESTAMP" required="true"/>
+    <column name="gemaakt_door" phpName="GemaaktDoor" type="VARCHAR" size="255" required="true"/>
+    <column name="gewijzigd_datum" phpName="DatumGewijzigd" type="TIMESTAMP" required="true"/>
+    <column name="gewijzigd_door" phpName="GewijzigdDoor" type="VARCHAR" size="255" required="true"/>
+    <behavior name="timestampable">
+      <parameter name="create_column" value="gemaakt_datum" />
+      <parameter name="update_column" value="gewijzigd_datum" />
+    </behavior>
+    <index name="fk_version_major">
+      <index-column name="version_major"/>
+    </index>
+    <index name="fk_version_minor">
+      <index-column name="version_minor"/>
+    </index>
+  </table>
+  <table name="fb_type" idMethod="native" phpName="Type" namespace="fb_model">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="code" phpName="Code" type="INTEGER" size="2" required="true"/>
+    <column name="naam" phpName="Naam" type="VARCHAR" size="255" required="true"/>
+    <column name="actief" phpName="IsActief" type="INTEGER" size="1" required="true"/>
+    <column name="gemaakt_datum" phpName="DatumGemaakt" type="TIMESTAMP" required="true"/>
+    <column name="gemaakt_door" phpName="GemaaktDoor" type="VARCHAR" size="255" required="true"/>
+    <column name="gewijzigd_datum" phpName="DatumGewijzigd" type="TIMESTAMP" required="true"/>
+    <column name="gewijzigd_door" phpName="GewijzigdDoor" type="VARCHAR" size="255" required="true"/>
+    <behavior name="timestampable">
+      <parameter name="create_column" value="gemaakt_datum" />
+      <parameter name="update_column" value="gewijzigd_datum" />
+    </behavior>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="fb_voucher" idMethod="native" phpName="Voucher" namespace="fb_model">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="code" phpName="Code" type="VARCHAR" size="255" required="true"/>
+    <column name="email" phpName="Email" type="VARCHAR" size="255" required="false"/>
+    <column name="evenement_id" phpName="EvenementId" type="INTEGER" required="false"/>
+    <column name="oorsprongwaarde" phpName="OorspronkelijkeWaarde" type="DECIMAL" size="9" scale="2"/>
+    <column name="restwaarde" phpName="RestWaarde" type="DECIMAL" size="9" scale="2"/>
+    <column name="verbruikt" phpName="Verbruikt" type="DECIMAL" size="9" scale="2"/>
+    <column name="vouchertype" phpName="VoucherType" type="INTEGER" size="2" required="true"/>
+    <column name="actief" phpName="IsActief" type="INTEGER" size="1" required="true"/>
+    <column name="geldig_tot" phpName="GeldigTot" type="TIMESTAMP" required="true"/>
+    <column name="gemaakt_datum" phpName="DatumGemaakt" type="TIMESTAMP" required="true"/>
+    <column name="gemaakt_door" phpName="GemaaktDoor" type="VARCHAR" size="255" required="true"/>
+    <column name="gewijzigd_datum" phpName="DatumGewijzigd" type="TIMESTAMP" required="true"/>
+    <column name="gewijzigd_door" phpName="GewijzigdDoor" type="VARCHAR" size="255" required="true"/>
+    <behavior name="timestampable">
+      <parameter name="create_column" value="gemaakt_datum" />
+      <parameter name="update_column" value="gewijzigd_datum" />
+    </behavior>
+    <index name="fk_voucher_code">
+        <index-column name="code"/>
+    </index>
+    <foreign-key foreignTable="fb_evenement">
+      <reference local="evenement_id" foreign="id"/>
+    </foreign-key>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+    <table name="fb_wachtwoord_reset" isCrossRef="true" idMethod="native" phpName="WachtwoordReset" namespace="fb_model">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="email" phpName="Email" type="VARCHAR" size="255" required="true"/>
+    <column name="token" phpName="Token" type="VARCHAR" size="255" required="true"/>
+    <column name="geldig_tot" phpName="GeldigTot" type="TIMESTAMP" required="true"/>
+    <column name="gemaakt_datum" phpName="DatumGemaakt" type="TIMESTAMP" required="true"/>
+    <column name="gemaakt_door" phpName="GemaaktDoor" type="VARCHAR" size="255" required="true"/>
+    <column name="gewijzigd_datum" phpName="DatumGewijzigd" type="TIMESTAMP" required="true"/>
+    <column name="gewijzigd_door" phpName="GewijzigdDoor" type="VARCHAR" size="255" required="true"/>
+    <behavior name="timestampable">
+      <parameter name="create_column" value="gemaakt_datum" />
+      <parameter name="update_column" value="gewijzigd_datum" />
+    </behavior>
+    <foreign-key foreignTable="fb_gebruiker">
+      <reference local="email" foreign="userid"/>
+    </foreign-key>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+</database>

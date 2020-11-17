@@ -1,0 +1,31 @@
+:root {
+  --body-achtergrond-kleur: #2e2e2e;
+  --body-voorgrond-kleur: #dadadc;
+  --font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  --table-achtergrond-kleur: #656b76;
+  --table-voorgrond-kleur: #ffffff;
+  --table-border-kleur: rgb(255, 133, 180);
+  --button-achtergrond-kleur: #098792;
+  --button-voorgrond-kleur: #c1dad9;
+  --disabled-achtergrond-kleur: #4a4e56;
+  --disabled-voorgrond-kleur: #96969a;
+  --status-achtergrond-kleur: #4a4e56;
+  --status-voorgrond-kleur: #dadadc;
+  --readonly-voorgrond-kleur: #2a2a2a;
+  --readonly-achtergrond-kleur: #96969a;
+  --input-achtergrond-kleur: #494949;
+  --input-voorgrond-kleur: #dadadc;
+  --grijs-kleur:  rgb(219, 88, 138);
+  --schaduw-kleur: rgba(128, 128, 128, 0.568);
+  --timeline-verleden-kleur:#7f9a9c;
+  --timeline-huidig-kleur:#098792;
+  --tooltip-achtergrond-kleur:#098792;
+  --tooltip-voorgrond-kleur:#cbe4e3;
+  --link-voorgrond-kleur:#bddeee;
+  --link-visited-voorgrond-kleur:#b491f5;
+  --navigatie-text-kleur:#dadadc;
+  --navigatie-achtergrond-kleur:#555;
+  --navigatie-voorgrond-kleur:#b4cac9;
+  --navigatie-select-kleur:#000;
+  --navigatie-select-voorgrond-kleur: #c4e2e1;
+}

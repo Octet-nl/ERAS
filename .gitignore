@@ -1,0 +1,6 @@
+.git
+.history
+config.php
+*.log
+.log
+templates_c

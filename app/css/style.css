@@ -1,0 +1,692 @@
+body {
+  font-size: 1em;    
+  margin-left: 2em;
+  font-family: var(--font-family);
+  background-color: var(--body-achtergrond-kleur);
+  color: var(--body-voorgrond-kleur);
+}
+
+#top, #bottom, #left, #right {
+	background: var(--status-achtergrond-kleur);
+	position: fixed;
+}
+#left, #right {
+		top: 0; bottom: 0;
+		width: 5px;
+}
+#left { left: 0; }
+#right { right: 0; }
+#top, #bottom {
+	left: 0; right: 0;
+	height: 5px;
+}
+#top { top: 0; }
+#bottom { bottom: 1.6em; }
+    
+label {
+  color: var(--body-voorgrond-kleur);
+}
+
+.label {
+  color: var(--body-voorgrond-kleur);
+}
+
+h1,h2,h3,h4 {
+  color:var(--body-voorgrond-kleur);
+}
+
+hr {
+  width: 50%;
+  color: var(--body-voorgrond-kleur);
+  margin-left: 0;
+}
+
+a:link {
+  color: var(--link-voorgrond-kleur);
+  background-color: transparent;
+}
+
+a:visited {
+  color: var(--link-visited-voorgrond-kleur);
+  background-color: transparent;
+}
+
+th {
+   border: 0.0625em solid var(--table-voorgrond-kleur);
+   padding: 0.44em 0.3em 0.44em 0.3em;
+   /*background-color: rgb(215, 234, 252);*/
+   background-color: var(--table-achtergrond-kleur);
+   border-radius: 0.20em;
+   -moz-box-shadow: 1px 2px 1px var(--schaduw-kleur);
+   -webkit-box-shadow: 1px 2px 1px var(--schaduw-kleur);
+   box-shadow: 1px 2px 1px var(--schaduw-kleur);
+   color: var(--table-voorgrond-kleur);
+}
+ 
+td {
+  border: 1px solid var(--table-border-kleur);
+  padding: 0.3em 0.3em 0.3em 0.3em;
+  border-radius: 0.20em;
+}
+
+.noborder{
+    border: 0;
+}
+
+.blankHeader{
+  border: 0;
+  background: none;
+  width: 5em;
+  box-shadow: none;
+}
+
+.zweven{
+    position: fixed;
+    right: +0.625em;
+}
+
+.linkszweven{
+  position: fixed;
+  top: 0em;
+  width: 90%;
+  background-color: var(--body-achtergrond-kleur);
+  border-radius: 5px;
+  border: 2px solid var(--body-voorgrond-kleur);
+  padding: 0.5em;
+  margin: 1em;
+}
+
+.menuRegel{
+  position: fixed;
+  left: 0em;
+  padding-left: 20em;
+  border-bottom: 1px solid var(--status-voorgrond-kleur);
+  top: 0;
+  color: var(--status-voorgrond-kleur);
+  width: 100%;
+  background-color: var(--status-achtergrond-kleur);
+}
+
+.nicEdit-main{
+  background-color: var(--input-achtergrond-kleur);
+  color: var(--input-voorgrond-kleur);
+}
+
+.fixed_grijs{
+  color: var(--grijs-kleur);
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.statusRegel{
+  position: fixed;
+  left: 0em;
+  padding-left: 2em;
+  padding-right: 2em;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  margin-top: 0.4em;
+  margin-right: 0.4em;
+  border-top: 1px solid var(--status-voorgrond-kleur);
+  bottom: 0;
+  color: var(--status-voorgrond-kleur);
+  width: 100%;
+  background-color: var(--status-achtergrond-kleur);
+}
+
+.status { 
+  float:left;
+  width: auto;
+}
+
+.loggedin { 
+  float:right; 
+}
+
+.logout {
+  font-size: 0.8em;
+  color: var(--body-voorgrond-kleur);
+  background: none;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+}
+
+.tussenkop{
+  color: var(--body-voorgrond-kleur);
+  font-size: 1.03em;
+  font-weight: bold;
+  padding: 0.25em 0.25em;
+}
+
+.janeetekst{
+  font-style: italic;
+  padding: 0em 0em 1.2em 0em;
+}
+
+.checkboxtekst{
+  font-style: italic;
+  padding: 0em 0em 1.2em 1.0em;
+}
+
+.tiny{
+  font-size: 0.8em;
+}
+
+input, textarea, select{
+  color: var(--input-voorgrond-kleur);
+  background-color: var(--input-achtergrond-kleur);
+}
+
+input[type="number"] {
+   width:5em;
+   padding: 0.3em 0.3em;
+   margin: 0.28em 0;
+/*   height: 1.8em; */
+   box-sizing: border-box;
+}
+
+input[type="text"] {
+   padding: 0.3em 0.3em;
+   margin: 0.28em 0;
+   box-sizing: border-box;
+}
+
+input[type="radio"]{
+  width:1.5em;
+  margin: 0 0.3em 0 0.3em;
+}
+
+input[type="submit"] {
+   margin:1em;
+}
+
+input:-moz-read-only { /* For Firefox */
+  color: var(--readonly-voorgrond-kleur);
+  background-color: var(--readonly-achtergrond-kleur);
+}
+
+input:read-only {
+  color: var(--readonly-voorgrond-kleur);
+  background-color: var(--readonly-achtergrond-kleur);
+}
+
+button {
+   margin:1em;
+   font-size: 0.92em;
+   color: var(--button-voorgrond-kleur);
+   background-color: var(--button-achtergrond-kleur);
+   padding: 0.4em 0.3em;
+   border-radius: 0.20em;
+   cursor: pointer;
+ }
+
+button[disabled]
+{
+  color: var(--disabled-voorgrond-kleur);
+  background-color: var(--disabled-achtergrond-kleur);
+}
+ 
+.bmargin2 {
+  margin-bottom: 2em;
+} 
+
+.barebutton { 
+  border:none; 
+/*	padding-right: 3em; */
+  margin: 0;
+  text-align: center;
+  cursor: pointer;
+  right: +0.625em;
+}
+
+.textbutton {
+  border: none;
+  background-color: inherit;
+  padding: 14px 28px;
+  font-size: 16px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.link-button {
+  background: none;
+  border: none;
+  padding: 0em;
+  margin: 0em;
+  color: #6c3306;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 1em;
+  font-family: serif;
+}
+.link-button:focus {
+  outline: none;
+}
+.link-button:active {
+  color:red;
+}
+
+a.linkbutton {
+  border-top: 1px solid #e2e5e7;
+  background: var(--button-achtergrond-kleur);
+  padding: 8.5px 17px;
+  margin: 1em;
+  border-radius: 1px;
+  box-shadow: rgba(0,0,0,1) 0 1px 0;
+  color: var(--button-voorgrond-kleur);
+  text-decoration: none;
+  vertical-align: middle;
+  }
+a.linkbutton:active {
+  border-top-color: #1b435e;
+  background: var(--button-achtergrond-kleur);
+  }
+
+.bareleft { 
+  border:none; 
+  padding-right: 1em;
+  padding-top: 0.2em;
+  font-size: 0.72em;
+  height: 1.6em;
+  margin: 0;
+  cursor: pointer;
+  right: +0.625em;
+}
+
+.koppel_container form,
+.koppel_container form div {
+    display: inline-block;
+    vertical-align: top;
+}
+
+del {
+  color: gray;
+  text-decoration: none ;
+}
+
+.error {
+   color: #FF0000;
+   margin-right: 0em;
+   font-size: 0.8em;
+}
+
+.errorcolor {
+  color: #FF0000;
+}
+
+.inputError {
+  background-color: rgba(255, 0, 0, 0.246) !important;
+}
+
+.signalError {
+    color: yellow;
+    background-color:rgb(207, 47, 47);
+    font-size: 1.0em;
+ }
+ 
+.signalMessage {
+  color: whitesmoke;
+  background-color:rgb(71, 129, 71);
+  font-size: 1.0em;
+}
+
+.grijs {
+   color: rgba(184, 66, 66, 0.658);
+ }
+ 
+.all{
+  width:100%;
+}
+
+.huge {
+  width:60em;
+}
+
+.wide {
+   width:40em;
+}
+
+.medium {
+   width:26em;
+}
+
+.longer {
+  width:18em;
+}
+
+.short {
+   width:10em;
+}
+
+.xshort {
+   width:5em;
+}
+
+.subtotaalprijs {
+  border: 1px solid gray;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.9em;
+  padding: 0.2em;
+  margin-top: 1em;
+  text-align: center;
+  width:450px;
+  max-width:450px;
+  display: inline-block;
+}
+
+.totaalprijs {
+  border: 1px solid gray;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.2em;
+  padding: 0.3em;
+  margin-top: 1em;
+  text-align: center;
+  width:450px;
+  max-width:450px;
+  display: inline-block;
+}
+
+.subprijsshort {
+  font-size: 0.9em;
+  padding: 0.2em;
+  width:5em;
+}
+
+.totprijsshort {
+  font-size: 1.2em;
+  padding: 0.3em;
+  width:5em;
+}
+
+.radiotitel {
+  width:17em;
+  padding: 0.125em 0.125em;
+  margin: 0.125em 0;
+  box-sizing: border-box;
+  display: inline-block;
+}
+
+.selectinput {
+  width:8em;
+  padding: 0.125em 0.125em;
+  margin: 0.125em 0em;
+}
+
+.datuminput {
+  width:8em;
+  padding: 0.125em 0.125em;
+  margin: 0.125em 1.5em;
+}
+
+.datumTijd {
+  width:16em;
+  padding: 0.125em 0.125em;
+  margin: 0.125em 0;
+}
+
+label {
+  width: 15em;
+  padding: 0.125em 0.125em;
+  margin: 0.125em 0;
+  box-sizing: border-box;
+  vertical-align:middle;
+  display: inline-block;
+}
+
+textarea {
+   vertical-align:middle;
+   display: inline-block;
+ }
+
+.textareaSans {
+  font-family: sans-serif;
+  font-weight: normal;
+  font-size: 0.9em;
+}
+
+ .conditional_form_part {
+   display: none;
+}
+
+.conditional_form_part_activator:checked + .conditional_form_part {
+   display: block;
+}
+
+input[type='number'] {
+    -moz-appearance:textfield;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+.hide  {
+    display: none;
+}
+
+.window_back_half {
+    background-color: var(--body-achtergrond-kleur);
+    width:50%; 
+    padding:2em;
+}
+
+.window_color {
+  background-color: var(--body-achtergrond-kleur);
+}
+
+.window_back_80 {
+  background-color: var(--body-achtergrond-kleur);
+  width:80%; 
+  padding:2em;
+}
+
+.calcIcon{
+  background: url(../res/icons/calc.png) no-repeat;
+  width: 2em;
+  height: 1.9em;
+}
+
+.round_corners {
+  border-radius: 25px;
+  border: 2px solid var(--body-voorgrond-kleur);
+  padding: 1em; 
+  margin: 1em;
+  width: 60%;
+}
+  
+.setting_input {
+  border-radius: 5px;
+  border: 1.5px solid var(--body-voorgrond-kleur);
+  padding: 1em; 
+  margin: 1em;
+  width: 60%;
+}
+
+.setting_label {
+  padding: 0px;
+  margin: 0px;
+  padding-top: 1em;
+  font-size: 1.1em;
+  display:block;
+}  
+
+.outer {
+  width: 100%;
+  text-align: center;
+}
+
+.center_div {
+  border-radius: 5px;
+  border: 1.5px solid var(--body-voorgrond-kleur);
+  padding: 2em;
+  margin: 0 auto;
+  display: inline-block;
+  text-align: center;
+}
+
+.left_div {
+  border-radius: 5px;
+  border: 1.5px solid var(--body-voorgrond-kleur);
+  padding: 2em;
+  margin: 0 auto;
+  display: inline-block;
+  text-align: left;
+}
+
+.popup {
+  width:160px;
+  height:80px;
+  padding:20px;
+  background-color:gray;    
+  position:absolute;
+  top:100px;
+  left:100px;
+  display:none;
+}
+
+/* Tooltip borrowed from w3schools */
+/* Tooltip is the questionmark */
+.tooltip {
+  font-size: 1.0em;
+  position: relative;
+  background: var(--tooltip-achtergrond-kleur); 
+  color: var(--tooltip-voorgrond-kleur);
+  border-radius: 100%;
+  padding: 0.10em 0.48em;
+  display: inline-block;
+}
+
+/* Tooltiptext is the text that pops up on hover */
+.tooltiptext {
+  visibility: hidden;
+  width: 15em;
+  background-color: var(--tooltip-achtergrond-kleur); 
+  color: var(--tooltip-voorgrond-kleur);
+  /* text-align: center; */
+  font-size: 0.95em;
+  border-radius: 0.6em;
+  padding: 0.5em 0.5em;
+  border: 0.06em solid black;
+
+  /* Position the tooltip */
+  position: absolute;
+  right: +1.4em;
+  top: -2.5em;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+.right{
+  right: -15em;
+}
+
+.xright{
+  right: -35em;
+}
+
+.wide{
+  width: 35em;
+}
+
+.left{
+  right: +1.4em;
+}
+
+/* Timeline (vordering) */
+.tlwrapper {
+	display:table;
+	width: 100%;
+}
+
+.timeline {
+	display: table-row;
+	counter-reset: timeline;
+}
+
+.timeline li {
+	display: table-cell;
+	width: 20%;
+	counter-increment: timeline;
+	list-style: none;
+	text-align: center;
+	padding: .25em .5em;
+	overflow:hidden;
+	position: relative;
+	background-color: #fff;
+	padding-left: 25px;
+	white-space: nowrap;
+}
+
+.timeline li:first-child {
+	padding-left: 0;
+}
+
+.timeline li:after {
+	left: 0;
+	top: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(151, 204, 237, 0);
+	border-left-color: #ccc;
+	border-width: 20px;
+	margin-top: -20px;
+}
+
+.timeline li:first-child:after {
+	display: none;
+}
+
+.timeline li a, .timeline li > span {
+	z-index: 100;
+	position: relative;
+	display: block;
+	color: #555;
+}
+
+.timeline li a:before, .timeline li > span:before {
+	display: inline-block;
+	color: #555;
+	content: counter(timeline);
+	background-color: none;
+	border: 3px solid #555;
+	margin-right:.25em;
+	border-radius: 5px;
+	padding: 0 .25em;
+}
+
+.timeline li.timeline-current > span, .timeline li.timeline-current a {
+	color: var(--body-voorgrond-kleur);
+  font-weight: bold;
+}
+
+/* het nummer van de stap*/
+.timeline li.timeline-current > span:before {
+	color: #fff;
+	background-color: var(--body-voorgrond-kleur);
+	border-color: var(--body-voorgrond-kleur);
+}
+
+.timeline li.timeline-past {
+	background-color: var(--timeline-verleden-kleur);
+}
+
+.timeline li.timeline-current {
+  background-color: var(--timeline-huidig-kleur);
+}
+
+.timeline li.timeline-past span:before {
+	color: green;
+	content: "\2713";
+	background-color: #fff;
+	border-color: green;
+}
+
+
