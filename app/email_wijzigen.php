@@ -54,7 +54,6 @@ use Respect\Validation\Validator as v;
 use Propel\Runtime\Propel;
 use \fb_model\fb_model\GebruikerQuery;
 use fb_model\fb_model\Contactlog;
-use \fb_model\fb_model\KeuzesQuery;
 
 $con = Propel::getConnection( fb_model\fb_model\Map\OptieTableMap::DATABASE_NAME );
 

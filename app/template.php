@@ -45,8 +45,6 @@ $smarty->setCompileDir( 'smarty/templates_c' );
 $smarty->setCacheDir( 'smarty/cache' );
 $smarty->setConfigDir( 'smarty/configs' );
 
-use \fb_model\fb_model\GebruikerQuery;
-
 $logger = new Logger();
 $logger->level( LOGLEVEL );
 

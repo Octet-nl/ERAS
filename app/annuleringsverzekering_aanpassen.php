@@ -43,11 +43,10 @@ $smarty->setCacheDir( 'smarty/cache' );
 $smarty->setConfigDir( 'smarty/configs' );
 
 // Propel use
-use Respect\Validation\Validator as v;
-use \fb_model\fb_model\Annuleringsverzekering;
+use \fb_model\fb_model\AnnuleringsverzekeringQuery;
 
 // Validator
-use \fb_model\fb_model\AnnuleringsverzekeringQuery;
+use Respect\Validation\Validator as v;
 
 // Session autorisatie
 $sessie = new Sessie();

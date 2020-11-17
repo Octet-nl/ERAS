@@ -32,9 +32,7 @@
 
 require_once 'constanten.php';
 require_once 'utilities.php';
-//require_once 'vendor\propel\propel\src\Propel\Runtime\ActiveQuery\Criteria.php';
 
-use fb_model\fb_model\KeuzesQuery;
 use fb_model\fb_model\DeelnemerHeeftOptieQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 

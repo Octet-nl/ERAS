@@ -38,7 +38,6 @@ use fb_model\fb_model\BetaalwijzeQuery;
 use fb_model\fb_model\DeelnemerHeeftOptieQuery;
 use fb_model\fb_model\DeelnemerQuery;
 use fb_model\fb_model\EvenementQuery;
-use fb_model\fb_model\EvenementHeeftOptieQuery;
 use fb_model\fb_model\InschrijvingHeeftOptieQuery;
 use fb_model\fb_model\InschrijvingQuery;
 use fb_model\fb_model\OptieQuery;

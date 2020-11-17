@@ -50,7 +50,6 @@ $smarty->setConfigDir( 'smarty/configs' );
 
 use \fb_model\fb_model\DeelnemerQuery;
 use \fb_model\fb_model\EvenementQuery;
-use \fb_model\fb_model\Inschrijving;
 use \fb_model\fb_model\InschrijvingQuery;
 use \fb_model\fb_model\PersoonQuery;
 

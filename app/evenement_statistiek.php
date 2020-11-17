@@ -45,8 +45,6 @@ $smarty->setCompileDir( 'smarty/templates_c' );
 $smarty->setCacheDir( 'smarty/cache' );
 $smarty->setConfigDir( 'smarty/configs' );
 
-// https://respect-validation.readthedocs.io/en/1.1/
-
 use fb_model\fb_model\DeelnemerHeeftOptieQuery;
 use fb_model\fb_model\DeelnemerQuery;
 use fb_model\fb_model\EvenementQuery;
@@ -55,7 +53,6 @@ use fb_model\fb_model\InschrijvingQuery;
 use fb_model\fb_model\OptieQuery;
 use fb_model\fb_model\VoucherQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Respect\Validation\Validator as v;
 
 // Defineer variabelen voor evenement
 

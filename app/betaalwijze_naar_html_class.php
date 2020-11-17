@@ -33,7 +33,6 @@
 require_once 'constanten.php';
 require_once 'utilities.php';
 
-use fb_model\fb_model\Betaalwijze;
 use fb_model\fb_model\BetaalwijzeQuery;
 
 // HTML generatie voor betaalwijze

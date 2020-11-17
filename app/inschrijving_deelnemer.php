@@ -35,20 +35,14 @@ require_once 'constanten.php';
 require_once 'utilities.php';
 require_once 'persoonsgegevens_class.php';
 
-// https://respect-validation.readthedocs.io/en/1.1/
-
 use fb_model\fb_model\Base\GebruikerQuery;
 use fb_model\fb_model\Base\PersoonQuery;
 use fb_model\fb_model\Deelnemer;
 use fb_model\fb_model\DeelnemerHeeftOptie;
 use fb_model\fb_model\DeelnemerHeeftOptieQuery;
 use fb_model\fb_model\DeelnemerQuery;
-use fb_model\fb_model\Persoon;
 use Propel\Runtime\Propel;
-use Respect\Validation\Validator as v;
-//use Symfony\Component\Config\Definition\Exception\Exception;
 use \fb_model\fb_model\EvenementQuery;
-use \fb_model\fb_model\Inschrijving;
 use \fb_model\fb_model\KeuzesQuery;
 use \fb_model\fb_model\OptieQuery;
 

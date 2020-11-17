@@ -44,12 +44,7 @@ $smarty->setCompileDir( 'smarty/templates_c' );
 $smarty->setCacheDir( 'smarty/cache' );
 $smarty->setConfigDir( 'smarty/configs' );
 
-// https://respect-validation.readthedocs.io/en/1.1/
-use fb_model\fb_model\Inschrijving;
-//use Symfony\Component\Config\Definition\Exception\Exception;
-
 use Propel\Runtime\Propel;
-use Respect\Validation\Validator as v;
 
 $logger = new Logger();
 $logger->level( LOGLEVEL );

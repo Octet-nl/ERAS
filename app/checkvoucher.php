@@ -34,17 +34,12 @@ require_once '../vendor/autoload.php';
 require_once 'constanten.php';
 require_once 'utilities.php';
 
-use fb_model\fb_model\Voucher;
 use fb_model\fb_model\VoucherQuery;
 
 $logger = new Logger();
 $logger->level( LOGLEVEL );
 
 $sessie = new Sessie();
-
-//$autorisatie = new Autorisatie();
-//$autorisatie->setNotAuth( "login.php" );
-//$autorisatie->validate( AUTORISATIE_STATUS_MEDEWERKER );
 
 // DEEL 1
 // Opbouwen inschrijvingslijst

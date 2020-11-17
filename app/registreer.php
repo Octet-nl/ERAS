@@ -48,12 +48,10 @@ $smarty->setCacheDir( 'smarty/cache' );
 $smarty->setConfigDir( 'smarty/configs' );
 
 // https://respect-validation.readthedocs.io/en/1.1/
-
 use Respect\Validation\Validator as v;
-use fb_model\fb_model\Contactlog;
+
 use fb_model\fb_model\Gebruiker;
 use fb_model\fb_model\GebruikerQuery;
-use fb_model\fb_model\System;
 
 // Defineer variabelen voor aanmelden
 $mailadres = $wachtwoord = $password = $bevestig = $email = $noregemail ="";

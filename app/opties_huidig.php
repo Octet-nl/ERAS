@@ -30,9 +30,7 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-//require_once '../vendor/autoload.php';
 require_once 'constanten.php';
-//require_once 'utilities.php';
 
 use fb_model\fb_model\InschrijvingHeeftOptieQuery;
 use fb_model\fb_model\DeelnemerHeeftOptieQuery;
