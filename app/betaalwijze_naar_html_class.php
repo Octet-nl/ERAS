@@ -33,6 +33,7 @@
 require_once 'constanten.php';
 require_once 'utilities.php';
 
+use fb_model\fb_model\Betaalwijze;
 use fb_model\fb_model\BetaalwijzeQuery;
 
 // HTML generatie voor betaalwijze
@@ -82,6 +83,19 @@ class betalingNaarHtml
             $this->htmlTotal .= '<h3><label class="radiotitel" for="Betaalwijze">Betaalwijze:</label></h3>
 
             <h4>U kunt contant afrekenen bij de start van het evenement</h4>';
+          
+            $betaalwijze = BetaalwijzeQuery::create()->findOneByCode( BETAALWIJZE_CONTANT );
+
+            if ( $betaalwijze->getKosten() > 0 )
+            {
+                $this->htmlTotal .= '<strong>Kosten contante betaling: ' . geld( $betaalwijze->getKosten()) . '</strong>';
+            }
+
+            $this->htmlTotal .= '
+            <input type="hidden" name="betaalwijze" id="extra_bedrag1" value="' . $betaalwijze->getCode() . '">
+            <label id="asGeen"></label><br/>
+            <input type="hidden" id="extra_bedrag_prijs1' . '" value="' . $betaalwijze->getKosten() . '">
+            ';
         }
         else
         {
@@ -141,9 +155,9 @@ class betalingNaarHtml
                            <label id="asGeen"></label><br/>
                            <input type="hidden" id="extra_keuze_prijs' . $i . '" value="' . $betaalwijze->getKosten() . '">
                            ';
-                        }
-                        $j += 1;
                     }
+                    $j += 1;
+                }
             }
             $this->htmlTotal .= '
             <span class="error"></span>

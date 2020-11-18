@@ -38,6 +38,7 @@ use fb_model\fb_model\BetaalwijzeQuery;
 use fb_model\fb_model\DeelnemerHeeftOptieQuery;
 use fb_model\fb_model\DeelnemerQuery;
 use fb_model\fb_model\EvenementQuery;
+use fb_model\fb_model\EvenementHeeftOptieQuery;
 use fb_model\fb_model\InschrijvingHeeftOptieQuery;
 use fb_model\fb_model\InschrijvingQuery;
 use fb_model\fb_model\OptieQuery;
@@ -447,11 +448,35 @@ class InschrijvingBevestiging
 
         if ( $wijze->getKosten() > 0 )
         {
-            $regel = array( "deelnemer" => "Algemeen", "naam" => "Incassokosten", "omschrijving" => "", "aantal" => "1", "prijs" => $wijze->getKosten() );
+            if ( $wijze->getCode() == BETAALWIJZE_INCASSO )
+            {
+                $naam = "Incassokosten";
+            }
+            else if ( $wijze->getCode() == BETAALWIJZE_CONTANT )
+            {
+                $naam = "Kosten contante betaling";
+            }
+            else if ( $wijze->getCode() == BETAALWIJZE_CREDITCARD )
+            {
+                $naam = "Kosten creditcard betaling";
+            }
+            else if ( $wijze->getCode() == BETAALWIJZE_OVERSCHRIJVING )
+            {
+                $naam = "Kosten betaling per overschrijving";
+            }
+            else if ( $wijze->getCode() == BETAALWIJZE_IDEAL )
+            {
+                $naam = "Kosten betaling per iDeal";
+            }
+            else if ( $wijze->getCode() == BETAALWIJZE_VOUCHER )
+            {
+                $naam = "Kosten betaling per overschrijving";
+            }
+            $regel = array( "deelnemer" => "Algemeen", "naam" => $naam, "omschrijving" => "", "aantal" => "1", "prijs" => $wijze->getKosten() );
             array_push( $this->factuurArray, $regel );
 
             $totaalprijs += $wijze->getKosten();
-            $this->messageBody .= "Incassokosten " . geldAnsi( $wijze->getKosten() ) . "<br/>";
+            $this->messageBody .= $naam . ": " . geldAnsi( $wijze->getKosten() ) . "<br/>";
         }
 
         $this->messageBody .= "<br/>Totaalbedrag: " . geldAnsi( $totaalprijs ) . "<br/>";
