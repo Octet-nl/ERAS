@@ -304,21 +304,25 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             if ( $validateOk == 0 )
             {
                 $logger->info( "Input ok" );
-                $conn = mysqli_connect( $hostname.":".$poortnummer , $userid, $password, $dbname );
+                if ( $poortnummer != "3306" && $poortnummer != "" )
+                {
+                    $hostname = $hostname.":".$poortnummer;
+                }
+                $conn = mysqli_connect( $hostname , $userid, $password, $dbname );
 
                 if(mysqli_connect_errno()) 
                 {
                     if ( mysqli_connect_errno() == 2002 )
                     {
-                        $poortnummerErr ="Connectie met deze database is mislukt op dit adres/poortnummer: errno=2002";
+                        $poortnummerErr ="Connectie met deze database is mislukt op dit adres/poortnummer: " . mysqli_connect_error() . " - " . mysqli_connect_errno();;
                     }
                     else if ( mysqli_connect_errno() == 1045 )
                     {
-                        $passwordErr = "Connectie met deze database is mislukt voor dit userid/password: errno=1045";
+                        $passwordErr = "Connectie met deze database is mislukt voor dit userid/password: " . mysqli_connect_error() . " - " . mysqli_connect_errno();;
                     }
                     else
                     {
-                        $createErr = "Connectie met database is mislukt: errno=" . mysqli_connect_errno();
+                        $createErr = "Connectie met database is mislukt: errno="  . mysqli_connect_error() . " - " . mysqli_connect_errno();
                     }
                 }
                 else

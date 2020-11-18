@@ -50,7 +50,7 @@
 
         <div>
           <label class="longer" for="hostname">Host naam:</label>
-          <input class="short" type="text" name="createhost" value="{$createhost}"><br />
+          <input class="longer" type="text" name="createhost" value="{$createhost}"><br />
           <span class="error">{$createhostErr}</span>
           <br />
           <label class="longer" for="createdb">Database naam:</label>
@@ -116,7 +116,7 @@
 
         <div>
           <label class="short" for="hostname">Host naam:</label>
-          <input class="short" type="text" name="hostname" value="{$hostname}"><br />
+          <input class="longer" type="text" name="hostname" value="{$hostname}"><br />
           <span class="error">{$hostnameErr}</span>
           <br />
           <label class="short" for="dbname">Database naam:</label>
