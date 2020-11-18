@@ -53,9 +53,11 @@ $poortnummer = "3306";
 $userid = "";
 $password = "";
 $createdb = "eras";
+$createdbErr = "";
 $createhost = "";
 $createhostErr = "";
 $createport = "3306";
+$createportErr = "";
 $createErr = "";
 $rootuser = "";
 $rootpassword = "";
@@ -144,6 +146,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                 ->go();
             $validateOk += $setVar->name( $rootpassword )
                 ->onerror( $rootpasswordErr )
+                ->noHtmlCleaning()
                 ->errormessage("Max. lengte is 255 posities")
                 ->validator( v::alwaysValid()->length( 1, 255 ) )
                 ->required( false )
@@ -157,6 +160,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                 ->go();
             $validateOk += $setVar->name( $eraspassword )
                 ->onerror( $eraspasswordErr )
+                ->noHtmlCleaning()
                 ->errormessage("Max. lengte is 255 posities")
                 ->validator( v::alwaysValid()->length( 1, 255 ) )
                 ->required( false )
@@ -173,7 +177,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             if ( $validateOk == 0 )
             {
                 $logger->info( "Input ok" );
-                $conn = mysqli_connect( $createhost.":".$createport , $rootuser, $rootpassword );
+                $conn = mysqli_connect( $createhost, $rootuser, $rootpassword, $createport );
 
                 if(mysqli_connect_errno()) 
                 {
@@ -291,6 +295,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                 ->go();
             $validateOk += $setVar->name( $password )
                 ->onerror( $passwordErr )
+                ->noHtmlCleaning()
                 ->validator( v::alwaysValid()->length( 1, 255 ) )
                 ->required( false )
                 ->go();
@@ -303,22 +308,21 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
 
             if ( $validateOk == 0 )
             {
+                ini_set('display_errors',1);
+                error_reporting(E_ALL);
+
                 $logger->info( "Input ok" );
-                if ( $poortnummer != "3306" && $poortnummer != "" )
-                {
-                    $hostname = $hostname.":".$poortnummer;
-                }
-                $conn = mysqli_connect( $hostname , $userid, $password, $dbname );
+                $conn = mysqli_connect( $hostname, $userid, $password, $dbname, $poortnummer );
 
                 if(mysqli_connect_errno()) 
                 {
                     if ( mysqli_connect_errno() == 2002 )
                     {
-                        $poortnummerErr ="Connectie met deze database is mislukt op dit adres/poortnummer: " . mysqli_connect_error() . " - " . mysqli_connect_errno();;
+                        $poortnummerErr ="Connectie met deze database is mislukt op dit adres/poortnummer: " . mysqli_connect_error() . " - " . mysqli_connect_errno();
                     }
                     else if ( mysqli_connect_errno() == 1045 )
                     {
-                        $passwordErr = "Connectie met deze database is mislukt voor dit userid/password: " . mysqli_connect_error() . " - " . mysqli_connect_errno();;
+                        $passwordErr = "Connectie met deze database is mislukt voor dit userid/password: " . mysqli_connect_error() . " - " . mysqli_connect_errno();
                     }
                     else
                     {
@@ -355,13 +359,13 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                                 fprintf( $fp, 'define("DB_VERSION_MAJOR", 0);' . "\n" );
                                 fprintf( $fp, 'define("DB_VERSION_MINOR", 91);' . "\n" );
                                 fprintf( $fp, '#' . "\n" );
-                                fprintf( $fp, 'define("DB_HOST", "%s");' . "\n", $createhost );
-                                fprintf( $fp, 'define("DB_NAME", "%s");' . "\n", $createdb );
-                                fprintf( $fp, 'define("DB_PORT", "%s");' . "\n", $createport );
-                                fprintf( $fp, 'define("DB_USER", "%s");' . "\n", $erasuser );
-                                fprintf( $fp, 'define("DB_PASSWORD", "%s");' . "\n", $eraspassword  );
+                                fprintf( $fp, 'define("DB_HOST", "%s");' . "\n", $hostname );
+                                fprintf( $fp, 'define("DB_NAME", "%s");' . "\n", $dbname );
+                                fprintf( $fp, 'define("DB_PORT", "%s");' . "\n", $poortnummer );
+                                fprintf( $fp, 'define("DB_USER", "%s");' . "\n", $userid );
+                                fprintf( $fp, 'define("DB_PASSWORD", "%s");' . "\n", $password  );
                                 fclose( $fp );
-        
+
                                 $logger->info( "Database geladen." );
                                 alert("De database is met succes geladen.");
                                 $schermdeel = 3;
