@@ -119,7 +119,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                 continue;
             }
 
-            $logger->debug( "Key " . $key . " value " . $value);
+            $logger->debug( "Foreach key " . $key . " => value " . $value);
 
             $nummer = substr( $key, 3 );
 
@@ -146,7 +146,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             }
             else if ( $teller == 2 )
             {
-                $logger->debug( "Kolom 3 " . $teller . " key=" . $key );
+                $logger->debug( "Kolom 2 " . $teller . " key=" . $key );
                 $value = prijs( $value );
                 $validateOk += $setVar->nameval( $key )
                     ->onerror( $kostenErr )
@@ -160,7 +160,6 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                     $save->setCode( substr( $key, 3 ) );
                     $save->setKosten( $value );
                     $save->setGewijzigdDoor( $autorisatie->getUserId() );
-                    $save->save();
                 }
                 else
                 {
@@ -169,7 +168,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             }
             else if ( $teller == 3 )
             {
-                $logger->debug( "Kolom 2 " . $teller );
+                $logger->debug( "Kolom 3 " . $teller . " key=" . $key );
                 $validateOk += $setVar->nameval( $key )
                     ->onerror( $isActiefErr )
                     ->errormessage( 'Waarde "' . $value . '" bij code ' . $nummer . ' niet correct, moet "0" of "1" zijn.' )
@@ -177,10 +176,11 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                     ->go();
                 if ( $validateOk == 0 )
                 {
-                    $logger->debug( "Kolom 3 save" );
+                    $logger->debug( "Kolom 3 save, key=" . $key );
                     // $save is de vorige iteratie gevuld, de foreach begint met oneven.
                     $save->setCode( substr( $key, 3 ) );
                     $save->setIsActief( $value );
+                    $save->save();
                 }
                 else
                 {
