@@ -4,13 +4,17 @@
 <body>
     <form method="post" action="{$SCRIPT_NAME}">
         <div class="zweven">
+            <button type="button" onclick='allesInklappen(7);'>Alles inklappen</button>
             <button name="opslaan">Opslaan</button>
             <button name="terug">Terug</button>
         </div>
         <h2>{$doctitle}</h2>
+
+
         <div class="window_back" style="width:100%">
-            <h3>Organisatie</h3>
-            <div class="setting_input">
+            <input type="checkbox" id="1" checked onchange='handleChecked(this,document.getElementById("organisatie"));'/> 
+            <h3 style="display: inline-block;">Organisatie</h3>
+            <fieldset id="organisatie" class="setting_input">
                <span class=setting_label>Naam van de organisatie</span>
                <input type="text" class="setting_input" name="organisatieNaam" value="{$organisatieNaam}">
                <span class="error">{$organisatieNaamErr}</span>
@@ -26,12 +30,13 @@
                <span class=setting_label>Adres van de voorwaarden voor de annuleringsverzekering</span>
                <input type="text" class="setting_input" name="organisatieVerzekeringVoorwaarden" value="{$organisatieVerzekeringVoorwaarden}">
                <span class="error">{$organisatieVerzekeringVoorwaardenErr}</span>
-            </div>
+            </fieldset>
         </div>
 
         <div class="window_back" style="width:100%">
-            <h3>Bankgegevens</h3>
-            <div class="setting_input">
+            <input type="checkbox" id="2" checked onchange='handleChecked(this,document.getElementById("bankgegevens"));'/> 
+            <h3 style="display: inline-block;">Bankgegevens</h3>
+            <fieldset id="bankgegevens" class="setting_input">
                <span class=setting_label>Banknummer (IBAN)</span>
                <input type="text" class="setting_input" name="bankIbanNummer" value="{$bankIbanNummer}">
                <span class="error">{$bankIbanNummerErr}</span>
@@ -41,12 +46,13 @@
                <span class=setting_label>Ten name van</span>
                <input type="text" class="setting_input" name="bankTenNameVan" value="{$bankTenNameVan}">
                <span class="error">{$bankTenNameVanErr}</span>
-            </div>
+            </fieldset>
         </div>
 
         <div class="window_back" style="width:100%">
-            <h3>Factuur</h3>
-            <div class="setting_input">
+            <input type="checkbox" id="3" checked onchange='handleChecked(this,document.getElementById("factuur"));'/> 
+            <h3 style="display: inline-block;">Factuur</h3>
+            <fieldset id="factuur" class="setting_input">
                 <span class=setting_label>Factuur aanmaken ({$ja}/{$nee})</span>
                 <input type="text" class="setting_input" name="factuurAanmaken" value="{$factuurAanmaken}">
                 <span class="error">{$factuurAanmakenErr}</span>
@@ -99,12 +105,13 @@
                 <span class="error">{$factuurBtwRegel2Err}</span>
                 <input style="width:8em" type="text" class="setting_input" name="factuurBtwRegel3" value="{$factuurBtwRegel3}">
                 <span class="error">{$factuurBtwRegel3Err}</span>
-            </div>
+            </fieldset>
         </div>
 
         <div class="window_back" style="width:100%">
-            <h3>iDEAL betaling</h3>
-            <div class="setting_input">
+            <input type="checkbox" id="4" checked onchange='handleChecked(this,document.getElementById("iDeal"));'/> 
+            <h3 style="display: inline-block;">iDEAL betaling</h3>
+            <fieldset id="iDeal" class="setting_input">
                 <span class=setting_label>iDeal betalingen toestaan ({$ja}/{$nee})</span>
                 <input type="text" class="setting_input" name="enableIDeal" value="{$enableIDeal}">
                 <span class="error">{$enableIDealErr}</span>
@@ -123,22 +130,24 @@
                 <span class=setting_label>Adres van de routine/html die aangeroepen wordt als de betaling (nog) niet correct is afgehandeld</span>
                 <input type="text" class="setting_input" name="idealStatusPending" value="{$idealStatusPending}">
                 <span class="error">{$idealStatusPendingErr}</span>
-            </div>
+            </fieldset>
         </div>
 
         <div class="window_back" style="width:100%">
-            <h3>Betaling</h3>
-            <div class="setting_input">
+            <input type="checkbox" id="5" checked onchange='handleChecked(this,document.getElementById("betaling"));'/> 
+            <h3 style="display: inline-block;">Betaling</h3>
+            <fieldset id="betaling" class="setting_input">
                 <span class=setting_label>Betalingsvoorwaarden op de bevestigingsmail</span><br/>
                 <textarea rows="10" cols="90" name="betalingVoorwaarden" id="betalingVoorwaarden">{$betalingVoorwaarden}</textarea>
                 <button type="button" class="bareleft" onClick="toggleBetalingVoorwaarden();">HTML</button>
                 <span class="error">{$betalingVoorwaardenErr}</span>
-            </div>
+            </fieldset>
         </div>
 
         <div class="window_back" style="width:100%">
-            <h3>Directories</h3>
-            <div class="setting_input">
+            <input type="checkbox" id="6" checked onchange='handleChecked(this,document.getElementById("directories"));'/> 
+            <h3 style="display: inline-block;">Directories</h3>
+            <fieldset id="directories" class="setting_input">
                 <span class=setting_label>Directory waar de tijdelijke bestanden geplaatst kunnen worden</span>
                 <input type="text" class="setting_input" name="settingTempDirectory" value="{$settingTempDirectory}">
                 <span class="error">{$settingTempDirectoryErr}</span>
@@ -151,19 +160,20 @@
                 <span class=setting_label>Directory waar de afbeeldingen geplaatst worden</span>
                 <input type="text" class="setting_input" name="settingImageDirectory" value="{$settingImageDirectory}">
                 <span class="error">{$settingImageDirectoryErr}</span>
-            </div>
+            </fieldset>
         </div>
 
         <div class="window_back" style="width:100%">
-            <h3>Instellingen</h3>
-            <div class="setting_input">
+            <input type="checkbox" id="7" checked onchange='handleChecked(this,document.getElementById("instellingen"));'/> 
+            <h3 style="display: inline-block;">Instellingen</h3>
+            <fieldset id="instellingen" class="setting_input">
                 <span class=setting_label>Maximaal aantal mails dat tegelijk verstuurd kan worden</span>
                 <input style="width:8em" type="text" class="setting_input" name="settingBatchSize" value="{$settingBatchSize}">
                 <div class="tooltip">?
                     <span class="tooltiptext right">Veel providers stellen een grens aan het maximaal in één keer te verzenden mails. Voor de nieuwbrief is dat soms onvoldoende. Geef hier aan hoeveel mails tegelijk verstuurd kunnen worden. Zijn het er meer, dan wordt een batchverwerking aangeboden.</span>
                 </div>
                 <span class="error">{$settingBatchSizeErr}</span>
-            </div>
+            </fieldset>
         </div>
 
         <button name="opslaan">Opslaan</button>
@@ -188,6 +198,30 @@
         } else {
             betalingVoorwaarden.removeInstance('betalingVoorwaarden');
             betalingVoorwaarden = null;
+        }
+    }
+
+    function handleChecked( checkbox, fieldset )
+    {
+        if ( checkbox.checked )
+        {
+            fieldset.style.display = "block";
+        }
+        else
+        {
+            fieldset.style.display = "none";
+        }
+    }
+
+    function allesInklappen( aantal )
+    {
+        for ( i = 1; i < aantal + 1; i++ )
+        {
+            var n = i.toString();
+            var element = document.getElementById(n);
+            element.checked = false;
+            var event = new Event('change');
+            element.dispatchEvent(event);
         }
     }
 </script>
