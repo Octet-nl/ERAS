@@ -49,11 +49,13 @@ $doctitle = "Instellingen";
 
 $hostname = "";
 $dbname = "";
+$poortnummer = "3306";
 $userid = "";
 $password = "";
 $createdb = "eras";
 $createhost = "";
 $createhostErr = "";
+$createport = "3306";
 $createErr = "";
 $rootuser = "";
 $rootpassword = "";
@@ -61,6 +63,7 @@ $erasuser = "erasuser";
 $eraspassword = "";
 $hostnameErr = "";
 $dbnameErr = "";
+$poortnummerErr = "";
 $useridErr = "";
 $passwordErr = "";
 $rootuserErr = "";
@@ -124,6 +127,14 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                 ->validator( v::alwaysValid()->length( 1, 255 ) )
                 ->required( true )
                 ->go();
+            $validateOk += $setVar->name( $createport )
+                ->onerror( $createportErr )
+                ->errormessage("Poortnummer ligt tussen 100 en 65535, default is 3306")
+                ->emptymessage("Vul het poortnummer in, default is 3306")
+                ->defaultvalue( "3306" )
+                ->validator( v::numericVal()->min(100)->max( 65535 ) )
+                ->required( true ) 
+                ->go();
             $validateOk += $setVar->name( $rootuser )
                 ->onerror( $rootuserErr )
                 ->errormessage("Max. lengte is 255 posities")
@@ -162,11 +173,12 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             if ( $validateOk == 0 )
             {
                 $logger->info( "Input ok" );
-                $conn = mysqli_connect( $createhost, $rootuser, $rootpassword );
+                $conn = mysqli_connect( $createhost.":".$createport , $rootuser, $rootpassword );
 
                 if(mysqli_connect_errno()) 
                 {
                     $createhostErr ="Connectie met deze database is mislukt voor dit userid/password: " . mysqli_connect_error() . " - " . mysqli_connect_errno();
+                    $logger->error( $createhostErr );
                 }
                 else
                 {
@@ -176,7 +188,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                     if (!$result)
                     {
                         $createhostErr ="U heeft geen CREATE privilege in deze omgeving. De ERAS database kan niet aangemaakt worden.";
-                        $logger->error( "Create error" );                        
+                        $logger->error( "Create error" );
                     }
                     else
                     {
@@ -198,18 +210,41 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                         {
                             $logger->info( "Database " . $createdb . " is aangemaakt" );                        
                             $sql = file_get_contents( $sqlfile );
-            
-                            /* execute multi query */
-                            $result = mysqli_multi_query($conn, $sql);
-                            if( $result )
+
+                            if( $sql === FALSE )
                             {
-                                $logger->info( "Database geladen." );
-                                $schermdeel = "3";
+                                $createErr = "Kan SQL bestand " . $sqlfile . " niet lezen.";
                             }
                             else
                             {
-                                $logger->error( "Laden database is mislukt: " . mysqli_error($conn) );
-                                $createErr = "Laden database is mislukt: " . mysqli_error($conn);
+                                /* execute multi query */
+                                $result = mysqli_multi_query($conn, $sql);
+                                if( $result )
+                                {
+                                    $logger->info( "Database geladen." );
+                                    
+                                    $fp = fopen( DATABASE_CONFIG_FILENAME, 'w' );
+                                    fprintf( $fp, '<?php' . "\n" );
+                                    fprintf( $fp, '#' . "\n" );
+                                    fprintf( $fp, 'define("DB_VERSION_MAJOR", 0);' . "\n" );
+                                    fprintf( $fp, 'define("DB_VERSION_MINOR", 91);' . "\n" );
+                                    fprintf( $fp, '#' . "\n" );
+                                    fprintf( $fp, 'define("DB_HOST", "%s");' . "\n", $createhost );
+                                    fprintf( $fp, 'define("DB_NAME", "%s");' . "\n", $createdb );
+                                    fprintf( $fp, 'define("DB_PORT", "%s");' . "\n", $createport );
+                                    fprintf( $fp, 'define("DB_USER", "%s");' . "\n", $erasuser );
+                                    fprintf( $fp, 'define("DB_PASSWORD", "%s");' . "\n", $eraspassword  );
+                                    fclose( $fp );
+
+                                    alert("De database is met succes aangemaakt en geladen.");
+
+                                    $schermdeel = "3";
+                                }
+                                else
+                                {
+                                    $logger->error( "Laden database is mislukt: " . mysqli_error($conn) );
+                                    $createErr = "Laden database is mislukt: " . mysqli_error($conn);
+                                }
                             }
                         }
                     }
@@ -244,6 +279,11 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                 ->validator( v::alwaysValid()->length( 1, 255 ) )
                 ->required( true )
                 ->go();
+            $validateOk += $setVar->name( $poortnummer )
+                ->onerror( $poortnummerErr )
+                ->validator( v::numericVal()->min(100)->max( 65535 ) )
+                ->required( true ) 
+                ->go();
             $validateOk += $setVar->name( $userid )
                 ->onerror( $useridErr )
                 ->validator( v::alwaysValid()->length( 1, 255 ) )
@@ -264,30 +304,73 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             if ( $validateOk == 0 )
             {
                 $logger->info( "Input ok" );
-                $conn = mysqli_connect( $hostname, $userid, $password, $dbname );
+                $conn = mysqli_connect( $hostname.":".$poortnummer , $userid, $password, $dbname );
 
                 if(mysqli_connect_errno()) 
                 {
-                    $createhostErr ="Connectie met deze database is mislukt voor dit userid/password: " . mysqli_connect_errno();
+                    if ( mysqli_connect_errno() == 2002 )
+                    {
+                        $poortnummerErr ="Connectie met deze database is mislukt op dit adres/poortnummer: errno=2002";
+                    }
+                    else if ( mysqli_connect_errno() == 1045 )
+                    {
+                        $passwordErr = "Connectie met deze database is mislukt voor dit userid/password: errno=1045";
+                    }
+                    else
+                    {
+                        $createErr = "Connectie met database is mislukt: errno=" . mysqli_connect_errno();
+                    }
                 }
                 else
                 {
                     $logger->info( "Connected" );
-    
-                    $sql = file_get_contents( $sqlfile );
-    
-                    /* execute multi query */
-                    $result = mysqli_multi_query($conn, $sql);
-                    if( $result )
+
+                    $logger->debug( "Aantal tabellen: " . mysqli_num_rows( mysqli_query( $conn,"SHOW TABLES LIKE 'fb_system'") )  );
+
+                    if( mysqli_num_rows( mysqli_query( $conn,"SHOW TABLES LIKE 'fb_%'") ) ) 
                     {
-                        $logger->info( "Database geladen." );
-                        alert("De database is met succes aangemaakt en geladen.");
-                        $schermdeel = 3;
-                    }
-                    else
+                        $createErr = "Deze database is niet leeg. We hebben een lege database nodig.";
+                    } 
+                    else 
                     {
-                        $logger->error( "Laden database is mislukt: " . mysqli_error($conn) );
+                        $sql = file_get_contents( $sqlfile );
+    
+                        if( $sql === FALSE )
+                        {
+                            $createErr = "Kan SQL bestand " . $sqlfile . " niet lezen.";
+                        }
+                        else
+                        {
+                            /* execute multi query */
+                            $result = mysqli_multi_query($conn, $sql);
+                            if( $result )
+                            {
+                                $fp = fopen( DATABASE_CONFIG_FILENAME, 'w' );
+                                fprintf( $fp, '<?php' . "\n" );
+                                fprintf( $fp, '#' . "\n" );
+                                fprintf( $fp, 'define("DB_VERSION_MAJOR", 0);' . "\n" );
+                                fprintf( $fp, 'define("DB_VERSION_MINOR", 91);' . "\n" );
+                                fprintf( $fp, '#' . "\n" );
+                                fprintf( $fp, 'define("DB_HOST", "%s");' . "\n", $createhost );
+                                fprintf( $fp, 'define("DB_NAME", "%s");' . "\n", $createdb );
+                                fprintf( $fp, 'define("DB_PORT", "%s");' . "\n", $createport );
+                                fprintf( $fp, 'define("DB_USER", "%s");' . "\n", $erasuser );
+                                fprintf( $fp, 'define("DB_PASSWORD", "%s");' . "\n", $eraspassword  );
+                                fclose( $fp );
+        
+                                $logger->info( "Database geladen." );
+                                alert("De database is met succes geladen.");
+                                $schermdeel = 3;
+                            }
+                            else
+                            {
+                                $createErr = "Laden database is mislukt: " . mysqli_error($conn);
+                                $logger->error( "Laden database is mislukt: " . mysqli_error($conn) );
+                            }
+                        }
+
                     }
+
                 }
             }
             else
@@ -380,6 +463,8 @@ if ( isset( $_SESSION['gebruikers']) )
 }
 $smarty->assign( "hostname", $hostname );
 $smarty->assign( "dbname", $dbname );
+$smarty->assign( "poortnummer", $poortnummer );
+$smarty->assign( "poortnummerErr", $poortnummerErr );
 $smarty->assign( "userid", $userid );
 $smarty->assign( "useridErr", $useridErr );
 $smarty->assign( "password", $password );
@@ -392,6 +477,8 @@ $smarty->assign( "createhost", $createhost );
 $smarty->assign( "createhostErr", $createhostErr );
 $smarty->assign( "createdb", $createdb );
 $smarty->assign( "createdbErr", $createdbErr );
+$smarty->assign( "createport", $createport );
+$smarty->assign( "createportErr", $createportErr );
 $smarty->assign( "createErr", $createErr );
 $smarty->assign( "rootuser", $rootuser );
 $smarty->assign( "rootuserErr", $rootuserErr );

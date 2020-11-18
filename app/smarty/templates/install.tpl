@@ -57,6 +57,16 @@
           <input class="short" type="text" name="createdb" value="{$createdb}">
           <span class="error">{$createdbErr}</span>
           <br />
+          <br />
+          <label class="longer" for="createport">Poort:</label>
+          <input class="short" type="text" name="createport" value="{$createport}">
+          <div class="tooltip">?
+            <span class="tooltiptext">Het default poortnummer van een MySQL/MariaDB database is 3306. <br/>
+            Verander dit nummer niet tenzij u zeker weet dat uw database op een andere poort draait.<br/>
+            Als u een foutcode 2002 krijgt, heeft u een verkeerde hostnaam of een verkeerd poortnummer opgegeven</span>
+          </div>
+          <span class="error">{$createportErr}</span>
+          <br />
           <label class="longer" for="rootUser">Gebruikers ID met CREATE rechten:</label>
           <input class="short" type="text" name="rootuser" value="{$rootuser}">
           <div class="tooltip">?
@@ -113,6 +123,10 @@
           <input class="short" type="text" name="dbname" value="{$dbname}"><br />
           <span class="error">{$dbnameErr}</span>
           <br />
+          <label class="short" for="dbname">Poortnummer:</label>
+          <input class="short" type="text" name="poortnummer" value="{$poortnummer}"><br />
+          <span class="error">{$poortnummerErr}</span>
+          <br />
           <label class="short" for="userid">Gebruikers ID:</label>
           <input class="short" type="text" name="userid" value="{$userid}"><br />
           <span class="error">{$useridErr}</span>
@@ -127,6 +141,7 @@
        <!-- <button type="button" name="instellingen" value=2 onclick="doSetup()">Overslaan, wijzig instellingen</button> -->
         <span class="error">{$createErr}</span>
       </div>
+      <input type="hidden" name="saveport" value="{$saveport}">
     </fieldset>
 
     <fieldset id="setup">
