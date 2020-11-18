@@ -43,6 +43,7 @@ BTW-regel2="BTW (21%)"
 BTW-regel3="Totaal incl. BTW"
 ;
 [ideal_payment]
+toestaan="nee"
 checkout_script="../idealcheckout/checkout.php"
 status_stopped="html/ideal_betaald.html"
 status_success="html/ideal_gestopt.html"

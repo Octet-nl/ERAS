@@ -78,6 +78,7 @@ $factuurBtwPercentage = "";
 $factuurBtwRegel1 = "";
 $factuurBtwRegel2 = "";
 $factuurBtwRegel3 = "";
+$enableIDeal = "";
 $idealCheckout = "";
 $idealStatusStopped = "";
 $idealStatusSuccess = "";
@@ -119,6 +120,7 @@ $factuurBtwPercentageErr = "";
 $factuurBtwRegel1Err = "";
 $factuurBtwRegel2Err = "";
 $factuurBtwRegel3Err = "";
+$enableIDealErr = "";
 $idealCheckoutErr = "";
 $idealStatusStoppedErr = "";
 $idealStatusSuccessErr = "";
@@ -188,6 +190,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
     $factuurBtwRegel2 = $ini['pdf_factuur']['BTW-regel2'];
     $factuurBtwRegel3 = $ini['pdf_factuur']['BTW-regel3'];
 
+    $enableIDeal = $ini['ideal_payment']['toestaan'];
     $idealCheckout = $ini['ideal_payment']['checkout_script'];
     $idealStatusStopped = $ini['ideal_payment']['status_stopped'];
     $idealStatusSuccess = $ini['ideal_payment']['status_success'];
@@ -330,31 +333,48 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             ->onerror( $factuurBtwRegel3Err )
             ->required( true )->go();
 
-        $validateOk += $setVar->name( $idealCheckout )
-            ->validator( v::callback( 'urlExists' ) )
-            ->errormessage( "Link niet gevonden" )
-            ->onerror( $idealCheckoutErr )
+        $validateOk += $setVar->name( $enableIDeal )
+            ->onerror( $enableIDealErr )
+            ->validator( v::oneOf( v::equals( OPTIE_KEUZE_JA ), v::equals( OPTIE_KEUZE_NEE ) ) )
             ->required( true )->go();
-        $validateOk += $setVar->name( $idealStatusStopped )
-            ->validator( v::callback( 'urlExists' ) )
-            ->errormessage( "Link niet gevonden" )
-            ->onerror( $idealStatusStoppedErr )
-            ->required( true )->go();
-        $validateOk += $setVar->name( $idealStatusSuccess )
-            ->validator( v::callback( 'urlExists' ) )
-            ->errormessage( "Link niet gevonden" )
-            ->onerror( $idealStatusSuccessErr )
-            ->required( true )->go();
-        $validateOk += $setVar->name( $idealStatusFailure )
-            ->validator( v::callback( 'urlExists' ) )
-            ->errormessage( "Link niet gevonden" )
-            ->onerror( $idealStatusFailureErr )
-            ->required( true )->go();
-        $validateOk += $setVar->name( $idealStatusPending )
-            ->validator( v::callback( 'urlExists' ) )
-            ->errormessage( "Link niet gevonden" )
-            ->onerror( $idealStatusPendingErr )
-            ->required( true )->go();
+
+        if ( $enableIDeal == OPTIE_KEUZE_JA )
+        {
+            $validateOk += $setVar->name( $idealCheckout )
+                ->validator( v::callback( 'urlExists' ) )
+                ->errormessage( "Link niet gevonden" )
+                ->onerror( $idealCheckoutErr )
+                ->required( true )->go();
+            $validateOk += $setVar->name( $idealStatusStopped )
+                ->validator( v::callback( 'urlExists' ) )
+                ->errormessage( "Link niet gevonden" )
+                ->onerror( $idealStatusStoppedErr )
+                ->required( true )->go();
+            $validateOk += $setVar->name( $idealStatusSuccess )
+                ->validator( v::callback( 'urlExists' ) )
+                ->errormessage( "Link niet gevonden" )
+                ->onerror( $idealStatusSuccessErr )
+                ->required( true )->go();
+            $validateOk += $setVar->name( $idealStatusFailure )
+                ->validator( v::callback( 'urlExists' ) )
+                ->errormessage( "Link niet gevonden" )
+                ->onerror( $idealStatusFailureErr )
+                ->required( true )->go();
+            $validateOk += $setVar->name( $idealStatusPending )
+                ->validator( v::callback( 'urlExists' ) )
+                ->errormessage( "Link niet gevonden" )
+                ->onerror( $idealStatusPendingErr )
+                ->required( true )->go();
+        }
+        else
+        {
+            $setVar->name( $idealCheckout )->go();
+            $setVar->name( $idealStatusStopped )->go();
+            $setVar->name( $idealStatusSuccess )->go();
+            $setVar->name( $idealStatusFailure )->go();
+            $setVar->name( $idealStatusPending )->go();
+        }
+
         $validateOk += $setVar->name( $betalingVoorwaarden )
             ->onerror( $betalingVoorwaardenErr )
             ->noHtmlCleaning()
@@ -449,6 +469,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             fprintf( $fp, 'BTW-regel3="%s"' . "\n", $factuurBtwRegel3 );
             fprintf( $fp, ';' . "\n" );
             fprintf( $fp, '[ideal_payment]' . "\n" );
+            fprintf( $fp, 'toestaan="%s"' . "\n", $enableIDeal );
             fprintf( $fp, 'checkout_script="%s"' . "\n", $idealCheckout );
             fprintf( $fp, 'status_stopped="%s"' . "\n", $idealStatusStopped );
             fprintf( $fp, 'status_success="%s"' . "\n", $idealStatusSuccess );
@@ -565,6 +586,8 @@ $smarty->assign( 'factuurBtwRegel2Err', $factuurBtwRegel2Err );
 $smarty->assign( 'factuurBtwRegel3', $factuurBtwRegel3 );
 $smarty->assign( 'factuurBtwRegel3Err', $factuurBtwRegel3Err );
 
+$smarty->assign( 'enableIDeal', $enableIDeal );
+$smarty->assign( 'enableIDealErr', $enableIDealErr );
 $smarty->assign( 'idealCheckout', $idealCheckout );
 $smarty->assign( 'idealCheckoutErr', $idealCheckoutErr );
 $smarty->assign( 'idealStatusStopped', $idealStatusStopped );

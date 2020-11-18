@@ -105,6 +105,9 @@
         <div class="window_back" style="width:100%">
             <h3>iDEAL betaling</h3>
             <div class="setting_input">
+                <span class=setting_label>iDeal betalingen toestaan ({$ja}/{$nee})</span>
+                <input type="text" class="setting_input" name="enableIDeal" value="{$enableIDeal}">
+                <span class="error">{$enableIDealErr}</span>
                 <span class=setting_label>Adres van de routine die de iDeal betaling verzorgt</span>
                 <input type="text" class="setting_input" name="idealCheckout" value="{$idealCheckout}">
                 <span class="error">{$idealCheckoutErr}</span>
