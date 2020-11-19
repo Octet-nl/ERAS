@@ -181,7 +181,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
 
                 if(mysqli_connect_errno()) 
                 {
-                    $createhostErr ="Connectie met deze database is mislukt voor dit userid/password: " . mysqli_connect_error() . " - " . mysqli_connect_errno();
+                    $createhostErr ="Connectie met deze host is mislukt voor dit userid/password: " . mysqli_connect_error() . " - " . mysqli_connect_errno();
                     $logger->error( $createhostErr );
                 }
                 else
