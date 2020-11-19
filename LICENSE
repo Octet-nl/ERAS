@@ -33,19 +33,19 @@ Big thanks to the authors of the following packages:
     Link:    http://propelorm.org/documentation/
   tail.datetime
     License: MIT
-	Link:	 https://github.com/pytesNET/tail.DateTime
+	  Link:	 https://github.com/pytesNET/tail.DateTime
   the-datepicker
     License: (niet vermeld)
-	Link:	 https://github.com/thedatepicker/thedatepicker
+	  Link:	 https://github.com/thedatepicker/thedatepicker
   nicEdit
     License: MIT
-	Link:	 http://nicedit.com/
+	  Link:	 http://nicedit.com/
   FPDF
     License: (niet vermeld)
 	Link:	 http://www.fpdf.org/nl/home.php
   PHPMailer
     License: LGPL-2.1
-	Link: 	 https://github.com/PHPMailer/PHPMailer
+	  Link: 	 https://github.com/PHPMailer/PHPMailer
   Menu/submenu
     Article by Ray Messina
     Link: https://css-tricks.com/targetting-menu-elements-submenus-navigation-bar/
