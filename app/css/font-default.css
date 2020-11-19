@@ -1,3 +1,5 @@
 :root {
     --font-family: default;
+    --button-font: 'Arial', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', sans-serif;
+    --button-radius: 0.2em;
   }

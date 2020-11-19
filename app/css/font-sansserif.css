@@ -1,3 +1,5 @@
 :root {
     --font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    --button-font: 'Arial', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', sans-serif;
+    --button-radius: 0.2em;
   }

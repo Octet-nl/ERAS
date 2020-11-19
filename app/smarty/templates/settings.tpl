@@ -9,8 +9,8 @@
         </div>
         <h2>{$doctitle}</h2>
 
-        <button type="button" onclick='allesKlappen(7, false);' title="Alles inklappen">Inklappen</button>
-        <button type="button" onclick='allesKlappen(7, true);' title="Alles uitklappen">Uitklappen</button>
+        <button class="softbutton" type="button" onclick='allesKlappen(7, false);' title="Alles inklappen">Inklappen</button>
+        <button class="softbutton" type="button" onclick='allesKlappen(7, true);' title="Alles uitklappen">Uitklappen</button>
 
         <div class="window_back" style="width:100%">
             <input type="checkbox" id="1" checked onchange='handleChecked(this,document.getElementById("organisatie"));'/> 
