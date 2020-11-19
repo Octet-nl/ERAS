@@ -4,6 +4,7 @@
 <head>
   <title>{$doctitle}</title>
   <link rel="stylesheet" type="text/css" href="css/colors.css">
+  <link rel="stylesheet" type="text/css" href="css/font.css">
   <link rel="stylesheet" type="text/css" href="css/style.css">
   <link rel="icon" href="favicon.png" type="image/png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -53,11 +54,6 @@
           <input class="longer" type="text" name="createhost" value="{$createhost}"><br />
           <span class="error">{$createhostErr}</span>
           <br />
-          <label class="longer" for="createdb">Database naam:</label>
-          <input class="short" type="text" name="createdb" value="{$createdb}">
-          <span class="error">{$createdbErr}</span>
-          <br />
-          <br />
           <label class="longer" for="createport">Poort:</label>
           <input class="short" type="text" name="createport" value="{$createport}">
           <div class="tooltip">?
@@ -81,6 +77,11 @@
           <span class="error">{$rootpasswordErr}</span>
           <br />
           <hr />
+          <br />
+          <br />
+          <label class="longer" for="createdb">ERAS database naam:</label>
+          <input class="short" type="text" name="createdb" value="{$createdb}">
+          <span class="error">{$createdbErr}</span>
           <br />
           <label class="longer" for="erasuser">Gebruikers ID van ERAS:</label>
           <input class="short" type="text" name="erasuser" value="{$erasuser}">

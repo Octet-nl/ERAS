@@ -1,4 +1,4 @@
-{include file="header.tpl"}
+{include file="header-klant.tpl"}
 
 <form method="post" action="{$SCRIPT_NAME}" >
 
