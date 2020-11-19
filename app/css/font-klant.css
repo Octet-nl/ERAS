@@ -1,5 +1,7 @@
 :root {
     --font-family: 'Amaranth';
+    --button-font: 'Amaranth';
+    --button-radius: 1.2em;
 }
      @font-face {
         font-family: Amaranth;
