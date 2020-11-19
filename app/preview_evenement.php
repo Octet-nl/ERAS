@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      Lijst met evenementen in status WACHTEN
  * Doel        Keuzelijst, overzicht van evenementen in wachtstatus voor testdoeleinden
  * Auteur      Hans de Rijck (apps@octet.nl)

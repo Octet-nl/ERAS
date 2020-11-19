@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      Evenement-opties
  * Doel        Evenement-Optie gegevens koppelen
  * Auteur      Hans de Rijck (apps@octet.nl)

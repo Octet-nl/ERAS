@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      Template
  * Doel        Leeg template bestand
  * Auteur      Hans de Rijck (apps@octet.nl)

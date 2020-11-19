@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      Inschrijving opties
  * Doel        Opties per inschrijving registreren
  * Auteur      Hans de Rijck (apps@octet.nl)

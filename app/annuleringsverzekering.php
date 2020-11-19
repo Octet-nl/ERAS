@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      Annuleringsverzekering
  * Doel        Class voor afhandelen annuleringsverzekering
  * Auteur      Hans de Rijck (apps@octet.nl)

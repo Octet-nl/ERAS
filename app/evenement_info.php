@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      Inschrijving info
  * Doel        Opvragen informatie over evenement
  * Auteur      Hans de Rijck (apps@octet.nl)

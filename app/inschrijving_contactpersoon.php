@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      Persoon
  * Doel        Persoonsgegevens registreren of wijzigen
  * Auteur      Hans de Rijck (apps@octet.nl)

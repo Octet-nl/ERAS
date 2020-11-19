@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      Inschrijving testen
  * Doel        Testen inschrijving van evenement in wachtstatus.
  * Auteur      Hans de Rijck (apps@octet.nl)

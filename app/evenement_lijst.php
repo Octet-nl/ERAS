@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      Lijst met evenementen
  * Doel        Keuzelijst, beheer van evenementen
  * Auteur      Hans de Rijck (apps@octet.nl)

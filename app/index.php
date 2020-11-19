@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      index
  * Doel        Startpagina (home) van het inschrijvingssysteem
  * Auteur      Hans de Rijck (apps@octet.nl)

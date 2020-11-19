@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      Lijst met gebruikers
  * Doel        Autorisatie, beheer van gebruikers
  * Auteur      Hans de Rijck (apps@octet.nl)

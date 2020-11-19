@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      iDeal betaling
  * Doel        Afronden betaling via iDeal (Mollie payments)
  * Auteur      Hans de Rijck (apps@octet.nl)

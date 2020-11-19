@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      Persoonsgegevens
  * Doel        Persoonsgegevens beheerclass
  * Auteur      Hans de Rijck (apps@octet.nl)

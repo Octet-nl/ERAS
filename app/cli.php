@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      clear inschrijving
  * Doel        Verwijderen sessie gegevens voor inschrijving
  * Auteur      Hans de Rijck (apps@octet.nl)

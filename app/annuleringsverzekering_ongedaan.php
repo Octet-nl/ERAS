@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      Afsluiten annuleringsverzekering
  * Doel        Bij inschrijving vermelden dat annuleringsverzekering is afgesloten.
  * Auteur      Hans de Rijck (apps@octet.nl)

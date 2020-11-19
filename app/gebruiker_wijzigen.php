@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      Autorisaties
  * Doel        Gebruiker autorisatie wijzigen (wachtwoord en rol)
  * Auteur      Hans de Rijck (apps@octet.nl)

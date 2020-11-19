@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      Codegenerator
  * Doel        Genereren en controleren van random codes voor vouchers en wachtwoord reset
  * Auteur      Hans de Rijck (apps@octet.nl)

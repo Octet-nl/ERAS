@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      Reset wachtwoord
  * Doel        Resetten van een vergeten wachtwoord
  * Auteur      Hans de Rijck (apps@octet.nl)

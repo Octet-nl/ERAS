@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      Batch mailing verzenden
  * Doel        Verzend mailing in batches
  * Auteur      Hans de Rijck (apps@octet.nl)

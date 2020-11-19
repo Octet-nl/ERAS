@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      Inschrijving opvoeren
  * Doel        Startscherm opvoeren nieuwe inschrijving
  * Auteur      Hans de Rijck (apps@octet.nl)

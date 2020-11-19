@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      Login
  * Doel        Aanmelden met userid/password
  * Auteur      Hans de Rijck (apps@octet.nl)

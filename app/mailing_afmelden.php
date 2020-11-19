@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      Mailing afmelden
  * Doel        Unsubscribe van mailinglist
  * Auteur      Hans de Rijck (apps@octet.nl)

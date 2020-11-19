@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      Persoon template variabelen
  * Doel        Invullen van de persoonsgegevens in de template
  * Auteur      Hans de Rijck (apps@octet.nl)

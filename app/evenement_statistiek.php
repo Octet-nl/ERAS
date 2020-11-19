@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      Evenement statistiek
  * Doel        Gedetailleerde informatie over gebruik van evenement opties
  * Auteur      Hans de Rijck (apps@octet.nl)

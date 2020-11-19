@@ -1,7 +1,7 @@
 <?php
 
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      Categorie aanpasssen
  * Doel        Aanpassen evenement categorieën
  * Auteur      Hans de Rijck

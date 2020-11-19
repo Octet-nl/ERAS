@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      Wachtwoord aanvragen
  * Doel        Wachtwoord vergeten, nieuw wachtwoord aanvragen.
  * Auteur      Hans de Rijck (apps@octet.nl)

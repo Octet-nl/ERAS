@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      Betaalwijze naar HTML
  * Doel        HTML generator voor betaalwijze
  * Auteur      Hans de Rijck (apps@octet.nl)

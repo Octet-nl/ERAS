@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      Opties naar HTML
  * Doel        HTML generator voor opties
  * Auteur      Hans de Rijck (apps@octet.nl)

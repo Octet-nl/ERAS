@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      Session status
  * Doel        Vullen session met statusarray (voor wijzigen inschrijving/deelnemer)
  * Auteur      Hans de Rijck (apps@octet.nl)

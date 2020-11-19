@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      Mail wijzigen
  * Doel        Wijzigen email adres van contactpersoon
  * Auteur      Hans de Rijck (apps@octet.nl)

@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      Annuleringsverzekering
  * Doel        Aanpassen parameters voor annuleringsverzekering
  * Auteur      Sander Kuiper

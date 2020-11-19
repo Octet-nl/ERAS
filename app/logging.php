@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      debug
  * Doel        Logleven instellingen
  * Auteur      Hans de Rijck (apps@octet.nl)

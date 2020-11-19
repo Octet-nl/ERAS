@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      Evenement
  * Doel        Evenementgegevens registreren of wijzigen
  * Auteur      Hans de Rijck (apps@octet.nl)

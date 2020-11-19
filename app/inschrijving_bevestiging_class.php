@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      Inschrijving bevestiging
  * Doel        Gedetailleerde bevestigings PDF voor de inschrijving
  * Auteur      Hans de Rijck (apps@octet.nl)

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      Type aanpasssen
  * Doel        Aanpassen parameters voor types
  * Auteur      Sander Kuiper

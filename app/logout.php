@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      Logout
  * Doel        Afmelden
  * Auteur      Hans de Rijck (apps@octet.nl)

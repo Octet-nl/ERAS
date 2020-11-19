@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      Factuur
  * Doel        Opmaak PDF factuur
  * Auteur      Hans de Rijck (apps@octet.nl)

@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      Registreer
  * Doel        Aanmelden of account aanmaken
  * Auteur      Hans de Rijck (apps@octet.nl)

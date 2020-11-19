@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      Voucher class
  * Doel        Genereren, afhandelen en tonen van informatie betreffende vouchers
  * Auteur      Hans de Rijck (apps@octet.nl)

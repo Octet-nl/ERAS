@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      Mailing aanmelden
  * Doel        Aanmelden voor de mailinglist voor een evenement
  * Auteur      Hans de Rijck (apps@octet.nl)

@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      Annuleringsverzekering naar HTML
  * Doel        HTML generator voor annuleringsverzekering
  * Auteur      Hans de Rijck (apps@octet.nl)

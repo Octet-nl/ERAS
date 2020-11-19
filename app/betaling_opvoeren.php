@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      Secretariaat betalingen
  * Doel        Verwerken van betalingen door het secretariaat
  * Auteur      Hans de Rijck (apps@octet.nl)

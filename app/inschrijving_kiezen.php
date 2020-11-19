@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      Inschrijving kiezen
  * Doel        Ingelogde klant kan kiezen uit zijn eigen inschrijvingen of een nieuwe opvoeren
  * Auteur      Hans de Rijck (apps@octet.nl)

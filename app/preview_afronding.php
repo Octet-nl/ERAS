@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      Inschrijving testen
  * Doel        Toon layout afrondingsdeel
  * Auteur      Hans de Rijck (apps@octet.nl)

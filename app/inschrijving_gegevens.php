@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      Inschrijvingsgegevens
  * Doel        Overzicht van een inschrijving
  * Auteur      Hans de Rijck (apps@octet.nl)

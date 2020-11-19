@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      constanten
  * Doel        Globale constanten voor literals e.d.
  * Auteur      Hans de Rijck (apps@octet.nl)

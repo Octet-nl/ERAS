@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      Verwijderen deelnemer
  * Doel        Verwijderen van een deelnemer uit een inschrijving
  * Auteur      Hans de Rijck (apps@octet.nl)

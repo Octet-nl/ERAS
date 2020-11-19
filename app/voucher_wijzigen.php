@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      Wijzigen voucher
  * Doel        Wijzigen van een bestaande voucher
  * Auteur      Hans de Rijck (apps@octet.nl)

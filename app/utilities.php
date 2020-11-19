@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      Utilities
  * Doel        Hulproutines en klassen
  * Auteur      Hans de Rijck (apps@octet.nl)

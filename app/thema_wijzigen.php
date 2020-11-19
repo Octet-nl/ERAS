@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      thema
  * Doel        Iies een kleurthema
  * Auteur      Hans de Rijck (apps@octet.nl)

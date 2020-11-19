@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      Secretariaat maak voucher
  * Doel        Aanmaken van een nieuwe voucher
  * Auteur      Hans de Rijck (apps@octet.nl)

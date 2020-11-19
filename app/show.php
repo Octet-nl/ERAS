@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      show
  * Doel        Tonen sessie gegevens
  * Auteur      Hans de Rijck (apps@octet.nl)

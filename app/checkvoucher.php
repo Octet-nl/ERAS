@@ -1,6 +1,6 @@
 <?php
 /**
- * System      Inschrijvingen
+ * System      ERAS
  * Module      Check voucher
  * Doel        Controleer of vouchercode correct is en wat het saldo is.
  * Auteur      Hans de Rijck (apps@octet.nl)
