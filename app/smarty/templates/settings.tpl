@@ -4,12 +4,13 @@
 <body>
     <form method="post" action="{$SCRIPT_NAME}">
         <div class="zweven">
-            <button type="button" onclick='allesInklappen(7);'>Alles inklappen</button>
             <button name="opslaan">Opslaan</button>
             <button name="terug">Terug</button>
         </div>
         <h2>{$doctitle}</h2>
 
+        <button type="button" onclick='allesKlappen(7, false);' title="Alles inklappen">Inklappen</button>
+        <button type="button" onclick='allesKlappen(7, true);' title="Alles uitklappen">Uitklappen</button>
 
         <div class="window_back" style="width:100%">
             <input type="checkbox" id="1" checked onchange='handleChecked(this,document.getElementById("organisatie"));'/> 
@@ -213,13 +214,13 @@
         }
     }
 
-    function allesInklappen( aantal )
+    function allesKlappen( aantal, inuit )
     {
         for ( i = 1; i < aantal + 1; i++ )
         {
             var n = i.toString();
             var element = document.getElementById(n);
-            element.checked = false;
+            element.checked = inuit;
             var event = new Event('change');
             element.dispatchEvent(event);
         }
