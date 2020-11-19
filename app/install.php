@@ -177,7 +177,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             if ( $validateOk == 0 )
             {
                 $logger->info( "Input ok" );
-                $conn = mysqli_connect( $createhost, $rootuser, $rootpassword, $createport );
+                $conn = mysqli_connect( $createhost, $rootuser, $rootpassword, "", $createport );
 
                 if(mysqli_connect_errno()) 
                 {
