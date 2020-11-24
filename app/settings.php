@@ -254,84 +254,118 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             ->validator( v::callback( 'urlExists' ) )
             ->required( true )->go();
 
-        $validateOk += $setVar->name( $bankIbanNummer )
-            ->onerror( $bankIbanNummerErr )
-            ->validator( v::iban() )
-            ->required( true )->go();
-        $validateOk += $setVar->name( $bankBicNummer )
-            ->onerror( $bankBicNummerErr )
-            ->required( false )->go();
-        $validateOk += $setVar->name( $bankTenNameVan )
-            ->onerror( $bankTenNameVanErr )
-            ->required( true )->go();
-
         $validateOk += $setVar->name( $factuurAanmaken )
             ->onerror( $factuurAanmakenErr )
             ->validator( v::oneOf( v::equals( OPTIE_KEUZE_JA ), v::equals( OPTIE_KEUZE_NEE ) ) )
             ->required( true )->go();
-        $validateOk += $setVar->name( $factuurVerzenden )
-            ->onerror( $factuurVerzendenErr )
-            ->validator( v::oneOf( v::equals( OPTIE_KEUZE_JA ), v::equals( OPTIE_KEUZE_NEE ) ) )
-            ->required( true )->go();
-        $validateOk += $setVar->name( $factuurTitel )
-            ->onerror( $factuurTitelErr )
-            ->required( true )->go();
-        $validateOk += $setVar->name( $factuurNotatype )
-            ->onerror( $factuurNotatypeErr )
-            ->required( true )->go();
-        $validateOk += $setVar->name( $factuurLogo )
-            ->validator( v::callback( 'file_exists' ) )
-            ->onerror( $factuurLogoErr )
-            ->errormessage( "Bestand niet gevonden" )
-            ->required( true )->go();
-        $validateOk += $setVar->name( $factuurFooter )
-            ->onerror( $factuurFooterErr )
-            ->required( true )->go();
-        $validateOk += $setVar->name( $factuurAdresregel )
-            ->onerror( $factuurAdresregelErr )
-            ->required( true )->go();
-        $validateOk += $setVar->name( $factuurEvenementKolom1 )
-            ->onerror( $factuurEvenementKolom1Err )
-            ->required( true )->go();
-        $validateOk += $setVar->name( $factuurEvenementKolom2 )
-            ->onerror( $factuurEvenementKolom2Err )
-            ->required( true )->go();
-        $validateOk += $setVar->name( $factuurEvenementKolom3 )
-            ->onerror( $factuurEvenementKolom3Err )
-            ->required( true )->go();
-        $validateOk += $setVar->name( $factuurEvenementKolom4 )
-            ->onerror( $factuurEvenementKolom4Err )
-            ->required( true )->go();
-        $validateOk += $setVar->name( $factuurEvenementKolom5 )
-            ->onerror( $factuurEvenementKolom5Err )
-            ->required( true )->go();
-        $validateOk += $setVar->name( $factuurDeelnemerKolom1 )
-            ->onerror( $factuurDeelnemerKolom1Err )
-            ->required( true )->go();
-        $validateOk += $setVar->name( $factuurDeelnemerKolom2 )
-            ->onerror( $factuurDeelnemerKolom2Err )
-            ->required( true )->go();
-        $validateOk += $setVar->name( $factuurDeelnemerKolom3 )
-            ->onerror( $factuurDeelnemerKolom3Err )
-            ->required( true )->go();
-        $validateOk += $setVar->name( $factuurDeelnemerKolom4 )
-            ->onerror( $factuurDeelnemerKolom4Err )
-            ->required( true )->go();
-        $validateOk += $setVar->name( $factuurDeelnemerKolom5 )
-            ->onerror( $factuurDeelnemerKolom5Err )
-            ->required( true )->go();
-        $validateOk += $setVar->name( $factuurBtwPercentage )
-            ->onerror( $factuurBtwPercentageErr )
-            ->required( true )->go();
-        $validateOk += $setVar->name( $factuurBtwRegel1 )
-            ->onerror( $factuurBtwRegel1Err )
-            ->required( true )->go();
-        $validateOk += $setVar->name( $factuurBtwRegel2 )
-            ->onerror( $factuurBtwRegel2Err )
-            ->required( true )->go();
-        $validateOk += $setVar->name( $factuurBtwRegel3 )
-            ->onerror( $factuurBtwRegel3Err )
-            ->required( true )->go();
+
+        if ( $factuurAanmaken == OPTIE_KEUZE_JA )
+        {
+            $validateOk += $setVar->name( $bankIbanNummer )
+                ->onerror( $bankIbanNummerErr )
+                ->validator( v::iban() )
+                ->required( true )->go();
+            $validateOk += $setVar->name( $bankBicNummer )
+                ->onerror( $bankBicNummerErr )
+                ->required( false )->go();
+            $validateOk += $setVar->name( $bankTenNameVan )
+                ->onerror( $bankTenNameVanErr )
+                ->required( true )->go();
+
+            $validateOk += $setVar->name( $factuurVerzenden )
+                ->onerror( $factuurVerzendenErr )
+                ->validator( v::oneOf( v::equals( OPTIE_KEUZE_JA ), v::equals( OPTIE_KEUZE_NEE ) ) )
+                ->required( true )->go();
+            $validateOk += $setVar->name( $factuurTitel )
+                ->onerror( $factuurTitelErr )
+                ->required( true )->go();
+            $validateOk += $setVar->name( $factuurNotatype )
+                ->onerror( $factuurNotatypeErr )
+                ->required( true )->go();
+            $validateOk += $setVar->name( $factuurLogo )
+                ->validator( v::callback( 'file_exists' ) )
+                ->onerror( $factuurLogoErr )
+                ->errormessage( "Bestand niet gevonden" )
+                ->required( true )->go();
+            $validateOk += $setVar->name( $factuurFooter )
+                ->onerror( $factuurFooterErr )
+                ->required( true )->go();
+            $validateOk += $setVar->name( $factuurAdresregel )
+                ->onerror( $factuurAdresregelErr )
+                ->required( true )->go();
+            $validateOk += $setVar->name( $factuurEvenementKolom1 )
+                ->onerror( $factuurEvenementKolom1Err )
+                ->required( true )->go();
+            $validateOk += $setVar->name( $factuurEvenementKolom2 )
+                ->onerror( $factuurEvenementKolom2Err )
+                ->required( true )->go();
+            $validateOk += $setVar->name( $factuurEvenementKolom3 )
+                ->onerror( $factuurEvenementKolom3Err )
+                ->required( true )->go();
+            $validateOk += $setVar->name( $factuurEvenementKolom4 )
+                ->onerror( $factuurEvenementKolom4Err )
+                ->required( true )->go();
+            $validateOk += $setVar->name( $factuurEvenementKolom5 )
+                ->onerror( $factuurEvenementKolom5Err )
+                ->required( true )->go();
+            $validateOk += $setVar->name( $factuurDeelnemerKolom1 )
+                ->onerror( $factuurDeelnemerKolom1Err )
+                ->required( true )->go();
+            $validateOk += $setVar->name( $factuurDeelnemerKolom2 )
+                ->onerror( $factuurDeelnemerKolom2Err )
+                ->required( true )->go();
+            $validateOk += $setVar->name( $factuurDeelnemerKolom3 )
+                ->onerror( $factuurDeelnemerKolom3Err )
+                ->required( true )->go();
+            $validateOk += $setVar->name( $factuurDeelnemerKolom4 )
+                ->onerror( $factuurDeelnemerKolom4Err )
+                ->required( true )->go();
+            $validateOk += $setVar->name( $factuurDeelnemerKolom5 )
+                ->onerror( $factuurDeelnemerKolom5Err )
+                ->required( true )->go();
+            $validateOk += $setVar->name( $factuurBtwPercentage )
+                ->formatter( 'prijs' )
+                ->validator( v::regex( "/^[0-9]+(\.[0-9]{1,2})?$/" )->lessThan( 100 ) )
+                ->errormessage( "percentage in decimalen (99.99) en minder dan 100" )
+                ->onerror( $factuurBtwPercentageErr )
+                ->required( true )->go();
+            $validateOk += $setVar->name( $factuurBtwRegel1 )
+                ->onerror( $factuurBtwRegel1Err )
+                ->required( true )->go();
+            $validateOk += $setVar->name( $factuurBtwRegel2 )
+                ->onerror( $factuurBtwRegel2Err )
+                ->required( true )->go();
+            $validateOk += $setVar->name( $factuurBtwRegel3 )
+                ->onerror( $factuurBtwRegel3Err )
+                ->required( true )->go();
+        }     
+        else
+        {
+            $setVar->name( $bankIbanNummer )->go();
+            $setVar->name( $bankBicNummer )->go();
+            $setVar->name( $bankTenNameVan )->go();
+            $setVar->name( $factuurVerzenden )->go();
+            $setVar->name( $factuurTitel )->go();
+            $setVar->name( $factuurNotatype )->go();
+            $setVar->name( $factuurLogo )->go();
+            $setVar->name( $factuurFooter )->go();
+            $setVar->name( $factuurAdresregel )->go();
+            $setVar->name( $factuurEvenementKolom1 )->go();
+            $setVar->name( $factuurEvenementKolom2 )->go();
+            $setVar->name( $factuurEvenementKolom3 )->go();
+            $setVar->name( $factuurEvenementKolom4 )->go();
+            $setVar->name( $factuurEvenementKolom5 )->go();
+            $setVar->name( $factuurDeelnemerKolom1 )->go();
+            $setVar->name( $factuurDeelnemerKolom2 )->go();
+            $setVar->name( $factuurDeelnemerKolom3 )->go();
+            $setVar->name( $factuurDeelnemerKolom4 )->go();
+            $setVar->name( $factuurDeelnemerKolom5 )->go();
+            $setVar->name( $factuurBtwPercentage )->go();
+            $setVar->name( $factuurBtwRegel1 )->go();
+            $setVar->name( $factuurBtwRegel2 )->go();
+            $setVar->name( $factuurBtwRegel3 )->go();
+        }
+       
 
         $validateOk += $setVar->name( $enableIDeal )
             ->onerror( $enableIDealErr )

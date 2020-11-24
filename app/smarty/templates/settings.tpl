@@ -35,28 +35,29 @@
         </div>
 
         <div class="window_back" style="width:100%">
-            <input type="checkbox" id="2" checked onchange='handleChecked(this,document.getElementById("bankgegevens"));'/> 
-            <h3 style="display: inline-block;">Bankgegevens</h3>
-            <fieldset id="bankgegevens" class="setting_input">
-               <span class=setting_label>Banknummer (IBAN)</span>
-               <input type="text" class="setting_input" name="bankIbanNummer" value="{$bankIbanNummer}">
-               <span class="error">{$bankIbanNummerErr}</span>
-               <span class=setting_label>Bank code (BIC/SWIFT)</span>
-               <input type="text" class="setting_input" name="bankBicNummer" value="{$bankBicNummer}">
-               <span class="error">{$bankBicNummerErr}</span>
-               <span class=setting_label>Ten name van</span>
-               <input type="text" class="setting_input" name="bankTenNameVan" value="{$bankTenNameVan}">
-               <span class="error">{$bankTenNameVanErr}</span>
-            </fieldset>
-        </div>
-
-        <div class="window_back" style="width:100%">
             <input type="checkbox" id="3" checked onchange='handleChecked(this,document.getElementById("factuur"));'/> 
             <h3 style="display: inline-block;">Factuur</h3>
             <fieldset id="factuur" class="setting_input">
                 <span class=setting_label>Factuur aanmaken ({$ja}/{$nee})</span>
                 <input type="text" class="setting_input" name="factuurAanmaken" value="{$factuurAanmaken}">
                 <span class="error">{$factuurAanmakenErr}</span>
+
+                <div class="window_back" style="width:100%">
+                    <input type="checkbox" id="2" checked onchange='handleChecked(this,document.getElementById("bankgegevens"));'/> 
+                    <h3 style="display: inline-block;">Bankgegevens</h3>
+                    <fieldset id="bankgegevens" class="setting_input">
+                       <span class=setting_label>Banknummer (IBAN)</span>
+                       <input type="text" class="setting_input" name="bankIbanNummer" value="{$bankIbanNummer}">
+                       <span class="error">{$bankIbanNummerErr}</span>
+                       <span class=setting_label>Bank code (BIC/SWIFT)</span>
+                       <input type="text" class="setting_input" name="bankBicNummer" value="{$bankBicNummer}">
+                       <span class="error">{$bankBicNummerErr}</span>
+                       <span class=setting_label>Ten name van</span>
+                       <input type="text" class="setting_input" name="bankTenNameVan" value="{$bankTenNameVan}">
+                       <span class="error">{$bankTenNameVanErr}</span>
+                    </fieldset>
+                </div>
+        
                 <span class=setting_label>Factuur verzenden ({$ja}/{$nee})</span>
                 <input type="text" class="setting_input" name="factuurVerzenden" value="{$factuurVerzenden}">
                 <span class="error">{$factuurVerzendenErr}</span>
