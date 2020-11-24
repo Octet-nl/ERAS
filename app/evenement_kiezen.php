@@ -36,7 +36,7 @@ require_once 'utilities.php';
 
 $sessie = new Sessie();
 
-$doctitle = "Evenement: ";
+$doctitle = "";
 
 // https://www.smarty.net/docs/en/
 $smarty = new Smarty();
@@ -45,21 +45,22 @@ $smarty->setCompileDir( 'smarty/templates_c' );
 $smarty->setCacheDir( 'smarty/cache' );
 $smarty->setConfigDir( 'smarty/configs' );
 
+use fb_model\fb_model\Base\CategorieQuery;
 use \fb_model\fb_model\DeelnemerQuery;
 use \fb_model\fb_model\EvenementQuery;
 
 // Defineer variabelen voor evenement
 $evenement_naam = $korteOmschrijving = $langeOmschrijving = $datumBegin = $datumEind = $prijs = "";
 $maxDeelnemers = $annuleringsverzekering = $id = $opslaan = "";
+$categorie = 0;
 $evt = $sum = 0;
 $status = 0;
+$categorieLinks = "0";
 
 $logger = new Logger();
 $logger->level( LOGLEVEL );
 
 $evenementen_lijst = array();
-
-$doctitle = "Inschrijven Evenement";
 
 //$autorisatie = new Autorisatie();
 //$autorisatie->setNotAuth( "login.php" );
@@ -80,16 +81,41 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
 
     $systeem = new Sysdb( true );
 
-    $evenementen = EvenementQuery::create()
-                   ->filterByStatus( array(EVENEMENT_STATUS_OPEN, EVENEMENT_STATUS_GEANNULEERD, EVENEMENT_STATUS_VOL) )
-                   ->find();
+    getGetVar( $categorie );
+
+    if ( $categorie == 0 )
+    {
+        $evenementen = EvenementQuery::create()
+            ->filterByStatus( array(EVENEMENT_STATUS_OPEN, EVENEMENT_STATUS_GEANNULEERD, EVENEMENT_STATUS_VOL) )
+            ->orderByCategorie()
+            ->find();
+        $categorieLinks = "1";
+    }
+    else
+    {
+        $evenementen = EvenementQuery::create()
+            ->filterByStatus( array(EVENEMENT_STATUS_OPEN, EVENEMENT_STATUS_GEANNULEERD, EVENEMENT_STATUS_VOL) )
+            ->filterByCategorie( $categorie )
+            ->find();
+
+        $naam = CategorieQuery::create()->filterByIsActief("1")->findOneByCode( $categorie );
+        if ( $naam != null )
+        {
+         //   $doctitle = $naam->getNaam();
+        }
+        else
+        {
+            $doctitle = "Geen evenement gevonden voor deze categorie.";
+        }
+    }
 
     if ( $evenementen == null )
     {
-        alert( "Er zijn geen actieve evenementen." );
+        alert( "Er zijn geen actieve evenementen voor deze categorie." );
         exit;
     }
 
+    $vorigeCategorie = 0;
     foreach ( $evenementen as $evenement )
     {
         $startDatum = new DateTime( $evenement->getDatumBegin()->format( 'Y-m-d' ) );
@@ -117,10 +143,20 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
             $aantal_beschikbaar = $evenement->getMaxDeelnemers() - $sum;
         }
 
+        if ( $evenement->getCategorie() != $vorigeCategorie )
+        {
+            $categorieNaam = CategorieQuery::create()->findOneByCode( $evenement->getCategorie() )->getNaam();
+            $vorigeCategorie = $evenement->getCategorie();
+        }
+        else
+        {
+            $categorieNaam = "";            
+        }
         $evt_lijst = array();
         $evt_lijst["id"] = $evenement->getId();
         $evt_lijst["naam"] = $evenement->getNaam();
-        $evt_lijst["categorie"] = $evenement->getCategorie();
+        $evt_lijst["categorie"] = $categorieNaam;
+        $evt_lijst["categorieNummer"] = $evenement->getCategorie();
         $evt_lijst["korteOmschrijving"] = $evenement->getKorteOmschrijving();
         $evt_lijst["langeOmschrijving"] = $evenement->getLangeOmschrijving();
         $evt_lijst["datumBegin"] = $evenement->getDatumBegin()->format( 'd-m-Y' );
@@ -185,6 +221,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
 }
 
 $smarty->assign( 'doctitle', $doctitle );
+$smarty->assign( 'categorieLinks', $categorieLinks );
 $smarty->assign( 'statusGeannuleerd', EVENEMENT_STATUS_GEANNULEERD );
 $smarty->assign( 'Evenementen', $evenementen_lijst );
 
