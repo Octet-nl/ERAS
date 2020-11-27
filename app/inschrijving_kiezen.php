@@ -255,6 +255,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
         $setVar->name( $evt )->go();
         $setVar->name( $evenementnaam )->go();
         $setVar->name( $email )->go();
+        $setVar->name( $soort )->go();
         $setVar->name( $inschrijven )->go();
         $setVar->name( $contactpersoonId )->go();
     }

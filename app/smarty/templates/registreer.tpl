@@ -11,7 +11,7 @@
                 Ik wil mezelf inschrijven
             </div>
             <div class="radio">
-                <input type="radio" name="soort" id="groep" value="{$soortGroep}}"/>
+                <input type="radio" name="soort" id="groep" value="{$soortGroep}"/>
                 Ik wil meerdere mensen inschrijven of voor iemand anders dan mezelf
             </div>
         </div>
