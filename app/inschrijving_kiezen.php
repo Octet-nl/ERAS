@@ -48,12 +48,12 @@ $smarty->setCacheDir( 'smarty/cache' );
 $smarty->setConfigDir( 'smarty/configs' );
 
 use fb_model\fb_model\GebruikerQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use \fb_model\fb_model\DeelnemerQuery;
 use \fb_model\fb_model\EvenementQuery;
+use \fb_model\fb_model\FactuurNummerQuery;
 use \fb_model\fb_model\InschrijvingQuery;
 use \fb_model\fb_model\PersoonQuery;
-use \fb_model\fb_model\FactuurNummerQuery;
-use Propel\Runtime\ActiveQuery\Criteria;
 
 $logger = new Logger();
 $logger->level( LOGLEVEL );
@@ -68,6 +68,9 @@ $sessieVariabelen = null;
 $contactpersoonId = 0;
 $evenementnaam = "";
 $inschrijving_open = 0;
+$soort = INSCHRIJVING_SOORT_INDIVIDU;
+$klant = INSCHRIJVING_KLANT_BESTAAND;
+$email = "";
 
 $ini = parse_ini_file( CONFIG_FILENAME, true );
 $facturenDirectory = $ini['settings']['facturen_directory'] . '/';
@@ -97,6 +100,19 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
         if ( $evenement != null )
         {
             $evenementnaam = $evenement->getNaam();
+        }
+
+        if ( isset( $_GET['email'] ) )
+        {
+             $email = $_GET['email'];
+        }
+        if ( isset( $_GET['soort'] ) )
+        {
+             $soort = $_GET['soort'];
+        }
+        if ( isset( $_GET['klant'] ) )
+        {
+             $email = $_GET['klant'];
         }
 
         $gebruiker = GebruikerQuery::create()->filterByUserId( $autorisatie->getUserId() )->findOne();
@@ -184,13 +200,13 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
                 $ins_lijst["datum"] = $inschrijving->getDatumInschrijving()->format( "d-m-Y h:m:s" );
 
                 $factuur = FactuurNummerQuery::create()
-                            ->filterByInschrijvingId( $inschrijving->getId() )
-                            ->orderById(Criteria::DESC)
-                            ->findOne();
+                    ->filterByInschrijvingId( $inschrijving->getId() )
+                    ->orderById( Criteria::DESC )
+                    ->findOne();
 
                 if ( $factuur != null )
                 {
-                    $factuurNaam = $facturenDirectory . $inschrijving->getId() . sprintf("-%04d", $factuur->getId() ) . ".pdf";
+                    $factuurNaam = $facturenDirectory . $inschrijving->getId() . sprintf( "-%04d", $factuur->getId() ) . ".pdf";
                 }
                 else
                 {
@@ -214,6 +230,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
                 $evenement_lijst[$evenement->getId()] = $evenement->getNaam();
             }
             $evenement_lijst["0"] = "Alle";
+            $logger->debug( "Evenementenlijst gevuld" );
         }
     }
 }
@@ -224,11 +241,20 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
     $logger->dump( $_POST );
     $logger->dump( $_SESSION );
 
+    if ( isset( $_POST['afmelden'] ) )
+    {
+        $logger->debug( 'Afmelden.' );
+        unset( $_SESSION['inschrijving'] ); 
+        $ini = parse_ini_file( CONFIG_FILENAME, true );
+        alertAndGo( "Bedankt voor uw bezoek, u bent afgemeld.", $ini['organisatie']['website'] );
+    }
+
     try
     {
         $setVar = new SetVariable();
         $setVar->name( $evt )->go();
         $setVar->name( $evenementnaam )->go();
+        $setVar->name( $email )->go();
         $setVar->name( $inschrijven )->go();
         $setVar->name( $contactpersoonId )->go();
     }
@@ -244,11 +270,25 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
         $logger->debug( 'Nieuwe inschrijving.' );
         if ( $contactpersoonId > 0 )
         {
-            header( "Location:inschrijving_contactpersoon.php?evt=" . $evt . "&prs=" . $contactpersoonId );
+            if ( $soort == INSCHRIJVING_SOORT_GROEP )
+            {
+                header( "Location:inschrijving_contactpersoon.php?evt=" . $evt . "&prs=" . $contactpersoonId );
+            }
+            else
+            {
+                header( "Location:inschrijving_individu.php?evt=" . $evt . "&email=" . $email . "&klant=" . $klant . "&prs=" . $contactpersoonId );
+            }
         }
         else
         {
-            header( "Location:inschrijving_contactpersoon.php?evt=" . $evt );
+            if ( $soort == INSCHRIJVING_SOORT_GROEP )
+            {
+                header( "Location:inschrijving_contactpersoon.php?evt=" . $evt );
+            }
+            else
+            {
+                header( "Location:inschrijving_individu.php?evt=" . $evt );
+            }
         }
         exit();
     }
@@ -269,7 +309,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
     if ( isset( $_POST['factuur'] ) )
     {
         $logger->debug( 'Factuur.' );
-        header( "Location:". $_POST["factuur"]  );
+        header( "Location:" . $_POST["factuur"] );
         exit();
     }
 
@@ -297,6 +337,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
     }
 }
 
+// Opbouwen scherm
 $buttontekst = "Alle inschrijvingen";
 $buttonname = "inact";
 
@@ -310,6 +351,9 @@ $smarty->assign( 'evenementnaam', $evenementnaam );
 $smarty->assign( 'contactpersoonId', $contactpersoonId );
 $smarty->assign( 'evenementid', $evt );
 $smarty->assign( 'evt', $evt );
+$smarty->assign( 'email', $email );
+$smarty->assign( 'soort', $soort );
+$smarty->assign( 'klant', $klant );
 $smarty->assign( 'inschrijving_open', $evt );
 
 // Voor statusregel
@@ -318,4 +362,5 @@ $smarty->assign( 'statusRegel', $statusRegel );
 $smarty->assign( 'noLogout', 'true' );
 $smarty->assign( 'loggedin', $autorisatie->getUserId() );
 
+$logger->debug( "Opbouwen scherm" );
 $smarty->display( 'inschrijving_kiezen.tpl' );

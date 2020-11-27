@@ -64,7 +64,12 @@
     {/if}
     </div>
 
+    <button name="afmelden">Afmelden</button>
+
     <input type="hidden" name="evt" value="{$evt}">
+    <input type="hidden" name="email" value="{$email}">
+    <input type="hidden" name="soort" value="{$soort}">
+    <input type="hidden" name="klant" value="{$klant}">
     <input type="hidden" name="evenementnaam" value="{$evenementnaam}">
     <input type="hidden" name="contactpersoonId" value="{$contactpersoonId}">
     

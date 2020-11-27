@@ -193,7 +193,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
             $isEvenementOpen = false;
             $statusTekst = "Dit evenement is gesloten voor inschrijving, de status is: " . evenementStatusNaam( $evenement->getStatus() );
         }
-        $logger->debug( $statusTekst );
+        $logger->debug( $evenement->getNaam() . " " . $statusTekst );
 
         $evt_lijst["statusTekst"] = $statusTekst;
         array_push( $evenementen_lijst, $evt_lijst );

@@ -48,6 +48,8 @@ $smarty->setCacheDir( 'smarty/cache' );
 $smarty->setConfigDir( 'smarty/configs' );
 
 // https://respect-validation.readthedocs.io/en/1.1/
+
+use fb_model\fb_model\EvenementQuery;
 use Respect\Validation\Validator as v;
 
 use fb_model\fb_model\Gebruiker;
@@ -58,6 +60,8 @@ $mailadres = $wachtwoord = $password = $bevestig = $email = $noregemail ="";
 $mailadresErr = $wachtwoordErr = $passwordErr = $bevestigErr = $emailErr = $noregemailErr = "";
 $newPassword = $repeatPassword = $newPasswordErr = $repeatPasswordErr = "";
 $registerchecked = $loginchecked = $directchecked = $wijzigchecked = $wijzigWachtwoord = "";
+$evenementNaam = "";
+$soort = INSCHRIJVING_SOORT_INDIVIDU;
 $moetWijzigen = false;
 $inschrijving = array();
 $accountNodig = false;
@@ -73,6 +77,11 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
     if ( isset( $_GET["evt"] ) )
     {
         $evt = $_GET["evt"];
+        $evenement = EvenementQuery::create()->findPk( $evt );
+        if ( $evenement != null )
+        {
+            $evenementNaam = $evenement->getNaam();
+        }
     }
 
     if ( isset( $_SESSION["inschrijving"] ) )
@@ -109,6 +118,8 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
         $setVar = new SetVariable();
         $validateOk += $setVar->name( $evt )
             ->go();
+        $validateOk += $setVar->name( $soort )
+            ->go();
         $validateOk += $setVar->name( $account )
             ->go();
         $validateOk += $setVar->name( $mailadres )
@@ -117,6 +128,8 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             ->go();
         $validateOk += $setVar->name( $wijzigWachtwoord )
             ->go();            
+        $validateOk += $setVar->name( $evenementNaam )
+            ->go();
 
         if ( isset( $_POST["wijzigEmail"] ) )
         {
@@ -215,7 +228,14 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                         $_SESSION["auth-" . $systeem->getNaam()] = $auth ;
 
                         // Naar inschrijving opvoeren, met email adres
-                        header( "Location:inschrijving_contactpersoon.php?evt=" . $evt . "&email=" . $email );
+                        if ( $soort == INSCHRIJVING_SOORT_GROEP )
+                        {
+                            header( "Location:inschrijving_contactpersoon.php?evt=" . $evt . "&email=" . $email . "&klant=" . INSCHRIJVING_KLANT_NIEUW  );
+                        }
+                        else
+                        {
+                            header( "Location:inschrijving_individu.php?evt=" . $evt . "&email=" . $email . "&klant=" . INSCHRIJVING_KLANT_NIEUW  );
+                        }
                         exit;
                     }
                 }
@@ -249,6 +269,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                 }
                 else
                 {
+                    // Dit is het enige verschil met wel een account, nu wordt geen gebruiker opgevoerd.
             //         $logger->debug( "Nieuwe gebruiker" );
             //         $gebruiker = new Gebruiker;
             //         $gebruiker->setUserId( $noregemail );
@@ -270,7 +291,14 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                     $_SESSION["auth-" . $systeem->getNaam()] = $auth ;
         
                     // Naar inschrijving opvoeren, met email adres
-                    header( "Location:inschrijving_contactpersoon.php?evt=" . $evt . "&email=" . $noregemail );
+                    if ( $soort == INSCHRIJVING_SOORT_GROEP )
+                    {
+                        header( "Location:inschrijving_contactpersoon.php?evt=" . $evt . "&email=" . $noregemail . "&klant=" . INSCHRIJVING_KLANT_NIEUW  );
+                    }
+                    else
+                    {
+                        header( "Location:inschrijving_individu.php?evt=" . $evt . "&email=" . $noregemail . "&klant=" . INSCHRIJVING_KLANT_NIEUW  );
+                    }
                     exit;
                 }
             }
@@ -388,7 +416,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
 
                             $logger->info( "User " . $mailadres . " met succes ingelogd." );
                             $logger->debug( "Doorzetten naar inschrijving kiezen" );
-                            header( "Location:inschrijving_kiezen.php?evt=" . $evt );
+                            header( "Location:inschrijving_kiezen.php?evt=" . $evt .  "&email=" . $mailadres . "&soort=" . $soort . "&klant=" . INSCHRIJVING_KLANT_BESTAAND );
                             exit;
                         }
 
@@ -426,6 +454,10 @@ $wachtwoordvergeten = "Vermeld uw naam, het email adres waaronder u bij ons staa
 
 $smarty->assign( 'doctitle', $doctitle );
 $smarty->assign( 'evt', $evt );
+$smarty->assign( 'evenementNaam', $evenementNaam );
+$smarty->assign( 'soort', $soort );
+$smarty->assign( 'soortGroep', INSCHRIJVING_SOORT_GROEP );
+$smarty->assign( 'soortIndividu', INSCHRIJVING_SOORT_INDIVIDU );
 $smarty->assign( 'infomail', $systeem->getOrganisatieMail() );
 $smarty->assign( 'wachtwoordvergeten', $wachtwoordvergeten );
 $smarty->assign( 'mailadres', $mailadres );

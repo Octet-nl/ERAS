@@ -1,7 +1,22 @@
 {include file="header-klant.tpl"}
 
-<h2>{$doctitle}</h2>
+<h2>{$doctitle} {$evenementNaam}</h2>
 <form method="post" action="{$SCRIPT_NAME}">
+
+    <fieldset id="soort">
+        <h2>Soort inschrijving</h2>
+        <div>
+            <div class="radio">
+                <input type="radio" name="soort" id="individu" value="{$soortIndividu}" checked/>
+                Ik wil mezelf inschrijven
+            </div>
+            <div class="radio">
+                <input type="radio" name="soort" id="groep" value="{$soortGroep}}"/>
+                Ik wil meerdere mensen inschrijven of voor iemand anders dan mezelf
+            </div>
+        </div>
+    </fieldset>
+    <br /><br />
 
     <fieldset>
         {if $evt!="" }
@@ -30,7 +45,6 @@
             Terugkerende klant
         </div>
         {/if}
-
     </fieldset>
     <br /><br />
 
@@ -143,6 +157,7 @@
     </fieldset>
     <br />
     <input type="hidden" name="evt" value="{$evt}">
+    <input type="hidden" name="evenementNaam" value="{$evenementNaam}">
     <input type="hidden" name="accountNodig" value="{$accountNodig}">
 </form>
 

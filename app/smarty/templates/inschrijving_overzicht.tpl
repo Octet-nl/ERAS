@@ -35,12 +35,13 @@
         {/if}
         <h3>Deelnemers:</h3>
 
-        {if $aantal_beschikbaar > 0}
-          <h4>Nog beschikbaar: {$aantal_beschikbaar} plaatsen</h4>
-        {else}
-          <h4>Er zijn geen plaatsen meer beschikbaar</h4>
+        {if !$changeDefinitief }
+          {if $aantal_beschikbaar > 0}
+            <h4>Nog beschikbaar: {$aantal_beschikbaar} plaatsen</h4>
+          {else}
+            <h4>Er zijn geen plaatsen meer beschikbaar</h4>
+          {/if}
         {/if}
-
         <table>
           <thead>
           <tr>
