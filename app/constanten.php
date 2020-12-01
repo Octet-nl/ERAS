@@ -59,6 +59,7 @@ define("BETAALWIJZE_CONTANT", "8");
 define("BETAALWIJZE_CREDITCARD", "16");
 define("BETAALWIJZE_VOUCHER", "32");
 
+define("CONFIG_DIRNAME", '../config' );
 define("CONFIG_FILENAME", '../config/config_ini.php' );
 define("DEBUG_CONFIG_FILENAME", '../config/debug_ini.php' );
 define("DATABASE_CONFIG_FILENAME", '../config/database_ini.php' );

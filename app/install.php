@@ -76,9 +76,12 @@ $rootchanged = "0";
 $settingschanged = "0";
 $userschanged = "0";
 
+$presentie = array();
+$isOk = true;
+
 $sqlfile = '../eras_init.sql';
 
-$schermdeel = "1";
+$schermdeel = "0";
 
 error_reporting(E_ERROR | E_PARSE);
 
@@ -88,9 +91,154 @@ $sessie = new Sessie();
 $logger = new Logger();
 $logger->level( LOGLEVEL_DUMP );
 
+function dir_writable( $directory )
+{
+    // try to create this directory if it doesn't exist
+    $dirExists     = is_dir($directory);
+    $dirIsWritable = false;
+    if ($dirExists && is_writable($directory)) 
+    {
+        $tempFile = $directory . '/dummy.txt';
+        $res = file_put_contents($tempFile, 'test');
+        $dirIsWritable = $res !== false;
+        @unlink($tempFile);
+    }
+    return $dirIsWritable;
+}
+
 if ( $_SERVER["REQUEST_METHOD"] == "GET" )
 {
     $logger->dump( $_SESSION );
+
+    $presentie = array();
+
+    // Check PHP version
+    $tekst = "PHP is minstens versie 7.0";
+    if ( version_compare( phpversion(), '7.0', '<') ) 
+    {
+        $phpPresent = false;
+        array_push( $presentie, array($tekst, "0") );
+    }
+    else
+    {
+        $phpPresent = true;
+        array_push( $presentie, array($tekst, "1") );
+    }
+    
+    $tekst = "MySQL interface aanwezig";
+    try
+    {
+        if ( mysqli_init( ) != null )
+        {
+            $mysqlPresent = true;
+            array_push( $presentie, array($tekst, "1") );
+        }
+        else
+        {
+            array_push( $presentie, array($tekst, "0") );
+        }
+    }
+    catch( Exception $ex )
+    {
+        $mysqlPresent = false;
+        array_push( $presentie, array($tekst, "0") );
+    }
+
+    $tekst = "Kan CONFIG directory schrijven";
+    if ( dir_writable( CONFIG_DIRNAME ) ) 
+    {
+        array_push( $presentie, array($tekst, "1") );
+    }
+    else
+    {
+        array_push( $presentie, array($tekst, "0") );
+    }
+
+    $ini = parse_ini_file( CONFIG_FILENAME, true );
+
+    $tekst = "Kan LOG directory schrijven";
+    if ( dir_writable( $ini['settings']['log_directory'] ) ) 
+    {
+        array_push( $presentie, array($tekst, "1") );
+    }
+    else
+    {
+        array_push( $presentie, array($tekst, "0") );
+    }
+
+    $tekst = "Kan TEMP directory schrijven";
+    if ( dir_writable( $ini['settings']['temp_directory'] ) )
+    {
+        array_push( $presentie, array($tekst, "1") );
+    }
+    else
+    {
+        array_push( $presentie, array($tekst, "0") );
+    }
+
+    $tekst = "Kan IMAGE directory schrijven";
+    if ( dir_writable( $ini['settings']['image_directory'] ) )
+    {
+        array_push( $presentie, array($tekst, "1") );
+    }
+    else
+    {
+        array_push( $presentie, array($tekst, "0") );
+    }
+
+    $tekst = "Kan FACTUREN directory schrijven";
+    if ( dir_writable( $ini['settings']['facturen_directory'] ) )
+    {
+        array_push( $presentie, array($tekst, "1") );
+    }
+    else
+    {
+        array_push( $presentie, array($tekst, "0") );
+    }
+
+    $tekst = "Kan CSS directory schrijven";
+    if ( dir_writable( "css" ) )
+    {
+        array_push( $presentie, array($tekst, "1") );
+    }
+    else
+    {
+        array_push( $presentie, array($tekst, "0") );
+    }
+
+    $tekst = "Kan TEMPLATE directory schrijven";
+    if ( dir_writable("smarty/templates_c" ) )
+    {
+        array_push( $presentie, array($tekst, "1") );
+    }
+    else
+    {
+        array_push( $presentie, array($tekst, "0") );
+    }
+
+    $tekst = "Kan CACHE directory schrijven";
+    if ( dir_writable( "smarty/cache" ) )
+    {
+        array_push( $presentie, array($tekst, "1") );
+    }
+    else
+    {
+        array_push( $presentie, array($tekst, "0") );
+    }
+
+    $logger->dump( $presentie );
+//    exit;
+
+    $isOk = true;
+    for( $i = 0; $i < count( $presentie); $i++ )
+    {
+        if ( $presentie[$i][1] == 0 )
+        {
+            $isOk = false;
+            $createErr = "<br/>Niet alle controles zijn succesvol. Installatie kan niet verder.<br/>";
+            break;
+        }
+    }
 
     $history->set( "?scherm=3" );
     if ( isset( $_GET["scherm"] ) )
@@ -103,8 +251,11 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
 {
     
     $logger->dump( $_POST );
-
-    if ( isset( $_POST["aanmaken"] ))
+    if ( isset( $_POST["verder"] ))
+    {
+        $schermdeel = 1;
+    }
+    else if ( isset( $_POST["aanmaken"] ))
     {
         $logger->info( "Database aanmaken" );
         try
@@ -498,4 +649,7 @@ $smarty->assign( "userschanged", $userschanged );
 $smarty->assign( "hostnameErr", $hostnameErr );
 $smarty->assign( "dbnameErr", $dbnameErr );
 $smarty->assign( "schermdeel", $schermdeel );
+$smarty->assign( "presentie", $presentie );
+$smarty->assign( "isOk", $isOk );
+
 $smarty->display( 'install.tpl' );

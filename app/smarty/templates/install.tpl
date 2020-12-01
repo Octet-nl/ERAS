@@ -16,6 +16,36 @@
   <form method="post" action="{$SCRIPT_NAME}">
     <h2>Installatie ERAS</h2>
 
+    <fieldset id="check">
+      <h2>Controles</h2>
+      <div>
+        <h3>Algemene systeemcontrole<br /></h3>
+        De installatie slaagt alleen als alle controles succesvol zijn.<br/><br/>
+        <table>
+          {foreach $presentie as $present}
+          <tr>
+            <td>
+              {$present.0}
+            </td>
+            <td>
+              {if ($present.1 == '1') }
+                <span class="signalMessage"> OK</span>
+              {else}
+                <span class="signalError">X</span>
+              {/if}
+            </td>
+          </tr>
+          {/foreach}
+          </table>
+      </div>
+      {if $isOk}
+      <button name="verder" value=1 >Verder</button>
+      <br />
+      {/if}
+      <span class="error">{$createErr}</span>
+    <input type="hidden" name="isOk" value="{$isOk}">
+    </fieldset>
+
     <fieldset id="create">
       <h3>Nieuwe database</h3>
       <div>In deze installatieprocedure kunt u een database voor ERAS aanmaken. <br />
@@ -227,14 +257,23 @@
 
     window.onload = onLoad();
     function onLoad( deel = {$schermdeel} ) {
-      if ( deel == "1" )
+      if ( deel == "0" )
       {
+        document.getElementById("check").className = "show";
+        document.getElementById("create").className = "hide";
+        document.getElementById("load").className = "hide";
+        document.getElementById("setup").className = "hide";
+      }
+      else if ( deel == "1" )
+      {
+        document.getElementById("check").className = "hide";
         document.getElementById("create").className = "show";
         document.getElementById("load").className = "hide";
         document.getElementById("setup").className = "hide";
       }
       else if ( deel == "2" )
       {
+        document.getElementById("check").className = "hide";
         document.getElementById("create").className = "hide";
         document.getElementById("load").className = "show";
         document.getElementById("setup").className = "hide";
@@ -242,22 +281,26 @@
       else if ( deel == "3" )
       {
         document.getElementById("create").className = "hide";
+        document.getElementById("check").className = "hide";
         document.getElementById("load").className = "hide";
         document.getElementById("setup").className = "show";
       }
     }
 
     function doLoad() {
+      document.getElementById("check").className = "hide";
         document.getElementById("create").className = "hide";
         document.getElementById("load").className = "show";
         document.getElementById("setup").className = "hide";
     }
     function doTerug() {
+      document.getElementById("check").className = "hide";
         document.getElementById("create").className = "show";
         document.getElementById("load").className = "hide";
         document.getElementById("setup").className = "hide";
     }
     function doSetup() {
+      document.getElementById("check").className = "hide";
         document.getElementById("create").className = "hide";
         document.getElementById("load").className = "hide";
         document.getElementById("setup").className = "show";
