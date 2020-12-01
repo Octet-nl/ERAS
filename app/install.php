@@ -90,11 +90,11 @@ $history = new History();
 $sessie = new Sessie();
 
 $logger = new Logger();
-$logger->level( LOGLEVEL_DUMP );
+$logger->level( LOGLEVEL );
 
 function dir_writable( $directory )
 {
-    // try to create this directory if it doesn't exist
+    // Als de directory niet bestaat, probeer hem dan aan te maken.
     $dirExists     = is_dir($directory) || (mkdir($directory, 0774, true) && is_dir($directory));
     $dirIsWritable = false;
     if ($dirExists && is_writable($directory)) 
