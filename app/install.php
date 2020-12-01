@@ -75,6 +75,7 @@ $eraspasswordErr = "";
 $rootchanged = "0";
 $settingschanged = "0";
 $userschanged = "0";
+$installDelete = "0";
 
 $presentie = array();
 $isOk = true;
@@ -94,7 +95,7 @@ $logger->level( LOGLEVEL_DUMP );
 function dir_writable( $directory )
 {
     // try to create this directory if it doesn't exist
-    $dirExists     = is_dir($directory);
+    $dirExists     = is_dir($directory) || (mkdir($directory, 0774, true) && is_dir($directory));
     $dirIsWritable = false;
     if ($dirExists && is_writable($directory)) 
     {
@@ -249,11 +250,10 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
 
 if ( $_SERVER["REQUEST_METHOD"] == "POST" )
 {
-    
     $logger->dump( $_POST );
     if ( isset( $_POST["verder"] ))
     {
-        $schermdeel = 1;
+        $schermdeel = "1";
     }
     else if ( isset( $_POST["aanmaken"] ))
     {
@@ -596,7 +596,14 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
         $comesFrom = (isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ? "https" : "http" ) . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . "?scherm=3";
         $logger->debug( $comesFrom );
 
+        unlink( "install.php" );
         session_destroy();
+
+        if ( file_exists( "install.php" ) )
+        {
+            alertAndGo("Verwijderen install.php is mislukt. U kunt dit alsnog zelf doen.", "index.php");
+            exit;
+        }
 
         header( "Location: index.php" );
         exit;
@@ -619,6 +626,14 @@ $logger->debug( "Voor gebruikers" );
 if ( isset( $_SESSION['gebruikers']) )
 {
     $userschanged = "1";
+}
+if ( file_exists( "install.php" ) )
+{
+    $installDelete = "0";
+}
+else
+{
+    $installDelete = "1";
 }
 $smarty->assign( "hostname", $hostname );
 $smarty->assign( "dbname", $dbname );
@@ -648,6 +663,7 @@ $smarty->assign( "settingschanged", $settingschanged );
 $smarty->assign( "userschanged", $userschanged );
 $smarty->assign( "hostnameErr", $hostnameErr );
 $smarty->assign( "dbnameErr", $dbnameErr );
+$smarty->assign( "installDelete", $installDelete );
 $smarty->assign( "schermdeel", $schermdeel );
 $smarty->assign( "presentie", $presentie );
 $smarty->assign( "isOk", $isOk );

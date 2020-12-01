@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>{$doctitle}</title>
+  <title>ERAS Installatie</title>
   <link rel="stylesheet" type="text/css" href="css/colors.css">
   <link rel="stylesheet" type="text/css" href="css/font.css">
   <link rel="stylesheet" type="text/css" href="css/style.css">
@@ -183,60 +183,81 @@
       <br />
       <br />
       <div class="window_back">
+        <table>
+          <tr>
+            <td>
+              Laden database:
+            </td>
+            <td>
+              <span class="signalMessage"> OK</span>
+            </td>
+            <td></td>
+          </tr>
 
-        <div>
-
-          <br/>
-          <label class="longer" for="this">Laden database:</label>
-          <span class="signalMessage"> OK</span>
-          <br/>
-          <label class="longer" for="rootpw">Wijzig ROOT wachtwoord:</label>
-          <button name="rootpw" value=1>Wijzig wachtwoord</button>
-          <div class="tooltip">?
-            <span class="tooltiptext">Bij installatie is 'root' het enige userid. Het initi&euml;le wachtwoord is 'ERASroot'. Wijzig dit wachtwoord zo snel mogelijk.<br/>
-              Daarna gebruikt u 'root' om gebruikers aan te maken.<br/>Later wordt 'root' alleen nog gebruikt voor heel specifieke zaken. 
-              Zie hiervoor de <a href="../images/Autorisatiematrix.bmp">autorisatiematrix</a></span>
-          </div>
-          {if ($rootchanged == '1') }
-             <span class="signalMessage"> OK</span>
-          {else}
-             <span class="signalError">Nog doen</span>
-          {/if}
+          <tr>
+            <td>
+              Wijzig ROOT wachtwoord:
+              <div class="tooltip">?
+                <span class="tooltiptext right">Bij installatie is 'root' het enige userid. Het initi&euml;le wachtwoord is 'ERASroot'. Wijzig dit wachtwoord zo snel mogelijk.<br/>
+                  Daarna gebruikt u 'root' om gebruikers aan te maken.<br/>Later wordt 'root' alleen nog gebruikt voor heel specifieke zaken. 
+                  Zie hiervoor de <a href="../images/Autorisatiematrix.bmp">autorisatiematrix</a></span>
+              </div>
+                </td>
+            <td>
+              {if ($rootchanged == '1') }
+                <span class="signalMessage"> OK</span>
+              {else}
+                <span class="signalError">Nog doen</span>
+              {/if}
+            </td>
+            <td><button name="rootpw" value=1>Wijzig wachtwoord</button></td>
+          </tr>
           <span class="error">{$rootpwErr}</span>
-          <br />
 
-          <label class="longer" for="instellingen">Wijzig basisinstellingen:</label>
-          <button name="instellingen" value='1'>Wijzigen</button>
-          {if ($settingschanged == '1') }
-             <span class="signalMessage"> OK</span>
-          {else}
-             <span class="signalError">Nog doen</span>
-          {/if}
-          <br />
+          <tr>
+            <td>
+              Wijzig basisinstellingen:
+            </td>
+            <td>
+              {if ($settingschanged == '1') }
+                <span class="signalMessage"> OK</span>
+              {else}
+                <span class="signalError">Nog doen</span>
+              {/if}
+            </td>
+            <td><button name="instellingen" value='1'>Wijzigen</button></td>
+          </tr>
 
-          <label class="longer" for="gebruikers">Gebruikers aanmaken:</label>
-          <button name="gebruikers" value='1'>Aanmaken</button>
-          {if ($userschanged == '1') }
-            <span class="signalMessage"> OK</span>
-          {else}
-            <span class="signalError">Nog doen</span>
-          {/if}
-          <br />
-
+          <tr>
+            <td>
+              Gebruikers aanmaken:
+            </td> 
+            <td>
+              {if ($userschanged == '1') }
+                <span class="signalMessage"> OK</span>
+              {else}
+                <span class="signalError">Nog doen</span>
+              {/if}
+            </td>
+            <td><button name="gebruikers" value='1'>Aanmaken</button></td>
+          </tr>
+        </table>
       </div>
-    </div>
 
-      {if $rootchanged == "1" && $settingschanged == "1" && $userschanged == "1"}
-        <br/>
-        U kunt de installatieprocedure nu afsluiten en het bestand 'install.php' verwijderen.
-        <br/>
-        U wordt automatisch afgemeld. 
-        Via 'Account' kunt u zich zometeen weer aanmelden als een van de zojuist opgevoerde gebruikers.
-        <br/>
-        <button name="klaar" value=1>Afsluiten, start ERAS</button>
-        {/if}
-      </div>
+      {if $rootchanged == "1" && $settingschanged == "1" && $userschanged == "1" }
+      <br/>
+      U kunt de installatieprocedure nu afsluiten.
+      Het bestand install.php moet verwijderd worden.
+      <br/>
+      U wordt automatisch afgemeld. 
+      Via 'Account' kunt u zich zometeen weer aanmelden als een van de zojuist opgevoerde gebruikers.
+      <br/>
+      <button name="klaar" value=1>Afsluiten, install.php verwijderen en ERAS starten</button>
+    {/if}
+
     </fieldset>
+
+
   </form>
 
   <script>
