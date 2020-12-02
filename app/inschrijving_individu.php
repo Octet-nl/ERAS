@@ -294,6 +294,8 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
         }
     }
 
+    $iid = 0;
+    
     if ( isset( $_SESSION['inschrijving'] ) )
     {
         $sessieVariabelen = $_SESSION['inschrijving'];

@@ -481,12 +481,6 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                         $voucherWaarde = $_POST['voucherwaarde'];
                         $voucherRest = $_POST['voucherrest'];
                         $voucherType = $_POST['vouchertype'];
-//ToDo: dit kan weg
-//                        if ( $nogTeBetalen == 0 )
-//                        {
-//                            // Volledig bedrag betaald met een voucher
-//                            $betaalwijze = BETAALWIJZE_VOUCHER;                        
-//                        }
                     }
                 }
 
