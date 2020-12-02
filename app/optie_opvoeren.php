@@ -103,7 +103,14 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
             $heeftHorLijn = $optie->getHeeftHorizontaleLijn();
             $groep = $optie->getGroep();
             $type = $optie->getOptieType();
-            $label = $optie->getLabel();
+            if ( $type == OPTIETYPE_VOORWAARDE )
+            {
+                $label = $optie->getLabel( );
+            }
+            else
+            {
+                $selectLabel = $optie->getLabel( );
+            }
             $status = $optie->getStatus();
             $totaalAantal = $optie->getTotaalAantal();
             $isDefault = naarJaNee( $optie->getIsDefault() );
