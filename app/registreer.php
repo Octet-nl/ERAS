@@ -110,7 +110,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
 if ( $_SERVER["REQUEST_METHOD"] == "POST" )
 {
     // Geen $_POST dumpen, hier staat het wachtwoord in klare tekst in!
-    $logger->dump( $_POST );
+    //$logger->dump( $_POST );
 
     $validateOk = 0;
     try
@@ -143,6 +143,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
         ///////////////////////////////////////////////
         if ( $account == "register" )
         {
+            $logger->debug( "Registreren nieuwe gebruiker" );
             $validateOk += $setVar->name( $email )
                 ->onerror( $emailErr )
                 ->emptymessage( "Vul uw e-mail adres in" )
@@ -246,6 +247,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
         ///////////////////////////////////////////////
         elseif ( $account == "zonder" )
         {
+            $logger->debug( "Inschrijven zonder account" );
             $directchecked = 'checked="checked"';
             $date = new DateTime( 'now' );
 
@@ -308,6 +310,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
         ///////////////////////////////////////////////////////////////
         elseif ( $account == "login" )
         {
+            $logger->debug( "Inloggen bestaande klant" );
             $validateOk += $setVar->name( $mailadres )
                 ->onerror( $mailadresErr )
                 ->emptymessage( "Vul uw e-mail adres in" )
@@ -424,7 +427,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                     else
                     {
                         $logger->security( "User " . $mailadres . " onjuist wachtwoord. " . $_SERVER['REMOTE_ADDR'] );
-                        $wachtwoordErr = "Gebruikers ID of wachtwoord is niet correct";
+                        $wachtwoordErr = "Gebruikers ID of wachtwoord is niet correct.";
                     }
                 }
                 else

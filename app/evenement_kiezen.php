@@ -74,8 +74,6 @@ $evenementen_lijst = array();
 // in eerste instantie alleen DEEL 3 hieronder (het tonen van de template) uitgevoerd.
 if ( $_SERVER["REQUEST_METHOD"] == "GET" )
 {
-    $logger->dump( $_SESSION );
-
     // Bestaande inschrijvingsgegevens verwijderen voordat een nieuwe wordt opgevoerd.
     unset( $_SESSION['inschrijving'] );
 

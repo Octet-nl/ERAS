@@ -71,6 +71,8 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
     $logger->dump( $_GET );
     $logger->dump( $_SESSION );
 
+    unset( $_SESSION['inschrijving'] );
+
     if ( isset( $_GET['evt'] ) )
     {
         $evt = $_GET['evt'];

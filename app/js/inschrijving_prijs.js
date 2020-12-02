@@ -211,40 +211,44 @@
 
             subTotaalBedrag.value = toFixed((subTotaal/100), 2);
 
-            if ( gewoon == null )
-            {
-                // Geen annuleringsverzekering
-                totaalBedrag.value = toFixed(((extraBedrag + subTotaal) / 100), 2);
-                return;
-            }
+//            if ( gewoon == null )
+//            {
+//                // Geen annuleringsverzekering
+//                totaalBedrag.value = toFixed(((extraBedrag + subTotaal) / 100), 2);
+//                return;
+//            }
 
             totaal = subTotaal + extraBedrag;
 
-            {$annulering_gewoon_formule}
-
-            gewoon.textContent =  " (€ " + toFixed( (annulering_gewoon/100), 2) + ")";
-
-            {$annulering_allrisk_formule}
-
-            allRisk.textContent =  " (€ " + toFixed( (annulering_allrisk/100), 2) + ")";
-
-            {$annulering_geen_formule}
-            geen.textContent =  " (€ " + toFixed((annulering_geen/100), 2) + ")";
-
-            if ( verzekeringGewoon.checked )
+            if ( gewoon != null )
             {
-                totaal += annulering_gewoon;
-            }
-            else if ( verzekeringAllRisk.checked )
-            {
-                totaal += annulering_allrisk;
-            }
-            else if ( verzekeringGeen.checked )
-            {
-                totaal += annulering_geen;
+                {$annulering_gewoon_formule}
+
+                gewoon.textContent =  " (€ " + toFixed( (annulering_gewoon/100), 2) + ")";
+
+                {$annulering_allrisk_formule}
+
+                allRisk.textContent =  " (€ " + toFixed( (annulering_allrisk/100), 2) + ")";
+
+                {$annulering_geen_formule}
+                geen.textContent =  " (€ " + toFixed((annulering_geen/100), 2) + ")";
+
+                if ( verzekeringGewoon.checked )
+                {
+                    totaal += annulering_gewoon;
+                }
+                else if ( verzekeringAllRisk.checked )
+                {
+                    totaal += annulering_allrisk;
+                }
+                else if ( verzekeringGeen.checked )
+                {
+                    totaal += annulering_geen;
+                }              
             }
 
             totaalBedrag.value = toFixed((totaal/100), 2) ;
+            
             if ( totaal - reedsBetaaldBedrag > 0)
             {
                 teBetalen.value = toFixed(((totaal - reedsBetaaldBedrag) / 100), 2);

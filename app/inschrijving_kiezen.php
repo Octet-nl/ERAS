@@ -112,7 +112,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
         }
         if ( isset( $_GET['klant'] ) )
         {
-             $email = $_GET['klant'];
+             $klant = $_GET['klant'];
         }
 
         $gebruiker = GebruikerQuery::create()->filterByUserId( $autorisatie->getUserId() )->findOne();
@@ -269,7 +269,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
     if ( $inschrijven != "" )
     {
         $logger->debug( 'Nieuwe inschrijving.' );
-        if ( $contactpersoonId > 0 )
+//        if ( $contactpersoonId > 0 )
         {
             if ( $soort == INSCHRIJVING_SOORT_GROEP )
             {
@@ -280,17 +280,17 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                 header( "Location:inschrijving_individu.php?evt=" . $evt . "&email=" . $email . "&klant=" . $klant . "&prs=" . $contactpersoonId );
             }
         }
-        else
-        {
-            if ( $soort == INSCHRIJVING_SOORT_GROEP )
-            {
-                header( "Location:inschrijving_contactpersoon.php?evt=" . $evt );
-            }
-            else
-            {
-                header( "Location:inschrijving_individu.php?evt=" . $evt );
-            }
-        }
+        // else
+        // {
+        //     if ( $soort == INSCHRIJVING_SOORT_GROEP )
+        //     {
+        //         header( "Location:inschrijving_contactpersoon.php?evt=" . $evt );
+        //     }
+        //     else
+        //     {
+        //         header( "Location:inschrijving_individu.php?evt=" . $evt );
+        //     }
+        // }
         exit();
     }
 

@@ -99,13 +99,13 @@ $extraContact = 0;
 
 if ( isset( $_SESSION['inschrijving'] ) )
 {
+    $logger->debug( "Session inschrijving is gezet" );
     $sessieVariabelen = $_SESSION['inschrijving'];
 }
 else
 {
     // Geen inschrijvingsdata? Verwijs naar keuzepagina
-    //$routing = new Routing();
-    //$routing->go();
+    $logger->debug( "Session inschrijving is niet gezet, naar overzicht." );
     header( "Location:inschrijving_overzicht.php" );
     exit();
 }
@@ -143,7 +143,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
 
     getGetVar( $prs );
 
-    if ( $prs != null )
+    if ( $prs != null && $prs != 0 )
     {
         $logger->debug( "Persoon ID in URL: " . $prs );
         $persoonsGegevens->load( $prs );
@@ -159,6 +159,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
         if ( $autorisatie->getUserId() != "" )
         {
             $persoonsGegevens->setEmail( $autorisatie->getUserId() );
+            $readonlyEmail = "readonly";
             $logger->debug( "Inschrijver met account: " . $autorisatie->getUserId() );
         }
         else
@@ -166,6 +167,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
             // Inschrijver zonder account
             $logger->debug( "Inschrijver zonder account: " . $gebruiker_email );
             $persoonsGegevens->setEmail( $gebruiker_email );
+            $readonlyEmail = "readonly";
         }
     }
 
@@ -176,6 +178,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
 
     $contactExtra = (int)$sessieVariabelen['extra_contact'];
     $deelnemerExtra = (int)$sessieVariabelen['extra_deelnemer'];
+    // Bij inschrijving individu gelden zowel de extra contactpersoon- als deelnemergegevens
     $extraContact =  $contactExtra | $deelnemerExtra;
     $logger->debug( "extra contact:" . $contactExtra . ", extra_deelnemer:" . $deelnemerExtra . ", combo:" . $extraContact );
     $persoonsGegevens->setExtraGegevens( $extraContact );
@@ -606,7 +609,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                 $opties->delete();
 
                 // Deze is niet vaak nodig maar geeft een hoop uitvoer
-                // $logger->dump( $optieArray );
+                //$logger->verbose( $optieArray );
 
                 // En nu alle geselecteerde opties weer opvoeren.
                // foreach ( $_POST as $key => $value )
