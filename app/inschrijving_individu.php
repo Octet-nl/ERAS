@@ -43,10 +43,11 @@ use fb_model\fb_model\Deelnemer;
 use fb_model\fb_model\DeelnemerHeeftOptie;
 use fb_model\fb_model\DeelnemerHeeftOptieQuery;
 use fb_model\fb_model\DeelnemerQuery;
-use Propel\Runtime\Propel;
 use \fb_model\fb_model\EvenementQuery;
 use \fb_model\fb_model\KeuzesQuery;
 use \fb_model\fb_model\OptieQuery;
+use \fb_model\fb_model\PersoonQuery;
+use Propel\Runtime\Propel;
 
 $sessie = new Sessie();
 
@@ -175,6 +176,24 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
 
     $deelnemerId = null;
     $deelnemer = null;
+    if ( isset( $_GET['mut'] ) )
+    {
+        $deelnemerId = $_GET['mut'];
+
+        // Kijk of deze deelnemer als gebruiker (contactpersoon) geregistreerd staat
+        $deelnemer = DeelnemerQuery::create()->findPK( $deelnemerId );
+        if ( $deelnemer != null )
+        {
+            $persoonId = $deelnemer->getPersoonId();
+            $persoon = PersoonQuery::create()->findPk( $persoonId );
+            $gebruiker = GebruikerQuery::create()->filterByUserId( $persoon->getEmail() )->filterByPersoonId( $persoonId )->findOne( );
+            if ( $gebruiker != null )
+            {
+                $logger->debug( "PersoonId " . $persoonId . ", email " . $persoon->getEmail() . " is contactpersoon");
+                $readonlyEmail = "readonly";
+            }
+        }
+    }
 
     $contactExtra = (int)$sessieVariabelen['extra_contact'];
     $deelnemerExtra = (int)$sessieVariabelen['extra_deelnemer'];
@@ -510,11 +529,10 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
 
     $validateOk = 0;
 
-    // Validatie persoonsgegevens
-    $contactPersoonId = $sessieVariabelen["contactpersoon_id"];
-
     if ( vanJaNee( $sessieVariabelen["is_deelnemer"] ) )
     {
+        // Validatie persoonsgegevens
+        $contactPersoonId = $sessieVariabelen["contactpersoon_id"];
         $persoon = $persoonsGegevens->load( $contactPersoonId );
         if ( $persoon == null )
         {

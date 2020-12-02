@@ -222,6 +222,7 @@
 
             if ( gewoon != null )
             {
+                // Annuleringsverzekering
                 {$annulering_gewoon_formule}
 
                 gewoon.textContent =  " (€ " + toFixed( (annulering_gewoon/100), 2) + ")";
@@ -248,7 +249,7 @@
             }
 
             totaalBedrag.value = toFixed((totaal/100), 2) ;
-            
+
             if ( totaal - reedsBetaaldBedrag > 0)
             {
                 teBetalen.value = toFixed(((totaal - reedsBetaaldBedrag) / 100), 2);

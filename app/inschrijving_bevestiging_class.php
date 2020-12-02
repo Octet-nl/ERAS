@@ -429,20 +429,23 @@ class InschrijvingBevestiging
         $betaling = $inschrijving->getBetaalwijze();
         $wijze = BetaalwijzeQuery::create()->filterByCode( $betaling )->findOne();
 
-        if ( $inschrijving->getAnnuleringsverzekering() == ANNULERINGSVERZEKERING_ALLRISK ||
-            $inschrijving->getAnnuleringsverzekering() == ANNULERINGSVERZEKERING_GEWOON ||
-            $inschrijving->getAnnuleringsverzekering() == ANNULERINGSVERZEKERING_GEEN )
+        if ( naarJaNee( $evenement->getAnnuleringsverzekering() ) == OPTIE_KEUZE_JA )
         {
-            require_once "annuleringsverzekering.php";
-            $annuleringsverzekering = new AnnuleringsVerzekering();
-            $avpremie = $annuleringsverzekering->bereken( $totaalprijs, $inschrijving->getAnnuleringsverzekering() );
-            $totaalprijs += $avpremie;
-            $this->messageBody .= "Annuleringsverzekering: " . annuleringsverzekeringNaam( $inschrijving->getAnnuleringsverzekering() ) . ", premie " . geldAnsi( $avpremie ) . "<br/>";
-
-            if ( $inschrijving->getAnnuleringsverzekering() != ANNULERINGSVERZEKERING_GEEN )
+            if ( $inschrijving->getAnnuleringsverzekering() == ANNULERINGSVERZEKERING_ALLRISK ||
+                $inschrijving->getAnnuleringsverzekering() == ANNULERINGSVERZEKERING_GEWOON ||
+                $inschrijving->getAnnuleringsverzekering() == ANNULERINGSVERZEKERING_GEEN )
             {
-                $regel = array( "deelnemer" => "Algemeen", "naam" => "Annuleringsverzekering", "omschrijving" => annuleringsverzekeringNaam( $inschrijving->getAnnuleringsverzekering() ), "aantal" => "1", "prijs" => $avpremie );
-                array_push( $this->factuurArray, $regel );
+                require_once "annuleringsverzekering.php";
+                $annuleringsverzekering = new AnnuleringsVerzekering();
+                $avpremie = $annuleringsverzekering->bereken( $totaalprijs, $inschrijving->getAnnuleringsverzekering() );
+                $totaalprijs += $avpremie;
+                $this->messageBody .= "Annuleringsverzekering: " . annuleringsverzekeringNaam( $inschrijving->getAnnuleringsverzekering() ) . ", premie " . geldAnsi( $avpremie ) . "<br/>";
+
+                if ( $inschrijving->getAnnuleringsverzekering() != ANNULERINGSVERZEKERING_GEEN )
+                {
+                    $regel = array( "deelnemer" => "Algemeen", "naam" => "Annuleringsverzekering", "omschrijving" => annuleringsverzekeringNaam( $inschrijving->getAnnuleringsverzekering() ), "aantal" => "1", "prijs" => $avpremie );
+                    array_push( $this->factuurArray, $regel );
+                }
             }
         }
 
