@@ -464,18 +464,21 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
 
                 // Verwijderen van alle deelnemer-opties
                 $opties = DeelnemerHeeftOptieQuery::create()->filterByDeelnemerId( $deelnemerId )->find();
-                $opties->delete();
+                //$opties->delete();
+                foreach ( $opties as $optie )
+                {
+                    $logger->debug( "Verwijderen inschrijvingsoptie ID=" . $optie->getId() );
+                    $optie->delete();
+                }
 
                 // Deze is niet vaak nodig maar geeft een hoop uitvoer
-                // $logger->dump( $optieArray );
+                $logger->dump( $optieArray );
 
                 // En nu alle geselecteerde opties weer opvoeren.
-               // foreach ( $_POST as $key => $value )
+                //foreach ( $_POST as $key => $value )
                 {
-                    //echo $key . " " . $value . "<br/>";
-
-                    $value = cleanInput( $_POST[$key] );
                     $logger->verbose( 'POST, key: ' . $key . ', value: ' . $value );
+                    $value = cleanInput( $_POST[$key] );
 
                     foreach ( $optieArray as $optienaam )
                     {
@@ -486,6 +489,10 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                         {
                             $key = $naam;
                             $value = $_POST[$naam];
+                        }
+                        else
+                        {
+                            continue;
                         }
 
                         if ( array_key_exists( "groep", $optienaam ) )
@@ -563,6 +570,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
         catch ( \Exception $e )
         {
             $con->rollback();
+            $logger->errordump( $e );
             $logger->error( 'Probleem met opslaan gegevens, foutcode ' . $e->getPrevious()->errorInfo[1] );
             $logger->error( "deelnemer PersoonId " . $persoonsGegevens->getId() . ", deelnemer InschrijvingId " . $sessieVariabelen["inschrijving_id"] );
             $logger->error( $e->getPrevious()->errorInfo[2] );

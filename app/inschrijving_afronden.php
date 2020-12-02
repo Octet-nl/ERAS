@@ -427,7 +427,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                             // In de url is bij de POST een underscore toegevoegd
                             $oGroep = str_replace( ' ', '_', $optienaam["groep"] );
                         }
-                        $logger->verbose( 'Optienaam["groep"]: ' . $oGroep . ' optienaam["naam"]: ' . $optienaam["naam"] );
+                        $logger->dump( 'Optienaam["groep"]: ' . $oGroep . ' optienaam["naam"]: ' . $optienaam["naam"] );
                         if ( $oGroep == $key || str_replace( ' ', '_', $optienaam["naam"] ) == $key )
                         {
                             if ( $optienaam["type"] == OPTIETYPE_KEUZE_RADIO || $optienaam["type"] == OPTIETYPE_KEUZE_MEERDERE )
