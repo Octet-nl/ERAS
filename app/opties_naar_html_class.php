@@ -383,7 +383,7 @@ class optiesNaarHtml
             // De DIV wordt dan verborgen gemaakt.
             if ( in_array( $optie->getLabel(), $hideArray ) )
             {
-                $labelTekst .= ' class="hide" ';
+                $labelTekst .= ' class="hide" disabled="disabled" ';
             }
 
             $tekstAchterCheck = "";
