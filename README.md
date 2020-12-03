@@ -20,6 +20,7 @@ Verder voorziet het in een complete back-office omgeving om snel overzicht te kr
 ## Systeem vereisten
 ERAS is speciaal bedoeld voor een Apache-PHP-MySQL/MariaDB omgeving. Dit kan in een Linux omgeving zijn, maar een XAMP omgeving onder
 Windows werkt ook prima.
+PHP versie 7.0 is minimaal vereist. Verder moet ERAS schrijftoegang hebben tot een aantal eigen directories. De installatieprocedure test hier op.
 
 ## Installatie
 Download het complete ERAS pakket:
