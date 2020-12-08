@@ -34,6 +34,7 @@
 require_once 'constanten.php';
 //require_once 'utilities.php';
 
+use fb_model\fb_model\Base\DeelnemerQuery;
 use fb_model\fb_model\InschrijvingQuery;
 use fb_model\fb_model\PersoonQuery;
 use fb_model\fb_model\GebruikerQuery;
@@ -82,6 +83,18 @@ function setSessieVariabelen( $id, $userid )
         return false;
     }
 
+    $isDeelnemer = OPTIE_KEUZE_NEE;
+    $deelnemer = DeelnemerQuery::create()->filterByInschrijvingId( $id )->filterByPersoonId( $contactpersoonId )->findPk( $id );
+    if ( $deelnemer != null )
+    {
+        $logger->debug( "Deelnemer met inschrijvingsID " . $id . " en contactpersoonId " . $contactpersoonId . " is gevonden");
+        $isDeelnemer = OPTIE_KEUZE_JA;
+    }
+    else
+    {
+        $logger->debug( "Deelnemer met inschrijvingsID " . $id . " en contactpersoonId " . $contactpersoonId . " is NIET gevonden");
+    }
+
     // Extra gegevens toevoegen aan sessievariabele "inschrijving"
     if ( isset( $_SESSION['inschrijving'] ) )
     {
@@ -105,7 +118,7 @@ function setSessieVariabelen( $id, $userid )
     $sessieVariabelen["contactpersoon_id"] = $contactpersoonId;
     $sessieVariabelen["contactpersoon_naam"] = $persoon->getVoornaam() . " " . $persoon->getTussenvoegsel() . " " . $persoon->getAchternaam();
     $sessieVariabelen["contactpersoon_email"] = $persoon->getEmail();
-    $sessieVariabelen["is_deelnemer"] = OPTIE_KEUZE_NEE;
+    $sessieVariabelen["is_deelnemer"] = $isDeelnemer;
     $_SESSION['inschrijving'] = $sessieVariabelen;
 
     return true;

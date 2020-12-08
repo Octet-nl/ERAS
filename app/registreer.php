@@ -84,21 +84,22 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
         }
     }
 
-    if ( isset( $_SESSION["inschrijving"] ) )
-    {
-        $logger->debug( "inschrijving aanwezig in session" );
-        $inschrijving = $_SESSION["inschrijving"];
+    //ToDo: Kan weg??
+    // if ( isset( $_SESSION["inschrijving"] ) )
+    // {
+    //     $logger->debug( "inschrijving aanwezig in session" );
+    //     $inschrijving = $_SESSION["inschrijving"];
 
-        if ( array_key_exists( "account_nodig", $inschrijving ) )
-        {
-            $accountNodig = $inschrijving["account_nodig"];
-            $logger->debug( "Er is account nodig: " . $accountNodig );
-        }
-        else
-        {
-            $logger->debug( "Er is geen account_nodig entry in inschrijving" );
-        }
-    }
+    //     if ( array_key_exists( "account_nodig", $inschrijving ) )
+    //     {
+    //         $accountNodig = $inschrijving["account_nodig"];
+    //         $logger->debug( "Er is account nodig: " . $accountNodig );
+    //     }
+    //     else
+    //     {
+    //         $logger->debug( "Er is geen account_nodig entry in inschrijving" );
+    //     }
+    // }
 
     // Bestaande autorisatie wissen
     unset( $_SESSION["auth-" . $systeem->getNaam()] );

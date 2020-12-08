@@ -376,9 +376,17 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
         $persoon = $persoonsGegevens->load( $contactPersoonId );
         if ( $persoon == null )
         {
-            echo "Contactpersoon " . $contactPersoonId . " is niet gevonden.";
+            alert( "Contactpersoon " . $contactPersoonId . " is niet gevonden." );
             $logger->error( "Contactpersoon, Id=" . $contactPersoonId . ", is niet gevonden." );
             return;
+        }
+        if ( $deelnemerId != null )
+        {
+            $deelnemer = DeelnemerQuery::create()->findPK( $deelnemerId );
+        }
+        else
+        {
+            $deelnemer = DeelnemerQuery::create()->filterByInschrijvingId($sessieVariabelen["inschrijving_id"])->findOneByPersoonId( $contactPersoonId );
         }
     }
     else
@@ -390,7 +398,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             $persoon = $persoonsGegevens->load( $persoonId );
             if ( $persoon == null )
             {
-                echo "Persoon " . $persoonId . " is niet gevonden.";
+                alert( "Persoon " . $persoonId . " is niet gevonden." );
                 $logger->error( "Deelnemer/persoon , Id=" . $persoonId . ", is niet gevonden." );
                 return;
             }

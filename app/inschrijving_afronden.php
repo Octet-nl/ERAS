@@ -422,13 +422,19 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                     foreach ( $optieArray as $optienaam )
                     {
                         $oGroep = "";
+                        $oNaam = "";
                         if ( array_key_exists( "groep", $optienaam ) )
                         {
                             // In de url is bij de POST een underscore toegevoegd
                             $oGroep = str_replace( ' ', '_', $optienaam["groep"] );
                         }
-                        $logger->dump( 'Optienaam["groep"]: ' . $oGroep . ' optienaam["naam"]: ' . $optienaam["naam"] );
-                        if ( $oGroep == $key || str_replace( ' ', '_', $optienaam["naam"] ) == $key )
+                        if ( array_key_exists( "groep", $optienaam ) )
+                        {
+                            // In de url is bij de POST een underscore toegevoegd
+                            $oNaam = str_replace( ' ', '_', $optienaam["naam"] );
+                        }
+                        $logger->debug( 'Optienaam["groep"]: ' . $oGroep . ' optienaam["naam"]: ' . $oNaam );
+                        if ( $oGroep == $key || $oNaam == $key )
                         {
                             if ( $optienaam["type"] == OPTIETYPE_KEUZE_RADIO || $optienaam["type"] == OPTIETYPE_KEUZE_MEERDERE )
                             {
