@@ -296,17 +296,33 @@
             return 0;
         }
 
+function disableAllContainers()
+        {
+            var divs = document.getElementsByClassName("option");
+            var i;
+            for ( i = 0; i < divs.length; i++ )
+            {
+                var childNodes = divs[i].getElementsByTagName('*');
+                for (var node of childNodes) 
+                {
+                  node.disabled = true;
+                  node.style.display = "none";
+                }
+            }
+        }
+
         function enableVoorwaarde( naam )
         {
             var input = document.getElementsByName( naam );
             for( i = 0; i < input.length; i++ )
             {
-                var inputs = input[i].getElementsByTagName( "input" );
+                var inputs = input[i].getElementsByTagName( "*" );
                 for( j = 0; j < inputs.length; j++ )
                 {
                     inputs[j].disabled = false;
+                    inputs[j].style.display = "inline";
                 }
-                input[i].className = "show";
+                input[i].style.display = "inline";
             }
             addPrices()
         }
@@ -316,20 +332,20 @@
             var input = document.getElementsByName( naam );
             for( i = 0; i < input.length; i++ )
             {
-                //var inputs = document.querySelectorAll('input[type=text]');
-                var inputs = input[i].getElementsByTagName( "input" );
+                var inputs = input[i].getElementsByTagName( "*" );
                 for( j = 0; j < inputs.length; j++ )
                 {
                     inputs[j].disabled = true;
                 }
-                input[i].className = "hide";
+                input[i].style.display = "none";
             }
             addPrices()
         }
 
         window.onload = function()
         {
-        addPrices()
-    };
+            addPrices()
+            disableAllContainers()
+        };
 
     </script>

@@ -86,7 +86,6 @@
                 for (var node of childNodes) 
                 {
                   node.disabled = true;
-                  //node.className = "hide";
                   node.style.display = "none";
                 }
             }
@@ -104,7 +103,6 @@
                     inputs[j].style.display = "inline";
                 }
                 input[i].style.display = "inline";
-                //input[i].className = "show";
             }
             addPrices()
         }
@@ -119,7 +117,6 @@
                 {
                     inputs[j].disabled = true;
                 }
-                //input[i].className = "hide";
                 input[i].style.display = "none";
             }
             addPrices()

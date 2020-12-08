@@ -293,7 +293,7 @@ class optiesNaarHtml
             {
                 $this->logger->verbose( "Prijsberekening" );
 
-                $prijsregel = "&nbsp;( &euro; " . $optie->getPrijs();
+                $prijsregel = "<span>&nbsp;( &euro; " . $optie->getPrijs();
 
                 if ( $optie->getTotaalAantal() != null )
                 //if ( $optie->getOptieType() == OPTIETYPE_AANTAL )
@@ -314,7 +314,7 @@ class optiesNaarHtml
                         }
                     }
                 }
-                $prijsregel .= " )";
+                $prijsregel .= " )</span>";
             }
             else
             {
@@ -376,7 +376,7 @@ class optiesNaarHtml
             $labelTekst = "";
             if ( $optie->getLabel() != "" )
             {
-                $labelTekst = 'name="' . $optie->getLabel() . '"';
+                    $labelTekst = 'name="' . $optie->getLabel() . '"';
             }
 
             // Als een voorwaardelijke optie op "nee" staat, dan wordt de naam (label) in hideArray opgeslagen
@@ -386,15 +386,17 @@ class optiesNaarHtml
                 $labelTekst .= ' class="option" ';
             }
 
+            $witregel = "<br/>";
+
             $tekstAchterCheck = "";
             $tekstAchterJaNee = "";
             if ( $optie->getTekstAchter() != null && $optie->getTekstAchter() != "" )
             {
                 $tekstAchterCheck = '<div ' . $labelTekst . ' style="font-style:italic;padding:0em 0em 1.2em 1.0em">' . $optie->getTekstAchter() . '</div>';
-                $tekstAchterJaNee = '<div ' . $labelTekst . ' style="font-style:italic;padding:0em 0em 1.2em 0em">' . $optie->getTekstAchter() . '</div>';
+                $tekstAchterJaNee = '<div ' . 'name="' . $optie->getLabel() . 'xx"' . ' style="font-style:italic;padding:0em 0em 1.2em 0em">' . $optie->getTekstAchter() . '</div>';
+                $witregel = "";
             }
 
-            $witregel = "<br/>";
             if ( $optie->getHeeftHorizontaleLijn() == HORIZONTALE_LIJN_BOVEN ||
                  $optie->getHeeftHorizontaleLijn() == HORIZONTALE_LIJN_BEIDE )
             {
