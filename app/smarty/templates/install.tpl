@@ -200,7 +200,7 @@
               <div class="tooltip">?
                 <span class="tooltiptext right">Bij installatie is 'root' het enige userid. Het initi&euml;le wachtwoord is 'ERASroot'. Wijzig dit wachtwoord zo snel mogelijk.<br/>
                   Daarna gebruikt u 'root' om gebruikers aan te maken.<br/>Later wordt 'root' alleen nog gebruikt voor heel specifieke zaken. 
-                  Zie hiervoor de <a href="../images/Autorisatiematrix.bmp">autorisatiematrix</a></span>
+                  Zie hiervoor de <a href="res/images/Autorisatiematrix.bmp">autorisatiematrix</a></span>
               </div>
                 </td>
             <td>

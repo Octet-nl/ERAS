@@ -22,7 +22,7 @@ aanmaken="nee"
 verzenden="nee"
 titel="ERAS overzicht"
 notatype="Overzicht"
-logo="../images/OctetLogo.png"
+logo="res/images/OctetLogo.png"
 footer="Mijn Organisatie is een Zeer Nuttige Organisatie (ZNO)"
 adresregel="Mijn Organisatie    Reuzenweg 14    2345 AB Monster    Tel:012 - 345 66 77    BTW nr:NL5 21 21 21 21 B21    KvK:0123 45678"
 evenement-kolom1="Evenement"
@@ -57,7 +57,7 @@ voorwaarden="<div align=left>Uw betaling moet binnen een maand na aanmelding bij
 log_directory="../log"
 temp_directory="../temp"
 facturen_directory="../facturen"
-image_directory="../res/images"
+image_directory="../images"
 ;
 batch_size="10"
 ;*/

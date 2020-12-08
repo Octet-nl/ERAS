@@ -1,5 +1,4 @@
 {include file="header.tpl"}
-<script type="text/javascript" src="js/nicEdit.js"></script> 
 
 <form method="post" action="{$SCRIPT_NAME}">
     <h3>{$mededeling}</h3>

@@ -45,7 +45,7 @@
         {html_options name=type id=type options=$typenLijst selected=$type}
         <div class="tooltip">?
             <span class="tooltiptext">
-             Zie ook het <a href="../images/opties.png">voorbeeld</a> <br/>
+             Zie ook het <a href="res/images/opties.png">voorbeeld</a> <br/>
              <b>Aantal: </b>Gebruikt voor opties waar een maximum voor geldt.<br>
              <b>Getal: </b>Een numerieke waarde, wordt niet mee gerekend.<br/>
              <b>Tekstregel: </b>Tekstinvoer, 1 regel<br/>
