@@ -47,11 +47,13 @@
     <input type="hidden" id="extra_bedrag_prijs1" value="{$totaalprijs_opties}">
   </div>
   {/if}
+  <br/>
 
   {$dynamichtml}
 
   <span class="error">{$validatiemelding}</span>
 
+  <br/><br/>
   <div class="subtotaalprijs">
   <strong>
     Subtotaal: &euro;
