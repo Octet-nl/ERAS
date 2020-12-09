@@ -36,7 +36,7 @@ require_once 'utilities.php';
 
 $sessie = new Sessie();
 
-$doctitle = "Inschrijven";
+$doctitle = "Welkom";
 $logger = new Logger();
 $logger->level( LOGLEVEL );
 
@@ -82,6 +82,10 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
         {
             $evenementNaam = $evenement->getNaam();
         }
+    }
+    else
+    {
+       // $doctitle = "Aanmelden";
     }
 
     //ToDo: Kan weg??

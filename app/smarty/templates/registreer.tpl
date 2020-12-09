@@ -1,8 +1,13 @@
 {include file="header-klant.tpl"}
 
-<h2>{$doctitle} {$evenementNaam}</h2>
+{if $evenementNaam != ""}
+<h2>Welkom bij de inschrijving voor {$evenementNaam}</h2>
+{else}
+<h2>Welkom</h2>
+{/if}
 <form method="post" action="{$SCRIPT_NAME}">
 
+    {if $evenementNaam != ""}
     <fieldset id="soort">
         <h2>Soort inschrijving</h2>
         <div>
@@ -17,33 +22,34 @@
         </div>
     </fieldset>
     <br /><br />
+    {/if}
 
     <fieldset>
-        {if $evt!="" }
-        <h2>Inloggen of account maken?</h2>
-        Als u een account aanmaakt
-        kunt u later zelf uw inschrijving bekijken en aanpassen.
-        <hr />
-        <div class="radio">
-            <input type="radio" name="account" id="regist" value="register" {$registerchecked} onclick="doRegister()" />
-            Account aanmaken
-        </div>
-        {if !$accountNodig}
-        <div class="radio">
-            <input type="radio" name="account" id="zonder" value="zonder" {$directchecked} onclick="doZonder()" />
-            Direct inschrijven zonder account
-        </div>
-        {/if}
-        <div class="radio">
+        {if $evenementNaam != ""}
+        <h2>Aanmelden of account maken?</h2>
+          Als u een account aanmaakt
+          kunt u later zelf uw inschrijving bekijken en aanpassen.
+          <hr />
+          <div class="radio">
+              <input type="radio" name="account" id="regist" value="register" {$registerchecked} onclick="doRegister()" />
+              Account aanmaken
+          </div>
+          {if !$accountNodig}
+            <div class="radio">
+              <input type="radio" name="account" id="zonder" value="zonder" {$directchecked} onclick="doZonder()" />
+              Direct inschrijven zonder account
+            </div>
+          {/if}
+          <div class="radio">
             <input type="radio" name="account" id="login" value="login" {$loginchecked} onclick="doLogin()" />
             Terugkerende klant
-        </div>
+          </div>
         {else}
-        <h2>Inloggen</h2>
-        <div class="radio">
-            <input type="radio" name="account" id="login" value="login" checked="checked" onclick="doLogin()" />
-            Terugkerende klant
-        </div>
+          <h2>Aanmelden</h2>
+          <div class="radio">
+              <input type="radio" name="account" id="login" value="login" checked="checked" onclick="doLogin()" />
+              Terugkerende klant
+          </div>
         {/if}
     </fieldset>
     <br /><br />
@@ -195,8 +201,8 @@ var check = function()
 
 var check2 = function() 
   {
-    if ( document.getElementById('password').value ==
-           document.getElementById('bevestig').value ) 
+    if ( (document.getElementById('password').value ==
+           document.getElementById('bevestig').value) && (document.getElementById('password').value != "") ) 
     {
         document.getElementById('repeatcheck2').style.color = 'green';
         document.getElementById('repeatcheck2').innerHTML = 'OK';
@@ -208,6 +214,10 @@ var check2 = function()
             document.getElementById('repeatcheck2').style.color = 'red';
             document.getElementById('repeatcheck2').innerHTML = 'X';
         } 
+        else
+        {
+            document.getElementById('repeatcheck2').innerHTML = '';
+        }
     }
    }
 
