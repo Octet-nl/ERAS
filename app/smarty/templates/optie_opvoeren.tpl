@@ -28,7 +28,7 @@
 
     {if sizeof($evenement_lijst) > 0 }
     <div>
-        Koppelen aan evenement:
+        <label for="evenementId">Koppelen aan evenement:</label>
         <select name="evenementId" onchange="submit();">
                 {html_options id=evenementId options=$evenement_lijst selected=$evenementId}
         </select>
