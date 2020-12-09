@@ -371,8 +371,15 @@ class InschrijvingBevestiging
                 $this->logger->debug( "Inschrijvings optie " . $optie->getId() );
 
                 $inschrijvingsOptie = InschrijvingHeeftOptieQuery::create()
-                ->filterByOptieId( $optie->getId() )
-                ->findOne();
+                    ->filterByInschrijvingId( $this->inschrijfnummer )
+                    ->filterByOptieId( $optie->getId( ) )
+                    ->findOne();
+
+                $this->logger->debug( "Inschrijvings optie " . $optie->getId() . 
+                                      " " . $optie->getTekstVoor() . 
+                                      ", groep: " . $optie->getGroep() .
+                                      ", type: " . $optie->getOptieType() .
+                                      ", waarde " . $inschrijvingsOptie->getWaarde() );                                     
         
                 if ( $optie->getGroep() != "" )
                 {
@@ -547,7 +554,7 @@ class InschrijvingBevestiging
 
             if( $betaling == BETAALWIJZE_INCASSO )
             {
-                $this->messageBody .= "<u>Betaling</u><br/><br>U heeft gekozen voor betaling in twee termijnen. Ongeveer een week na uw inschrijving ontvangt u van ons per mail een incassoformulier waarmee u toestemming geeft. De incassodata verschillen per evenement, kijk hiervoor op de inschrijfpagina. Bij de eerste incasso wordt een evenetuele annuleringsverzekering en de incassokosten volledig verrekend, de termijnbedragen worden op het incassoformulier vermeld<br/>";
+                $this->messageBody .= "<u>Betaling</u><br/><br>U heeft gekozen voor betaling in termijnen. Ongeveer een week na uw inschrijving ontvangt u van ons per mail een incassoformulier waarmee u toestemming geeft. De incassodata verschillen per evenement, kijk hiervoor op de inschrijfpagina. Bij de eerste incasso wordt een eventuele annuleringsverzekering en de incassokosten volledig verrekend, de termijnbedragen worden op het incassoformulier vermeld<br/>";
             } 
             else if( $betaling == BETAALWIJZE_CONTANT )
             {

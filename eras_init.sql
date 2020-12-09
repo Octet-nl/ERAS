@@ -613,7 +613,8 @@ ALTER TABLE `fb_evenement`
 ALTER TABLE `fb_evenement_heeft_optie`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_gekozen_optie_optie1` (`optie_id`),
-  ADD KEY `fk_evenement_optie_deelnemer1` (`evenement_id`);
+  ADD KEY `fk_evenement_optie_deelnemer1` (`evenement_id`),
+  ADD UNIQUE (`evenement_id`, `optie_id`);
 
 --
 -- Indexen voor tabel `fb_factuur`
