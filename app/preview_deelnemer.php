@@ -53,7 +53,7 @@ $smarty->setConfigDir( 'smarty/configs' );
 
 
 $logger = new Logger();
-$logger->level( LOGLEVEL );
+$logger->level( LOGLEVEL_NONE );
 
 require_once 'evenement_define_variables.inc';
 
