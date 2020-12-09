@@ -320,9 +320,9 @@ function disableAllContainers()
                 for( j = 0; j < inputs.length; j++ )
                 {
                     inputs[j].disabled = false;
-                    inputs[j].style.display = "inline";
+                    inputs[j].style.removeProperty('display');
                 }
-                input[i].style.display = "inline";
+                inputs[i].style.removeProperty('display');
             }
             addPrices()
         }
@@ -336,8 +336,9 @@ function disableAllContainers()
                 for( j = 0; j < inputs.length; j++ )
                 {
                     inputs[j].disabled = true;
+                    inputs[j].style.setProperty('display', 'none');
                 }
-                input[i].style.display = "none";
+                inputs[i].style.setProperty('display', 'none');
             }
             addPrices()
         }

@@ -428,7 +428,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                             // In de url is bij de POST een underscore toegevoegd
                             $oGroep = str_replace( ' ', '_', $optienaam["groep"] );
                         }
-                        if ( array_key_exists( "groep", $optienaam ) )
+                        if ( array_key_exists( "naam", $optienaam ) )
                         {
                             // In de url is bij de POST een underscore toegevoegd
                             $oNaam = str_replace( ' ', '_', $optienaam["naam"] );
@@ -577,7 +577,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                         ->findOne();
                     if ( $mailing != null )
                     {
-                        $logger->dump( $mailing );
+                        //$logger->dump( $mailing );
                         $logger->info( "Klant is al ingeschreven op deze mailinglist." );
                     }
                     else
