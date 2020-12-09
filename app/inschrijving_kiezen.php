@@ -143,6 +143,12 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
             foreach ( $inschrijvingen as $inschrijving )
             {
                 $logger->debug( "Inschrijving ID: " . $inschrijving->getId() );
+
+                if ( $inschrijving->getEvenementId() == $evt )
+                {
+                    $evenementnaam = "";
+                }
+
                 $ins_lijst = array();
 
                 if ( $inschrijving->getStatus() == INSCHRIJVING_STATUS_GEANNULEERD ) //||

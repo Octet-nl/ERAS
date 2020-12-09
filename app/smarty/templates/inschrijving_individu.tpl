@@ -46,6 +46,7 @@
         </div>
 
         <input type="hidden" name="wijzigingDefinitieveInschrijving" value="{$wijzigingDefinitieveInschrijving}">
+        <input type="hidden" name="email" value="{$email}">
         <input type="hidden" name="deelnemerId" value="{$deelnemerId}">
         <input type="hidden" name="persoonId" value="{$persoonId}">
 

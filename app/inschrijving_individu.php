@@ -83,7 +83,7 @@ $evt = 0;
 $inschrijvingnummer = 0;
 $validatiemelding = "";
 $optieArray = array();
-$readonlyEmail = "";
+$readonlyEmail = "readonly";
 
 $con = Propel::getConnection( fb_model\fb_model\Map\OptieTableMap::DATABASE_NAME );
 $validateOk = 0;
@@ -148,19 +148,12 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
     {
         $logger->debug( "Persoon ID in URL: " . $prs );
         $persoonsGegevens->load( $prs );
-        // Als $wijzigen TRUE is, dan wordt de vorderingbalk niet getoond,
-        // alleen de contactpersoongegevens verschijnen dan
-        //if ( $aantalDeelnemers == 0 )
-        //{
-        //    $wijzigen = false;
-        //}
     }
     else
     {
         if ( $autorisatie->getUserId() != "" )
         {
-            $persoonsGegevens->setEmail( $autorisatie->getUserId() );
-            $readonlyEmail = "readonly";
+            $persoonsGegevens->setEmail( $email );
             $logger->debug( "Inschrijver met account: " . $autorisatie->getUserId() );
         }
         else
@@ -168,7 +161,6 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
             // Inschrijver zonder account
             $logger->debug( "Inschrijver zonder account: " . $gebruiker_email );
             $persoonsGegevens->setEmail( $gebruiker_email );
-            $readonlyEmail = "readonly";
         }
     }
 
@@ -190,7 +182,6 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
             if ( $gebruiker != null )
             {
                 $logger->debug( "PersoonId " . $persoonId . ", email " . $persoon->getEmail() . " is contactpersoon");
-                $readonlyEmail = "readonly";
             }
         }
     }
@@ -280,6 +271,12 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
 
     $persoonsGegevens = new Persoonsgegevens( $autorisatie->getUserId() );
 
+    if ( isset( $_POST["annuleren"] ) )
+    {
+        header( "location:inschrijving_overzicht.php?evt=" . $evt . "&prs=" . $deelnemerId );
+        exit;
+    }
+
     if ( isset( $_POST['id'] ) )
     {
         $id = $_POST['id'];
@@ -295,7 +292,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
     }
 
     $iid = 0;
-    
+
     if ( isset( $_SESSION['inschrijving'] ) )
     {
         $sessieVariabelen = $_SESSION['inschrijving'];
@@ -312,14 +309,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
     try
     {
         $setVar = new SetVariable();
-        $validateOk += $setVar->name( $evt )
-            ->go();
-        $validateOk += $setVar->name( $required )
-            ->go();
-        $validateOk += $setVar->name( $deelnemer )
-            ->go();
-        $validateOk += $setVar->name( $gebruiker_email )
-            ->go();
+        // POST variabelen zonder validatie
     }
     catch ( Exception $ex )
     {
@@ -328,18 +318,55 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
         $validateOk = 999;
     }
 
-    $sessieVariabelen["is_deelnemer"] = $deelnemer;
-
-    $req = false;
-    if ( $required == "true" )
+    try
     {
-        $req = true;
+        $setVar = new SetVariable();
+        $validateOk += $setVar->name( $evt )
+            ->go();
+        $validateOk += $setVar->name( $email )
+            ->required()
+            ->go();
+        $validateOk += $setVar->name( $deelnemerId )
+            ->go();
+        $validateOk += $setVar->name( $totaalprijs )
+            ->go();
+        $validateOk += $setVar->name( $wijzigingDefinitieveInschrijving )
+            ->go();
+        }
+    catch ( Exception $ex )
+    {
+        $logger->error( "Unhandled exception in SetVariable" );
+        $logger->errordump( $ex );
+        $validateOk = 999;
     }
 
     // Validatie persoonsgegevens
     $persoonsGegevens->setExtraGegevens( $extraContact );
     $persoonsGegevens->validate( $_POST );
     $validateOk += $persoonsGegevens->getValidateOk();
+
+    $logger->debug( "Geen DynamicHTML aanwezig in SESSION, genereer" );
+    $opties = OptieQuery::create()
+        ->filterByPerDeelnemer( '1' )
+        ->useEvenementHeeftOptieQuery()
+        ->filterByEvenementId( $evt )
+        ->orderByVolgorde()
+        ->endUse()
+        ->orderByGroep()
+        ->find();
+
+    $logger->debug( "Genereer dynamisch HTML d.m.v. POST." );
+
+    require "opties_naar_html_class.php";
+    $optiesNaarHtml = new optiesNaarHtml();
+    $optiesNaarHtml->setEvenementId( $evt );
+    $optiesNaarHtml->setAutorisatieRol( $autorisatie->getRol() );
+    $optiesNaarHtml->setKopregel( "Opties voor deze deelnemer" );
+    $optiesNaarHtml->setWijzigenDefinitieveInschrijving( $wijzigingDefinitieveInschrijving );
+    $optiesNaarHtml->setCurrent( $_POST );
+    $dynHtml = $optiesNaarHtml->genereerHtml( $opties );
+    $dynamicHtml = $optiesNaarHtml->getHtml();
+    $optieArray = $optiesNaarHtml->getOptieArray();
 
     if ( $validateOk == 0 )
     {
@@ -349,17 +376,15 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
         {
             if ( $persoonsGegevens->getEmail() == "" )
             {
-                if ( $autorisatie->isLoggedIn() )
-                {
-                    $persoonsGegevens->setEmail( $autorisatie->getUserId() );
-                }
+                $persoonsGegevens->setEmail( $email );
             }
 
             $persoonsGegevens->save();
 
-            $gebruiker = GebruikerQuery::create()->findPk( $gebruiker_email );
+            $gebruiker = GebruikerQuery::create()->filterByUserId( $email )->findone();
             if ( $gebruiker != null )
             {
+                $logger->debug( "Gebruikersgegevens aanpassen" );
                 $gebruiker->setPersoonId( $persoonsGegevens->getId() );
                 $gebruiker->setGewijzigdDoor( $autorisatie->getUserId() );
                 $gebruiker->save();
@@ -381,21 +406,6 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             }
             $autorisatie->setUserId( $email );
 
-//            $autorisatie->setRol( AUTORISATIE_STATUS_KLANT );
-
-            $gebruiker = GebruikerQuery::create()->filterByUserId( $autorisatie->getUserId() )->findOne();
-            if ( $gebruiker == null )
-            {
-                $logger->warning( "Gebruiker " . $autorisatie->getUserId() . " is niet gevonden." );
-            }
-            else
-            {
-                $gebruiker->setPersoonId( $persoonsGegevens->getId() );
-                $gebruiker->setGewijzigdDoor( $autorisatie->getUserId() );
-                $gebruiker->save();
-                $logger->debug( "Gebruiker " . $autorisatie->getUserId() . " is gevonden." );
-            }
-
             // Koppelen persoonsgegevens aan userid
 
             if ( $iid > 0 )
@@ -404,7 +414,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                 if ( $inschrijving == null )
                 {
                     $logger->error( "Fout bij opvragen inschrijving id=" . $iid );
-                    echo "Fout bij opvragen inschrijving id=" . $iid;
+                    alert( "Fout bij opvragen inschrijving id=" . $iid );
                     exit;
                 }
             }
@@ -451,138 +461,6 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             $sessieVariabelen["aantal_deelnemers"] = 1;
             $_SESSION['inschrijving'] = $sessieVariabelen;
 
-            $con->commit();
-            $logger->debug( "Commit van bovenstaande." );
-
-        }
-        catch ( \Exception $e )
-        {
-            $con->rollback();
-            if ( $e->getPrevious() != null )
-            {
-                $logger->error( 'Probleem met opslaan gegevens contactpersoon, foutcode ' . $e->getPrevious()->errorInfo[1] );
-                $logger->error( $e->getPrevious()->errorInfo[2] );
-                $validatiemelding = 'Probleem met opslaan gegevens, foutcode ' . $e->getPrevious()->errorInfo[1];
-            }
-            else
-            {
-                $validatiemelding = 'Probleem met opslaan gegevens, ' . $e->getMessage();
-            }
-            $logger->dump( $e );
-        }    
-    }
-
-    $optieArray = array();
-    if ( isset( $_SESSION['opties'] ) )
-    {
-        $logger->info( "Opties aanwezig in SESSION" );
-        $optieArray = $_SESSION['opties'];
-        $logger->dump( $optieArray );
-    }
-
-    $extraContact = $sessieVariabelen['extra_deelnemer'];
-//    $inschrijvingnummer = $sessieVariabelen["inschrijving_id"];
-    
-    try
-    {
-        $setVar = new SetVariable();
-        // POST variabelen zonder validatie
-        $setVar->name( $evt )->go();
-        $setVar->name( $deelnemerId )->go();
-        $setVar->name( $totaalprijs )->go();
-        $setVar->name( $readonlyEmail )->go();
-        $setVar->name( $wijzigingDefinitieveInschrijving )->go();
-    }
-    catch ( Exception $ex )
-    {
-        $logger->error( "Unhandled exception in SetVariable" );
-        $logger->errordump( $ex );
-        $validateOk = 999;
-    }
-
-    if ( isset( $_POST["annuleren"] ) )
-    {
-        header( "location:inschrijving_overzicht.php?evt=" . $evt . "&prs=" . $deelnemerId );
-        exit;
-    }
-
-    $logger->debug( "Geen DynamicHTML aanwezig in SESSION, genereer" );
-    $opties = OptieQuery::create()
-        ->filterByPerDeelnemer( '1' )
-        ->useEvenementHeeftOptieQuery()
-        ->filterByEvenementId( $evt )
-        ->orderByVolgorde()
-        ->endUse()
-        ->orderByGroep()
-        ->find();
-
-    $logger->debug( "Genereer dynamisch HTML d.m.v. POST." );
-
-    require "opties_naar_html_class.php";
-    $optiesNaarHtml = new optiesNaarHtml();
-    $optiesNaarHtml->setEvenementId( $evt );
-    $optiesNaarHtml->setAutorisatieRol( $autorisatie->getRol() );
-    $optiesNaarHtml->setKopregel( "Opties voor deze deelnemer" );
-    $optiesNaarHtml->setWijzigenDefinitieveInschrijving( $wijzigingDefinitieveInschrijving );
-    $optiesNaarHtml->setCurrent( $_POST );
-    $dynHtml = $optiesNaarHtml->genereerHtml( $opties );
-    $dynamicHtml = $optiesNaarHtml->getHtml();
-    $optieArray = $optiesNaarHtml->getOptieArray();
-
-    $validateOk = 0;
-
-    if ( vanJaNee( $sessieVariabelen["is_deelnemer"] ) )
-    {
-        // Validatie persoonsgegevens
-        $contactPersoonId = $sessieVariabelen["contactpersoon_id"];
-        $persoon = $persoonsGegevens->load( $contactPersoonId );
-        if ( $persoon == null )
-        {
-            echo "Contactpersoon " . $contactPersoonId . " is niet gevonden.";
-            $logger->error( "Contactpersoon, Id=" . $contactPersoonId . ", is niet gevonden." );
-            return;
-        }
-    }
-    else
-    {
-        if ( $deelnemerId != null )
-        {
-            $deelnemer = DeelnemerQuery::create()->findPK( $deelnemerId );
-            $persoonId = $deelnemer->getPersoonId();
-            $persoon = $persoonsGegevens->load( $persoonId );
-            if ( $persoon == null )
-            {
-                echo "Persoon " . $persoonId . " is niet gevonden.";
-                $logger->error( "Deelnemer/persoon , Id=" . $persoonId . ", is niet gevonden." );
-                return;
-            }
-            else
-            {
-                $logger->debug( "Bestaand contactpersoon, id=" . $persoonId );
-                $persoonsGegevens->setCreator( $email );
-            }
-        }
-        else
-        {
-            $persoonsGegevens->setCreator( $email );
-            $persoonsGegevens->new();
-            $logger->debug( "Deelnemer ID is null, nieuw persoon toegevoegd" );
-        }
-    }
-
-    $persoonsGegevens->setExtraGegevens( $extraContact );
-    // Volgende vult het persoonsgegevens object met de data uit de POST
-    $persoonsGegevens->validate( $_POST );
-    $validateOk += $persoonsGegevens->getValidateOk();
-
-    if ( $validateOk == 0 )
-    {
-        $logger->debug( "Persoonsgegevens gevalideerd, alles OK" );
-
-        $con->beginTransaction();
-
-        try
-        {
             ////////////////////////////////////////////
             // Persoon en deelnemergegevens vastleggen
             ////////////////////////////////////////////
@@ -709,18 +587,8 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                 $logger->debug( "Wijziging definitieve inschrijving. Gewijzigde gegevens niet vastgelegd, PersoonID: " . $persoonsGegevens->getId() . ", InschrijvingsID: " . $sessieVariabelen["inschrijving_id"] . ", Totaalprijs: " . $totaalprijs );
             }
 
-//            $con->rollback();
             $con->commit();
 
-            $logger->debug( 'Deelnemergegevens voor persoonID=' . $persoonsGegevens->getId() . ' zijn opgeslagen.' );
-
-            //ToDo: Moet dit of kan dit blijven bestaan (voor terug-knop bijvoorbeeld):
-            unset( $_SESSION['dynamicHtml'] );
-
-            $status = 0;
-
-            // Volgende deelnemer.
-//            header( "Location:inschrijving_overzicht.php?evt=" . $evt . "&prs=" . $contactPersoonId );
             $logger->debug( 'Afronden aanvraag.' );
             header( "Location:inschrijving_afronden.php?evt=" . $sessieVariabelen["evenement_id"] );
             exit();
@@ -728,11 +596,27 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
         catch ( \Exception $e )
         {
             $con->rollback();
-            $logger->error( 'Probleem met opslaan gegevens, foutcode ' . $e->getPrevious()->errorInfo[1] );
-            $logger->error( "deelnemer PersoonId " . $persoonsGegevens->getId() . ", deelnemer InschrijvingId " . $sessieVariabelen["inschrijving_id"] );
-            $logger->error( $e->getPrevious()->errorInfo[2] );
-            alert( 'Probleem met opslaan gegevens, details:\n' . $e->getMessage() );
-        }
+            if ( $e->getPrevious() != null )
+            {
+                $logger->error( 'Probleem met opslaan gegevens contactpersoon, foutcode ' . $e->getPrevious()->errorInfo[1] );
+                $logger->error( $e->getPrevious()->errorInfo[2] );
+                $validatiemelding = 'Probleem met opslaan gegevens, foutcode ' . $e->getPrevious()->errorInfo[1];
+            }
+            else
+            {
+                $logger->error( 'Probleem met opslaan gegevens' );
+                $inschrijfId = "onbekend";
+                if ( isset( $sessieVariabelen["inschrijving_id"] ))
+                {
+                    $inschrijfId = $sessieVariabelen["inschrijving_id"];
+                }
+                
+                $logger->error( "deelnemer PersoonId " . $persoonsGegevens->getId() . ", deelnemer InschrijvingId " . $inschrijfId );
+                alert( 'Probleem met opslaan gegevens, details:\n' . $e->getMessage() );
+                $validatiemelding = 'Probleem met opslaan gegevens, ' . $e->getMessage();
+            }
+            $logger->dump( $e );
+        }    
     }
     else
     {
