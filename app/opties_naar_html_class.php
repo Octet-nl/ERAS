@@ -46,6 +46,7 @@ class optiesNaarHtml
     private $currentValues = array();
     private $evenementId = 0;
     private $useIntern = false;
+    private $isPreview = false;
     private $wijzigenDefinitieveInschrijving = false;
     private $kopregel = "Opties";
     private $logger = null;
@@ -84,6 +85,11 @@ class optiesNaarHtml
     public function setKopregel( $kopregel )
     {
         $this->kopregel = $kopregel;
+    }
+
+    public function setIsPreview( $preview )
+    {
+        $this->isPreview = $preview;
     }
 
     public function setAutorisatieRol( $rol )
@@ -189,28 +195,30 @@ class optiesNaarHtml
 
         foreach ( $opties as $optie )
         {
-            $this->logger->verbose( "Foreach optie: " . $optie->getNaam() );
+            $this->logger->debug( "Foreach optie: " . $optie->getNaam() );
 
             if ( $this->useIntern == false && $optie->getInternGebruik() )
             {
-                $this->logger->verbose( "Skip: Geen interne medewerker en optie voor intern gebruik: " . $optie->getNaam() );
+                $this->logger->debug( "Skip: Geen interne medewerker en optie voor intern gebruik: " . $optie->getNaam() );
                 continue;
             }
 
             if ( $optie->getStatus() != OPTIE_STATUS_ACTIEF ) // Status 1 is actief
             {
-                $this->logger->verbose( "Skip: Optie niet actief: " . $optie->getNaam() );
+                $this->logger->debug( "Skip: Optie niet actief: " . $optie->getNaam() );
                 continue;
             }
 
             if (  ( $optie->getLaterWijzigen() == "0" && $this->getWijzigenDefinitieveInschrijving() ) && ( $this->autorisatieRol < AUTORISATIE_STATUS_MEDEWERKER ) )
             {
-                $this->logger->verbose( "Skip: Wil later wijzigen en later wijzigen niet toegestaan: " . $optie->getNaam() );
+                $this->logger->debug( "Skip: Wil later wijzigen en later wijzigen niet toegestaan: " . $optie->getNaam() );
                 continue;
             }
 
             // Instemmingsopties niet voor medewerkers
-            if ( $optie->getOptieType() == OPTIETYPE_AKKOORD && $this->autorisatieRol >= AUTORISATIE_STATUS_MEDEWERKER)
+            if ( $optie->getOptieType() == OPTIETYPE_AKKOORD && 
+                 $this->autorisatieRol >= AUTORISATIE_STATUS_MEDEWERKER &&
+                 !$this->isPreview )
             {
                 continue;
             }
@@ -394,7 +402,7 @@ class optiesNaarHtml
             {
                 $tekstAchterCheck = '<div ' . $labelTekst . ' style="font-style:italic;padding:0em 0em 1.2em 1.0em">' . $optie->getTekstAchter() . '</div>';
                 $tekstAchterJaNee = '<div ' . 'name="' . $optie->getLabel() . 'xx"' . ' style="font-style:italic;padding:0em 0em 1.2em 0em">' . $optie->getTekstAchter() . '</div>';
-                $witregel = "";
+ //               $witregel = "";
             }
 
             if ( $optie->getHeeftHorizontaleLijn() == HORIZONTALE_LIJN_BOVEN ||
@@ -402,7 +410,7 @@ class optiesNaarHtml
             {
                 $html1 = '<div ' . $labelTekst . '><br/><hr/></div>';
                 $this->htmlTotal .= $html1;
-                $witregel = "";
+ //               $witregel = "";
             }
 
             if ( $optie->getOptieType() == OPTIETYPE_AANTAL )

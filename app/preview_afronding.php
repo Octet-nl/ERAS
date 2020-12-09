@@ -161,6 +161,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
         $optiesNaarHtml = new optiesNaarHtml();
         $optiesNaarHtml->setEvenementId( $evt );
         $optiesNaarHtml->setAutorisatieRol( $autorisatie->getRol() );
+        $optiesNaarHtml->setIsPreview( true );
         $optiesNaarHtml->setKopregel( "" ); //"Opties voor deze inschrijving");
         $optiesNaarHtml->setCurrent( $currentOpties );
         $optiesNaarHtml->genereerHtml( $opties );

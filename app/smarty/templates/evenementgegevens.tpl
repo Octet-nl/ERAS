@@ -78,7 +78,7 @@
         <div>
             <label for="prijs">Prijs:</label>
             <input class="datuminput" type="text" id="prijs" name="prijs" placeholder="123.45" value="{$prijs}">
-            <span class="error">{$inschrijfTijdEindErr}</span>
+            <span class="error">{$prijsErr}</span>
 
             <label class="datuminput" for="maxDeelnemers">Max deelnemers:</label>
             <input type="number" id="maxDeelnemers" name="maxDeelnemers" value="{$maxDeelnemers}" min="1">

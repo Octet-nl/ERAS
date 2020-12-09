@@ -53,7 +53,7 @@ $smarty->setConfigDir( 'smarty/configs' );
 
 
 $logger = new Logger();
-$logger->level( LOGLEVEL_NONE );
+$logger->level( LOGLEVEL );
 
 require_once 'evenement_define_variables.inc';
 
@@ -103,6 +103,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
             $logger->debug( "Genereer dynamisch HTML" );
             require_once "opties_naar_html_class.php";
             $optiesNaarHtml = new optiesNaarHtml();
+            $optiesNaarHtml->setIsPreview( true );
             $optiesNaarHtml->setEvenementId( $evt );
             $optiesNaarHtml->setAutorisatieRol( $autorisatie->getRol() );
             $optiesNaarHtml->setKopregel( "Opties voor deze deelnemer" );
@@ -129,7 +130,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
     }
 }
 
-// Na drukken op de "inschrijven" knop
+// Na drukken op de "afronden" knop
 if ( $_SERVER["REQUEST_METHOD"] == "POST" )
 {
     $logger->dump( $_POST );
