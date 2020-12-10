@@ -149,6 +149,13 @@ td {
   width: auto;
 }
 
+.eras { 
+  float: left;
+  position: relative;
+  left: 50%;
+  right: -50%;
+}
+
 .loggedin { 
   float:right; 
 }

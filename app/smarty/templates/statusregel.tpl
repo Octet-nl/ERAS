@@ -8,6 +8,10 @@
               </span>
             {/if}
         </span>
+        <span class="eras">
+          ERAS 2021
+        </span>
+
         <span class="loggedin">
           {if !isset($noLogout) or $noLogout != 'true' }
           <input class="barebutton" type="button" id="home" name="home" value="[home]" onclick="thuis()">
