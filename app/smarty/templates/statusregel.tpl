@@ -8,8 +8,9 @@
               </span>
             {/if}
         </span>
+
         <span class="eras">
-          ERAS 2021
+          ERAS by HdR
         </span>
 
         <span class="loggedin">

@@ -7,7 +7,7 @@
 {/if}
 <form method="post" action="{$SCRIPT_NAME}">
 
-    {if $evenementNaam != ""}
+    {if $evenementNaam != "" && $groepsInschrijving == "1"}
     <fieldset id="soort">
         <h2>Soort inschrijving</h2>
         <div>
@@ -34,7 +34,7 @@
               <input type="radio" name="account" id="regist" value="register" {$registerchecked} onclick="doRegister()" />
               Account aanmaken
           </div>
-          {if !$accountNodig}
+          {if $accountNodig == "0"}
             <div class="radio">
               <input type="radio" name="account" id="zonder" value="zonder" {$directchecked} onclick="doZonder()" />
               Direct inschrijven zonder account

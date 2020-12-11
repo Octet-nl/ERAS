@@ -207,6 +207,13 @@ abstract class Evenement implements ActiveRecordInterface
     protected $account_nodig;
 
     /**
+     * The value for the groepsinschrijving field.
+     *
+     * @var        int
+     */
+    protected $groepsinschrijving;
+
+    /**
      * The value for the status field.
      *
      * @var        int
@@ -773,6 +780,16 @@ abstract class Evenement implements ActiveRecordInterface
     }
 
     /**
+     * Get the [groepsinschrijving] column value.
+     *
+     * @return int
+     */
+    public function getGroepsInschrijving()
+    {
+        return $this->groepsinschrijving;
+    }
+
+    /**
      * Get the [status] column value.
      *
      * @return int
@@ -1203,6 +1220,26 @@ abstract class Evenement implements ActiveRecordInterface
     } // setAccountNodig()
 
     /**
+     * Set the value of [groepsinschrijving] column.
+     *
+     * @param int $v new value
+     * @return $this|\fb_model\fb_model\Evenement The current object (for fluent API support)
+     */
+    public function setGroepsInschrijving($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->groepsinschrijving !== $v) {
+            $this->groepsinschrijving = $v;
+            $this->modifiedColumns[EvenementTableMap::COL_GROEPSINSCHRIJVING] = true;
+        }
+
+        return $this;
+    } // setGroepsInschrijving()
+
+    /**
      * Set the value of [status] column.
      *
      * @param int $v new value
@@ -1408,25 +1445,28 @@ abstract class Evenement implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 17 + $startcol : EvenementTableMap::translateFieldName('AccountNodig', TableMap::TYPE_PHPNAME, $indexType)];
             $this->account_nodig = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 18 + $startcol : EvenementTableMap::translateFieldName('Status', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 18 + $startcol : EvenementTableMap::translateFieldName('GroepsInschrijving', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->groepsinschrijving = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 19 + $startcol : EvenementTableMap::translateFieldName('Status', TableMap::TYPE_PHPNAME, $indexType)];
             $this->status = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 19 + $startcol : EvenementTableMap::translateFieldName('DatumGemaakt', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 20 + $startcol : EvenementTableMap::translateFieldName('DatumGemaakt', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->gemaakt_datum = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 20 + $startcol : EvenementTableMap::translateFieldName('GemaaktDoor', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 21 + $startcol : EvenementTableMap::translateFieldName('GemaaktDoor', TableMap::TYPE_PHPNAME, $indexType)];
             $this->gemaakt_door = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 21 + $startcol : EvenementTableMap::translateFieldName('DatumGewijzigd', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 22 + $startcol : EvenementTableMap::translateFieldName('DatumGewijzigd', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->gewijzigd_datum = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 22 + $startcol : EvenementTableMap::translateFieldName('GewijzigdDoor', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 23 + $startcol : EvenementTableMap::translateFieldName('GewijzigdDoor', TableMap::TYPE_PHPNAME, $indexType)];
             $this->gewijzigd_door = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
@@ -1436,7 +1476,7 @@ abstract class Evenement implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 23; // 23 = EvenementTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 24; // 24 = EvenementTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\fb_model\\fb_model\\Evenement'), 0, $e);
@@ -1834,6 +1874,9 @@ abstract class Evenement implements ActiveRecordInterface
         if ($this->isColumnModified(EvenementTableMap::COL_ACCOUNT_NODIG)) {
             $modifiedColumns[':p' . $index++]  = 'account_nodig';
         }
+        if ($this->isColumnModified(EvenementTableMap::COL_GROEPSINSCHRIJVING)) {
+            $modifiedColumns[':p' . $index++]  = 'groepsinschrijving';
+        }
         if ($this->isColumnModified(EvenementTableMap::COL_STATUS)) {
             $modifiedColumns[':p' . $index++]  = 'status';
         }
@@ -1913,6 +1956,9 @@ abstract class Evenement implements ActiveRecordInterface
                         break;
                     case 'account_nodig':
                         $stmt->bindValue($identifier, $this->account_nodig, PDO::PARAM_INT);
+                        break;
+                    case 'groepsinschrijving':
+                        $stmt->bindValue($identifier, $this->groepsinschrijving, PDO::PARAM_INT);
                         break;
                     case 'status':
                         $stmt->bindValue($identifier, $this->status, PDO::PARAM_INT);
@@ -2046,18 +2092,21 @@ abstract class Evenement implements ActiveRecordInterface
                 return $this->getAccountNodig();
                 break;
             case 18:
-                return $this->getStatus();
+                return $this->getGroepsInschrijving();
                 break;
             case 19:
-                return $this->getDatumGemaakt();
+                return $this->getStatus();
                 break;
             case 20:
-                return $this->getGemaaktDoor();
+                return $this->getDatumGemaakt();
                 break;
             case 21:
-                return $this->getDatumGewijzigd();
+                return $this->getGemaaktDoor();
                 break;
             case 22:
+                return $this->getDatumGewijzigd();
+                break;
+            case 23:
                 return $this->getGewijzigdDoor();
                 break;
             default:
@@ -2108,11 +2157,12 @@ abstract class Evenement implements ActiveRecordInterface
             $keys[15] => $this->getMaxDeelnemers(),
             $keys[16] => $this->getAnnuleringsverzekering(),
             $keys[17] => $this->getAccountNodig(),
-            $keys[18] => $this->getStatus(),
-            $keys[19] => $this->getDatumGemaakt(),
-            $keys[20] => $this->getGemaaktDoor(),
-            $keys[21] => $this->getDatumGewijzigd(),
-            $keys[22] => $this->getGewijzigdDoor(),
+            $keys[18] => $this->getGroepsInschrijving(),
+            $keys[19] => $this->getStatus(),
+            $keys[20] => $this->getDatumGemaakt(),
+            $keys[21] => $this->getGemaaktDoor(),
+            $keys[22] => $this->getDatumGewijzigd(),
+            $keys[23] => $this->getGewijzigdDoor(),
         );
         if ($result[$keys[5]] instanceof \DateTimeInterface) {
             $result[$keys[5]] = $result[$keys[5]]->format('c');
@@ -2130,12 +2180,12 @@ abstract class Evenement implements ActiveRecordInterface
             $result[$keys[10]] = $result[$keys[10]]->format('c');
         }
 
-        if ($result[$keys[19]] instanceof \DateTimeInterface) {
-            $result[$keys[19]] = $result[$keys[19]]->format('c');
+        if ($result[$keys[20]] instanceof \DateTimeInterface) {
+            $result[$keys[20]] = $result[$keys[20]]->format('c');
         }
 
-        if ($result[$keys[21]] instanceof \DateTimeInterface) {
-            $result[$keys[21]] = $result[$keys[21]]->format('c');
+        if ($result[$keys[22]] instanceof \DateTimeInterface) {
+            $result[$keys[22]] = $result[$keys[22]]->format('c');
         }
 
         $virtualColumns = $this->virtualColumns;
@@ -2308,18 +2358,21 @@ abstract class Evenement implements ActiveRecordInterface
                 $this->setAccountNodig($value);
                 break;
             case 18:
-                $this->setStatus($value);
+                $this->setGroepsInschrijving($value);
                 break;
             case 19:
-                $this->setDatumGemaakt($value);
+                $this->setStatus($value);
                 break;
             case 20:
-                $this->setGemaaktDoor($value);
+                $this->setDatumGemaakt($value);
                 break;
             case 21:
-                $this->setDatumGewijzigd($value);
+                $this->setGemaaktDoor($value);
                 break;
             case 22:
+                $this->setDatumGewijzigd($value);
+                break;
+            case 23:
                 $this->setGewijzigdDoor($value);
                 break;
         } // switch()
@@ -2403,19 +2456,22 @@ abstract class Evenement implements ActiveRecordInterface
             $this->setAccountNodig($arr[$keys[17]]);
         }
         if (array_key_exists($keys[18], $arr)) {
-            $this->setStatus($arr[$keys[18]]);
+            $this->setGroepsInschrijving($arr[$keys[18]]);
         }
         if (array_key_exists($keys[19], $arr)) {
-            $this->setDatumGemaakt($arr[$keys[19]]);
+            $this->setStatus($arr[$keys[19]]);
         }
         if (array_key_exists($keys[20], $arr)) {
-            $this->setGemaaktDoor($arr[$keys[20]]);
+            $this->setDatumGemaakt($arr[$keys[20]]);
         }
         if (array_key_exists($keys[21], $arr)) {
-            $this->setDatumGewijzigd($arr[$keys[21]]);
+            $this->setGemaaktDoor($arr[$keys[21]]);
         }
         if (array_key_exists($keys[22], $arr)) {
-            $this->setGewijzigdDoor($arr[$keys[22]]);
+            $this->setDatumGewijzigd($arr[$keys[22]]);
+        }
+        if (array_key_exists($keys[23], $arr)) {
+            $this->setGewijzigdDoor($arr[$keys[23]]);
         }
     }
 
@@ -2511,6 +2567,9 @@ abstract class Evenement implements ActiveRecordInterface
         }
         if ($this->isColumnModified(EvenementTableMap::COL_ACCOUNT_NODIG)) {
             $criteria->add(EvenementTableMap::COL_ACCOUNT_NODIG, $this->account_nodig);
+        }
+        if ($this->isColumnModified(EvenementTableMap::COL_GROEPSINSCHRIJVING)) {
+            $criteria->add(EvenementTableMap::COL_GROEPSINSCHRIJVING, $this->groepsinschrijving);
         }
         if ($this->isColumnModified(EvenementTableMap::COL_STATUS)) {
             $criteria->add(EvenementTableMap::COL_STATUS, $this->status);
@@ -2630,6 +2689,7 @@ abstract class Evenement implements ActiveRecordInterface
         $copyObj->setMaxDeelnemers($this->getMaxDeelnemers());
         $copyObj->setAnnuleringsverzekering($this->getAnnuleringsverzekering());
         $copyObj->setAccountNodig($this->getAccountNodig());
+        $copyObj->setGroepsInschrijving($this->getGroepsInschrijving());
         $copyObj->setStatus($this->getStatus());
         $copyObj->setDatumGemaakt($this->getDatumGemaakt());
         $copyObj->setGemaaktDoor($this->getGemaaktDoor());
@@ -4120,6 +4180,7 @@ abstract class Evenement implements ActiveRecordInterface
         $this->max_deelnemers = null;
         $this->annuleringsverzekering = null;
         $this->account_nodig = null;
+        $this->groepsinschrijving = null;
         $this->status = null;
         $this->gemaakt_datum = null;
         $this->gemaakt_door = null;

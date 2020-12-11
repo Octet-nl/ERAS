@@ -68,9 +68,10 @@ $inschrijfDatumBeginErr = $inschrijfDatumEindErr = $inschrijfTijdBeginErr = $ins
 $maxDeelnemers = $categorie = $betaalwijze_deelnemer = "";
 $naamErr = $korteOmschrijvingErr = $langeOmschrijvingErr = $datumBeginErr = $datumEindErr = $prijsErr = "";
 $maxDeelnemersErr = $statusErr = $aantalDagen = $aantalDagenErr = "";
-$isAnnuleringsverzekeringErr = $betaalwijze_deelnemerErr = $isAccountNodigErr = "";
+$isAnnuleringsverzekeringErr = $betaalwijze_deelnemerErr = $isAccountNodigErr = $groepsInschrijvingErr = "";
 $status = $extraContact = $extraDeelnemer = 0;
-$isAnnuleringsverzekering = $isAccountNodig = null; //OPTIE_KEUZE_NEE;
+$isAnnuleringsverzekering = $isAccountNodig = null;
+$groepsInschrijving = OPTIE_KEUZE_NEE;
 $volledigheid_contact = array();
 $volledigheid_deelnemer = array(); 
 $betaalwijze_deelnemer = array();
@@ -340,6 +341,10 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             ->onerror( $isAccountNodigErr )
             ->required( true )
             ->go();
+        $validateOk += $setVar->name( $groepsInschrijving )
+            ->onerror( $groepsInschrijvingErr )
+            ->required( true )
+            ->go();
         $validateOk += $setVar->name( $betaalwijze_deelnemer )
             ->onerror( $betaalwijze_deelnemerErr )
             ->required( true )
@@ -407,6 +412,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             $evenement->setStatus( $status );
             $evenement->setAnnuleringsverzekering( vanJaNee( $isAnnuleringsverzekering ) );
             $evenement->setAccountNodig( vanJaNee( $isAccountNodig ) );
+            $evenement->setGroepsInschrijving( vanJaNee( $groepsInschrijving ) );
             $evenement->save();
             $con->commit();
 
@@ -557,6 +563,12 @@ $smarty->assign( 'accountNodigKeus', array(
     OPTIE_KEUZE_NEE => OPTIE_KEUZE_NEE ) );
 $smarty->assign( 'isAccountNodig', $isAccountNodig );
 $smarty->assign( 'isAccountNodigErr', $isAccountNodigErr );
+
+$smarty->assign( 'groepsInschrijvingKeus', array(
+    OPTIE_KEUZE_JA => OPTIE_KEUZE_JA,
+    OPTIE_KEUZE_NEE => OPTIE_KEUZE_NEE ) );
+$smarty->assign( 'groepsInschrijving', $groepsInschrijving );
+$smarty->assign( 'groepsInschrijvingErr', $groepsInschrijvingErr );
 
 $smarty->assign( 'categorielijst', $categorieArray );
 $smarty->assign( 'categorie', $categorie );

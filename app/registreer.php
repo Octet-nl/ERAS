@@ -65,6 +65,7 @@ $soort = INSCHRIJVING_SOORT_INDIVIDU;
 $moetWijzigen = false;
 $inschrijving = array();
 $accountNodig = false;
+$groepsInschrijving = false;
 $evt = "";
 
 $systeem = new Sysdb();
@@ -81,6 +82,8 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
         if ( $evenement != null )
         {
             $evenementNaam = $evenement->getNaam();
+            $groepsInschrijving = $evenement->getGroepsInschrijving();
+            $accountNodig = $evenement->getAccountNodig();
         }
     }
     else
@@ -130,6 +133,8 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
         $validateOk += $setVar->name( $mailadres )
             ->go();
         $validateOk += $setVar->name( $accountNodig )
+            ->go();
+        $validateOk += $setVar->name( $groepsInschrijving )
             ->go();
         $validateOk += $setVar->name( $wijzigWachtwoord )
             ->go();            
@@ -493,5 +498,6 @@ $smarty->assign( 'wijzigWachtwoord', $wijzigWachtwoord );
 $smarty->assign( 'moetWijzigen', $moetWijzigen );
 $smarty->assign( 'wijzigchecked', $wijzigchecked );
 $smarty->assign( 'accountNodig', $accountNodig );
+$smarty->assign( 'groepsInschrijving', $groepsInschrijving );
 
 $smarty->display( 'registreer.tpl' );

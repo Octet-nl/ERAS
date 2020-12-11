@@ -59,7 +59,7 @@ class EvenementTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 23;
+    const NUM_COLUMNS = 24;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class EvenementTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 23;
+    const NUM_HYDRATE_COLUMNS = 24;
 
     /**
      * the column name for the id field
@@ -162,6 +162,11 @@ class EvenementTableMap extends TableMap
     const COL_ACCOUNT_NODIG = 'fb_evenement.account_nodig';
 
     /**
+     * the column name for the groepsinschrijving field
+     */
+    const COL_GROEPSINSCHRIJVING = 'fb_evenement.groepsinschrijving';
+
+    /**
      * the column name for the status field
      */
     const COL_STATUS = 'fb_evenement.status';
@@ -198,11 +203,11 @@ class EvenementTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Id', 'Naam', 'Categorie', 'KorteOmschrijving', 'LangeOmschrijving', 'DatumBegin', 'DatumEind', 'AantalDagen', 'Frequentie', 'InschrijvingBegin', 'InschrijvingEind', 'ExtraDeelnemerGegevens', 'ExtraContactGegevens', 'Prijs', 'Betaalwijze', 'MaxDeelnemers', 'Annuleringsverzekering', 'AccountNodig', 'Status', 'DatumGemaakt', 'GemaaktDoor', 'DatumGewijzigd', 'GewijzigdDoor', ),
-        self::TYPE_CAMELNAME     => array('id', 'naam', 'categorie', 'korteOmschrijving', 'langeOmschrijving', 'datumBegin', 'datumEind', 'aantalDagen', 'frequentie', 'inschrijvingBegin', 'inschrijvingEind', 'extraDeelnemerGegevens', 'extraContactGegevens', 'prijs', 'betaalwijze', 'maxDeelnemers', 'annuleringsverzekering', 'accountNodig', 'status', 'datumGemaakt', 'gemaaktDoor', 'datumGewijzigd', 'gewijzigdDoor', ),
-        self::TYPE_COLNAME       => array(EvenementTableMap::COL_ID, EvenementTableMap::COL_NAAM, EvenementTableMap::COL_CATEGORIE, EvenementTableMap::COL_KORTE_OMSCHRIJVING, EvenementTableMap::COL_LANGE_OMSCHRIJVING, EvenementTableMap::COL_DATUM_BEGIN, EvenementTableMap::COL_DATUM_EIND, EvenementTableMap::COL_AANTAL_DAGEN, EvenementTableMap::COL_FREQUENTIE, EvenementTableMap::COL_INSCHRIJVING_BEGIN, EvenementTableMap::COL_INSCHRIJVING_EIND, EvenementTableMap::COL_EXTRA_DEELNEMER_GEGEVENS, EvenementTableMap::COL_EXTRA_CONTACT_GEGEVENS, EvenementTableMap::COL_PRIJS, EvenementTableMap::COL_BETAALWIJZE, EvenementTableMap::COL_MAX_DEELNEMERS, EvenementTableMap::COL_ANNULERINGSVERZEKERING, EvenementTableMap::COL_ACCOUNT_NODIG, EvenementTableMap::COL_STATUS, EvenementTableMap::COL_GEMAAKT_DATUM, EvenementTableMap::COL_GEMAAKT_DOOR, EvenementTableMap::COL_GEWIJZIGD_DATUM, EvenementTableMap::COL_GEWIJZIGD_DOOR, ),
-        self::TYPE_FIELDNAME     => array('id', 'naam', 'categorie', 'korte_omschrijving', 'lange_omschrijving', 'datum_begin', 'datum_eind', 'aantal_dagen', 'frequentie', 'inschrijving_begin', 'inschrijving_eind', 'extra_deelnemer_gegevens', 'extra_contact_gegevens', 'prijs', 'betaalwijze', 'max_deelnemers', 'annuleringsverzekering', 'account_nodig', 'status', 'gemaakt_datum', 'gemaakt_door', 'gewijzigd_datum', 'gewijzigd_door', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, )
+        self::TYPE_PHPNAME       => array('Id', 'Naam', 'Categorie', 'KorteOmschrijving', 'LangeOmschrijving', 'DatumBegin', 'DatumEind', 'AantalDagen', 'Frequentie', 'InschrijvingBegin', 'InschrijvingEind', 'ExtraDeelnemerGegevens', 'ExtraContactGegevens', 'Prijs', 'Betaalwijze', 'MaxDeelnemers', 'Annuleringsverzekering', 'AccountNodig', 'GroepsInschrijving', 'Status', 'DatumGemaakt', 'GemaaktDoor', 'DatumGewijzigd', 'GewijzigdDoor', ),
+        self::TYPE_CAMELNAME     => array('id', 'naam', 'categorie', 'korteOmschrijving', 'langeOmschrijving', 'datumBegin', 'datumEind', 'aantalDagen', 'frequentie', 'inschrijvingBegin', 'inschrijvingEind', 'extraDeelnemerGegevens', 'extraContactGegevens', 'prijs', 'betaalwijze', 'maxDeelnemers', 'annuleringsverzekering', 'accountNodig', 'groepsInschrijving', 'status', 'datumGemaakt', 'gemaaktDoor', 'datumGewijzigd', 'gewijzigdDoor', ),
+        self::TYPE_COLNAME       => array(EvenementTableMap::COL_ID, EvenementTableMap::COL_NAAM, EvenementTableMap::COL_CATEGORIE, EvenementTableMap::COL_KORTE_OMSCHRIJVING, EvenementTableMap::COL_LANGE_OMSCHRIJVING, EvenementTableMap::COL_DATUM_BEGIN, EvenementTableMap::COL_DATUM_EIND, EvenementTableMap::COL_AANTAL_DAGEN, EvenementTableMap::COL_FREQUENTIE, EvenementTableMap::COL_INSCHRIJVING_BEGIN, EvenementTableMap::COL_INSCHRIJVING_EIND, EvenementTableMap::COL_EXTRA_DEELNEMER_GEGEVENS, EvenementTableMap::COL_EXTRA_CONTACT_GEGEVENS, EvenementTableMap::COL_PRIJS, EvenementTableMap::COL_BETAALWIJZE, EvenementTableMap::COL_MAX_DEELNEMERS, EvenementTableMap::COL_ANNULERINGSVERZEKERING, EvenementTableMap::COL_ACCOUNT_NODIG, EvenementTableMap::COL_GROEPSINSCHRIJVING, EvenementTableMap::COL_STATUS, EvenementTableMap::COL_GEMAAKT_DATUM, EvenementTableMap::COL_GEMAAKT_DOOR, EvenementTableMap::COL_GEWIJZIGD_DATUM, EvenementTableMap::COL_GEWIJZIGD_DOOR, ),
+        self::TYPE_FIELDNAME     => array('id', 'naam', 'categorie', 'korte_omschrijving', 'lange_omschrijving', 'datum_begin', 'datum_eind', 'aantal_dagen', 'frequentie', 'inschrijving_begin', 'inschrijving_eind', 'extra_deelnemer_gegevens', 'extra_contact_gegevens', 'prijs', 'betaalwijze', 'max_deelnemers', 'annuleringsverzekering', 'account_nodig', 'groepsinschrijving', 'status', 'gemaakt_datum', 'gemaakt_door', 'gewijzigd_datum', 'gewijzigd_door', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, )
     );
 
     /**
@@ -212,11 +217,11 @@ class EvenementTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Id' => 0, 'Naam' => 1, 'Categorie' => 2, 'KorteOmschrijving' => 3, 'LangeOmschrijving' => 4, 'DatumBegin' => 5, 'DatumEind' => 6, 'AantalDagen' => 7, 'Frequentie' => 8, 'InschrijvingBegin' => 9, 'InschrijvingEind' => 10, 'ExtraDeelnemerGegevens' => 11, 'ExtraContactGegevens' => 12, 'Prijs' => 13, 'Betaalwijze' => 14, 'MaxDeelnemers' => 15, 'Annuleringsverzekering' => 16, 'AccountNodig' => 17, 'Status' => 18, 'DatumGemaakt' => 19, 'GemaaktDoor' => 20, 'DatumGewijzigd' => 21, 'GewijzigdDoor' => 22, ),
-        self::TYPE_CAMELNAME     => array('id' => 0, 'naam' => 1, 'categorie' => 2, 'korteOmschrijving' => 3, 'langeOmschrijving' => 4, 'datumBegin' => 5, 'datumEind' => 6, 'aantalDagen' => 7, 'frequentie' => 8, 'inschrijvingBegin' => 9, 'inschrijvingEind' => 10, 'extraDeelnemerGegevens' => 11, 'extraContactGegevens' => 12, 'prijs' => 13, 'betaalwijze' => 14, 'maxDeelnemers' => 15, 'annuleringsverzekering' => 16, 'accountNodig' => 17, 'status' => 18, 'datumGemaakt' => 19, 'gemaaktDoor' => 20, 'datumGewijzigd' => 21, 'gewijzigdDoor' => 22, ),
-        self::TYPE_COLNAME       => array(EvenementTableMap::COL_ID => 0, EvenementTableMap::COL_NAAM => 1, EvenementTableMap::COL_CATEGORIE => 2, EvenementTableMap::COL_KORTE_OMSCHRIJVING => 3, EvenementTableMap::COL_LANGE_OMSCHRIJVING => 4, EvenementTableMap::COL_DATUM_BEGIN => 5, EvenementTableMap::COL_DATUM_EIND => 6, EvenementTableMap::COL_AANTAL_DAGEN => 7, EvenementTableMap::COL_FREQUENTIE => 8, EvenementTableMap::COL_INSCHRIJVING_BEGIN => 9, EvenementTableMap::COL_INSCHRIJVING_EIND => 10, EvenementTableMap::COL_EXTRA_DEELNEMER_GEGEVENS => 11, EvenementTableMap::COL_EXTRA_CONTACT_GEGEVENS => 12, EvenementTableMap::COL_PRIJS => 13, EvenementTableMap::COL_BETAALWIJZE => 14, EvenementTableMap::COL_MAX_DEELNEMERS => 15, EvenementTableMap::COL_ANNULERINGSVERZEKERING => 16, EvenementTableMap::COL_ACCOUNT_NODIG => 17, EvenementTableMap::COL_STATUS => 18, EvenementTableMap::COL_GEMAAKT_DATUM => 19, EvenementTableMap::COL_GEMAAKT_DOOR => 20, EvenementTableMap::COL_GEWIJZIGD_DATUM => 21, EvenementTableMap::COL_GEWIJZIGD_DOOR => 22, ),
-        self::TYPE_FIELDNAME     => array('id' => 0, 'naam' => 1, 'categorie' => 2, 'korte_omschrijving' => 3, 'lange_omschrijving' => 4, 'datum_begin' => 5, 'datum_eind' => 6, 'aantal_dagen' => 7, 'frequentie' => 8, 'inschrijving_begin' => 9, 'inschrijving_eind' => 10, 'extra_deelnemer_gegevens' => 11, 'extra_contact_gegevens' => 12, 'prijs' => 13, 'betaalwijze' => 14, 'max_deelnemers' => 15, 'annuleringsverzekering' => 16, 'account_nodig' => 17, 'status' => 18, 'gemaakt_datum' => 19, 'gemaakt_door' => 20, 'gewijzigd_datum' => 21, 'gewijzigd_door' => 22, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, )
+        self::TYPE_PHPNAME       => array('Id' => 0, 'Naam' => 1, 'Categorie' => 2, 'KorteOmschrijving' => 3, 'LangeOmschrijving' => 4, 'DatumBegin' => 5, 'DatumEind' => 6, 'AantalDagen' => 7, 'Frequentie' => 8, 'InschrijvingBegin' => 9, 'InschrijvingEind' => 10, 'ExtraDeelnemerGegevens' => 11, 'ExtraContactGegevens' => 12, 'Prijs' => 13, 'Betaalwijze' => 14, 'MaxDeelnemers' => 15, 'Annuleringsverzekering' => 16, 'AccountNodig' => 17, 'GroepsInschrijving' => 18, 'Status' => 19, 'DatumGemaakt' => 20, 'GemaaktDoor' => 21, 'DatumGewijzigd' => 22, 'GewijzigdDoor' => 23, ),
+        self::TYPE_CAMELNAME     => array('id' => 0, 'naam' => 1, 'categorie' => 2, 'korteOmschrijving' => 3, 'langeOmschrijving' => 4, 'datumBegin' => 5, 'datumEind' => 6, 'aantalDagen' => 7, 'frequentie' => 8, 'inschrijvingBegin' => 9, 'inschrijvingEind' => 10, 'extraDeelnemerGegevens' => 11, 'extraContactGegevens' => 12, 'prijs' => 13, 'betaalwijze' => 14, 'maxDeelnemers' => 15, 'annuleringsverzekering' => 16, 'accountNodig' => 17, 'groepsInschrijving' => 18, 'status' => 19, 'datumGemaakt' => 20, 'gemaaktDoor' => 21, 'datumGewijzigd' => 22, 'gewijzigdDoor' => 23, ),
+        self::TYPE_COLNAME       => array(EvenementTableMap::COL_ID => 0, EvenementTableMap::COL_NAAM => 1, EvenementTableMap::COL_CATEGORIE => 2, EvenementTableMap::COL_KORTE_OMSCHRIJVING => 3, EvenementTableMap::COL_LANGE_OMSCHRIJVING => 4, EvenementTableMap::COL_DATUM_BEGIN => 5, EvenementTableMap::COL_DATUM_EIND => 6, EvenementTableMap::COL_AANTAL_DAGEN => 7, EvenementTableMap::COL_FREQUENTIE => 8, EvenementTableMap::COL_INSCHRIJVING_BEGIN => 9, EvenementTableMap::COL_INSCHRIJVING_EIND => 10, EvenementTableMap::COL_EXTRA_DEELNEMER_GEGEVENS => 11, EvenementTableMap::COL_EXTRA_CONTACT_GEGEVENS => 12, EvenementTableMap::COL_PRIJS => 13, EvenementTableMap::COL_BETAALWIJZE => 14, EvenementTableMap::COL_MAX_DEELNEMERS => 15, EvenementTableMap::COL_ANNULERINGSVERZEKERING => 16, EvenementTableMap::COL_ACCOUNT_NODIG => 17, EvenementTableMap::COL_GROEPSINSCHRIJVING => 18, EvenementTableMap::COL_STATUS => 19, EvenementTableMap::COL_GEMAAKT_DATUM => 20, EvenementTableMap::COL_GEMAAKT_DOOR => 21, EvenementTableMap::COL_GEWIJZIGD_DATUM => 22, EvenementTableMap::COL_GEWIJZIGD_DOOR => 23, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'naam' => 1, 'categorie' => 2, 'korte_omschrijving' => 3, 'lange_omschrijving' => 4, 'datum_begin' => 5, 'datum_eind' => 6, 'aantal_dagen' => 7, 'frequentie' => 8, 'inschrijving_begin' => 9, 'inschrijving_eind' => 10, 'extra_deelnemer_gegevens' => 11, 'extra_contact_gegevens' => 12, 'prijs' => 13, 'betaalwijze' => 14, 'max_deelnemers' => 15, 'annuleringsverzekering' => 16, 'account_nodig' => 17, 'groepsinschrijving' => 18, 'status' => 19, 'gemaakt_datum' => 20, 'gemaakt_door' => 21, 'gewijzigd_datum' => 22, 'gewijzigd_door' => 23, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, )
     );
 
     /**
@@ -254,6 +259,7 @@ class EvenementTableMap extends TableMap
         $this->addColumn('max_deelnemers', 'MaxDeelnemers', 'INTEGER', true, null, null);
         $this->addColumn('annuleringsverzekering', 'Annuleringsverzekering', 'INTEGER', true, 1, null);
         $this->addColumn('account_nodig', 'AccountNodig', 'INTEGER', true, 1, null);
+        $this->addColumn('groepsinschrijving', 'GroepsInschrijving', 'INTEGER', true, 1, null);
         $this->addForeignKey('status', 'Status', 'INTEGER', 'fb_keuzes', 'id', true, 2, null);
         $this->addColumn('gemaakt_datum', 'DatumGemaakt', 'TIMESTAMP', true, null, null);
         $this->addColumn('gemaakt_door', 'GemaaktDoor', 'VARCHAR', true, 255, null);
@@ -476,6 +482,7 @@ class EvenementTableMap extends TableMap
             $criteria->addSelectColumn(EvenementTableMap::COL_MAX_DEELNEMERS);
             $criteria->addSelectColumn(EvenementTableMap::COL_ANNULERINGSVERZEKERING);
             $criteria->addSelectColumn(EvenementTableMap::COL_ACCOUNT_NODIG);
+            $criteria->addSelectColumn(EvenementTableMap::COL_GROEPSINSCHRIJVING);
             $criteria->addSelectColumn(EvenementTableMap::COL_STATUS);
             $criteria->addSelectColumn(EvenementTableMap::COL_GEMAAKT_DATUM);
             $criteria->addSelectColumn(EvenementTableMap::COL_GEMAAKT_DOOR);
@@ -500,6 +507,7 @@ class EvenementTableMap extends TableMap
             $criteria->addSelectColumn($alias . '.max_deelnemers');
             $criteria->addSelectColumn($alias . '.annuleringsverzekering');
             $criteria->addSelectColumn($alias . '.account_nodig');
+            $criteria->addSelectColumn($alias . '.groepsinschrijving');
             $criteria->addSelectColumn($alias . '.status');
             $criteria->addSelectColumn($alias . '.gemaakt_datum');
             $criteria->addSelectColumn($alias . '.gemaakt_door');

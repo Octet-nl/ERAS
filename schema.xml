@@ -148,6 +148,7 @@
     <column name="max_deelnemers" phpName="MaxDeelnemers" type="INTEGER" required="true"/>
     <column name="annuleringsverzekering" phpName="Annuleringsverzekering" type="INTEGER" size="1" required="true"/>
     <column name="account_nodig" phpName="AccountNodig" type="INTEGER" size="1" required="true"/>
+    <column name="groepsinschrijving" phpName="GroepsInschrijving" type="INTEGER" size="1" required="true"/>
     <column name="status" phpName="Status" type="INTEGER" size="2" required="true"/>
     <column name="gemaakt_datum" phpName="DatumGemaakt" type="TIMESTAMP" required="true"/>
     <column name="gemaakt_door" phpName="GemaaktDoor" type="VARCHAR" size="255" required="true"/>

@@ -38,6 +38,7 @@ use fb_model\fb_model\Map\EvenementTableMap;
  * @method     ChildEvenementQuery orderByMaxDeelnemers($order = Criteria::ASC) Order by the max_deelnemers column
  * @method     ChildEvenementQuery orderByAnnuleringsverzekering($order = Criteria::ASC) Order by the annuleringsverzekering column
  * @method     ChildEvenementQuery orderByAccountNodig($order = Criteria::ASC) Order by the account_nodig column
+ * @method     ChildEvenementQuery orderByGroepsInschrijving($order = Criteria::ASC) Order by the groepsinschrijving column
  * @method     ChildEvenementQuery orderByStatus($order = Criteria::ASC) Order by the status column
  * @method     ChildEvenementQuery orderByDatumGemaakt($order = Criteria::ASC) Order by the gemaakt_datum column
  * @method     ChildEvenementQuery orderByGemaaktDoor($order = Criteria::ASC) Order by the gemaakt_door column
@@ -62,6 +63,7 @@ use fb_model\fb_model\Map\EvenementTableMap;
  * @method     ChildEvenementQuery groupByMaxDeelnemers() Group by the max_deelnemers column
  * @method     ChildEvenementQuery groupByAnnuleringsverzekering() Group by the annuleringsverzekering column
  * @method     ChildEvenementQuery groupByAccountNodig() Group by the account_nodig column
+ * @method     ChildEvenementQuery groupByGroepsInschrijving() Group by the groepsinschrijving column
  * @method     ChildEvenementQuery groupByStatus() Group by the status column
  * @method     ChildEvenementQuery groupByDatumGemaakt() Group by the gemaakt_datum column
  * @method     ChildEvenementQuery groupByGemaaktDoor() Group by the gemaakt_door column
@@ -149,6 +151,7 @@ use fb_model\fb_model\Map\EvenementTableMap;
  * @method     ChildEvenement findOneByMaxDeelnemers(int $max_deelnemers) Return the first ChildEvenement filtered by the max_deelnemers column
  * @method     ChildEvenement findOneByAnnuleringsverzekering(int $annuleringsverzekering) Return the first ChildEvenement filtered by the annuleringsverzekering column
  * @method     ChildEvenement findOneByAccountNodig(int $account_nodig) Return the first ChildEvenement filtered by the account_nodig column
+ * @method     ChildEvenement findOneByGroepsInschrijving(int $groepsinschrijving) Return the first ChildEvenement filtered by the groepsinschrijving column
  * @method     ChildEvenement findOneByStatus(int $status) Return the first ChildEvenement filtered by the status column
  * @method     ChildEvenement findOneByDatumGemaakt(string $gemaakt_datum) Return the first ChildEvenement filtered by the gemaakt_datum column
  * @method     ChildEvenement findOneByGemaaktDoor(string $gemaakt_door) Return the first ChildEvenement filtered by the gemaakt_door column
@@ -176,6 +179,7 @@ use fb_model\fb_model\Map\EvenementTableMap;
  * @method     ChildEvenement requireOneByMaxDeelnemers(int $max_deelnemers) Return the first ChildEvenement filtered by the max_deelnemers column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildEvenement requireOneByAnnuleringsverzekering(int $annuleringsverzekering) Return the first ChildEvenement filtered by the annuleringsverzekering column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildEvenement requireOneByAccountNodig(int $account_nodig) Return the first ChildEvenement filtered by the account_nodig column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildEvenement requireOneByGroepsInschrijving(int $groepsinschrijving) Return the first ChildEvenement filtered by the groepsinschrijving column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildEvenement requireOneByStatus(int $status) Return the first ChildEvenement filtered by the status column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildEvenement requireOneByDatumGemaakt(string $gemaakt_datum) Return the first ChildEvenement filtered by the gemaakt_datum column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildEvenement requireOneByGemaaktDoor(string $gemaakt_door) Return the first ChildEvenement filtered by the gemaakt_door column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -201,6 +205,7 @@ use fb_model\fb_model\Map\EvenementTableMap;
  * @method     ChildEvenement[]|ObjectCollection findByMaxDeelnemers(int $max_deelnemers) Return ChildEvenement objects filtered by the max_deelnemers column
  * @method     ChildEvenement[]|ObjectCollection findByAnnuleringsverzekering(int $annuleringsverzekering) Return ChildEvenement objects filtered by the annuleringsverzekering column
  * @method     ChildEvenement[]|ObjectCollection findByAccountNodig(int $account_nodig) Return ChildEvenement objects filtered by the account_nodig column
+ * @method     ChildEvenement[]|ObjectCollection findByGroepsInschrijving(int $groepsinschrijving) Return ChildEvenement objects filtered by the groepsinschrijving column
  * @method     ChildEvenement[]|ObjectCollection findByStatus(int $status) Return ChildEvenement objects filtered by the status column
  * @method     ChildEvenement[]|ObjectCollection findByDatumGemaakt(string $gemaakt_datum) Return ChildEvenement objects filtered by the gemaakt_datum column
  * @method     ChildEvenement[]|ObjectCollection findByGemaaktDoor(string $gemaakt_door) Return ChildEvenement objects filtered by the gemaakt_door column
@@ -304,7 +309,7 @@ abstract class EvenementQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT id, naam, categorie, korte_omschrijving, lange_omschrijving, datum_begin, datum_eind, aantal_dagen, frequentie, inschrijving_begin, inschrijving_eind, extra_deelnemer_gegevens, extra_contact_gegevens, prijs, betaalwijze, max_deelnemers, annuleringsverzekering, account_nodig, status, gemaakt_datum, gemaakt_door, gewijzigd_datum, gewijzigd_door FROM fb_evenement WHERE id = :p0';
+        $sql = 'SELECT id, naam, categorie, korte_omschrijving, lange_omschrijving, datum_begin, datum_eind, aantal_dagen, frequentie, inschrijving_begin, inschrijving_eind, extra_deelnemer_gegevens, extra_contact_gegevens, prijs, betaalwijze, max_deelnemers, annuleringsverzekering, account_nodig, groepsinschrijving, status, gemaakt_datum, gemaakt_door, gewijzigd_datum, gewijzigd_door FROM fb_evenement WHERE id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -1058,6 +1063,47 @@ abstract class EvenementQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(EvenementTableMap::COL_ACCOUNT_NODIG, $accountNodig, $comparison);
+    }
+
+    /**
+     * Filter the query on the groepsinschrijving column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByGroepsInschrijving(1234); // WHERE groepsinschrijving = 1234
+     * $query->filterByGroepsInschrijving(array(12, 34)); // WHERE groepsinschrijving IN (12, 34)
+     * $query->filterByGroepsInschrijving(array('min' => 12)); // WHERE groepsinschrijving > 12
+     * </code>
+     *
+     * @param     mixed $groepsInschrijving The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildEvenementQuery The current query, for fluid interface
+     */
+    public function filterByGroepsInschrijving($groepsInschrijving = null, $comparison = null)
+    {
+        if (is_array($groepsInschrijving)) {
+            $useMinMax = false;
+            if (isset($groepsInschrijving['min'])) {
+                $this->addUsingAlias(EvenementTableMap::COL_GROEPSINSCHRIJVING, $groepsInschrijving['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($groepsInschrijving['max'])) {
+                $this->addUsingAlias(EvenementTableMap::COL_GROEPSINSCHRIJVING, $groepsInschrijving['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(EvenementTableMap::COL_GROEPSINSCHRIJVING, $groepsInschrijving, $comparison);
     }
 
     /**
