@@ -114,8 +114,8 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
     $presentie = array();
 
     // Check PHP version
-    $tekst = "PHP is minstens versie 7.0";
-    if ( version_compare( phpversion(), '7.0', '<') ) 
+    $tekst = "PHP is minstens versie 7.4";
+    if ( version_compare( phpversion(), '7.4', '<') ) 
     {
         $phpPresent = false;
         array_push( $presentie, array($tekst, "0") );

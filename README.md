@@ -33,3 +33,19 @@ Download de ZIP file uit Github en pak deze uit.
 
 ### Installeren
 Start de installatieprocedure door met uw browser het bestand 'install.php' te openen.
+
+### Voorbeeld
+Het definiëren van een evenement gebeurt op de volgende wijze:
+
+![Alt text](/app/res/images/gitaar_evenement.png?raw=true "Evenement definitie")
+
+Daarna kunnen opties toegekend worden, het 'optie' mechanisme is erg sterk. Met heel weinig moeite kan er van alles toegevoegd worden aan een evenement.
+
+![Alt text](/app/res/images/gitaar_huren.png?raw=true "Optie definitie")
+
+Na nog eeen aantal opties toegevoegd te hebben ziet het resultaat er voor de klant als volgt uit:
+(merk op dat het thema voor medewerkers anders kan zijn dan het thema voor de klant)
+
+![Alt text](/app/res/images/gitaar_deelnemer.png?raw=true "Inschrijven")
+
+
