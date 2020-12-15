@@ -646,6 +646,9 @@ function deelnemerOptieToevoegen( $optieId, $deelnemerId, $waarde, $prijs, $emai
 // - in geval van een wijziging, de gegevens van de te wijzigen persoon.
 // Dit deel vult de waarden in voor de HTML template en start deze op.
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 $logger->debug( "Optiearray en dynamichtml NIET naar SESSION" );
 
 // Variabelen zijn nodig voor persoon_template
@@ -653,6 +656,8 @@ $readonly = true;
 $id = 0;
 $id_visibility = "hide";
 require_once 'persoon_template.php';
+
+$logger->debug( "Persoon template gedaan" );
 
 $smarty->assign( 'doctitle', $doctitle );
 $smarty->assign( 'evenement_naam', $sessieVariabelen["evenement_naam"] );
@@ -678,4 +683,5 @@ $smarty->assign( 'statusRegel', $statusRegel );
 $smarty->assign( 'noLogout', 'true' );
 $smarty->assign( 'loggedin', $autorisatie->getUserId() );
 
+$logger->debug( "Toon inschrijving_individu" );
 $smarty->display( 'inschrijving_individu.tpl' );

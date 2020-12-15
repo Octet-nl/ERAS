@@ -26,13 +26,16 @@
         <h4>=> Deze inschrijving is definitief <=</h4>
         {/if}
         
-        <h3>Contactpersoon:</h3>
-        {$contactpersoon_naam}
-        <button name="bewerk_contact" value={$contactpersoon_id}>Aanpassen</button> 
-        <br/>
-        {if $aantalDeelnemers == 0}
-        Klik <em>Aanpassen</em> als u de contactpersoon ook als deelnemer wilt opvoeren
+        {if !$deelnemerIsContactpersoon}
+          <h3>Contactpersoon:</h3>
+          {$contactpersoon_naam}
+          <button name="bewerk_contact" value={$contactpersoon_id}>Aanpassen</button> 
+          <br/>
+          {if $aantalDeelnemers == 0}
+            Klik <em>Aanpassen</em> als u de contactpersoon ook als deelnemer wilt opvoeren
+          {/if}
         {/if}
+
         <h3>Deelnemers:</h3>
 
         {if !$changeDefinitief }
@@ -101,6 +104,7 @@
 
 
        <input type="hidden" name="aantalDeelnemers" value={$aantalDeelnemers}>
+       <input type="hidden" name="deelnemerIsContactpersoon" value={$deelnemerIsContactpersoon}>
 
        {include file="statusregel.tpl"}
 

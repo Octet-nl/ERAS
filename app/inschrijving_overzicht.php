@@ -46,6 +46,7 @@ $smarty->setCacheDir( 'smarty/cache' );
 $smarty->setConfigDir( 'smarty/configs' );
 
 use fb_model\fb_model\DeelnemerQuery;
+use fb_model\fb_model\InschrijvingQuery;
 use fb_model\fb_model\PersoonQuery;
 
 // Defineer variabelen voor evenement
@@ -67,6 +68,8 @@ $statusRegel = "";
 $signalError = false;
 
 $deelnemers_lijst = array();
+
+$deelnemerIsContactpersoon = false;
 
 $deelnemer_lijst = array();
 $sessieVariabelen = array();
@@ -159,6 +162,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
     $deelnemers = DeelnemerQuery::create()->filterByInschrijvingId( $inschrijvingId );
 
     $aantalDeelnemers = 0;
+    $deelnemerId = 0;
     $totaalprijs = 0;
     foreach ( $deelnemers as $deelnemer )
     {
@@ -166,6 +170,10 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
         $persoon = PersoonQuery::create()->findPK( $deelnemer->getPersoonId() );
         $deelnemer_lijst["deelnemer_naam"] = $persoon->getVoornaam() . " " . $persoon->getTussenvoegsel() . " " . $persoon->getAchternaam();
         $deelnemer_lijst["deelnemer_id"] = $deelnemer->getId();
+        if ( $deelnemerId == 0 )
+        {
+            $deelnemerId = $deelnemer->getPersoonId();
+        }
         $deelnemer_lijst["deelnemer_persoon_id"] = $persoon->getId();
         if ( $persoon->getGeboortedatum() != null )
         {
@@ -181,6 +189,17 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
         array_push( $deelnemers_lijst, $deelnemer_lijst );
 
         $totaalprijs += $deelnemer->getTotaalbedrag();
+    }
+
+    $inschrijving = InschrijvingQuery::create()->findPk( $inschrijvingId );
+    if ( $aantalDeelnemers == 1 && $inschrijving->getContactpersoonId() == $deelnemerId )
+    {
+        $deelnemerIsContactpersoon = true;
+        $logger->debug( "Deelnemer is contactpersoon" );
+    }
+    else
+    {
+        $logger->debug( "Deelnemer " . $deelnemerId . ", contactpersoon " . $inschrijving->getContactpersoonId() . ", aantal deelnemers " . $aantalDeelnemers );
     }
 
     if ( !$wijzigingDefinitieveInschrijving )
@@ -220,6 +239,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
     {
         $setVar = new SetVariable();
         $setVar->name( $aantalDeelnemers )->go();
+        $setVar->name( $deelnemerIsContactpersoon )->go();
     }
     catch ( Exception $ex )
     {
@@ -259,7 +279,14 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
     elseif ( isset( $_POST["bewerk"] ) )
     {
         $logger->debug( 'Bewerk deelnemer.' );
-        header( "Location:inschrijving_deelnemer.php?evt=" . $sessieVariabelen["evenement_id"] . "&mut=" . $_POST['bewerk'] );
+//        if ( $deelnemerIsContactpersoon )
+//        {
+//            header( "Location:inschrijving_individu.php?evt=" . $sessieVariabelen["evenement_id"] . "&mut=" . $_POST['bewerk'] );
+//        }
+//        else
+//        {
+            header( "Location:inschrijving_deelnemer.php?evt=" . $sessieVariabelen["evenement_id"] . "&mut=" . $_POST['bewerk'] );
+//        }
         exit();
     }
     elseif ( isset( $_POST["bewerk_contact"] ) )
@@ -299,6 +326,7 @@ $smarty->assign( 'contactpersoon_id', $sessieVariabelen["contactpersoon_id"] );
 $smarty->assign( 'deelnemers', $deelnemers_lijst );
 $smarty->assign( 'totaalprijs', $totaalprijs );
 $smarty->assign( 'aantalDeelnemers', $aantalDeelnemers );
+$smarty->assign( 'deelnemerIsContactpersoon', $deelnemerIsContactpersoon );
 $smarty->assign( 'changeDefinitief', $wijzigingDefinitieveInschrijving );
 $smarty->assign( 'isMedewerker', $isMedewerker );
 
