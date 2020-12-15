@@ -51,6 +51,8 @@ status_failure="html/ideal_fout.html"
 status_pending="html/ideal_onbekend.html"
 ;
 [betaling]
+incasso_tekst="<u>Betaling</u><br/><br>U heeft gekozen voor betaling in termijnen. Ongeveer een week na uw inschrijving ontvangt u van ons per mail een incassoformulier waarmee u toestemming geeft. De incassodata verschillen per evenement, kijk hiervoor op de inschrijfpagina. Bij de eerste incasso wordt een eventuele annuleringsverzekering en de incassokosten volledig verrekend, de termijnbedragen worden op het incassoformulier vermeld<br/>"
+contant_tekst="<u>Betaling</u><br/><br>U kunt contant betalen bij de aanvang van het evenement<br/>"
 voorwaarden="<div align=left>Uw betaling moet binnen een maand na aanmelding bij ons binnen zijn. Als uw iDeal betaling mislukt is dan kunt u het bedrag altijd via een gewone bankopdracht overmaken.<br><br>- Vermeld bij zelf overschrijven zorgvuldig de referentie. Hiermee kunnen we uw betaling aan uw inschrijving koppelen. Niet traceerbare betalingen worden teruggeboekt met mogelijk gevolgen voor uw inschrijving.<br><br>- Een eventuele betaling via iDeal is hier nog niet in verwerkt.</div>"
 ;
 [settings]

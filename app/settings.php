@@ -85,6 +85,8 @@ $idealStatusSuccess = "";
 $idealStatusFailure = "";
 $idealStatusPending = "";
 $betalingVoorwaarden = "";
+$betalingIncassoTekst = "";
+$betalingContantTekst = "";
 $settingLogDirectory = "";
 $settingTempDirectory = "";
 $settingFacturenDirectory = "";
@@ -127,6 +129,8 @@ $idealStatusSuccessErr = "";
 $idealStatusFailureErr = "";
 $idealStatusPendingErr = "";
 $betalingVoorwaardenErr = "";
+$betalingIncassoTekstErr = "";
+$betalingContantTekstErr = "";
 $settingLogDirectoryErr = "";
 $settingTempDirectoryErr = "";
 $settingFacturenDirectoryErr = "";
@@ -198,7 +202,9 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
     $idealStatusPending = $ini['ideal_payment']['status_pending'];
 
     $betalingVoorwaarden = $ini['betaling']['voorwaarden'];
-
+    $betalingIncassoTekst = $ini['betaling']['incasso_tekst'];
+    $betalingContantTekst = $ini['betaling']['contant_tekst'];
+    
     $settingLogDirectory = $ini['settings']['log_directory'];
     $settingTempDirectory = $ini['settings']['temp_directory'];
     $settingFacturenDirectory = $ini['settings']['facturen_directory'];
@@ -415,6 +421,18 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             ->formatter( 'stripQuotes' )
             ->required( true )
             ->go();
+        $validateOk += $setVar->name( $betalingContantTekst )
+            ->onerror( $betalingContantTekstErr )
+            ->noHtmlCleaning()
+            ->formatter( 'stripQuotes' )
+            ->required( true )
+            ->go();
+        $validateOk += $setVar->name( $betalingIncassoTekst )
+            ->onerror( $betalingIncassoTekstErr )
+            ->noHtmlCleaning()
+            ->formatter( 'stripQuotes' )
+            ->required( true )
+            ->go();
         $validateOk += $setVar->name( $settingLogDirectory )
             ->validator( v::callback( 'dirWriteable' ) )
             ->formatter( 'trimDir' )
@@ -511,6 +529,8 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             fprintf( $fp, 'status_pending="%s"' . "\n", $idealStatusPending );
             fprintf( $fp, ';' . "\n" );
             fprintf( $fp, '[betaling]' . "\n" );
+            fprintf( $fp, 'incasso_tekst="%s"' . "\n", $betalingIncassoTekst );
+            fprintf( $fp, 'contant_tekst="%s"' . "\n", $betalingContantTekst );
             fprintf( $fp, 'voorwaarden="%s"' . "\n", $betalingVoorwaarden );
             fprintf( $fp, ';' . "\n" );
             fprintf( $fp, '[settings]' . "\n" );
@@ -635,6 +655,10 @@ $smarty->assign( 'idealStatusPendingErr', $idealStatusPendingErr );
 
 $smarty->assign( 'betalingVoorwaarden', $betalingVoorwaarden );
 $smarty->assign( 'betalingVoorwaardenErr', $betalingVoorwaardenErr );
+$smarty->assign( 'betalingIncassoTekst', $betalingIncassoTekst );
+$smarty->assign( 'betalingIncassoTekstErr', $betalingIncassoTekstErr );
+$smarty->assign( 'betalingContantTekst', $betalingContantTekst );
+$smarty->assign( 'betalingContantTekstErr', $betalingContantTekstErr );
 
 $smarty->assign( 'settingLogDirectory', $settingLogDirectory );
 $smarty->assign( 'settingLogDirectoryErr', $settingLogDirectoryErr );

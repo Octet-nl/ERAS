@@ -554,11 +554,11 @@ class InschrijvingBevestiging
 
             if( $betaling == BETAALWIJZE_INCASSO )
             {
-                $this->messageBody .= "<u>Betaling</u><br/><br>U heeft gekozen voor betaling in termijnen. Ongeveer een week na uw inschrijving ontvangt u van ons per mail een incassoformulier waarmee u toestemming geeft. De incassodata verschillen per evenement, kijk hiervoor op de inschrijfpagina. Bij de eerste incasso wordt een eventuele annuleringsverzekering en de incassokosten volledig verrekend, de termijnbedragen worden op het incassoformulier vermeld<br/>";
+                $this->messageBody .= $ini['betaling']['incasso_tekst'];
             } 
             else if( $betaling == BETAALWIJZE_CONTANT )
             {
-                $this->messageBody .= "<u>Betaling</u><br/><br>U kunt contant betalen bij de aanvang van het evenement<br/>";
+                $this->messageBody .= $ini['betaling']['contant_tekst'];
             } 
             else 
             {

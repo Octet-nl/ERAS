@@ -139,9 +139,15 @@
             <input type="checkbox" id="5" checked onchange='handleChecked(this,document.getElementById("betaling"));'/> 
             <h3 style="display: inline-block;">Betaling</h3>
             <fieldset id="betaling" class="setting_input">
+                <button type="button" class="bareleft" onClick="toggleBetalingVoorwaarden();">HTML</button>
+                <span class=setting_label>Tekst op de bevestigingsmail bij betaling per incasso</span><br/>
+                <textarea rows="10" cols="90" name="betalingIncassoTekst" id="betalingIncassoTekst">{$betalingIncassoTekst}</textarea>
+                <span class="error">{$betalingIncassoTekstErr}</span>
+                <span class=setting_label>Tekst op de bevestigingsmail bij contante betaling</span><br/>
+                <textarea rows="10" cols="90" name="betalingContantTekst" id="betalingContantTekst">{$betalingContantTekst}</textarea>
+                <span class="error">{$betalingContantTekstErr}</span>
                 <span class=setting_label>Betalingsvoorwaarden op de bevestigingsmail</span><br/>
                 <textarea rows="10" cols="90" name="betalingVoorwaarden" id="betalingVoorwaarden">{$betalingVoorwaarden}</textarea>
-                <button type="button" class="bareleft" onClick="toggleBetalingVoorwaarden();">HTML</button>
                 <span class="error">{$betalingVoorwaardenErr}</span>
             </fieldset>
         </div>
@@ -186,19 +192,33 @@
 
 <script>
     var betalingVoorwaarden = null;
+    var betalingContant = null;
+    var betalingIncasso = null;
 
     // {if $toonWysiwig}
-
-    bkLib.onDomLoaded(function() { toggleBetalingVoorwaarden(); } );
-
+    window.onload = function() 
+    {
+        betalingContant = new nicEditor( { imageURI : '{$imageDirectory}' } ).panelInstance('betalingContantTekst' );
+        betalingIncasso = new nicEditor( { imageURI : '{$imageDirectory}' } ).panelInstance('betalingIncassoTekst' );
+        betalingVoorwaarden = new nicEditor( { imageURI : '{$imageDirectory}' } ).panelInstance('betalingVoorwaarden' );
+    };
     // {/if}
 
     function toggleBetalingVoorwaarden() 
     {
-        if(!betalingVoorwaarden) {
+        if(!betalingVoorwaarden) 
+        {
+            betalingContant = new nicEditor( { imageURI : '{$imageDirectory}' } ).panelInstance('betalingContantTekst' );
+            betalingIncasso = new nicEditor( { imageURI : '{$imageDirectory}' } ).panelInstance('betalingIncassoTekst' );
             betalingVoorwaarden = new nicEditor( { imageURI : '{$imageDirectory}' } ).panelInstance('betalingVoorwaarden' );
-        } else {
+        }
+        else 
+        {
+            betalingContant.removeInstance('betalingContantTekst');
+            betalingIncasso.removeInstance('betalingIncassoTekst');
             betalingVoorwaarden.removeInstance('betalingVoorwaarden');
+            betalingContant = null;
+            betalingIncasso = null;
             betalingVoorwaarden = null;
         }
     }
