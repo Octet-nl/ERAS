@@ -552,6 +552,8 @@ class InschrijvingBevestiging
         {
             $this->messageBody .= "<br/><strong>U moet nog betalen: " . geldAnsi( $this->nogTeBetalenBedrag ) . "</strong><br/><br/>";
 
+            $this->messageBody .= "<u>Betaling</u><br/><br/>";
+
             if( $betaling == BETAALWIJZE_INCASSO )
             {
                 $this->messageBody .= $ini['betaling']['incasso_tekst'];
@@ -562,7 +564,6 @@ class InschrijvingBevestiging
             } 
             else 
             {
-                $this->messageBody .= "<u>Betaling</u><br/><br/>";
                 $this->messageBody .= $ini['betaling']['voorwaarden'];
             }
         }

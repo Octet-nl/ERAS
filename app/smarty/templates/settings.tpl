@@ -146,7 +146,7 @@
                 <span class=setting_label>Tekst op de bevestigingsmail bij contante betaling</span><br/>
                 <textarea rows="10" cols="90" name="betalingContantTekst" id="betalingContantTekst">{$betalingContantTekst}</textarea>
                 <span class="error">{$betalingContantTekstErr}</span>
-                <span class=setting_label>Betalingsvoorwaarden op de bevestigingsmail</span><br/>
+                <span class=setting_label>Voorwaarden op de bevestigingsmail bij andere betaling</span><br/>
                 <textarea rows="10" cols="90" name="betalingVoorwaarden" id="betalingVoorwaarden">{$betalingVoorwaarden}</textarea>
                 <span class="error">{$betalingVoorwaardenErr}</span>
             </fieldset>
