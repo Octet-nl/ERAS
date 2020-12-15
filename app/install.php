@@ -155,6 +155,20 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
         array_push( $presentie, array($tekst, "0") );
     }
 
+    $tekst = "Initialisatie config_ini.php";
+    if ( !file_exists( CONFIG_FILENAME ) )
+    {
+        copy( CONFIG_DIRNAME."../config_ini_dist.php", CONFIG_FILENAME );
+    }
+    if ( file_exists( CONFIG_FILENAME ) )
+    {
+        array_push( $presentie, array($tekst, "1") );
+    }
+    else
+    {
+        array_push( $presentie, array($tekst, "0") );
+    }
+
     $ini = parse_ini_file( CONFIG_FILENAME, true );
 
     $tekst = "Kan LOG directory schrijven";
