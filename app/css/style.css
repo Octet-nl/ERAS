@@ -151,7 +151,7 @@ td {
 
 .eras { 
   float: left;
-  position: relative;
+  position: absolute;
   left: 50%;
   right: -50%;
 }
