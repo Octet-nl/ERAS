@@ -35,17 +35,32 @@ Download de ZIP file uit Github en pak deze uit.
 Start de installatieprocedure door met uw browser het bestand 'install.php' te openen.
 
 ### Voorbeeld
+
+Om een beeld te vormen van de manier waarop ERAS werkt volgen hieronder een paar screenshots.
+
+#### Definitie evenement
+
 Het definiëren van een evenement gebeurt op de volgende wijze:
 
 ![Alt text](/app/res/images/gitaar_evenement.png?raw=true "Evenement definitie")
 
-Daarna kunnen opties toegekend worden, het 'optie' mechanisme is erg sterk. Met heel weinig moeite kan er van alles toegevoegd worden aan een evenement.
+Daarna kunnen opties toegekend worden, het 'optie' mechanisme is erg sterk. Met heel weinig moeite kunnen er allerlei bijzonderheden 
+worden toegevoegd aan een evenement.
 
 ![Alt text](/app/res/images/gitaar_huren.png?raw=true "Optie definitie")
+
+#### Inschrijving klant
 
 Na nog eeen aantal opties toegevoegd te hebben ziet het resultaat er voor de klant als volgt uit:
 (merk op dat het thema voor medewerkers anders kan zijn dan het thema voor de klant)
 
+Allereerst de inschrijfgegevens voor de klant:
+
 ![Alt text](/app/res/images/gitaar_deelnemer.png?raw=true "Inschrijven")
 
+Na de deelnemergegevens volgt de afronding van de inschrijving met de betaalgegevens en de bevestiging:
+
+![Alt text](/app/res/images/gitaar_afronding.png?raw=true "Inschrijven")
+
+Na bevestiging ontvangt de klant een bevestigingsmail en eventueel een factuur.
 
