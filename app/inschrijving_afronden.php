@@ -62,7 +62,7 @@ $smarty->setConfigDir( 'smarty/configs' );
 $logger = new Logger();
 $logger->level( LOGLEVEL );
 
-$doctitle = "Inschrijving";
+$doctitle = "Inschrijving afronden";
 
 $statusRegel = "";
 $signalError = false;
