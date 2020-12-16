@@ -51,8 +51,8 @@ worden toegevoegd aan een evenement.
 
 #### Inschrijving klant
 
-Na nog eeen aantal opties toegevoegd te hebben ziet het resultaat er voor de klant als volgt uit:
-(merk op dat het thema voor medewerkers anders kan zijn dan het thema voor de klant)
+Na nog een aantal opties toegevoegd te hebben ziet het resultaat er voor de klant als volgt uit:
+(merk op dat het thema (kleur en lettertype) voor medewerkers anders kan zijn dan het thema voor de klant)
 
 Allereerst de inschrijfgegevens voor de klant:
 
