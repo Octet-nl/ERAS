@@ -124,8 +124,6 @@
 
       {if file_exists("smarty/templates/version.tpl")}
         {include file="version.tpl" nocache}
-      {else}
-        <h4>Versie info niet gevonden.</h4>
       {/if}
 
       <h3 class="errorcolor">{$debugmessage}</h3>
