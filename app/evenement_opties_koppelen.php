@@ -180,7 +180,12 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                 $opties->delete();
                 $logger->debug( "Opties verwijderd" );
 
-                $optieArray = $_POST['gekozen'];
+                $optieArray = array();
+                if ( isset( $_POST['gekozen'] ))
+                {
+                    $optieArray = $_POST['gekozen'];
+                }
+
                 $volgorde = 1;
                 foreach ( $optieArray as $key => $value )
                 {
@@ -198,10 +203,9 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                 $logger->debug( "Opties opgeslagen" );
                 //$con->rollback();
                 alert( 'Optiegegevens zijn opgeslagen.' );
-                $signalError = false;
-                $statusRegel = 'Optiegegevens zijn opgeslagen.';
                 $status = 0;
                 header( "Refresh:0" );
+                exit;
             }
             catch ( \Exception $e )
             {
@@ -219,6 +223,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
         $evt = $_POST['beschikbaar'];
         // header( "Location:evenement_opties.php?evt=".$evt );
         header( 'Location: ' . $_SERVER['REQUEST_URI'] . '?evt=' . $evt );
+        exit;
     }
 }
 
