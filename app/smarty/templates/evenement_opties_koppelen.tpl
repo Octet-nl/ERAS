@@ -64,74 +64,91 @@
 
 </script>
 
-<div class="koppel_container" style="background-color: #eaf2f8 ; width:90%; padding:2em">
-    <form method="POST" name="selectEvent" action="{$SCRIPT_NAME}">
-        <h2>&nbsp; </h2>
-        <table bgcolor="white" border="1" cellpadding="5" cellspacing="2">
-            <tr>
-                <td align="center">
-                    <h3>Openstaande evenementen</h3>
-                    <div>
-                        <select name="beschikbaar" onDblClick="this.form.submit()" size="20">
-                            {html_options options=$evenementenLijst}
-                        </select><br />
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td align="center">
-                    <button name="kies_evenement" >kies evenement</button>
-                    <!--input type="submit" name="kies_evenement" value="kies evenement"-->
-                </td>
-            </tr>
-        </table>
-    </form>
+<!-- <div class="koppel_container" ; width:90%; padding:2em">-->
 
-    <form method="POST" name="selectForm" action="{$SCRIPT_NAME}">
-        <h2>Opties voor: {$evenementNaam}</h2>
-        <table bgcolor="white" border="1" cellpadding="5" cellspacing="2">
-            <tr>
-                <td align="center">
+    <div class="koppel_container window_back">
+        <div class="outer">
+            <h2>Opties koppelen aan evenement</h2>
+            <div class="left_div">
+                <form method="POST" name="selectEvent" action="{$SCRIPT_NAME}">
+                    {if $evenementNaam == ""}
+                      <h2>Kies eerst een evenement</h2>
+                    {else}
+                      <h2>&nbsp; </h2>
+                    {/if}
+                    <table border="1" cellpadding="5" cellspacing="2">
+                        <tr>
+                            <th>Openstaande evenementen</th>
+                        </tr>
+                        <tr>
+                            <td align="center">
+                                <div>
+                                    <select name="beschikbaar" size="20" onDblClick="this.form.submit()">
+                                        {html_options options=$evenementenLijst}
+                                    </select><br />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center">
+                                <button name="kies_evenement" >kies evenement</button>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
 
-                    <h3>Beschikbare opties</h3>
-                    <select name="beschikbaar" size="20" onDblClick="one2two()" multiple>
-                        {html_options options=$beschikbaarLijst}
-                    </select><br />
+                <form method="POST" name="selectForm" action="{$SCRIPT_NAME}">
+                    {if $evenementNaam == ""}
+                      <h2>&nbsp; </h2>
+                    {else}
+                      <h2>Koppel opties voor: {$evenementNaam}</h2>
+                    {/if}
+                    <table border="1" cellpadding="5" cellspacing="2">
+                        <tr>
+                            <th>Beschikbare opties</th>
+                            <th></th>
+                            <th>Gekozen opties</th>
+                        </tr>
+                        <tr>
+                            <td align="center">
+                                <select name="beschikbaar" size="20" onDblClick="one2two()" multiple>
+                                    {html_options options=$beschikbaarLijst}
+                                </select><br />
 
-                </td>
-                <td align="center">
-                    <p><input type="button" onClick="one2two()" value=" >> "></p>
-                    <p><input type="button" onClick="two2one()" value=" << "></p>
+                            </td>
+                            <td align="center">
+                                <p><input type="button" onClick="one2two()" value=" >> "></p>
+                                <p><input type="button" onClick="two2one()" value=" << "></p>
 
-                </td>
-                <td align="center">
+                            </td>
+                            <td align="center">
+                                <select name="gekozen[]" id="gekozen" onDblClick="two2one()" size="20" multiple>
+                                    {html_options options=$gekozenLijst}
+                                </select><br />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            </td>
+                            <td>
+                                <button name="opslaan" onclick="vastleggen()">Opslaan</button>
+                            </td>
+                            <td align="center">
+                                <input type="button" value="&uarr;" onClick="moveUp()">
+                                <input type="button" value="&darr;" onClick="moveDown()">
+                            </td>
+                        </tr>
+                    </table>
+                    
+                    <button name="terug">Terug</button> 
 
-                    <h3>Gekozen opties</h3>
-                    <select name="gekozen[]" id="gekozen" onDblClick="two2one()" size="20" multiple>
-                        {html_options options=$gekozenLijst}
-                    </select><br />
-                </td>
-            </tr>
-            <tr>
-                <td>
-                </td>
-                <td>
-                    <button name="opslaan" onclick="vastleggen()">Opslaan</button>
-                </td>
-                <td align="center">
-                    <input type="button" value="&uarr;" onClick="moveUp()">
-                    <input type="button" value="&darr;" onClick="moveDown()">
-                </td>
-            </tr>
-        </table>
-        
-        <button name="terug">Terug</button> 
+                    <input type="hidden" name="evenementId" value="{$evenementId}">
 
-        <input type="hidden" name="evenementId" value="{$evenementId}">
-
-        {include file="statusregel.tpl"}
-    
-    </form>
+                    {include file="statusregel.tpl"}
+                
+            </div>
+        </div>
+    </div>
 </div>
 
 

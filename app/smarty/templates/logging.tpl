@@ -1,10 +1,11 @@
 {include file="header.tpl"}
 <body>
     <form method="post" action="{$SCRIPT_NAME}">
-        <h2>{$doctitle}</h2>
-        <div class="window_back" style="width:100%">
+        <div class="window_back">
+            <div class="outer">
+                <h2>{$doctitle}</h2>
             <h3>Debugging</h3>
-            <div class="setting_input">
+            <div class="left_div" style="width: 60%;">
                 Beschikbare logging niveaus:<br/>
                 <table>
                     <thead>
@@ -90,8 +91,9 @@
                   <button name="verwijder">Logfile leegmaken</button> 
                  {/if}
                 </div>
-            </div>
+                </div>
             <br/>
+            </div>
         </div>
 
         {include file="statusregel.tpl"}

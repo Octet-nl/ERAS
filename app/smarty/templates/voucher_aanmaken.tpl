@@ -1,7 +1,7 @@
 {include file="header.tpl"}
 
 <form method="post" action="{$SCRIPT_NAME}">
-<div class="window_back_half">
+<div class="window_back">
     
     <div class="outer">
         <h2>{$doctitle}</h2>

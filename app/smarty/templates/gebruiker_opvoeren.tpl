@@ -2,7 +2,7 @@
 
 <form method="post" action="{$SCRIPT_NAME}">
 
-    <div class="window_back_half">
+    <div class="window_back">
         <div class="outer">
             <h2>Toevoegen gebruiker:</h2>
             <div class="left_div">

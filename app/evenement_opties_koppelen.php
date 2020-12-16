@@ -125,6 +125,8 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
     {
         // echo "Geen evenement opgegeven";
         // return;
+        $beschikbaarLijst[0] = "-";
+        $gekozenLijst[0] = "-";
     }
 }
 
@@ -195,7 +197,9 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                 $con->commit();
                 $logger->debug( "Opties opgeslagen" );
                 //$con->rollback();
-                //alert( 'Gegevens zijn opgeslagen.' );
+                alert( 'Optiegegevens zijn opgeslagen.' );
+                $signalError = false;
+                $statusRegel = 'Optiegegevens zijn opgeslagen.';
                 $status = 0;
                 header( "Refresh:0" );
             }
@@ -205,10 +209,9 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                 echo $e->getMessage() . "<br/><br/>";
                 $logger->error( "Unhandled exception bij opslaan opties" );
                 $logger->errordump( $e );
-                $validatiemelding = 'Probleem met opslaan gegevens, details: <br/>' . $e;
+                $signalError = true;
+                $statusRegel = 'Probleem met opslaan gegevens, details: <br/>' . $e;
             }
-            $statusRegel = "Controleer de invoer a.u.b";
-            $signalError = true;
         }
     }
     elseif ( isset( $_POST['beschikbaar'] ) )
