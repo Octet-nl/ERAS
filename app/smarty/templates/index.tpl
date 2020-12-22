@@ -6,7 +6,7 @@
 {include file="closeheader.tpl"}
 
   <!--form method="post" action="{$SCRIPT_NAME}" -->
-    <div class="window_color" style="width:98%">
+    <div class="window_color" style="width: 80%; margin: 0 auto;">
       <div class="menuregel">
         <nav style="display: inline;">
           <ul class="nav">
