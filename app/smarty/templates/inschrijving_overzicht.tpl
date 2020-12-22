@@ -98,8 +98,6 @@
        {/if}
        {if $changeDefinitief }
          <button name="overzicht">Overzicht</button>
-       {else}
-         <button onclick="history.go(-1);">Terug</button>
        {/if}
 
 
