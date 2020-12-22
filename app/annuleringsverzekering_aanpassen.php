@@ -7,7 +7,7 @@
  * Datum       14-01-2020
  * License     MIT
  *
- * Copyright (c) 2019-2020 Hans de Rijck
+ * Copyright (c) 2019-2021 Hans de Rijck
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation

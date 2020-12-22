@@ -81,7 +81,7 @@ nav ul {
 
 /* submenu positioning*/
 .nav ul {
-  position: absolute;
+  position: absolute; 
   white-space: nowrap;
   border-bottom: 5px solid  #aaa;
   z-index: 1;
