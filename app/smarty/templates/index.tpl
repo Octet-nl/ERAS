@@ -101,16 +101,6 @@
             </ul>
           </li>
 
-          <li><a href="#">Account</a>
-            <ul>
-              {if !$loggedin}
-                <li><a href="login.php">Login</a></li>
-              {else}
-                <li><a href="logout.php">Logout</a></li>
-              {/if}
-            </ul>
-          </li>
-
         </ul>
         {if !$loggedin}
           <a href=login.php style="float: right;"><img src="res/icons/login.png" alt="Login" height="40" width="40"></a>
