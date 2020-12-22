@@ -80,6 +80,17 @@ $autorisatie = new Autorisatie();
 $autorisatie->setNotAuth( "login.php" );
 $autorisatie->validate( AUTORISATIE_STATUS_ROOT );
 
+function copyDir( $dirName )
+{
+   // Move all images files
+   $files = glob( "res/icons/" . $dirName . "/*.*" );
+   foreach($files as $file)
+   {
+        $newName = str_replace("res/icons/" . $dirName . "/", "res/icons/", $file);
+                copy($file, $newName);
+   }
+}
+
 
 if ( $_SERVER["REQUEST_METHOD"] == "GET" )
 {
@@ -139,26 +150,32 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             if ( $thema == 'dark' )
             {
                 copy( "css/colors-dark.css", "css/colors.css" );
+                copyDir( "dark" );
             }
             else if ( $thema == 'classic' )
             {
                 copy( "css/colors-classic.css", "css/colors.css" );
+                copyDir( "classic" );
             }
             else if ( $thema == 'teal' )
             {
                 copy( "css/colors-teal.css", "css/colors.css" );
+                copyDir( "teal" );
             }
             else if ( $thema == 'lblue' )
             {
                 copy( "css/colors-lblue.css", "css/colors.css" );
+                copyDir( "lblue" );
             }
             else if ( $thema == 'b/w' )
             {
                 copy( "css/colors-bw.css", "css/colors.css" );
+                copyDir( "bw" );
             }
             else
             {
                 copy( "css/colors-blue.css", "css/colors.css" );
+                copyDir( "blue" );
             }
             $_SESSION['thema'] = $thema;
         }

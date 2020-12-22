@@ -8,10 +8,9 @@
   <!--form method="post" action="{$SCRIPT_NAME}" -->
     <div class="window_color" style="width:98%">
       <div class="menuregel">
-      <nav>
-        <ul class="nav">
+        <nav style="display: inline;">
+          <ul class="nav">
           {if $autorisatie > $KLANT}
-            <li><a href=klant_zoeken.php>Klant zoeken</a></li>
             <li><a href="#">Nieuw</a>
               <ul>
                 <li><a href=evenement_opvoeren.php>Evenement</a></li>
@@ -113,6 +112,14 @@
           </li>
 
         </ul>
+        {if !$loggedin}
+          <a href=login.php style="float: right;"><img src="res/icons/login.png" alt="Login" height="40" width="40"></a>
+        {else}
+          <a href=logout.php style="float: right;"><img src="res/icons/logout.png" alt="Logout" height="40" width="40"></a>
+          {if $autorisatie > $KLANT}
+            <a href=klant_zoeken.php style="float: right;margin-right:2em;"><img src="res/icons/search.png" alt="Klant zoeken" height="40" width="40"></a>
+          {/if}
+        {/if}
       </nav>
     </div>
 

@@ -19,7 +19,9 @@
           |
           {/if}
           {if $loggedin == ""}
-            Niet Aangemeld 
+            <span style="padding-right: 2.5em;">
+              <input class="barebutton" type="button" id="aanmelden" name="aanmelden" value="[aanmelden]" onclick="aanmeld()">
+            </span>
             <span style="padding-right: 2.5em;"></span>
             {else}
             {if isset($noLogout) and $noLogout == 'true' }
@@ -40,6 +42,10 @@
       {
           document.body.innerHTML += '<form id="dynForm" method="post"><input type="hidden" name="afmelden"></form>';
           document.getElementById("dynForm").submit(); 
+      }
+      function aanmeld()
+      {
+        window.location.assign( 'login.php' );
       }
 
       function thuis()
