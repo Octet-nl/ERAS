@@ -250,7 +250,8 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
     if ( isset( $_POST['afmelden'] ) )
     {
         $logger->debug( 'Afmelden.' );
-        unset( $_SESSION['inschrijving'] ); 
+        unset( $_SESSION['inschrijving'] );
+        $autorisatie->logOut();
         $ini = parse_ini_file( CONFIG_FILENAME, true );
         alertAndGo( "Bedankt voor uw bezoek, u bent afgemeld.", $ini['organisatie']['website'] );
     }
