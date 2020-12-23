@@ -28,9 +28,6 @@
                <span class=setting_label>Adres van de leveringsvoorwaarden van de organisatie</span>
                <input type="text" class="setting_input" name="organisatieVoorwaarden" value="{$organisatieVoorwaarden}">
                <span class="error">{$organisatieVoorwaardenErr}</span>
-               <span class=setting_label>Adres van de voorwaarden voor de annuleringsverzekering</span>
-               <input type="text" class="setting_input" name="organisatieVerzekeringVoorwaarden" value="{$organisatieVerzekeringVoorwaarden}">
-               <span class="error">{$organisatieVerzekeringVoorwaardenErr}</span>
             </fieldset>
         </div>
 
@@ -181,6 +178,18 @@
                     <span class="tooltiptext right">Veel providers stellen een grens aan het maximaal in één keer te verzenden mails. Voor de nieuwbrief is dat soms onvoldoende. Geef hier aan hoeveel mails tegelijk verstuurd kunnen worden. Zijn het er meer, dan wordt een batchverwerking aangeboden.</span>
                 </div>
                 <span class="error">{$settingBatchSizeErr}</span>
+                
+                <span class=setting_label>Annuleringsverzekering mogelijk? ({$ja}/{$nee})</span>
+                <input type="text" class="setting_input" name="enableVerzekering" value="{$enableVerzekering}">
+                <div class="tooltip">?
+                    <span class="tooltiptext right">Is het in het algemeen mogelijk om annuleringsverzekeringen af te sluiten? Als u "ja" invult kunt u het per evenement nog uitzetten. Als u hier "nee" invult, kan niet meer aangezet worden.</span>
+                </div>
+                <span class="error">{$enableVerzekeringErr}</span>
+                <span class=setting_label>Adres van de voorwaarden voor de annuleringsverzekering (als annuleringsverzekering mogelijk is)</span>
+                <input type="text" class="setting_input" name="settingVerzekeringVoorwaarden" value="{$settingVerzekeringVoorwaarden}">
+                <span class="error">{$settingVerzekeringVoorwaardenErr}</span>
+
+                
             </fieldset>
         </div>
 

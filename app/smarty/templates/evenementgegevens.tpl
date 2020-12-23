@@ -105,14 +105,15 @@
             <span class="error">{$groepsInschrijvingErr}</span>
         </div>
 
+        {if $heeftAV}
         <div>
             {my_radios naam='isAnnuleringsverzekering' options=$annuleringsverzekeringKeus selected=$isAnnuleringsverzekering tekst='Annuleringsverzekering:'}
             <div class="tooltip">?
                 <span class="tooltiptext right">Kan voor dit evenement een annuleringsverzekering afgesloten worden?</span>
             </div>
             <span class="error">{$isAnnuleringsverzekeringErr}</span>
-    
         </div>
+        {/if}
 
         <br/>
 

@@ -70,7 +70,8 @@ $naamErr = $korteOmschrijvingErr = $langeOmschrijvingErr = $datumBeginErr = $dat
 $maxDeelnemersErr = $statusErr = $aantalDagen = $aantalDagenErr = "";
 $isAnnuleringsverzekeringErr = $betaalwijze_deelnemerErr = $isAccountNodigErr = $groepsInschrijvingErr = "";
 $status = $extraContact = $extraDeelnemer = 0;
-$isAnnuleringsverzekering = $isAccountNodig = null;
+$isAccountNodig = null;
+$isAnnuleringsverzekering = null;
 $groepsInschrijving = OPTIE_KEUZE_NEE;
 $volledigheid_contact = array();
 $volledigheid_deelnemer = array(); 
@@ -87,6 +88,14 @@ $autorisatie->setNotAuth( "login.php" );
 $autorisatie->validate( AUTORISATIE_STATUS_MEDEWERKER );
 $con = Propel::getConnection( fb_model\fb_model\Map\OptieTableMap::DATABASE_NAME );
 $validateOk = 0;
+
+$ini = parse_ini_file( CONFIG_FILENAME, true );
+
+$heeftAV = false;
+if ( $ini['settings']['verzekering_toestaan'] == OPTIE_KEUZE_JA )
+{
+    $heeftAV = true;
+}
 
 // DEEL 1
 // De GET method wordt alleen getriggerd als dit script wordt aangeroepen met de ?evt= parameter,
@@ -333,10 +342,21 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             ->validator( v::intVal()->min( 1 ) )
             ->required( true )
             ->go();
-        $validateOk += $setVar->name( $isAnnuleringsverzekering )
+        if ( $heeftAV )
+        {
+            $validateOk += $setVar->name( $isAnnuleringsverzekering )
             ->onerror( $isAnnuleringsverzekeringErr )
             ->required( true )
             ->go();
+        }
+        else
+        {
+            $validateOk += $setVar->name( $isAnnuleringsverzekering )
+            ->onerror( $isAnnuleringsverzekeringErr )
+            ->defaultvalue( OPTIE_KEUZE_NEE )
+            ->required( false )
+            ->go();
+        }
         $validateOk += $setVar->name( $isAccountNodig )
             ->onerror( $isAccountNodigErr )
             ->required( true )
@@ -496,7 +516,7 @@ try
         }
         $logger->debug( "Volledigheid array geladen" );
     }
-
+    
     $betaalwijzeArray = array();
     if ( $betaalwijzeArray == null )
     {
@@ -504,7 +524,6 @@ try
         $betalingen = BetaalwijzeQuery::create()->filterByIsActief( "1" )->find();
 
         $skipIdeal = false;
-        $ini = parse_ini_file( CONFIG_FILENAME, true );
         if ( $ini['ideal_payment']['toestaan'] != OPTIE_KEUZE_JA )
         {
             $skipIdeal = true;
@@ -531,7 +550,6 @@ catch ( Exception $e )
 
 $logger->debug( "Smarty schermopbouw" );
 
-$ini = parse_ini_file( CONFIG_FILENAME, true );
 $imageDirectory = $ini['settings']['image_directory'] . '/';
 
 $smarty->assign( 'doctitle', $doctitle );
@@ -563,6 +581,7 @@ $smarty->assign( 'aantalDagen', $aantalDagen );
 $smarty->assign( 'aantalDagenErr', $aantalDagenErr );
 $smarty->assign( 'isWijziging', $isWijziging );
 
+$smarty->assign( 'heeftAV', $heeftAV );
 $smarty->assign( 'annuleringsverzekeringKeus', array(
     OPTIE_KEUZE_JA => OPTIE_KEUZE_JA,
     OPTIE_KEUZE_NEE => OPTIE_KEUZE_NEE ) );

@@ -53,7 +53,6 @@ $organisatieNaam = "";
 $organisatieEmail = "";
 $organisatieWebsite = "";
 $organisatieVoorwaarden = "";
-$organisatieVerzekeringVoorwaarden = "";
 $bankIbanNummer = "";
 $bankBicNummer = "";
 $bankTenNameVan = "";
@@ -92,12 +91,13 @@ $settingTempDirectory = "";
 $settingFacturenDirectory = "";
 $settingImageDirectory = "";
 $settingBatchSize = "";
+$enableVerzekering = "";
+$settingVerzekeringVoorwaarden = "";
 
 $organisatieNaamErr = "";
 $organisatieEmailErr = "";
 $organisatieWebsiteErr = "";
 $organisatieVoorwaardenErr = "";
-$organisatieVerzekeringVoorwaardenErr = "";
 $bankIbanNummerErr = "";
 $bankBicNummerErr = "";
 $bankTenNameVanErr = "";
@@ -136,6 +136,8 @@ $settingTempDirectoryErr = "";
 $settingFacturenDirectoryErr = "";
 $settingImageDirectoryErr = "";
 $settingBatchSizeErr = "";
+$enableVerzekeringErr = "";
+$settingVerzekeringVoorwaardenErr = "";
 
 $statusRegel = "";
 $signalError = false;
@@ -166,7 +168,6 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
     $organisatieEmail = $ini['organisatie']['email'];
     $organisatieWebsite = $ini['organisatie']['website'];
     $organisatieVoorwaarden = $ini['organisatie']['voorwaarden'];
-    $organisatieVerzekeringVoorwaarden = $ini['organisatie']['verzekering'];
 
     $bankIbanNummer = $ini['bank']['IBAN'];
     $bankBicNummer = $ini['bank']['BIC'];
@@ -209,6 +210,9 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
     $settingTempDirectory = $ini['settings']['temp_directory'];
     $settingFacturenDirectory = $ini['settings']['facturen_directory'];
     $settingImageDirectory = $ini['settings']['image_directory'];
+
+    $enableVerzekering = $ini['settings']['verzekering_toestaan'];
+    $settingVerzekeringVoorwaarden = $ini['settings']['verzekering_voorwaarden'];
 
     $settingBatchSize = $ini['settings']['batch_size'];
 
@@ -254,12 +258,6 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             ->validator( v::callback( 'urlExists' ) )
             ->errormessage( "Link niet gevonden" )
             ->required( true )->go();
-        $validateOk += $setVar->name( $organisatieVerzekeringVoorwaarden )
-            ->onerror( $organisatieVerzekeringVoorwaardenErr )
-            ->errormessage( "Link niet gevonden" )
-            ->validator( v::callback( 'urlExists' ) )
-            ->required( true )->go();
-
         $validateOk += $setVar->name( $factuurAanmaken )
             ->onerror( $factuurAanmakenErr )
             ->validator( v::oneOf( v::equals( OPTIE_KEUZE_JA ), v::equals( OPTIE_KEUZE_NEE ) ) )
@@ -462,6 +460,19 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             ->onerror( $settingBatchSizeErr )
             ->validator( v::number() )
             ->required( true )->go();
+        $validateOk += $setVar->name( $enableVerzekering )
+            ->onerror( $enableVerzekeringErr )
+            ->validator( v::oneOf( v::equals( OPTIE_KEUZE_JA ), v::equals( OPTIE_KEUZE_NEE ) ) )
+            ->required( true )->go();
+
+        if ( $enableVerzekering == OPTIE_KEUZE_JA )
+        {
+            $validateOk += $setVar->name( $settingVerzekeringVoorwaarden )
+            ->onerror( $settingVerzekeringVoorwaardenErr )
+            ->errormessage( "Link niet gevonden" )
+            ->validator( v::callback( 'urlExists' ) )
+            ->required( true )->go();
+        }
 
         if ( $validateOk == 0 )
         {
@@ -488,7 +499,6 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             fprintf( $fp, 'email="%s"' . "\n", $organisatieEmail );
             fprintf( $fp, 'website="%s"' . "\n", $organisatieWebsite );
             fprintf( $fp, 'voorwaarden="%s"' . "\n", $organisatieVoorwaarden );
-            fprintf( $fp, 'verzekering="%s"' . "\n", $organisatieVerzekeringVoorwaarden );
             fprintf( $fp, ';' . "\n" );
             fprintf( $fp, '[bank]' . "\n" );
             fprintf( $fp, 'IBAN="%s"' . "\n", $bankIbanNummer );
@@ -540,6 +550,8 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             fprintf( $fp, 'image_directory="%s"' . "\n", $settingImageDirectory );
             fprintf( $fp, ';' . "\n" );
             fprintf( $fp, 'batch_size="%s"' . "\n", $settingBatchSize );
+            fprintf( $fp, 'verzekering_toestaan="%s"' . "\n" . $enableVerzekering );
+            fprintf( $fp, 'verzekering_voorwaarden="%s"' . "\n", $settingVerzekeringVoorwaarden );
             fprintf( $fp, ';' . "\n" );            
             fprintf( $fp, ';*/' . "\n" );
             fprintf( $fp, ';?>' . "\n" );
@@ -551,7 +563,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
         {
             $logger->warning( "Fout bij controle invoer, " . $validateOk );
             $signalError = true;
-            $statusRegel = "Herstel a.u.b. de fout en probeer het opnieuw";
+            $statusRegel = "Los a.u.b. het probleem op en probeer het opnieuw";
         }
     }
     catch ( Exception $ex )
@@ -584,8 +596,6 @@ $smarty->assign( 'organisatieWebsite', $organisatieWebsite );
 $smarty->assign( 'organisatieWebsiteErr', $organisatieWebsiteErr );
 $smarty->assign( 'organisatieVoorwaarden', $organisatieVoorwaarden );
 $smarty->assign( 'organisatieVoorwaardenErr', $organisatieVoorwaardenErr );
-$smarty->assign( 'organisatieVerzekeringVoorwaarden', $organisatieVerzekeringVoorwaarden );
-$smarty->assign( 'organisatieVerzekeringVoorwaardenErr', $organisatieVerzekeringVoorwaardenErr );
 
 $smarty->assign( 'bankIbanNummer', $bankIbanNummer );
 $smarty->assign( 'bankIbanNummerErr', $bankIbanNummerErr );
@@ -671,6 +681,10 @@ $smarty->assign( 'settingImageDirectoryErr', $settingImageDirectoryErr );
 
 $smarty->assign( 'settingBatchSize', $settingBatchSize );
 $smarty->assign( 'settingBatchSizeErr', $settingBatchSizeErr );
+$smarty->assign( 'enableVerzekering', $enableVerzekering );
+$smarty->assign( 'enableVerzekeringErr', $enableVerzekeringErr );
+$smarty->assign( 'settingVerzekeringVoorwaarden', $settingVerzekeringVoorwaarden );
+$smarty->assign( 'settingVerzekeringVoorwaardenErr', $settingVerzekeringVoorwaardenErr );
 
 // Voor statusregel
 $smarty->assign( 'isError', $signalError );
