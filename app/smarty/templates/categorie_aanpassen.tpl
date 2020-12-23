@@ -8,7 +8,7 @@
     <ul>
         <li>De getoonde tekst (beschrijving)</li>
         <li>De volgorde van tonen</li>
-        <li>Of de betaalwijze zichtbaar (actief) is.</li>
+        <li>Of de categorie zichtbaar (actief) is.</li>
     </ul>
     <strong><i>Dit werkt door op bestaande inschrijvingen!</i></strong> <br />
     <br />
