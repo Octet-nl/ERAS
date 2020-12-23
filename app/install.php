@@ -231,6 +231,16 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
         array_push( $presentie, array($tekst, "0") );
     }
 
+    $tekst = "Kan ICONS directory schrijven";
+    if ( dir_writable("res/icons" ) )
+    {
+        array_push( $presentie, array($tekst, "1") );
+    }
+    else
+    {
+        array_push( $presentie, array($tekst, "0") );
+    }
+
     $tekst = "Kan CACHE directory schrijven";
     if ( dir_writable( "smarty/cache" ) )
     {

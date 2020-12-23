@@ -2,7 +2,7 @@
 /**
  * System      ERAS
  * Module      thema
- * Doel        Iies een kleurthema
+ * Doel        Kies een kleurthema
  * Auteur      Hans de Rijck (apps@octet.nl)
  * Datum       05-07-2020
  *
