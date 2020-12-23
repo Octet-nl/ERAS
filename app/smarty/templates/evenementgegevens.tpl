@@ -103,20 +103,9 @@
                 <span class="tooltiptext left">Kan voor een groep of voor iemand anders dan de contactpersoon worden ingeschreven, of is alleen individuele inschrijving mogelijk?</span>
             </div>
             <span class="error">{$groepsInschrijvingErr}</span>
-
-            <!--            <label class="datuminput" for="isAccountNodig">Is een account nodig:</label>
-            {html_radios name='isAccountNodig' id=isAccountNodig options=$accountNodigKeus selected=$isAccountNodig labels=FALSE}
-            
-            {my_radios naam='isAccountNodig' options=$accountNodigKeus selected=$isAccountNodig tekst='Is een account nodig:'}
--->
-            <span class="error">{$isAccountNodigErr}</span>
-
         </div>
 
         <div>
-<!--            <label class="textlabel" for="annuleringsverzekering">Annuleringsverzekering:</label>
-            {html_radios name='isAnnuleringsverzekering' label_ids=true options=$annuleringsverzekeringKeus selected=$isAnnuleringsverzekering labels=FALSE}
--->
             {my_radios naam='isAnnuleringsverzekering' options=$annuleringsverzekeringKeus selected=$isAnnuleringsverzekering tekst='Annuleringsverzekering:'}
             <div class="tooltip">?
                 <span class="tooltiptext right">Kan voor dit evenement een annuleringsverzekering afgesloten worden?</span>
