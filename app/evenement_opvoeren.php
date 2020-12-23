@@ -503,8 +503,19 @@ try
         $betalingen = null;
         $betalingen = BetaalwijzeQuery::create()->filterByIsActief( "1" )->find();
 
+        $skipIdeal = false;
+        $ini = parse_ini_file( CONFIG_FILENAME, true );
+        if ( $ini['ideal_payment']['toestaan'] != OPTIE_KEUZE_JA )
+        {
+            $skipIdeal = true;
+        }
+
         foreach ( $betalingen as $dbbetaling )
         {
+            if ( $skipIdeal && $dbbetaling->getCode() == BETAALWIJZE_IDEAL )
+            {
+                continue;
+            }
             $betaalwijzeArray[$dbbetaling->getCode()] = $dbbetaling->getNaam();
         }
         $logger->debug( "Betaalwijze array geladen" );
