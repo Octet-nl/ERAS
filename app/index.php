@@ -198,6 +198,8 @@ else if ( $autorisatie->getRol() == AUTORISATIE_STATUS_ROOT )
     $debugMessage = "Waarschuwing: U bent als ROOT ingelogd.";
 }
 
+$smarty->assign( 'platform', PHP_OS );
+
 $smarty->assign( 'lopendeEvenementen', $lopend_evenement_lijst );
 $smarty->assign( 'komendeEvenementen', $komend_evenement_lijst );
 

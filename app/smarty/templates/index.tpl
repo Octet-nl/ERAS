@@ -87,7 +87,7 @@
                     {if $autorisatie >= $ADMIN}
                       <li><a href="logging.php">Logging/debug level</a></li>
                     {/if}
-                    {if $autorisatie == $ROOT}
+                    {if $autorisatie == $ROOT && $platform == "Linux" }
                       <li><a href=deploy.php>Upgrade versie
                           <div class="tooltip">?
                             <span class="tooltiptext left">Haal nieuwe versie uit GIT.</span>

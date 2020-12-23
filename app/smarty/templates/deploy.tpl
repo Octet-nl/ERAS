@@ -5,7 +5,11 @@
         <h2>{$doctitle}</h2>
 
         <hr />
-        <h3>Let op: Dit is een potentieel destructieve handeling</h3>
+        <h2>Dit is een experimentele functie</h2>
+        <h4>Upgrade bij voorkeur volgens de procedure die beschreven is in GitHub. Deze deployment is experimenteel en kan tot onverwachte resultaten leiden </h4>
+        <h3>Dit is een potentieel destructieve handeling</h3>
+        <h4>Het is mogelijk dat de applicatie na afloop niet meer werkt</h4>
+        <h3>Je bent gewaarschuwd!</h3>
         <h4>Na de druk op de knop wordt de gekozen tag uit GitHub op de {$omgeving} omgeving geplaatst (directory {$deployDirectory})</h4>
 
         <h4>Als je twijfelt over de werking van de deployment:</h4>
