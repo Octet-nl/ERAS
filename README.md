@@ -17,10 +17,22 @@ Eras is heel erg flexibel en aanpasbaar aan verschillende situaties.
 
 Verder voorziet het in een complete back-office omgeving om snel overzicht te krijgen van betalingen, planning, bezetting etc.
 
+## Waarom geen WordPress?
+De gebruikelijke content management systemen (CMS) zoals WordPress, Joomla, Drupal en andere, zijn speciaal bedoeld voor het snel en eenvoudig opzetten van blogs, websites, portals etc.
+ERAS is een heel ander systeem, het is speciaal ontwikkeld om inschrijvingen af te handelen en bij te houden. 
+Eras zorgt onder andere voor het volgende:
+- De periode waarop inschrijving mogelijk is is instelbaar
+- De prijs van een inschrijving is instelbaar
+- Het aantal beschikbare plaatsen is instelbaar.
+- De betaalwijze is instelbaar
+- Er is een volledig back-office systeem aanwezig. Een lijst opvragen van wie nog niet (alles) betaald heeft is eenvoudig.
+
+Een logische opzet kan zijn om alle content af te laten handelen door WordPress en consorten, en vervolgens een link te plaatsen naar ERAS. Zo krijg je het beste van twee werelden.
+
 ## Systeem vereisten
 ERAS is speciaal bedoeld voor een Apache-PHP-MySQL/MariaDB omgeving. Dit kan in een Linux omgeving zijn, maar een XAMP omgeving onder
 Windows werkt ook prima.
-PHP versie 7.0 is minimaal vereist. Verder moet ERAS schrijftoegang hebben tot een aantal eigen directories. De installatieprocedure test hier op.
+PHP versie 7.4 is minimaal vereist. Verder moet ERAS schrijftoegang hebben tot een aantal eigen directories. De installatieprocedure test hier op.
 
 ## Installatie
 Download het complete ERAS pakket:

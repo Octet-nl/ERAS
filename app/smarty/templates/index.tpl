@@ -11,41 +11,48 @@
         <nav style="display: inline;">
           <ul class="nav">
           {if $autorisatie > $KLANT}
+            <li><a href="#">Evenement</a>
+              <ul>
+                 <li><a href="#">Nieuw</a>
+                  <ul>
+                    <li><a href=evenement_opvoeren.php>Evenement</a></li>
+                    <li><a href=optie_opvoeren.php>Optie</a></li>
+                  </ul>
+                 </li>
+                 <li><a href="#">Wijzigen</a>
+                   <ul>
+                     <li><a href=evenement_lijst.php>Evenementen</a></li>
+                     <li><a href=optie_lijst.php>Opties</a></li>
+                     <li><a href=evenement_opties_koppelen.php>Opties per evenement</a></li>
+                   </ul>
+                 </li>
+                 <li><a href=preview_evenement.php>Preview
+                    <div class="tooltip">?
+                      <span class="tooltiptext right">Beoordeel hoe de klant <br/>een evenement te zien krijgt.</span>
+                    </div>
+                   </a>
+                </li>
+              </ul>
+            </li>
+
             <li><a href="#">Nieuw</a>
               <ul>
-                <li><a href=evenement_opvoeren.php>Evenement</a></li>
-                <li><a href=preview_evenement.php>Preview
-                  <div class="tooltip">?
-                    <span class="tooltiptext left">Beoordeel hoe de klant een evenement te zien krijgt.</span>
-                  </div>
-                  </a>
-                </li>
-              <li><a href=optie_opvoeren.php>Optie</a></li>
+                <li><a href=gebruiker_opvoeren.php>Gebruiker</a></li>
                 {if $autorisatie >= $SUPERVISOR}
                   <li><a href=mailing_verzenden.php>Mailing</a></li>
                   <li><a href=voucher_aanmaken.php>Voucher</a></li>
                 {/if}
-                <li><a href=gebruiker_opvoeren.php>Gebruiker</a></li>
-              </ul>
-            </li>
-            <li><a href="#">Wijzigen</a>
-              <ul>
-                <li><a href=evenement_lijst.php>Evenementen</a></li>
-                <li><a href=optie_lijst.php>Opties</a></li>
-                <li><a href=evenement_opties_koppelen.php>Opties per evenement</a></li>
-                {if $autorisatie >= $ADMIN}
-                  <li><a href=voucher_wijzigen.php>Vouchers wijzigen</a></li>
-                {/if}
               </ul>
             </li>
 
-            <li><a href="#">Zoeken</a>
+            <li><a href="#">Wijzigen</a>
               <ul>
                 <li><a href=inschrijving_lijst.php>Inschrijvingen</a></li>
                 <li><a href=deelnemer_lijst.php>Deelnemers</a></li>
                 <li><a href=gebruiker_lijst.php>Gebruikers</a></li>
-                <li><a href=klant_zoeken.php>Klanten</a></li>
-                <li><a href=evenement_statistiek.php>Statistiek</a></li>
+                {if $autorisatie >= $ADMIN}
+                  <li><a href=voucher_wijzigen.php>Vouchers</a></li>
+                {/if}
               </ul>
             </li>
 
@@ -72,16 +79,15 @@
                     </li>
                   </li>
                 {/if}
-                <li><a href="#">IT taken</a>
+                <li><a href="#">Techniek</a>
                   <ul>
+                    <li><a href="show.php?alles=1">Toon sessiegegevens</a></li>
                     <li><a href=clear.php>Wis sessiegegevens</a></li>
-                    <li><a href=show.php>Toon sessiegegevens voor inschrijving</a></li>
-                    <li><a href="show.php?alles=1">Toon alle sessiegegevens</a></li>
                     {if $autorisatie >= $ADMIN}
-                      <li><a href="logging.php">Wijzig logging level</a></li>
+                      <li><a href="logging.php">Logging/debug level</a></li>
                     {/if}
                     {if $autorisatie == $ROOT}
-                      <li><a href=deploy.php>Installeer nieuwe versie
+                      <li><a href=deploy.php>Upgrade versie
                           <div class="tooltip">?
                             <span class="tooltiptext left">Haal nieuwe versie uit GIT.</span>
                           </div>
@@ -90,6 +96,7 @@
                     {/if}
                   </ul>
                 </li>
+                <li><a href=evenement_statistiek.php>Statistiek</a></li>
               </ul>
             </li>
           {/if}
@@ -103,11 +110,11 @@
 
         </ul>
         {if !$loggedin}
-          <a href=login.php style="float: right;"><img src="res/icons/login.png" alt="Login" height="40" width="40"></a>
+          <a href=login.php style="float: right;"><img src="res/icons/login.png" alt="Login" height="36" width="36"></a>
         {else}
-          <a href=logout.php style="float: right;"><img src="res/icons/logout.png" alt="Logout" height="40" width="40"></a>
+          <a href=logout.php style="float: right;"><img src="res/icons/logout.png" alt="Logout" height="36" width="36"></a>
           {if $autorisatie > $KLANT}
-            <a href=klant_zoeken.php style="float: right;margin-right:2em;"><img src="res/icons/search.png" alt="Klant zoeken" height="40" width="40"></a>
+            <a href=klant_zoeken.php style="float: right;margin-right:2em;"><img src="res/icons/search.png" alt="Klant zoeken" height="36" width="36"></a>
           {/if}
         {/if}
       </nav>

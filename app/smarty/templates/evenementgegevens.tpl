@@ -100,7 +100,7 @@
             <label class="datuminput" for="groepsInschrijving">Groepsinschrijving mogelijk?</label>
             {html_radios name='groepsInschrijving' id=groepsInschrijving options=$groepsInschrijvingKeus selected=$groepsInschrijving labels=FALSE}
             <div class="tooltip">?
-                <span class="tooltiptext right">Kan voor een groep of voor iemand anders dan de contactpersoon worden ingeschreven, of is alleen individuele inschrijving mogelijk?</span>
+                <span class="tooltiptext left">Kan voor een groep of voor iemand anders dan de contactpersoon worden ingeschreven, of is alleen individuele inschrijving mogelijk?</span>
             </div>
             <span class="error">{$groepsInschrijvingErr}</span>
 
