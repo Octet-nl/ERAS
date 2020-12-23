@@ -45,7 +45,7 @@
               </ul>
             </li>
 
-            <li><a href="#">Wijzigen</a>
+            <li><a href="#">Tonen</a>
               <ul>
                 <li><a href=inschrijving_lijst.php>Inschrijvingen</a></li>
                 <li><a href=deelnemer_lijst.php>Deelnemers</a></li>
@@ -53,6 +53,7 @@
                 {if $autorisatie >= $ADMIN}
                   <li><a href=voucher_wijzigen.php>Vouchers</a></li>
                 {/if}
+                <li><a href=klant_zoeken.php>Klant zoeken</a></li>
               </ul>
             </li>
 
