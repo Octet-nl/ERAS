@@ -92,7 +92,7 @@ $validateOk = 0;
 $ini = parse_ini_file( CONFIG_FILENAME, true );
 
 $heeftAV = false;
-if ( $ini['settings']['verzekering_toestaan'] == OPTIE_KEUZE_JA )
+if ( $ini['verzekering']['toestaan'] == OPTIE_KEUZE_JA )
 {
     $heeftAV = true;
 }

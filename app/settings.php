@@ -211,8 +211,8 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
     $settingFacturenDirectory = $ini['settings']['facturen_directory'];
     $settingImageDirectory = $ini['settings']['image_directory'];
 
-    $enableVerzekering = $ini['settings']['verzekering_toestaan'];
-    $settingVerzekeringVoorwaarden = $ini['settings']['verzekering_voorwaarden'];
+    $enableVerzekering = $ini['verzekering']['toestaan'];
+    $settingVerzekeringVoorwaarden = $ini['verzekering']['voorwaarden'];
 
     $settingBatchSize = $ini['settings']['batch_size'];
 
@@ -257,12 +257,12 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             ->onerror( $organisatieVoorwaardenErr )
             ->validator( v::callback( 'urlExists' ) )
             ->errormessage( "Link niet gevonden" )
-            ->required( true )->go();
+            ->required( false )->go();
+
         $validateOk += $setVar->name( $factuurAanmaken )
             ->onerror( $factuurAanmakenErr )
             ->validator( v::oneOf( v::equals( OPTIE_KEUZE_JA ), v::equals( OPTIE_KEUZE_NEE ) ) )
             ->required( true )->go();
-
         if ( $factuurAanmaken == OPTIE_KEUZE_JA )
         {
             $validateOk += $setVar->name( $bankIbanNummer )
@@ -543,6 +543,10 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             fprintf( $fp, 'contant_tekst="%s"' . "\n", $betalingContantTekst );
             fprintf( $fp, 'voorwaarden="%s"' . "\n", $betalingVoorwaarden );
             fprintf( $fp, ';' . "\n" );
+            fprintf( $fp, '[verzekering]' . "\n" );
+            fprintf( $fp, 'toestaan="%s"' . "\n" , $enableVerzekering );
+            fprintf( $fp, 'voorwaarden="%s"' . "\n", $settingVerzekeringVoorwaarden );
+            fprintf( $fp, ';' . "\n" );
             fprintf( $fp, '[settings]' . "\n" );
             fprintf( $fp, 'log_directory="%s"' . "\n", $settingLogDirectory );
             fprintf( $fp, 'temp_directory="%s"' . "\n", $settingTempDirectory );
@@ -550,8 +554,6 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             fprintf( $fp, 'image_directory="%s"' . "\n", $settingImageDirectory );
             fprintf( $fp, ';' . "\n" );
             fprintf( $fp, 'batch_size="%s"' . "\n", $settingBatchSize );
-            fprintf( $fp, 'verzekering_toestaan="%s"' . "\n" . $enableVerzekering );
-            fprintf( $fp, 'verzekering_voorwaarden="%s"' . "\n", $settingVerzekeringVoorwaarden );
             fprintf( $fp, ';' . "\n" );            
             fprintf( $fp, ';*/' . "\n" );
             fprintf( $fp, ';?>' . "\n" );

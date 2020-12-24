@@ -10,7 +10,6 @@ organisatienaam="Mijn Organisatie"
 email="admin@myorg.nl"
 website="https://www.myorg.nl"
 voorwaarden="https://www.myorg.nl/MyOrg-voorwaarden.php"
-verzekering="https://www.assurantien.nl/verzekering/kortlopende-annuleringsverzekering"
 ;
 [bank]
 IBAN="NL12 INGS 0345 6789 01"
@@ -55,6 +54,10 @@ incasso_tekst="<div align=left>U heeft gekozen voor betaling in termijnen. Ongev
 contant_tekst="<div align=left>U kunt contant betalen bij de aanvang van het evenement</div>"
 voorwaarden="<div align=left>Uw betaling moet binnen een maand na aanmelding bij ons binnen zijn. Als uw iDeal betaling mislukt is dan kunt u het bedrag altijd via een gewone bankopdracht overmaken.<br><br>- Vermeld bij zelf overschrijven zorgvuldig de referentie. Hiermee kunnen we uw betaling aan uw inschrijving koppelen. Niet traceerbare betalingen worden teruggeboekt met mogelijk gevolgen voor uw inschrijving.<br><br>- Een eventuele betaling via iDeal is hier nog niet in verwerkt.</div>"
 ;
+[verzekering]
+toestaan="ja"
+voorwaarden="https://www.verzeker_bedrijf.nl/verzekering/kortlopende-annuleringsverzekering"
+;
 [settings]
 log_directory="../log"
 temp_directory="../temp"
@@ -62,5 +65,6 @@ facturen_directory="../facturen"
 image_directory="../images"
 ;
 batch_size="10"
+;
 ;*/
 ;?>
