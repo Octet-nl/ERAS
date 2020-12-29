@@ -72,7 +72,12 @@ Allereerst de inschrijfgegevens voor de klant:
 
 Na de deelnemergegevens volgt de afronding van de inschrijving met de betaalgegevens en de bevestiging:
 
-![Alt text](/app/res/images/gitaar_afronding.png?raw=true "Inschrijven")
+![Alt text](/app/res/images/gitaar_afronding.png?raw=true "Afronden")
 
 Na bevestiging ontvangt de klant een bevestigingsmail en eventueel een factuur.
+
+### Menustructuur
+Het ERAS menu voor medewerkers heeft de volgende structuur:
+
+![Alt text](/ERAS_menu.png?raw=true "Menustructuur")
 

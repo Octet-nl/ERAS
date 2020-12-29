@@ -132,7 +132,7 @@ class avNaarHtml
                 $this->htmlTotal = "";
 
                 $ini= parse_ini_file( CONFIG_FILENAME, true );
-                $settingsVerzekeringVoorwaarden = $ini['settings']['verzekering_voorwaarden'];
+                $settingsVerzekeringVoorwaarden = $ini['verzekering']['voorwaarden'];
 
                 $html1 = '<br/>
                     <label class="radiotitel" style="margin-top: 0.2em;" for="Annuleringsverzekering">

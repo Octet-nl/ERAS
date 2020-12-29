@@ -9,8 +9,8 @@
         </div>
         <h2>{$doctitle}</h2>
 
-        <button class="softbutton" type="button" onclick='allesKlappen(7, false);' title="Alles inklappen">Inklappen</button>
-        <button class="softbutton" type="button" onclick='allesKlappen(7, true);' title="Alles uitklappen">Uitklappen</button>
+        <button class="softbutton" type="button" onclick='allesKlappen(8, false);' title="Alles inklappen">Inklappen</button>
+        <button class="softbutton" type="button" onclick='allesKlappen(8, true);' title="Alles uitklappen">Uitklappen</button>
 
         <div class="window_back" style="width:100%">
             <input type="checkbox" id="1" checked onchange='handleChecked(this,document.getElementById("organisatie"));'/> 
@@ -113,6 +113,11 @@
             <fieldset id="iDeal" class="setting_input">
                 <span class=setting_label>iDeal betalingen toestaan ({$ja}/{$nee})</span>
                 <input type="text" class="setting_input" name="enableIDeal" value="{$enableIDeal}">
+                <div class="tooltip">?
+                    <span class="tooltiptext right">Voor iDeal betaling moet een afzonderlijk programma geinstalleerd worden. 
+                        We hebben goede ervaringen met <a href="https://www.ideal-checkout.nl/" target="_blank">ideal-checkout</a>. 
+                        Dit werkt goed en is in veel gevallen gratis.</span>
+                </div>
                 <span class="error">{$enableIDealErr}</span>
                 <span class=setting_label>Adres van de routine die de iDeal betaling verzorgt</span>
                 <input type="text" class="setting_input" name="idealCheckout" value="{$idealCheckout}">
@@ -169,7 +174,23 @@
         </div>
 
         <div class="window_back" style="width:100%">
-            <input type="checkbox" id="7" checked onchange='handleChecked(this,document.getElementById("instellingen"));'/> 
+            <input type="checkbox" id="7" checked onchange='handleChecked(this,document.getElementById("verzekering"));'/> 
+            <h3 style="display: inline-block;">Verzekering</h3>
+            <fieldset id="verzekering" class="setting_input">
+                <span class=setting_label>Annuleringsverzekering mogelijk? ({$ja}/{$nee})</span>
+                <input type="text" class="setting_input" name="enableVerzekering" value="{$enableVerzekering}">
+                <div class="tooltip">?
+                    <span class="tooltiptext right">Is het in het algemeen mogelijk om annuleringsverzekeringen af te sluiten? Als u "ja" invult kunt u dit per evenement nog aanpassen. Als u hier "nee" invult, kan dit niet meer aangepast worden.</span>
+                </div>
+                <span class="error">{$enableVerzekeringErr}</span>
+                <span class=setting_label>Adres van de voorwaarden voor de annuleringsverzekering (als annuleringsverzekering mogelijk is)</span>
+                <input type="text" class="setting_input" name="settingVerzekeringVoorwaarden" value="{$settingVerzekeringVoorwaarden}">
+                <span class="error">{$settingVerzekeringVoorwaardenErr}</span>
+            </fieldset>
+        </div>
+
+        <div class="window_back" style="width:100%">
+            <input type="checkbox" id="8" checked onchange='handleChecked(this,document.getElementById("instellingen"));'/> 
             <h3 style="display: inline-block;">Instellingen</h3>
             <fieldset id="instellingen" class="setting_input">
                 <span class=setting_label>Maximaal aantal mails dat tegelijk verstuurd kan worden</span>
@@ -178,18 +199,6 @@
                     <span class="tooltiptext right">Veel providers stellen een grens aan het maximaal in één keer te verzenden mails. Voor de nieuwbrief is dat soms onvoldoende. Geef hier aan hoeveel mails tegelijk verstuurd kunnen worden. Zijn het er meer, dan wordt een batchverwerking aangeboden.</span>
                 </div>
                 <span class="error">{$settingBatchSizeErr}</span>
-                
-                <span class=setting_label>Annuleringsverzekering mogelijk? ({$ja}/{$nee})</span>
-                <input type="text" class="setting_input" name="enableVerzekering" value="{$enableVerzekering}">
-                <div class="tooltip">?
-                    <span class="tooltiptext right">Biedt uw organisatie de mogelijkheid om annuleringsverzekeringen af te sluiten? Als u "ja" invult kunt u dit later per evenement aan- of uitzetten. Als u hier "nee" invult wordt de vraag niet gesteld.</span>
-                </div>
-                <span class="error">{$enableVerzekeringErr}</span>
-                <span class=setting_label>Adres van de voorwaarden voor de annuleringsverzekering (als annuleringsverzekering mogelijk is)</span>
-                <input type="text" class="setting_input" name="settingVerzekeringVoorwaarden" value="{$settingVerzekeringVoorwaarden}">
-                <span class="error">{$settingVerzekeringVoorwaardenErr}</span>
-
-                
             </fieldset>
         </div>
 
