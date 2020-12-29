@@ -74,6 +74,7 @@
 
 <div style="display: inline-block;margin-left: 4em;" >
     <h3>Vouchers</h3>
+    <div>Dit zijn de vouchers voor <b>alle</b> evenementen</div>
     <table>
         <th></th>
         <th>Aantal</th>

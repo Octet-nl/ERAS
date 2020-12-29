@@ -351,11 +351,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
         }
         else
         {
-            $validateOk += $setVar->name( $isAnnuleringsverzekering )
-            ->onerror( $isAnnuleringsverzekeringErr )
-            ->defaultvalue( OPTIE_KEUZE_NEE )
-            ->required( false )
-            ->go();
+            $isAnnuleringsverzekering = OPTIE_KEUZE_NEE;
         }
         $validateOk += $setVar->name( $isAccountNodig )
             ->onerror( $isAccountNodigErr )
