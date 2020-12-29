@@ -77,7 +77,7 @@ Na de deelnemergegevens volgt de afronding van de inschrijving met de betaalgege
 Na bevestiging ontvangt de klant een bevestigingsmail en eventueel een factuur.
 
 ### Menustructuur
-Het ERAS hoofdmenu heeft de volgende structuur
+Het ERAS menu voor medewerkers heeft de volgende structuur:
 
 ![Alt text](/ERAS_menu.png?raw=true "Menustructuur")
-https://github.com/Octet-nl/ERAS/blob/master/ERAS_menu.png
+
