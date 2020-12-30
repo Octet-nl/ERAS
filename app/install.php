@@ -114,11 +114,11 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
     $presentie = array();
 
     // Check PHP version
-    $tekst = "PHP is minstens versie 7.4";
-    if ( version_compare( phpversion(), '7.4', '<') ) 
+    $tekst = "PHP is minstens versie 7.3";
+    if ( version_compare( phpversion(), '7.3', '<') ) 
     {
         $phpPresent = false;
-        array_push( $presentie, array($tekst, "0") );
+        array_push( $presentie, array($tekst . "<br/>" . phpversion(), "0") );
     }
     else
     {
@@ -158,7 +158,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
     $tekst = "Initialisatie config_ini.php";
     if ( !file_exists( CONFIG_FILENAME ) )
     {
-        copy( CONFIG_DIRNAME."../config_ini_dist.php", CONFIG_FILENAME );
+        copy( CONFIG_DIRNAME."/config_ini_dist.php", CONFIG_FILENAME );
     }
     if ( file_exists( CONFIG_FILENAME ) )
     {

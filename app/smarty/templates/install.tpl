@@ -212,7 +212,6 @@
             </td>
             <td><button name="rootpw" value=1>Wijzig wachtwoord</button></td>
           </tr>
-          <span class="error">{$rootpwErr}</span>
 
           <tr>
             <td>

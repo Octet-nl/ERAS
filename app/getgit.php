@@ -74,7 +74,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
                 ///////////////////////////////////////////////////////////////////
                 $rc = 0;
                 $logger->info( "Download archive" );
-                $command = 'curl -k -L https://github.com/Octet-nl/ERAS/archive/' . $tag . '.tar.gz --output ' . $tag . '.tar.gz';
+                $command = 'curl -k -L https://github.com/Octet-nl/ERAS/archive/' . $tag . '.tar.gz --output ../' . $tag . '.tar.gz';
                 $logger->info( $command );
                 $rc = execWait( $command );
                 if ( $rc != 0 )
@@ -114,7 +114,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
                 ///////////////////////////////////////////////////////////////////
                 //  Gedownload archief untarren naar de deployment directory
                 ///////////////////////////////////////////////////////////////////
-                $command = "tar -xvf " . $tag . ".tar.gz -C ../ --strip-components=1";
+                $command = "tar -xvf ../" . $tag . ".tar.gz -C ../ --strip-components=1";
                 $logger->info( $command );
                 $rc = execWait( $command );
                 if ( $rc != 0 )
