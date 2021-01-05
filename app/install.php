@@ -5,7 +5,7 @@
  * Doel        Installatie en configuratie
  * Auteur      Hans de Rijck (apps@octet.nl)
  * Datum       22-10-2020
- * 
+ *
  * Copyright (c) 2019-2021 Hans de Rijck
  *
  * Permission is hereby granted, free of charge, to any person
@@ -29,7 +29,6 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-
 
 //echo $_SERVER['REQUEST_URI']."<br/>";
 //echo $_SERVER['HTTP_HOST']."<br/>";
@@ -84,7 +83,7 @@ $sqlfile = '../eras_init.sql';
 
 $schermdeel = "0";
 
-error_reporting(E_ERROR | E_PARSE);
+error_reporting( E_ERROR | E_PARSE );
 
 $history = new History();
 $sessie = new Sessie();
@@ -100,147 +99,147 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
 
     // Check PHP version
     $tekst = "PHP is minstens versie 7.3";
-    if ( version_compare( phpversion(), '7.3', '<') ) 
+    if ( version_compare( phpversion(), '7.3', '<' ) )
     {
         $phpPresent = false;
-        array_push( $presentie, array($tekst . "<br/>" . phpversion(), "0") );
+        array_push( $presentie, array( $tekst . "<br/>" . phpversion(), "0" ) );
     }
     else
     {
         $phpPresent = true;
-        array_push( $presentie, array($tekst, "1") );
+        array_push( $presentie, array( $tekst, "1" ) );
     }
-    
+
     $tekst = "MySQL interface aanwezig";
     try
     {
-        if ( mysqli_init( ) != null )
+        if ( mysqli_init() != null )
         {
             $mysqlPresent = true;
-            array_push( $presentie, array($tekst, "1") );
+            array_push( $presentie, array( $tekst, "1" ) );
         }
         else
         {
-            array_push( $presentie, array($tekst, "0") );
+            array_push( $presentie, array( $tekst, "0" ) );
         }
     }
-    catch( Exception $ex )
+    catch ( Exception $ex )
     {
         $mysqlPresent = false;
-        array_push( $presentie, array($tekst, "0") );
+        array_push( $presentie, array( $tekst, "0" ) );
     }
 
     $tekst = "Kan CONFIG directory schrijven";
-    if ( dirIsWritable( CONFIG_DIRNAME ) ) 
+    if ( dirIsWritable( CONFIG_DIRNAME ) )
     {
-        array_push( $presentie, array($tekst, "1") );
+        array_push( $presentie, array( $tekst, "1" ) );
     }
     else
     {
-        array_push( $presentie, array($tekst, "0") );
+        array_push( $presentie, array( $tekst, "0" ) );
     }
 
     $tekst = "Initialisatie config_ini.php";
     if ( !file_exists( CONFIG_FILENAME ) )
     {
-        copy( CONFIG_DIRNAME."/config_ini_dist.php", CONFIG_FILENAME );
+        copy( CONFIG_DIRNAME . "/config_ini_dist.php", CONFIG_FILENAME );
     }
     if ( file_exists( CONFIG_FILENAME ) )
     {
-        array_push( $presentie, array($tekst, "1") );
+        array_push( $presentie, array( $tekst, "1" ) );
     }
     else
     {
-        array_push( $presentie, array($tekst, "0") );
+        array_push( $presentie, array( $tekst, "0" ) );
     }
 
     $ini = parse_ini_file( CONFIG_FILENAME, true );
 
     $tekst = "Kan LOG directory schrijven";
-    if ( dirIsWritable( $ini['settings']['log_directory'] ) ) 
+    if ( dirIsWritable( $ini['settings']['log_directory'] ) )
     {
-        array_push( $presentie, array($tekst, "1") );
+        array_push( $presentie, array( $tekst, "1" ) );
     }
     else
     {
-        array_push( $presentie, array($tekst, "0") );
+        array_push( $presentie, array( $tekst, "0" ) );
     }
 
     $tekst = "Kan TEMP directory schrijven";
     if ( dirIsWritable( $ini['settings']['temp_directory'] ) )
     {
-        array_push( $presentie, array($tekst, "1") );
+        array_push( $presentie, array( $tekst, "1" ) );
     }
     else
     {
-        array_push( $presentie, array($tekst, "0") );
+        array_push( $presentie, array( $tekst, "0" ) );
     }
 
     $tekst = "Kan IMAGE directory schrijven";
     if ( dirIsWritable( $ini['settings']['image_directory'] ) )
     {
-        array_push( $presentie, array($tekst, "1") );
+        array_push( $presentie, array( $tekst, "1" ) );
     }
     else
     {
-        array_push( $presentie, array($tekst, "0") );
+        array_push( $presentie, array( $tekst, "0" ) );
     }
 
     $tekst = "Kan FACTUREN directory schrijven";
     if ( dirIsWritable( $ini['settings']['facturen_directory'] ) )
     {
-        array_push( $presentie, array($tekst, "1") );
+        array_push( $presentie, array( $tekst, "1" ) );
     }
     else
     {
-        array_push( $presentie, array($tekst, "0") );
+        array_push( $presentie, array( $tekst, "0" ) );
     }
 
     $tekst = "Kan CSS directory schrijven";
     if ( dirIsWritable( "css" ) )
     {
-        array_push( $presentie, array($tekst, "1") );
+        array_push( $presentie, array( $tekst, "1" ) );
     }
     else
     {
-        array_push( $presentie, array($tekst, "0") );
+        array_push( $presentie, array( $tekst, "0" ) );
     }
 
     $tekst = "Kan TEMPLATE directory schrijven";
-    if ( dirIsWritable("smarty/templates_c" ) )
+    if ( dirIsWritable( "smarty/templates_c" ) )
     {
-        array_push( $presentie, array($tekst, "1") );
+        array_push( $presentie, array( $tekst, "1" ) );
     }
     else
     {
-        array_push( $presentie, array($tekst, "0") );
+        array_push( $presentie, array( $tekst, "0" ) );
     }
 
     $tekst = "Kan ICONS directory schrijven";
-    if ( dirIsWritable("res/icons" ) )
+    if ( dirIsWritable( "res/icons" ) )
     {
-        array_push( $presentie, array($tekst, "1") );
+        array_push( $presentie, array( $tekst, "1" ) );
     }
     else
     {
-        array_push( $presentie, array($tekst, "0") );
+        array_push( $presentie, array( $tekst, "0" ) );
     }
 
     $tekst = "Kan CACHE directory schrijven";
     if ( dirIsWritable( "smarty/cache" ) )
     {
-        array_push( $presentie, array($tekst, "1") );
+        array_push( $presentie, array( $tekst, "1" ) );
     }
     else
     {
-        array_push( $presentie, array($tekst, "0") );
+        array_push( $presentie, array( $tekst, "0" ) );
     }
 
     $logger->dump( $presentie );
 //    exit;
 
     $isOk = true;
-    for( $i = 0; $i < count( $presentie); $i++ )
+    for ( $i = 0; $i < count( $presentie ); $i++ )
     {
         if ( $presentie[$i][1] == 0 )
         {
@@ -260,11 +259,11 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
 if ( $_SERVER["REQUEST_METHOD"] == "POST" )
 {
     $logger->dump( $_POST );
-    if ( isset( $_POST["verder"] ))
+    if ( isset( $_POST["verder"] ) )
     {
         $schermdeel = "1";
     }
-    else if ( isset( $_POST["aanmaken"] ))
+    else if ( isset( $_POST["aanmaken"] ) )
     {
         $logger->info( "Database aanmaken" );
         try
@@ -277,51 +276,51 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             $setVar = new SetVariable();
             $validateOk += $setVar->name( $createhost )
                 ->onerror( $createhostErr )
-                ->errormessage("Max. lengte is 255 posities")
-                ->emptymessage("Vul het adres (URL) van uw provider in")
+                ->errormessage( "Max. lengte is 255 posities" )
+                ->emptymessage( "Vul het adres (URL) van uw provider in" )
                 ->validator( v::alwaysValid()->length( 1, 255 ) )
                 ->required( true )
                 ->go();
             $validateOk += $setVar->name( $createdb )
                 ->onerror( $createdbErr )
-                ->errormessage("Max. lengte is 255 posities")
-                ->emptymessage("Vul de naam van de database in")
+                ->errormessage( "Max. lengte is 255 posities" )
+                ->emptymessage( "Vul de naam van de database in" )
                 ->validator( v::alwaysValid()->length( 1, 255 ) )
                 ->required( true )
                 ->go();
             $validateOk += $setVar->name( $createport )
                 ->onerror( $createportErr )
-                ->errormessage("Poortnummer ligt tussen 100 en 65535, default is 3306")
-                ->emptymessage("Vul het poortnummer in, default is 3306")
+                ->errormessage( "Poortnummer ligt tussen 100 en 65535, default is 3306" )
+                ->emptymessage( "Vul het poortnummer in, default is 3306" )
                 ->defaultvalue( "3306" )
-                ->validator( v::numericVal()->min(100)->max( 65535 ) )
-                ->required( true ) 
+                ->validator( v::numericVal()->min( 100 )->max( 65535 ) )
+                ->required( true )
                 ->go();
             $validateOk += $setVar->name( $rootuser )
                 ->onerror( $rootuserErr )
-                ->errormessage("Max. lengte is 255 posities")
-                ->emptymessage("Vul het userid (bv. root) in dat de database kan maken")
+                ->errormessage( "Max. lengte is 255 posities" )
+                ->emptymessage( "Vul het userid (bv. root) in dat de database kan maken" )
                 ->validator( v::alwaysValid()->length( 1, 255 ) )
                 ->required( true )
                 ->go();
             $validateOk += $setVar->name( $rootpassword )
                 ->onerror( $rootpasswordErr )
                 ->noHtmlCleaning()
-                ->errormessage("Max. lengte is 255 posities")
+                ->errormessage( "Max. lengte is 255 posities" )
                 ->validator( v::alwaysValid()->length( 1, 255 ) )
                 ->required( false )
                 ->go();
             $validateOk += $setVar->name( $erasuser )
                 ->onerror( $erasuserErr )
-                ->errormessage("Max. lengte is 255 posities")
-                ->emptymessage("Vul het userid in waaronder de database benaderd moet kunnen worden")
+                ->errormessage( "Max. lengte is 255 posities" )
+                ->emptymessage( "Vul het userid in waaronder de database benaderd moet kunnen worden" )
                 ->validator( v::alwaysValid()->length( 1, 255 ) )
                 ->required( true )
                 ->go();
             $validateOk += $setVar->name( $eraspassword )
                 ->onerror( $eraspasswordErr )
                 ->noHtmlCleaning()
-                ->errormessage("Max. lengte is 255 posities")
+                ->errormessage( "Max. lengte is 255 posities" )
                 ->validator( v::alwaysValid()->length( 1, 255 ) )
                 ->required( false )
                 ->go();
@@ -330,7 +329,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
 
             if ( !file_exists( $sqlfile ) )
             {
-                $createErr = "Kan " . $sqlfile ." niet laden";
+                $createErr = "Kan " . $sqlfile . " niet laden";
                 $validateOk += 99;
             }
 
@@ -339,54 +338,54 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                 $logger->info( "Input ok" );
                 $conn = mysqli_connect( $createhost, $rootuser, $rootpassword, "", $createport );
 
-                if(mysqli_connect_errno()) 
+                if ( mysqli_connect_errno() )
                 {
-                    $createhostErr ="Connectie met deze host is mislukt voor dit userid/password: " . mysqli_connect_error() . " - " . mysqli_connect_errno();
+                    $createhostErr = "Connectie met deze host is mislukt voor dit userid/password: " . mysqli_connect_error() . " - " . mysqli_connect_errno();
                     $logger->error( $createhostErr );
                 }
                 else
                 {
                     $logger->info( "Connected" );
-    
-                    $result = mysqli_query($conn, 'CREATE DATABASE testDB');
-                    if (!$result)
+
+                    $result = mysqli_query( $conn, 'CREATE DATABASE testDB' );
+                    if ( !$result )
                     {
-                        $createhostErr ="U heeft geen CREATE privilege in deze omgeving. De ERAS database kan niet aangemaakt worden.";
+                        $createhostErr = "U heeft geen CREATE privilege in deze omgeving. De ERAS database kan niet aangemaakt worden.";
                         $logger->error( "Create error" );
                     }
                     else
                     {
-                        if ( !mysqli_query($conn, 'DROP DATABASE testDB') )
+                        if ( !mysqli_query( $conn, 'DROP DATABASE testDB' ) )
                         {
-                            $logger->error( "Drop testdatabase error: " . mysqli_error($conn) );                        
+                            $logger->error( "Drop testdatabase error: " . mysqli_error( $conn ) );
                         }
-                        else if( !mysqli_query($conn, 'CREATE DATABASE ' . $createdb . ' DEFAULT CHARACTER SET utf8mb4;') )
+                        else if ( !mysqli_query( $conn, 'CREATE DATABASE ' . $createdb . ' DEFAULT CHARACTER SET utf8mb4;' ) )
                         {
-                            $createErr = "Create database " . $createdb . " is mislukt: " . mysqli_error($conn);
-                            $logger->error( "Create database " . $createdb . " is mislukt: " . mysqli_error($conn) );                        
+                            $createErr = "Create database " . $createdb . " is mislukt: " . mysqli_error( $conn );
+                            $logger->error( "Create database " . $createdb . " is mislukt: " . mysqli_error( $conn ) );
                         }
-                        else if ( !mysqli_query($conn, "GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,INDEX,ALTER,CREATE TEMPORARY TABLES ON " . $createdb . ".* TO " . $erasuser . "@" . $createhost . " IDENTIFIED BY '" . $eraspassword . "';") ) 
+                        else if ( !mysqli_query( $conn, "GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,INDEX,ALTER,CREATE TEMPORARY TABLES ON " . $createdb . ".* TO " . $erasuser . "@" . $createhost . " IDENTIFIED BY '" . $eraspassword . "';" ) )
                         {
-                            $createErr = "GRANT toegang is mislukt: " . mysqli_error($conn);
-                            $logger->error( "GRANT toegang is mislukt: " . mysqli_error($conn) );                        
+                            $createErr = "GRANT toegang is mislukt: " . mysqli_error( $conn );
+                            $logger->error( "GRANT toegang is mislukt: " . mysqli_error( $conn ) );
                         }
                         else
                         {
-                            $logger->info( "Database " . $createdb . " is aangemaakt" );                        
+                            $logger->info( "Database " . $createdb . " is aangemaakt" );
                             $sql = file_get_contents( $sqlfile );
 
-                            if( $sql === FALSE )
+                            if ( $sql === false )
                             {
                                 $createErr = "Kan SQL bestand " . $sqlfile . " niet lezen.";
                             }
                             else
                             {
                                 /* execute multi query */
-                                $result = mysqli_multi_query($conn, $sql);
-                                if( $result )
+                                $result = mysqli_multi_query( $conn, $sql );
+                                if ( $result )
                                 {
                                     $logger->info( "Database geladen." );
-                                    
+
                                     $fp = fopen( DATABASE_CONFIG_FILENAME, 'w' );
                                     fprintf( $fp, '<?php' . "\n" );
                                     fprintf( $fp, '#' . "\n" );
@@ -397,17 +396,17 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                                     fprintf( $fp, 'define("DB_NAME", "%s");' . "\n", $createdb );
                                     fprintf( $fp, 'define("DB_PORT", "%s");' . "\n", $createport );
                                     fprintf( $fp, 'define("DB_USER", "%s");' . "\n", $erasuser );
-                                    fprintf( $fp, 'define("DB_PASSWORD", "%s");' . "\n", $eraspassword  );
+                                    fprintf( $fp, 'define("DB_PASSWORD", "%s");' . "\n", $eraspassword );
                                     fclose( $fp );
 
-                                    alert("De database is met succes aangemaakt en geladen.");
+                                    alert( "De database is met succes aangemaakt en geladen." );
 
                                     $schermdeel = "3";
                                 }
                                 else
                                 {
-                                    $logger->error( "Laden database is mislukt: " . mysqli_error($conn) );
-                                    $createErr = "Laden database is mislukt: " . mysqli_error($conn);
+                                    $logger->error( "Laden database is mislukt: " . mysqli_error( $conn ) );
+                                    $createErr = "Laden database is mislukt: " . mysqli_error( $conn );
                                 }
                             }
                         }
@@ -416,10 +415,10 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             }
             else
             {
-                $logger->error( "Input niet ok: " .$validateOk );
+                $logger->error( "Input niet ok: " . $validateOk );
             }
         }
-        catch(Exception $ex)
+        catch ( Exception $ex )
         {
             $hostnameErr = "Er is een exceptie opgetreden: " . $ex->getMessage();
             $logger->error( "Exceptie " . $ex->getMessage() );
@@ -445,8 +444,8 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                 ->go();
             $validateOk += $setVar->name( $poortnummer )
                 ->onerror( $poortnummerErr )
-                ->validator( v::numericVal()->min(100)->max( 65535 ) )
-                ->required( true ) 
+                ->validator( v::numericVal()->min( 100 )->max( 65535 ) )
+                ->required( true )
                 ->go();
             $validateOk += $setVar->name( $userid )
                 ->onerror( $useridErr )
@@ -468,17 +467,17 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
 
             if ( $validateOk == 0 )
             {
-                ini_set('display_errors',1);
-                error_reporting(E_ALL);
+                ini_set( 'display_errors', 1 );
+                error_reporting( E_ALL );
 
                 $logger->info( "Input ok" );
                 $conn = mysqli_connect( $hostname, $userid, $password, $dbname, $poortnummer );
 
-                if(mysqli_connect_errno()) 
+                if ( mysqli_connect_errno() )
                 {
                     if ( mysqli_connect_errno() == 2002 )
                     {
-                        $poortnummerErr ="Connectie met deze database is mislukt op dit adres/poortnummer: " . mysqli_connect_error() . " - " . mysqli_connect_errno();
+                        $poortnummerErr = "Connectie met deze database is mislukt op dit adres/poortnummer: " . mysqli_connect_error() . " - " . mysqli_connect_errno();
                     }
                     else if ( mysqli_connect_errno() == 1045 )
                     {
@@ -486,32 +485,65 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                     }
                     else
                     {
-                        $createErr = "Connectie met database is mislukt: errno="  . mysqli_connect_error() . " - " . mysqli_connect_errno();
+                        $createErr = "Connectie met database is mislukt: errno=" . mysqli_connect_error() . " - " . mysqli_connect_errno();
                     }
                 }
                 else
                 {
                     $logger->info( "Connected" );
 
-                    $logger->debug( "Aantal tabellen: " . mysqli_num_rows( mysqli_query( $conn,"SHOW TABLES LIKE 'fb_system'") )  );
+                    $result = mysqli_query( $conn, "SHOW TABLES LIKE '%'" );
+                    $aantal = mysqli_num_rows( $result );
+                    mysqli_free_result( $result );
 
-                    if( mysqli_num_rows( mysqli_query( $conn,"SHOW TABLES LIKE 'fb_%'") ) ) 
+                    $logger->debug( "Aantal tabellen: " . $aantal );
+
+                    if ( $aantal )
                     {
-                        $createErr = "Deze database is niet leeg. We hebben een lege database nodig.";
-                    } 
-                    else 
+                        $createErr = "Deze database is niet leeg (" . $aantal . " tabellen). We hebben een lege database nodig.";
+                    }
+                    else
                     {
-                        $sql = file_get_contents( $sqlfile );
-    
-                        if( $sql === FALSE )
+                        //$sql = file_get_contents( $sqlfile );
+
+                        if ( !file_exists( $sqlfile ) )
+                        //if ( $sql === false )
                         {
                             $createErr = "Kan SQL bestand " . $sqlfile . " niet lezen.";
                         }
                         else
                         {
-                            /* execute multi query */
-                            $result = mysqli_multi_query($conn, $sql);
-                            if( $result )
+                            // Temporary variable, used to store current query
+                            $templine = '';
+                            // Read in entire file
+                            $lines = file( $sqlfile );
+                            // Loop through each line
+                            $insertErrors = 0;
+                            foreach ( $lines as $line )
+                            {
+                                // Skip it if it's a comment
+                                if ( substr( $line, 0, 2 ) == '--' || $line == '' )
+                                {
+                                    continue;
+                                }
+
+                                // Add this line to the current segment
+                                $templine .= $line;
+                                // If it has a semicolon at the end, it's the end of the query
+                                if ( substr( trim( $line ), -1, 1 ) == ';' )
+                                {
+                                    // Perform the query
+                                    if ( mysqli_query( $conn, $templine ) != true )
+                                    {
+                                        $logger->error( 'Error bij uitvoeren query ' . $templine . ': ' . mysqli_error( $conn ) );
+                                        $insertErrors += 1;
+                                    }
+                                    // Reset temp variable to empty
+                                    $templine = '';
+                                }
+                            }
+
+                            if ( $insertErrors == 0 )
                             {
                                 $fp = fopen( DATABASE_CONFIG_FILENAME, 'w' );
                                 fprintf( $fp, '<?php' . "\n" );
@@ -523,17 +555,18 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                                 fprintf( $fp, 'define("DB_NAME", "%s");' . "\n", $dbname );
                                 fprintf( $fp, 'define("DB_PORT", "%s");' . "\n", $poortnummer );
                                 fprintf( $fp, 'define("DB_USER", "%s");' . "\n", $userid );
-                                fprintf( $fp, 'define("DB_PASSWORD", "%s");' . "\n", $password  );
+                                fprintf( $fp, 'define("DB_PASSWORD", "%s");' . "\n", $password );
                                 fclose( $fp );
 
                                 $logger->info( "Database geladen." );
-                                alert("De database is met succes geladen.");
+                                alert( "De database is met succes geladen." );
                                 $schermdeel = 3;
                             }
                             else
                             {
-                                $createErr = "Laden database is mislukt: " . mysqli_error($conn);
-                                $logger->error( "Laden database is mislukt: " . mysqli_error($conn) );
+                                alert( "Er is iets misgegaan bij het laden van de database: " . mysqli_error( $conn ) );
+                                $logger->error( "Er is iets misgegaan bij het laden van de database: " . mysqli_error( $conn ) );
+                                $createErr = "Laden database is mislukt: " . mysqli_error( $conn );
                             }
                         }
 
@@ -543,10 +576,10 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             }
             else
             {
-                $logger->error( "Input niet ok: " .$validateOk );
+                $logger->error( "Input niet ok: " . $validateOk );
             }
         }
-        catch(Exception $ex)
+        catch ( Exception $ex )
         {
             $hostnameErr = "Er is een exceptie opgetreden: " . $ex->getMessage();
             $logger->error( "Exceptie " . $ex->getMessage() );
@@ -557,8 +590,8 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
         $logger->dump( $_SESSION );
         $comesFrom = ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ? "https" : "http" ) . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
         $logger->debug( $comesFrom );
-        
-        $comesFrom = (isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ? "https" : "http" ) . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . "?scherm=3";
+
+        $comesFrom = ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ? "https" : "http" ) . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . "?scherm=3";
         $logger->debug( $comesFrom );
 
         $_SESSION['referer'] = $comesFrom;
@@ -571,8 +604,8 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
         $logger->dump( $_SESSION );
         $comesFrom = ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ? "https" : "http" ) . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
         $logger->debug( $comesFrom );
-        
-        $comesFrom = (isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ? "https" : "http" ) . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . "?scherm=3";
+
+        $comesFrom = ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ? "https" : "http" ) . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . "?scherm=3";
         $logger->debug( $comesFrom );
 
         $_SESSION['referer'] = $comesFrom;
@@ -586,8 +619,8 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
         $logger->dump( $_SESSION );
         $comesFrom = ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ? "https" : "http" ) . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
         $logger->debug( $comesFrom );
-        
-        $comesFrom = (isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ? "https" : "http" ) . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . "?scherm=3";
+
+        $comesFrom = ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ? "https" : "http" ) . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . "?scherm=3";
         $logger->debug( $comesFrom );
 
         $_SESSION['referer'] = $comesFrom;
@@ -601,8 +634,8 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
         $logger->dump( $_SESSION );
         $comesFrom = ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ? "https" : "http" ) . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
         $logger->debug( $comesFrom );
-        
-        $comesFrom = (isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ? "https" : "http" ) . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . "?scherm=3";
+
+        $comesFrom = ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ? "https" : "http" ) . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . "?scherm=3";
         $logger->debug( $comesFrom );
 
         unlink( "install.php" );
@@ -610,7 +643,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
 
         if ( file_exists( "install.php" ) )
         {
-            alertAndGo("Verwijderen install.php is mislukt. U kunt dit alsnog zelf doen.", "index.php");
+            alertAndGo( "Verwijderen install.php is mislukt. U kunt dit alsnog zelf doen.", "index.php" );
             exit;
         }
 
@@ -627,12 +660,12 @@ if ( $autorisatie->check( AUTORISATIE_STATUS_ROOT ) )
     $rootchanged = "1";
 }
 $logger->debug( "Voor settings" );
-if ( isset( $_SESSION['settings']) )
+if ( isset( $_SESSION['settings'] ) )
 {
     $settingschanged = "1";
 }
 $logger->debug( "Voor gebruikers" );
-if ( isset( $_SESSION['gebruikers']) )
+if ( isset( $_SESSION['gebruikers'] ) )
 {
     $userschanged = "1";
 }
@@ -666,7 +699,7 @@ $smarty->assign( "createErr", $createErr );
 $smarty->assign( "rootuser", $rootuser );
 $smarty->assign( "rootuserErr", $rootuserErr );
 $smarty->assign( "rootpassword", $rootpassword );
-$smarty->assign( "rootpasswordErr", $rootpasswordErr);
+$smarty->assign( "rootpasswordErr", $rootpasswordErr );
 $smarty->assign( "rootchanged", $rootchanged );
 $smarty->assign( "settingschanged", $settingschanged );
 $smarty->assign( "userschanged", $userschanged );
