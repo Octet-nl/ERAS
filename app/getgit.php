@@ -146,7 +146,6 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
                 if ( $rc != 0 )
                 {
                     $logger->error( "Fout bij plaatsen nieuwe versie, rc=" . $rc );
-//                $logger->error( "Ga toch door" );
                     throw new Exception( 'Fout bij plaatsen nieuwe versie.' );
                 }
                 else
@@ -159,6 +158,9 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
                 $command = "rm ../" . $tag . ".tar.gz";
                 $logger->info( $command );
                 $rc = execWait( $command );
+                $command = "rm -rf ../untar";
+                $logger->info( $command );
+                $rc += execWait( $command );
                 if ( $rc != 0 )
                 {
                     $logger->error( "Fout bij verwijderen archive, rc=" . $rc );
