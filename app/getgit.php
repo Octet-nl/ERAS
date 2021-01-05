@@ -139,6 +139,9 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
                 $command = "mv ../untar/vendor ../vendor";
                 $logger->info( $command );
                 $rc += execWait( $command );
+                $command = "cp ../untar/ ../";
+                $logger->info( $command );
+                $rc += execWait( $command );
 
                 if ( $rc != 0 )
                 {
