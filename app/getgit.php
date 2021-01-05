@@ -162,14 +162,18 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
                 $command = "rm -rf ../untar";
                 $logger->info( $command );
                 $rc += execWait( $command );
+                //  Verwijderen installer (niet nodig bij update)
+                $command = "rm -rf ../app/install.php";
+                $logger->info( $command );
+                $rc += execWait( $command );
                 if ( $rc != 0 )
                 {
-                    $logger->error( "Fout bij verwijderen archive, rc=" . $rc );
-                    throw new Exception( 'Fout bij verwijderen archive.' );
+                    $logger->error( "Fout bij verwijderen archive of installer, rc=" . $rc );
+                    throw new Exception( 'Fout bij verwijderen archive of installer.' );
                 }
                 else
                 {
-                    $logger->info( "Archive is verwijderd" );
+                    $logger->info( "Archive en installer zijn verwijderd" );
                 }
 
                 ///////////////////////////////////////////////////////////////////

@@ -42,7 +42,7 @@ CREATE TABLE `fb_system` (
 --
 
 INSERT INTO `fb_system` (`naam`, `version_major`, `version_minor`, `otap`, `debug`, `deploy_directory`, `db_version_major`, `db_version_minor`, `gemaakt_datum`, `gemaakt_door`, `gewijzigd_datum`, `gewijzigd_door`) VALUES
-('eras', '1', '01', 1, 0, 'eras', '0', '91', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '');
+('eras', '1', '01', 1, 0, 'ERAS', '0', '91', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '');
 
 --
 -- Indexes for table `fb_system`

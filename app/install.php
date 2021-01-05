@@ -92,21 +92,6 @@ $sessie = new Sessie();
 $logger = new Logger();
 $logger->level( LOGLEVEL );
 
-function dir_writable( $directory )
-{
-    // Als de directory niet bestaat, probeer hem dan aan te maken.
-    $dirExists     = is_dir($directory) || (mkdir($directory, 0774, true) && is_dir($directory));
-    $dirIsWritable = false;
-    if ($dirExists && is_writable($directory)) 
-    {
-        $tempFile = $directory . '/dummy.txt';
-        $res = file_put_contents($tempFile, 'test');
-        $dirIsWritable = $res !== false;
-        @unlink($tempFile);
-    }
-    return $dirIsWritable;
-}
-
 if ( $_SERVER["REQUEST_METHOD"] == "GET" )
 {
     $logger->dump( $_SESSION );
@@ -146,7 +131,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
     }
 
     $tekst = "Kan CONFIG directory schrijven";
-    if ( dir_writable( CONFIG_DIRNAME ) ) 
+    if ( dirIsWritable( CONFIG_DIRNAME ) ) 
     {
         array_push( $presentie, array($tekst, "1") );
     }
@@ -172,7 +157,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
     $ini = parse_ini_file( CONFIG_FILENAME, true );
 
     $tekst = "Kan LOG directory schrijven";
-    if ( dir_writable( $ini['settings']['log_directory'] ) ) 
+    if ( dirIsWritable( $ini['settings']['log_directory'] ) ) 
     {
         array_push( $presentie, array($tekst, "1") );
     }
@@ -182,7 +167,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
     }
 
     $tekst = "Kan TEMP directory schrijven";
-    if ( dir_writable( $ini['settings']['temp_directory'] ) )
+    if ( dirIsWritable( $ini['settings']['temp_directory'] ) )
     {
         array_push( $presentie, array($tekst, "1") );
     }
@@ -192,7 +177,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
     }
 
     $tekst = "Kan IMAGE directory schrijven";
-    if ( dir_writable( $ini['settings']['image_directory'] ) )
+    if ( dirIsWritable( $ini['settings']['image_directory'] ) )
     {
         array_push( $presentie, array($tekst, "1") );
     }
@@ -202,7 +187,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
     }
 
     $tekst = "Kan FACTUREN directory schrijven";
-    if ( dir_writable( $ini['settings']['facturen_directory'] ) )
+    if ( dirIsWritable( $ini['settings']['facturen_directory'] ) )
     {
         array_push( $presentie, array($tekst, "1") );
     }
@@ -212,7 +197,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
     }
 
     $tekst = "Kan CSS directory schrijven";
-    if ( dir_writable( "css" ) )
+    if ( dirIsWritable( "css" ) )
     {
         array_push( $presentie, array($tekst, "1") );
     }
@@ -222,7 +207,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
     }
 
     $tekst = "Kan TEMPLATE directory schrijven";
-    if ( dir_writable("smarty/templates_c" ) )
+    if ( dirIsWritable("smarty/templates_c" ) )
     {
         array_push( $presentie, array($tekst, "1") );
     }
@@ -232,7 +217,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
     }
 
     $tekst = "Kan ICONS directory schrijven";
-    if ( dir_writable("res/icons" ) )
+    if ( dirIsWritable("res/icons" ) )
     {
         array_push( $presentie, array($tekst, "1") );
     }
@@ -242,7 +227,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
     }
 
     $tekst = "Kan CACHE directory schrijven";
-    if ( dir_writable( "smarty/cache" ) )
+    if ( dirIsWritable( "smarty/cache" ) )
     {
         array_push( $presentie, array($tekst, "1") );
     }

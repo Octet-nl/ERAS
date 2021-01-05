@@ -322,20 +322,26 @@ function baseUrlExists( $url )
     }
 }
 
-function dirWriteable( $directory )
+function dirIsWritable( $directory, $create = true )
 {
-    if( !is_dir( $directory )  ) 
+    // Als de directory niet bestaat, probeer hem dan aan te maken.
+    if ( $create )
     {
-        if ( !mkdir( $directory, 0700, true ) )
-        {
-            return false;
-        }
-    }    
-    if ( !is_writable( $directory ) )
-    {
-        return false;
+        $dirExists     = is_dir($directory) || (mkdir($directory, 0774, true) && is_dir($directory));
     }
-    return true;
+    else
+    {
+        $dirExists     = is_dir($directory);
+    }
+    $dirWritable = false;
+    if ($dirExists && is_writable($directory)) 
+    {
+        $tempFile = $directory . '/dummy.txt';
+        $res = file_put_contents($tempFile, 'test');
+        $dirWritable = $res !== false;
+        @unlink($tempFile);
+    }
+    return $dirWritable;
 }
 
 class Logger
