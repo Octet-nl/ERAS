@@ -114,7 +114,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
                 ///////////////////////////////////////////////////////////////////
                 //  Gedownload archief untarren naar de deployment directory
                 ///////////////////////////////////////////////////////////////////
-                $command = "tar -xvf ../" . $tag . ".tar.gz -C ../ --strip-components=1";
+                $command = "mkdir -p ../untar && tar -xvf ../" . $tag . ".tar.gz -C ../untar/ --strip-components=1";
                 $logger->info( $command );
                 $rc = execWait( $command );
                 if ( $rc != 0 )
@@ -128,25 +128,32 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
                 }
 
                 ///////////////////////////////////////////////////////////////////
-                //  Kopieren van favicon
+                //  Gedownloade versies naar live omgeving
                 ///////////////////////////////////////////////////////////////////
-                $command = "cp -p " . $omgeving . "/favicon.png ../app/favicon.png";
+                $command = "mv ../untar/fb_model ../fb_model";
                 $logger->info( $command );
                 $rc = execWait( $command );
+                $command = "mv ../untar/app ../app";
+                $logger->info( $command );
+                $rc += execWait( $command );
+                $command = "mv ../untar/vendor ../vendor";
+                $logger->info( $command );
+                $rc += execWait( $command );
+
                 if ( $rc != 0 )
                 {
-                    $logger->error( "Fout bij kopieren favicon.png, rc=" . $rc );
-                    throw new Exception( 'Fout bij kopieren favicon.png' );
+                    $logger->error( "Fout bij plaatsen nieuwe versie, rc=" . $rc );
+//                $logger->error( "Ga toch door" );
+                    throw new Exception( 'Fout bij plaatsen nieuwe versie.' );
                 }
                 else
                 {
-                    $logger->info( "Favicon.png is gekopieerd" );
+                    $logger->info( "Nieuwe versie is geplaatst" );
                 }
-
                 ///////////////////////////////////////////////////////////////////
                 //  Verwijderen gedownload archief
                 ///////////////////////////////////////////////////////////////////
-                $command = "rm " . $tag . ".tar.gz";
+                $command = "rm ../untar/" . $tag . ".tar.gz";
                 $logger->info( $command );
                 $rc = execWait( $command );
                 if ( $rc != 0 )
@@ -192,7 +199,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
                 ///////////////////////////////////////////////////////////////////
                 //  En naar het hoofdmenu van de zojuist geinstalleerde versie
                 ///////////////////////////////////////////////////////////////////
-                header( "location:../" . $deployDirectory . "/app/index.php" );
+                header( "location:../app/index.php" );
                 exit;
             }
             catch ( Exception $ex )
