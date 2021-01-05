@@ -153,7 +153,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
                 ///////////////////////////////////////////////////////////////////
                 //  Verwijderen gedownload archief
                 ///////////////////////////////////////////////////////////////////
-                $command = "rm ../untar/" . $tag . ".tar.gz";
+                $command = "rm ../" . $tag . ".tar.gz";
                 $logger->info( $command );
                 $rc = execWait( $command );
                 if ( $rc != 0 )
