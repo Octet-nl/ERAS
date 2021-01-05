@@ -173,12 +173,12 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
                 {
                     $tag = $tag . " " . date('Y-m-d\TH:i:s');
                 }
-                file_put_contents( "version.tpl", "<h4>Dit is de " . $omgeving . " omgeving. Versie: " . $tag . "<h4>" );
+                file_put_contents( "../version.tpl", "<h4>ERAS versie: " . $tag . "<h4>" );
 
                 ///////////////////////////////////////////////////////////////////
                 //  version.tpl naar de smarty template directory
                 ///////////////////////////////////////////////////////////////////
-                $command = "mv version.tpl ../app/smarty/templates/version.tpl";
+                $command = "mv ../version.tpl ../app/smarty/templates/version.tpl";
                 $logger->info( $command );
                 $rc = execWait( $command );
                 if ( $rc != 0 )
