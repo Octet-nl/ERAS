@@ -141,7 +141,8 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
                 $rc += execWait( $command );
                 $command = "cp ../untar/* ../";
                 $logger->info( $command );
-                $rc += execWait( $command );
+                // cp keert terug met returncode 1, dat is ok
+                execWait( $command );
 
                 if ( $rc != 0 )
                 {
