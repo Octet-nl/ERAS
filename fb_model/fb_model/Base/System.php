@@ -84,11 +84,11 @@ abstract class System implements ActiveRecordInterface
     protected $version_minor;
 
     /**
-     * The value for the otap field.
+     * The value for the valid field.
      *
      * @var        int
      */
-    protected $otap;
+    protected $valid;
 
     /**
      * The value for the debug field.
@@ -318,7 +318,7 @@ abstract class System implements ActiveRecordInterface
      * @param string $name  The virtual column name
      * @param mixed  $value The value to give to the virtual column
      *
-     * @return $this|System The current object, for fluid interface
+     * @return $this The current object, for fluid interface
      */
     public function setVirtualColumn($name, $value)
     {
@@ -332,11 +332,11 @@ abstract class System implements ActiveRecordInterface
      *
      * @param  string  $msg
      * @param  int     $priority One of the Propel::LOG_* logging levels
-     * @return boolean
+     * @return void
      */
     protected function log($msg, $priority = Propel::LOG_INFO)
     {
-        return Propel::log(get_class($this) . ': ' . $msg, $priority);
+        Propel::log(get_class($this) . ': ' . $msg, $priority);
     }
 
     /**
@@ -410,13 +410,13 @@ abstract class System implements ActiveRecordInterface
     }
 
     /**
-     * Get the [otap] column value.
+     * Get the [valid] column value.
      *
      * @return int
      */
-    public function getOtap()
+    public function getValid()
     {
-        return $this->otap;
+        return $this->valid;
     }
 
     /**
@@ -463,14 +463,14 @@ abstract class System implements ActiveRecordInterface
      * Get the [optionally formatted] temporal [gemaakt_datum] column value.
      *
      *
-     * @param      string|null $format The date/time format string (either date()-style or strftime()-style).
-     *                            If format is NULL, then the raw DateTime object will be returned.
+     * @param string|null $format The date/time format string (either date()-style or strftime()-style).
+     *   If format is NULL, then the raw DateTime object will be returned.
      *
      * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
      *
      * @throws PropelException - if unable to parse/validate the date/time value.
      */
-    public function getDatumGemaakt($format = NULL)
+    public function getDatumGemaakt($format = null)
     {
         if ($format === null) {
             return $this->gemaakt_datum;
@@ -493,14 +493,14 @@ abstract class System implements ActiveRecordInterface
      * Get the [optionally formatted] temporal [gewijzigd_datum] column value.
      *
      *
-     * @param      string|null $format The date/time format string (either date()-style or strftime()-style).
-     *                            If format is NULL, then the raw DateTime object will be returned.
+     * @param string|null $format The date/time format string (either date()-style or strftime()-style).
+     *   If format is NULL, then the raw DateTime object will be returned.
      *
      * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
      *
      * @throws PropelException - if unable to parse/validate the date/time value.
      */
-    public function getDatumGewijzigd($format = NULL)
+    public function getDatumGewijzigd($format = null)
     {
         if ($format === null) {
             return $this->gewijzigd_datum;
@@ -522,7 +522,7 @@ abstract class System implements ActiveRecordInterface
     /**
      * Set the value of [naam] column.
      *
-     * @param string $v new value
+     * @param string $v New value
      * @return $this|\fb_model\fb_model\System The current object (for fluent API support)
      */
     public function setNaam($v)
@@ -542,7 +542,7 @@ abstract class System implements ActiveRecordInterface
     /**
      * Set the value of [version_major] column.
      *
-     * @param string $v new value
+     * @param string $v New value
      * @return $this|\fb_model\fb_model\System The current object (for fluent API support)
      */
     public function setVersionMajor($v)
@@ -562,7 +562,7 @@ abstract class System implements ActiveRecordInterface
     /**
      * Set the value of [version_minor] column.
      *
-     * @param string $v new value
+     * @param string $v New value
      * @return $this|\fb_model\fb_model\System The current object (for fluent API support)
      */
     public function setVersionMinor($v)
@@ -580,29 +580,29 @@ abstract class System implements ActiveRecordInterface
     } // setVersionMinor()
 
     /**
-     * Set the value of [otap] column.
+     * Set the value of [valid] column.
      *
-     * @param int $v new value
+     * @param int $v New value
      * @return $this|\fb_model\fb_model\System The current object (for fluent API support)
      */
-    public function setOtap($v)
+    public function setValid($v)
     {
         if ($v !== null) {
             $v = (int) $v;
         }
 
-        if ($this->otap !== $v) {
-            $this->otap = $v;
-            $this->modifiedColumns[SystemTableMap::COL_OTAP] = true;
+        if ($this->valid !== $v) {
+            $this->valid = $v;
+            $this->modifiedColumns[SystemTableMap::COL_VALID] = true;
         }
 
         return $this;
-    } // setOtap()
+    } // setValid()
 
     /**
      * Set the value of [debug] column.
      *
-     * @param int $v new value
+     * @param int $v New value
      * @return $this|\fb_model\fb_model\System The current object (for fluent API support)
      */
     public function setDebug($v)
@@ -622,7 +622,7 @@ abstract class System implements ActiveRecordInterface
     /**
      * Set the value of [deploy_directory] column.
      *
-     * @param string $v new value
+     * @param string $v New value
      * @return $this|\fb_model\fb_model\System The current object (for fluent API support)
      */
     public function setDeployDirectory($v)
@@ -642,7 +642,7 @@ abstract class System implements ActiveRecordInterface
     /**
      * Set the value of [db_version_major] column.
      *
-     * @param string $v new value
+     * @param string $v New value
      * @return $this|\fb_model\fb_model\System The current object (for fluent API support)
      */
     public function setDbVersionMajor($v)
@@ -662,7 +662,7 @@ abstract class System implements ActiveRecordInterface
     /**
      * Set the value of [db_version_minor] column.
      *
-     * @param string $v new value
+     * @param string $v New value
      * @return $this|\fb_model\fb_model\System The current object (for fluent API support)
      */
     public function setDbVersionMinor($v)
@@ -682,7 +682,7 @@ abstract class System implements ActiveRecordInterface
     /**
      * Sets the value of [gemaakt_datum] column to a normalized version of the date/time value specified.
      *
-     * @param  mixed $v string, integer (timestamp), or \DateTimeInterface value.
+     * @param  string|integer|\DateTimeInterface $v string, integer (timestamp), or \DateTimeInterface value.
      *               Empty strings are treated as NULL.
      * @return $this|\fb_model\fb_model\System The current object (for fluent API support)
      */
@@ -702,7 +702,7 @@ abstract class System implements ActiveRecordInterface
     /**
      * Set the value of [gemaakt_door] column.
      *
-     * @param string $v new value
+     * @param string $v New value
      * @return $this|\fb_model\fb_model\System The current object (for fluent API support)
      */
     public function setGemaaktDoor($v)
@@ -722,7 +722,7 @@ abstract class System implements ActiveRecordInterface
     /**
      * Sets the value of [gewijzigd_datum] column to a normalized version of the date/time value specified.
      *
-     * @param  mixed $v string, integer (timestamp), or \DateTimeInterface value.
+     * @param  string|integer|\DateTimeInterface $v string, integer (timestamp), or \DateTimeInterface value.
      *               Empty strings are treated as NULL.
      * @return $this|\fb_model\fb_model\System The current object (for fluent API support)
      */
@@ -742,7 +742,7 @@ abstract class System implements ActiveRecordInterface
     /**
      * Set the value of [gewijzigd_door] column.
      *
-     * @param string $v new value
+     * @param string $v New value
      * @return $this|\fb_model\fb_model\System The current object (for fluent API support)
      */
     public function setGewijzigdDoor($v)
@@ -804,8 +804,8 @@ abstract class System implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : SystemTableMap::translateFieldName('VersionMinor', TableMap::TYPE_PHPNAME, $indexType)];
             $this->version_minor = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : SystemTableMap::translateFieldName('Otap', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->otap = (null !== $col) ? (int) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : SystemTableMap::translateFieldName('Valid', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->valid = (null !== $col) ? (int) $col : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : SystemTableMap::translateFieldName('Debug', TableMap::TYPE_PHPNAME, $indexType)];
             $this->debug = (null !== $col) ? (int) $col : null;
@@ -1063,8 +1063,8 @@ abstract class System implements ActiveRecordInterface
         if ($this->isColumnModified(SystemTableMap::COL_VERSION_MINOR)) {
             $modifiedColumns[':p' . $index++]  = 'version_minor';
         }
-        if ($this->isColumnModified(SystemTableMap::COL_OTAP)) {
-            $modifiedColumns[':p' . $index++]  = 'otap';
+        if ($this->isColumnModified(SystemTableMap::COL_VALID)) {
+            $modifiedColumns[':p' . $index++]  = 'valid';
         }
         if ($this->isColumnModified(SystemTableMap::COL_DEBUG)) {
             $modifiedColumns[':p' . $index++]  = 'debug';
@@ -1110,8 +1110,8 @@ abstract class System implements ActiveRecordInterface
                     case 'version_minor':
                         $stmt->bindValue($identifier, $this->version_minor, PDO::PARAM_STR);
                         break;
-                    case 'otap':
-                        $stmt->bindValue($identifier, $this->otap, PDO::PARAM_INT);
+                    case 'valid':
+                        $stmt->bindValue($identifier, $this->valid, PDO::PARAM_INT);
                         break;
                     case 'debug':
                         $stmt->bindValue($identifier, $this->debug, PDO::PARAM_INT);
@@ -1202,7 +1202,7 @@ abstract class System implements ActiveRecordInterface
                 return $this->getVersionMinor();
                 break;
             case 3:
-                return $this->getOtap();
+                return $this->getValid();
                 break;
             case 4:
                 return $this->getDebug();
@@ -1260,7 +1260,7 @@ abstract class System implements ActiveRecordInterface
             $keys[0] => $this->getNaam(),
             $keys[1] => $this->getVersionMajor(),
             $keys[2] => $this->getVersionMinor(),
-            $keys[3] => $this->getOtap(),
+            $keys[3] => $this->getValid(),
             $keys[4] => $this->getDebug(),
             $keys[5] => $this->getDeployDirectory(),
             $keys[6] => $this->getDbVersionMajor(),
@@ -1326,7 +1326,7 @@ abstract class System implements ActiveRecordInterface
                 $this->setVersionMinor($value);
                 break;
             case 3:
-                $this->setOtap($value);
+                $this->setValid($value);
                 break;
             case 4:
                 $this->setDebug($value);
@@ -1388,7 +1388,7 @@ abstract class System implements ActiveRecordInterface
             $this->setVersionMinor($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setOtap($arr[$keys[3]]);
+            $this->setValid($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
             $this->setDebug($arr[$keys[4]]);
@@ -1464,8 +1464,8 @@ abstract class System implements ActiveRecordInterface
         if ($this->isColumnModified(SystemTableMap::COL_VERSION_MINOR)) {
             $criteria->add(SystemTableMap::COL_VERSION_MINOR, $this->version_minor);
         }
-        if ($this->isColumnModified(SystemTableMap::COL_OTAP)) {
-            $criteria->add(SystemTableMap::COL_OTAP, $this->otap);
+        if ($this->isColumnModified(SystemTableMap::COL_VALID)) {
+            $criteria->add(SystemTableMap::COL_VALID, $this->valid);
         }
         if ($this->isColumnModified(SystemTableMap::COL_DEBUG)) {
             $criteria->add(SystemTableMap::COL_DEBUG, $this->debug);
@@ -1583,7 +1583,7 @@ abstract class System implements ActiveRecordInterface
         $copyObj->setNaam($this->getNaam());
         $copyObj->setVersionMajor($this->getVersionMajor());
         $copyObj->setVersionMinor($this->getVersionMinor());
-        $copyObj->setOtap($this->getOtap());
+        $copyObj->setValid($this->getValid());
         $copyObj->setDebug($this->getDebug());
         $copyObj->setDeployDirectory($this->getDeployDirectory());
         $copyObj->setDbVersionMajor($this->getDbVersionMajor());
@@ -1629,7 +1629,7 @@ abstract class System implements ActiveRecordInterface
         $this->naam = null;
         $this->version_major = null;
         $this->version_minor = null;
-        $this->otap = null;
+        $this->valid = null;
         $this->debug = null;
         $this->deploy_directory = null;
         $this->db_version_major = null;
@@ -1691,10 +1691,7 @@ abstract class System implements ActiveRecordInterface
      */
     public function preSave(ConnectionInterface $con = null)
     {
-        if (is_callable('parent::preSave')) {
-            return parent::preSave($con);
-        }
-        return true;
+                return true;
     }
 
     /**
@@ -1703,10 +1700,7 @@ abstract class System implements ActiveRecordInterface
      */
     public function postSave(ConnectionInterface $con = null)
     {
-        if (is_callable('parent::postSave')) {
-            parent::postSave($con);
-        }
-    }
+            }
 
     /**
      * Code to be run before inserting to database
@@ -1715,10 +1709,7 @@ abstract class System implements ActiveRecordInterface
      */
     public function preInsert(ConnectionInterface $con = null)
     {
-        if (is_callable('parent::preInsert')) {
-            return parent::preInsert($con);
-        }
-        return true;
+                return true;
     }
 
     /**
@@ -1727,10 +1718,7 @@ abstract class System implements ActiveRecordInterface
      */
     public function postInsert(ConnectionInterface $con = null)
     {
-        if (is_callable('parent::postInsert')) {
-            parent::postInsert($con);
-        }
-    }
+            }
 
     /**
      * Code to be run before updating the object in database
@@ -1739,10 +1727,7 @@ abstract class System implements ActiveRecordInterface
      */
     public function preUpdate(ConnectionInterface $con = null)
     {
-        if (is_callable('parent::preUpdate')) {
-            return parent::preUpdate($con);
-        }
-        return true;
+                return true;
     }
 
     /**
@@ -1751,10 +1736,7 @@ abstract class System implements ActiveRecordInterface
      */
     public function postUpdate(ConnectionInterface $con = null)
     {
-        if (is_callable('parent::postUpdate')) {
-            parent::postUpdate($con);
-        }
-    }
+            }
 
     /**
      * Code to be run before deleting the object in database
@@ -1763,10 +1745,7 @@ abstract class System implements ActiveRecordInterface
      */
     public function preDelete(ConnectionInterface $con = null)
     {
-        if (is_callable('parent::preDelete')) {
-            return parent::preDelete($con);
-        }
-        return true;
+                return true;
     }
 
     /**
@@ -1775,10 +1754,7 @@ abstract class System implements ActiveRecordInterface
      */
     public function postDelete(ConnectionInterface $con = null)
     {
-        if (is_callable('parent::postDelete')) {
-            parent::postDelete($con);
-        }
-    }
+            }
 
 
     /**

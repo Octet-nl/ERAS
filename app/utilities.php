@@ -816,7 +816,7 @@ class Sysdb
     private $naam = "";
     private $version_major = 0;
     private $version_minor = 0;
-    private $otap = OTAP_ONTWIKKEL;
+    private $valid = 0;
     private $debug = 0;
     private $organisatie_naam = "<Mijn Organisatie>";
     private $organisatie_mail = "postmaster@localhost";
@@ -857,11 +857,16 @@ class Sysdb
                 $sys['naam'] = $systeem->getNaam();
                 $sys['version_major'] = $systeem->getVersionMajor();
                 $sys['version_minor'] = $systeem->getVersionMinor();
-                $sys['otap'] = $systeem->getOtap();
+                $sys['valid'] = $systeem->getValid();
                 $sys['debug'] = $systeem->getDebug();
                 $sys['deploy_dir'] = $systeem->getDeployDirectory();
                 $sys['db_version_major'] = $systeem->getDbVersionMajor();
                 $sys['db_version_minor'] = $systeem->getDbVersionMinor();
+
+                if ( $systeem->getValid() != 1 )
+                {
+                    throw new Exception( "Corrupte database. De installatie is niet correct verlopen. Systeem is gestopt." );
+                }
 
                 if ( $systeem->getDbVersionMajor() != DB_VERSION_MAJOR || $systeem->getDbVersionMinor() != DB_VERSION_MINOR )
                 {
@@ -887,7 +892,7 @@ class Sysdb
         $this->naam = $sys['naam'];
         $this->version_major = $sys['version_major'];
         $this->version_minor = $sys['version_minor'];
-        $this->otap = $sys['otap'];
+        $this->valid = $sys['valid'];
         $this->debug = $sys['debug'];
         $this->organisatie_naam = $sys['organisatie_naam'];
         $this->organisatie_mail = $sys['organisatie_mail'];
@@ -912,9 +917,9 @@ class Sysdb
         return $this->version_minor;
     }
 
-    public function getOtap()
+    public function getValid()
     {
-        return $this->otap;
+        return $this->valid;
     }
 
     public function getDebug()
@@ -1451,18 +1456,14 @@ function optieTypeNaam( $code )
     }
 }
 
-function otapNaam( $code )
+function validNaam( $code )
 {
     switch ( $code )
     {
-        case OTAP_TEST:
-            return "test";
-        case OTAP_ONTWIKKEL:
-            return "ontwikkel";
-        case OTAP_ACCEPTATIE:
-            return "acceptatie";
-        case OTAP_PRODUCTIE:
-            return "productie";
+        case DB_VALID:
+            return "geldig";
+        case DB_INVALID:
+            return "ongeldig";
         default:
             return "???";
     }

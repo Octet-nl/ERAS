@@ -114,7 +114,7 @@ abstract class Inschrijving implements ActiveRecordInterface
     /**
      * The value for the annuleringsverzekering_afgesloten field.
      *
-     * @var        DateTime
+     * @var        DateTime|null
      */
     protected $annuleringsverzekering_afgesloten;
 
@@ -128,49 +128,49 @@ abstract class Inschrijving implements ActiveRecordInterface
     /**
      * The value for the reeds_betaald field.
      *
-     * @var        string
+     * @var        string|null
      */
     protected $reeds_betaald;
 
     /**
      * The value for the nog_te_betalen field.
      *
-     * @var        string
+     * @var        string|null
      */
     protected $nog_te_betalen;
 
     /**
      * The value for the korting field.
      *
-     * @var        string
+     * @var        string|null
      */
     protected $korting;
 
     /**
      * The value for the betaald_per_voucher field.
      *
-     * @var        string
+     * @var        string|null
      */
     protected $betaald_per_voucher;
 
     /**
      * The value for the voucher_id field.
      *
-     * @var        int
+     * @var        int|null
      */
     protected $voucher_id;
 
     /**
      * The value for the betaalwijze field.
      *
-     * @var        int
+     * @var        int|null
      */
     protected $betaalwijze;
 
     /**
      * The value for the annuleringsverzekering field.
      *
-     * @var        int
+     * @var        int|null
      */
     protected $annuleringsverzekering;
 
@@ -462,7 +462,7 @@ abstract class Inschrijving implements ActiveRecordInterface
      * @param string $name  The virtual column name
      * @param mixed  $value The value to give to the virtual column
      *
-     * @return $this|Inschrijving The current object, for fluid interface
+     * @return $this The current object, for fluid interface
      */
     public function setVirtualColumn($name, $value)
     {
@@ -476,11 +476,11 @@ abstract class Inschrijving implements ActiveRecordInterface
      *
      * @param  string  $msg
      * @param  int     $priority One of the Propel::LOG_* logging levels
-     * @return boolean
+     * @return void
      */
     protected function log($msg, $priority = Propel::LOG_INFO)
     {
-        return Propel::log(get_class($this) . ': ' . $msg, $priority);
+        Propel::log(get_class($this) . ': ' . $msg, $priority);
     }
 
     /**
@@ -557,14 +557,14 @@ abstract class Inschrijving implements ActiveRecordInterface
      * Get the [optionally formatted] temporal [datum_inschrijving] column value.
      *
      *
-     * @param      string|null $format The date/time format string (either date()-style or strftime()-style).
-     *                            If format is NULL, then the raw DateTime object will be returned.
+     * @param string|null $format The date/time format string (either date()-style or strftime()-style).
+     *   If format is NULL, then the raw DateTime object will be returned.
      *
      * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
      *
      * @throws PropelException - if unable to parse/validate the date/time value.
      */
-    public function getDatumInschrijving($format = NULL)
+    public function getDatumInschrijving($format = null)
     {
         if ($format === null) {
             return $this->datum_inschrijving;
@@ -577,14 +577,14 @@ abstract class Inschrijving implements ActiveRecordInterface
      * Get the [optionally formatted] temporal [annuleringsverzekering_afgesloten] column value.
      *
      *
-     * @param      string|null $format The date/time format string (either date()-style or strftime()-style).
-     *                            If format is NULL, then the raw DateTime object will be returned.
+     * @param string|null $format The date/time format string (either date()-style or strftime()-style).
+     *   If format is NULL, then the raw DateTime object will be returned.
      *
-     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
+     * @return string|DateTime|null Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
      *
      * @throws PropelException - if unable to parse/validate the date/time value.
      */
-    public function getAnnuleringsverzekeringAfgesloten($format = NULL)
+    public function getAnnuleringsverzekeringAfgesloten($format = null)
     {
         if ($format === null) {
             return $this->annuleringsverzekering_afgesloten;
@@ -606,7 +606,7 @@ abstract class Inschrijving implements ActiveRecordInterface
     /**
      * Get the [reeds_betaald] column value.
      *
-     * @return string
+     * @return string|null
      */
     public function getReedsBetaald()
     {
@@ -616,7 +616,7 @@ abstract class Inschrijving implements ActiveRecordInterface
     /**
      * Get the [nog_te_betalen] column value.
      *
-     * @return string
+     * @return string|null
      */
     public function getNogTeBetalen()
     {
@@ -626,7 +626,7 @@ abstract class Inschrijving implements ActiveRecordInterface
     /**
      * Get the [korting] column value.
      *
-     * @return string
+     * @return string|null
      */
     public function getKorting()
     {
@@ -636,7 +636,7 @@ abstract class Inschrijving implements ActiveRecordInterface
     /**
      * Get the [betaald_per_voucher] column value.
      *
-     * @return string
+     * @return string|null
      */
     public function getBetaaldPerVoucher()
     {
@@ -646,7 +646,7 @@ abstract class Inschrijving implements ActiveRecordInterface
     /**
      * Get the [voucher_id] column value.
      *
-     * @return int
+     * @return int|null
      */
     public function getVoucherId()
     {
@@ -656,7 +656,7 @@ abstract class Inschrijving implements ActiveRecordInterface
     /**
      * Get the [betaalwijze] column value.
      *
-     * @return int
+     * @return int|null
      */
     public function getBetaalwijze()
     {
@@ -666,7 +666,7 @@ abstract class Inschrijving implements ActiveRecordInterface
     /**
      * Get the [annuleringsverzekering] column value.
      *
-     * @return int
+     * @return int|null
      */
     public function getAnnuleringsverzekering()
     {
@@ -687,14 +687,14 @@ abstract class Inschrijving implements ActiveRecordInterface
      * Get the [optionally formatted] temporal [gemaakt_datum] column value.
      *
      *
-     * @param      string|null $format The date/time format string (either date()-style or strftime()-style).
-     *                            If format is NULL, then the raw DateTime object will be returned.
+     * @param string|null $format The date/time format string (either date()-style or strftime()-style).
+     *   If format is NULL, then the raw DateTime object will be returned.
      *
      * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
      *
      * @throws PropelException - if unable to parse/validate the date/time value.
      */
-    public function getDatumGemaakt($format = NULL)
+    public function getDatumGemaakt($format = null)
     {
         if ($format === null) {
             return $this->gemaakt_datum;
@@ -717,14 +717,14 @@ abstract class Inschrijving implements ActiveRecordInterface
      * Get the [optionally formatted] temporal [gewijzigd_datum] column value.
      *
      *
-     * @param      string|null $format The date/time format string (either date()-style or strftime()-style).
-     *                            If format is NULL, then the raw DateTime object will be returned.
+     * @param string|null $format The date/time format string (either date()-style or strftime()-style).
+     *   If format is NULL, then the raw DateTime object will be returned.
      *
      * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
      *
      * @throws PropelException - if unable to parse/validate the date/time value.
      */
-    public function getDatumGewijzigd($format = NULL)
+    public function getDatumGewijzigd($format = null)
     {
         if ($format === null) {
             return $this->gewijzigd_datum;
@@ -746,7 +746,7 @@ abstract class Inschrijving implements ActiveRecordInterface
     /**
      * Set the value of [id] column.
      *
-     * @param int $v new value
+     * @param int $v New value
      * @return $this|\fb_model\fb_model\Inschrijving The current object (for fluent API support)
      */
     public function setId($v)
@@ -766,7 +766,7 @@ abstract class Inschrijving implements ActiveRecordInterface
     /**
      * Set the value of [evenement_id] column.
      *
-     * @param int $v new value
+     * @param int $v New value
      * @return $this|\fb_model\fb_model\Inschrijving The current object (for fluent API support)
      */
     public function setEvenementId($v)
@@ -790,7 +790,7 @@ abstract class Inschrijving implements ActiveRecordInterface
     /**
      * Set the value of [contactpersoon_id] column.
      *
-     * @param int $v new value
+     * @param int $v New value
      * @return $this|\fb_model\fb_model\Inschrijving The current object (for fluent API support)
      */
     public function setContactPersoonId($v)
@@ -814,7 +814,7 @@ abstract class Inschrijving implements ActiveRecordInterface
     /**
      * Sets the value of [datum_inschrijving] column to a normalized version of the date/time value specified.
      *
-     * @param  mixed $v string, integer (timestamp), or \DateTimeInterface value.
+     * @param  string|integer|\DateTimeInterface $v string, integer (timestamp), or \DateTimeInterface value.
      *               Empty strings are treated as NULL.
      * @return $this|\fb_model\fb_model\Inschrijving The current object (for fluent API support)
      */
@@ -834,7 +834,7 @@ abstract class Inschrijving implements ActiveRecordInterface
     /**
      * Sets the value of [annuleringsverzekering_afgesloten] column to a normalized version of the date/time value specified.
      *
-     * @param  mixed $v string, integer (timestamp), or \DateTimeInterface value.
+     * @param  string|integer|\DateTimeInterface|null $v string, integer (timestamp), or \DateTimeInterface value.
      *               Empty strings are treated as NULL.
      * @return $this|\fb_model\fb_model\Inschrijving The current object (for fluent API support)
      */
@@ -854,7 +854,7 @@ abstract class Inschrijving implements ActiveRecordInterface
     /**
      * Set the value of [totaalbedrag] column.
      *
-     * @param string $v new value
+     * @param string $v New value
      * @return $this|\fb_model\fb_model\Inschrijving The current object (for fluent API support)
      */
     public function setTotaalbedrag($v)
@@ -874,7 +874,7 @@ abstract class Inschrijving implements ActiveRecordInterface
     /**
      * Set the value of [reeds_betaald] column.
      *
-     * @param string $v new value
+     * @param string|null $v New value
      * @return $this|\fb_model\fb_model\Inschrijving The current object (for fluent API support)
      */
     public function setReedsBetaald($v)
@@ -894,7 +894,7 @@ abstract class Inschrijving implements ActiveRecordInterface
     /**
      * Set the value of [nog_te_betalen] column.
      *
-     * @param string $v new value
+     * @param string|null $v New value
      * @return $this|\fb_model\fb_model\Inschrijving The current object (for fluent API support)
      */
     public function setNogTeBetalen($v)
@@ -914,7 +914,7 @@ abstract class Inschrijving implements ActiveRecordInterface
     /**
      * Set the value of [korting] column.
      *
-     * @param string $v new value
+     * @param string|null $v New value
      * @return $this|\fb_model\fb_model\Inschrijving The current object (for fluent API support)
      */
     public function setKorting($v)
@@ -934,7 +934,7 @@ abstract class Inschrijving implements ActiveRecordInterface
     /**
      * Set the value of [betaald_per_voucher] column.
      *
-     * @param string $v new value
+     * @param string|null $v New value
      * @return $this|\fb_model\fb_model\Inschrijving The current object (for fluent API support)
      */
     public function setBetaaldPerVoucher($v)
@@ -954,7 +954,7 @@ abstract class Inschrijving implements ActiveRecordInterface
     /**
      * Set the value of [voucher_id] column.
      *
-     * @param int $v new value
+     * @param int|null $v New value
      * @return $this|\fb_model\fb_model\Inschrijving The current object (for fluent API support)
      */
     public function setVoucherId($v)
@@ -978,7 +978,7 @@ abstract class Inschrijving implements ActiveRecordInterface
     /**
      * Set the value of [betaalwijze] column.
      *
-     * @param int $v new value
+     * @param int|null $v New value
      * @return $this|\fb_model\fb_model\Inschrijving The current object (for fluent API support)
      */
     public function setBetaalwijze($v)
@@ -998,7 +998,7 @@ abstract class Inschrijving implements ActiveRecordInterface
     /**
      * Set the value of [annuleringsverzekering] column.
      *
-     * @param int $v new value
+     * @param int|null $v New value
      * @return $this|\fb_model\fb_model\Inschrijving The current object (for fluent API support)
      */
     public function setAnnuleringsverzekering($v)
@@ -1018,7 +1018,7 @@ abstract class Inschrijving implements ActiveRecordInterface
     /**
      * Set the value of [status] column.
      *
-     * @param int $v new value
+     * @param int $v New value
      * @return $this|\fb_model\fb_model\Inschrijving The current object (for fluent API support)
      */
     public function setStatus($v)
@@ -1042,7 +1042,7 @@ abstract class Inschrijving implements ActiveRecordInterface
     /**
      * Sets the value of [gemaakt_datum] column to a normalized version of the date/time value specified.
      *
-     * @param  mixed $v string, integer (timestamp), or \DateTimeInterface value.
+     * @param  string|integer|\DateTimeInterface $v string, integer (timestamp), or \DateTimeInterface value.
      *               Empty strings are treated as NULL.
      * @return $this|\fb_model\fb_model\Inschrijving The current object (for fluent API support)
      */
@@ -1062,7 +1062,7 @@ abstract class Inschrijving implements ActiveRecordInterface
     /**
      * Set the value of [gemaakt_door] column.
      *
-     * @param string $v new value
+     * @param string $v New value
      * @return $this|\fb_model\fb_model\Inschrijving The current object (for fluent API support)
      */
     public function setGemaaktDoor($v)
@@ -1082,7 +1082,7 @@ abstract class Inschrijving implements ActiveRecordInterface
     /**
      * Sets the value of [gewijzigd_datum] column to a normalized version of the date/time value specified.
      *
-     * @param  mixed $v string, integer (timestamp), or \DateTimeInterface value.
+     * @param  string|integer|\DateTimeInterface $v string, integer (timestamp), or \DateTimeInterface value.
      *               Empty strings are treated as NULL.
      * @return $this|\fb_model\fb_model\Inschrijving The current object (for fluent API support)
      */
@@ -1102,7 +1102,7 @@ abstract class Inschrijving implements ActiveRecordInterface
     /**
      * Set the value of [gewijzigd_door] column.
      *
-     * @param string $v new value
+     * @param string $v New value
      * @return $this|\fb_model\fb_model\Inschrijving The current object (for fluent API support)
      */
     public function setGewijzigdDoor($v)
@@ -2521,7 +2521,7 @@ abstract class Inschrijving implements ActiveRecordInterface
     /**
      * Declares an association between this object and a ChildVoucher object.
      *
-     * @param  ChildVoucher $v
+     * @param  ChildVoucher|null $v
      * @return $this|\fb_model\fb_model\Inschrijving The current object (for fluent API support)
      * @throws PropelException
      */
@@ -2550,7 +2550,7 @@ abstract class Inschrijving implements ActiveRecordInterface
      * Get the associated ChildVoucher object
      *
      * @param  ConnectionInterface $con Optional Connection object.
-     * @return ChildVoucher The associated ChildVoucher object.
+     * @return ChildVoucher|null The associated ChildVoucher object.
      * @throws PropelException
      */
     public function getVoucher(ConnectionInterface $con = null)
@@ -2631,15 +2631,15 @@ abstract class Inschrijving implements ActiveRecordInterface
      */
     public function initRelation($relationName)
     {
-        if ('Deelnemer' == $relationName) {
+        if ('Deelnemer' === $relationName) {
             $this->initDeelnemers();
             return;
         }
-        if ('FactuurNummer' == $relationName) {
+        if ('FactuurNummer' === $relationName) {
             $this->initFactuurNummers();
             return;
         }
-        if ('InschrijvingHeeftOptie' == $relationName) {
+        if ('InschrijvingHeeftOptie' === $relationName) {
             $this->initInschrijvingHeeftOpties();
             return;
         }
@@ -2708,10 +2708,19 @@ abstract class Inschrijving implements ActiveRecordInterface
     public function getDeelnemers(Criteria $criteria = null, ConnectionInterface $con = null)
     {
         $partial = $this->collDeelnemersPartial && !$this->isNew();
-        if (null === $this->collDeelnemers || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collDeelnemers) {
+        if (null === $this->collDeelnemers || null !== $criteria || $partial) {
+            if ($this->isNew()) {
                 // return empty collection
-                $this->initDeelnemers();
+                if (null === $this->collDeelnemers) {
+                    $this->initDeelnemers();
+                } else {
+                    $collectionClassName = DeelnemerTableMap::getTableMap()->getCollectionClassName();
+
+                    $collDeelnemers = new $collectionClassName;
+                    $collDeelnemers->setModel('\fb_model\fb_model\Deelnemer');
+
+                    return $collDeelnemers;
+                }
             } else {
                 $collDeelnemers = ChildDeelnemerQuery::create(null, $criteria)
                     ->filterByInschrijving($this)
@@ -2958,10 +2967,19 @@ abstract class Inschrijving implements ActiveRecordInterface
     public function getFactuurNummers(Criteria $criteria = null, ConnectionInterface $con = null)
     {
         $partial = $this->collFactuurNummersPartial && !$this->isNew();
-        if (null === $this->collFactuurNummers || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collFactuurNummers) {
+        if (null === $this->collFactuurNummers || null !== $criteria || $partial) {
+            if ($this->isNew()) {
                 // return empty collection
-                $this->initFactuurNummers();
+                if (null === $this->collFactuurNummers) {
+                    $this->initFactuurNummers();
+                } else {
+                    $collectionClassName = FactuurNummerTableMap::getTableMap()->getCollectionClassName();
+
+                    $collFactuurNummers = new $collectionClassName;
+                    $collFactuurNummers->setModel('\fb_model\fb_model\FactuurNummer');
+
+                    return $collFactuurNummers;
+                }
             } else {
                 $collFactuurNummers = ChildFactuurNummerQuery::create(null, $criteria)
                     ->filterByInschrijving($this)
@@ -3183,10 +3201,19 @@ abstract class Inschrijving implements ActiveRecordInterface
     public function getInschrijvingHeeftOpties(Criteria $criteria = null, ConnectionInterface $con = null)
     {
         $partial = $this->collInschrijvingHeeftOptiesPartial && !$this->isNew();
-        if (null === $this->collInschrijvingHeeftOpties || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collInschrijvingHeeftOpties) {
+        if (null === $this->collInschrijvingHeeftOpties || null !== $criteria || $partial) {
+            if ($this->isNew()) {
                 // return empty collection
-                $this->initInschrijvingHeeftOpties();
+                if (null === $this->collInschrijvingHeeftOpties) {
+                    $this->initInschrijvingHeeftOpties();
+                } else {
+                    $collectionClassName = InschrijvingHeeftOptieTableMap::getTableMap()->getCollectionClassName();
+
+                    $collInschrijvingHeeftOpties = new $collectionClassName;
+                    $collInschrijvingHeeftOpties->setModel('\fb_model\fb_model\InschrijvingHeeftOptie');
+
+                    return $collInschrijvingHeeftOpties;
+                }
             } else {
                 $collInschrijvingHeeftOpties = ChildInschrijvingHeeftOptieQuery::create(null, $criteria)
                     ->filterByInschrijving($this)
@@ -3805,10 +3832,7 @@ abstract class Inschrijving implements ActiveRecordInterface
      */
     public function preSave(ConnectionInterface $con = null)
     {
-        if (is_callable('parent::preSave')) {
-            return parent::preSave($con);
-        }
-        return true;
+                return true;
     }
 
     /**
@@ -3817,10 +3841,7 @@ abstract class Inschrijving implements ActiveRecordInterface
      */
     public function postSave(ConnectionInterface $con = null)
     {
-        if (is_callable('parent::postSave')) {
-            parent::postSave($con);
-        }
-    }
+            }
 
     /**
      * Code to be run before inserting to database
@@ -3829,10 +3850,7 @@ abstract class Inschrijving implements ActiveRecordInterface
      */
     public function preInsert(ConnectionInterface $con = null)
     {
-        if (is_callable('parent::preInsert')) {
-            return parent::preInsert($con);
-        }
-        return true;
+                return true;
     }
 
     /**
@@ -3841,10 +3859,7 @@ abstract class Inschrijving implements ActiveRecordInterface
      */
     public function postInsert(ConnectionInterface $con = null)
     {
-        if (is_callable('parent::postInsert')) {
-            parent::postInsert($con);
-        }
-    }
+            }
 
     /**
      * Code to be run before updating the object in database
@@ -3853,10 +3868,7 @@ abstract class Inschrijving implements ActiveRecordInterface
      */
     public function preUpdate(ConnectionInterface $con = null)
     {
-        if (is_callable('parent::preUpdate')) {
-            return parent::preUpdate($con);
-        }
-        return true;
+                return true;
     }
 
     /**
@@ -3865,10 +3877,7 @@ abstract class Inschrijving implements ActiveRecordInterface
      */
     public function postUpdate(ConnectionInterface $con = null)
     {
-        if (is_callable('parent::postUpdate')) {
-            parent::postUpdate($con);
-        }
-    }
+            }
 
     /**
      * Code to be run before deleting the object in database
@@ -3877,10 +3886,7 @@ abstract class Inschrijving implements ActiveRecordInterface
      */
     public function preDelete(ConnectionInterface $con = null)
     {
-        if (is_callable('parent::preDelete')) {
-            return parent::preDelete($con);
-        }
-        return true;
+                return true;
     }
 
     /**
@@ -3889,10 +3895,7 @@ abstract class Inschrijving implements ActiveRecordInterface
      */
     public function postDelete(ConnectionInterface $con = null)
     {
-        if (is_callable('parent::postDelete')) {
-            parent::postDelete($con);
-        }
-    }
+            }
 
 
     /**

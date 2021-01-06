@@ -91,7 +91,7 @@ abstract class Optie implements ActiveRecordInterface
     /**
      * The value for the per_deelnemer field.
      *
-     * @var        int
+     * @var        int|null
      */
     protected $per_deelnemer;
 
@@ -105,21 +105,21 @@ abstract class Optie implements ActiveRecordInterface
     /**
      * The value for the tekst_voor field.
      *
-     * @var        string
+     * @var        string|null
      */
     protected $tekst_voor;
 
     /**
      * The value for the tekst_achter field.
      *
-     * @var        string
+     * @var        string|null
      */
     protected $tekst_achter;
 
     /**
      * The value for the tooltip_tekst field.
      *
-     * @var        string
+     * @var        string|null
      */
     protected $tooltip_tekst;
 
@@ -133,28 +133,28 @@ abstract class Optie implements ActiveRecordInterface
     /**
      * The value for the optietype field.
      *
-     * @var        int
+     * @var        int|null
      */
     protected $optietype;
 
     /**
      * The value for the groep field.
      *
-     * @var        string
+     * @var        string|null
      */
     protected $groep;
 
     /**
      * The value for the label field.
      *
-     * @var        string
+     * @var        string|null
      */
     protected $label;
 
     /**
      * The value for the is_default field.
      *
-     * @var        int
+     * @var        int|null
      */
     protected $is_default;
 
@@ -162,21 +162,21 @@ abstract class Optie implements ActiveRecordInterface
      * The value for the later_wijzigen field.
      *
      * Note: this column has a database default value of: 1
-     * @var        int
+     * @var        int|null
      */
     protected $later_wijzigen;
 
     /**
      * The value for the totaal_aantal field.
      *
-     * @var        int
+     * @var        int|null
      */
     protected $totaal_aantal;
 
     /**
      * The value for the prijs field.
      *
-     * @var        string
+     * @var        string|null
      */
     protected $prijs;
 
@@ -190,7 +190,7 @@ abstract class Optie implements ActiveRecordInterface
     /**
      * The value for the intern_gebruik field.
      *
-     * @var        int
+     * @var        int|null
      */
     protected $intern_gebruik;
 
@@ -523,7 +523,7 @@ abstract class Optie implements ActiveRecordInterface
      * @param string $name  The virtual column name
      * @param mixed  $value The value to give to the virtual column
      *
-     * @return $this|Optie The current object, for fluid interface
+     * @return $this The current object, for fluid interface
      */
     public function setVirtualColumn($name, $value)
     {
@@ -537,11 +537,11 @@ abstract class Optie implements ActiveRecordInterface
      *
      * @param  string  $msg
      * @param  int     $priority One of the Propel::LOG_* logging levels
-     * @return boolean
+     * @return void
      */
     protected function log($msg, $priority = Propel::LOG_INFO)
     {
-        return Propel::log(get_class($this) . ': ' . $msg, $priority);
+        Propel::log(get_class($this) . ': ' . $msg, $priority);
     }
 
     /**
@@ -597,7 +597,7 @@ abstract class Optie implements ActiveRecordInterface
     /**
      * Get the [per_deelnemer] column value.
      *
-     * @return int
+     * @return int|null
      */
     public function getPerDeelnemer()
     {
@@ -617,7 +617,7 @@ abstract class Optie implements ActiveRecordInterface
     /**
      * Get the [tekst_voor] column value.
      *
-     * @return string
+     * @return string|null
      */
     public function getTekstVoor()
     {
@@ -627,7 +627,7 @@ abstract class Optie implements ActiveRecordInterface
     /**
      * Get the [tekst_achter] column value.
      *
-     * @return string
+     * @return string|null
      */
     public function getTekstAchter()
     {
@@ -637,7 +637,7 @@ abstract class Optie implements ActiveRecordInterface
     /**
      * Get the [tooltip_tekst] column value.
      *
-     * @return string
+     * @return string|null
      */
     public function getTooltipTekst()
     {
@@ -657,7 +657,7 @@ abstract class Optie implements ActiveRecordInterface
     /**
      * Get the [optietype] column value.
      *
-     * @return int
+     * @return int|null
      */
     public function getOptieType()
     {
@@ -667,7 +667,7 @@ abstract class Optie implements ActiveRecordInterface
     /**
      * Get the [groep] column value.
      *
-     * @return string
+     * @return string|null
      */
     public function getGroep()
     {
@@ -677,7 +677,7 @@ abstract class Optie implements ActiveRecordInterface
     /**
      * Get the [label] column value.
      *
-     * @return string
+     * @return string|null
      */
     public function getLabel()
     {
@@ -687,7 +687,7 @@ abstract class Optie implements ActiveRecordInterface
     /**
      * Get the [is_default] column value.
      *
-     * @return int
+     * @return int|null
      */
     public function getIsDefault()
     {
@@ -697,7 +697,7 @@ abstract class Optie implements ActiveRecordInterface
     /**
      * Get the [later_wijzigen] column value.
      *
-     * @return int
+     * @return int|null
      */
     public function getLaterWijzigen()
     {
@@ -707,7 +707,7 @@ abstract class Optie implements ActiveRecordInterface
     /**
      * Get the [totaal_aantal] column value.
      *
-     * @return int
+     * @return int|null
      */
     public function getTotaalAantal()
     {
@@ -717,7 +717,7 @@ abstract class Optie implements ActiveRecordInterface
     /**
      * Get the [prijs] column value.
      *
-     * @return string
+     * @return string|null
      */
     public function getPrijs()
     {
@@ -737,7 +737,7 @@ abstract class Optie implements ActiveRecordInterface
     /**
      * Get the [intern_gebruik] column value.
      *
-     * @return int
+     * @return int|null
      */
     public function getInternGebruik()
     {
@@ -748,14 +748,14 @@ abstract class Optie implements ActiveRecordInterface
      * Get the [optionally formatted] temporal [gemaakt_datum] column value.
      *
      *
-     * @param      string|null $format The date/time format string (either date()-style or strftime()-style).
-     *                            If format is NULL, then the raw DateTime object will be returned.
+     * @param string|null $format The date/time format string (either date()-style or strftime()-style).
+     *   If format is NULL, then the raw DateTime object will be returned.
      *
      * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
      *
      * @throws PropelException - if unable to parse/validate the date/time value.
      */
-    public function getDatumGemaakt($format = NULL)
+    public function getDatumGemaakt($format = null)
     {
         if ($format === null) {
             return $this->gemaakt_datum;
@@ -778,14 +778,14 @@ abstract class Optie implements ActiveRecordInterface
      * Get the [optionally formatted] temporal [gewijzigd_datum] column value.
      *
      *
-     * @param      string|null $format The date/time format string (either date()-style or strftime()-style).
-     *                            If format is NULL, then the raw DateTime object will be returned.
+     * @param string|null $format The date/time format string (either date()-style or strftime()-style).
+     *   If format is NULL, then the raw DateTime object will be returned.
      *
      * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
      *
      * @throws PropelException - if unable to parse/validate the date/time value.
      */
-    public function getDatumGewijzigd($format = NULL)
+    public function getDatumGewijzigd($format = null)
     {
         if ($format === null) {
             return $this->gewijzigd_datum;
@@ -807,7 +807,7 @@ abstract class Optie implements ActiveRecordInterface
     /**
      * Set the value of [id] column.
      *
-     * @param int $v new value
+     * @param int $v New value
      * @return $this|\fb_model\fb_model\Optie The current object (for fluent API support)
      */
     public function setId($v)
@@ -827,7 +827,7 @@ abstract class Optie implements ActiveRecordInterface
     /**
      * Set the value of [per_deelnemer] column.
      *
-     * @param int $v new value
+     * @param int|null $v New value
      * @return $this|\fb_model\fb_model\Optie The current object (for fluent API support)
      */
     public function setPerDeelnemer($v)
@@ -847,7 +847,7 @@ abstract class Optie implements ActiveRecordInterface
     /**
      * Set the value of [naam] column.
      *
-     * @param string $v new value
+     * @param string $v New value
      * @return $this|\fb_model\fb_model\Optie The current object (for fluent API support)
      */
     public function setNaam($v)
@@ -867,7 +867,7 @@ abstract class Optie implements ActiveRecordInterface
     /**
      * Set the value of [tekst_voor] column.
      *
-     * @param string $v new value
+     * @param string|null $v New value
      * @return $this|\fb_model\fb_model\Optie The current object (for fluent API support)
      */
     public function setTekstVoor($v)
@@ -887,7 +887,7 @@ abstract class Optie implements ActiveRecordInterface
     /**
      * Set the value of [tekst_achter] column.
      *
-     * @param string $v new value
+     * @param string|null $v New value
      * @return $this|\fb_model\fb_model\Optie The current object (for fluent API support)
      */
     public function setTekstAchter($v)
@@ -907,7 +907,7 @@ abstract class Optie implements ActiveRecordInterface
     /**
      * Set the value of [tooltip_tekst] column.
      *
-     * @param string $v new value
+     * @param string|null $v New value
      * @return $this|\fb_model\fb_model\Optie The current object (for fluent API support)
      */
     public function setTooltipTekst($v)
@@ -927,7 +927,7 @@ abstract class Optie implements ActiveRecordInterface
     /**
      * Set the value of [heeft_hor_lijn] column.
      *
-     * @param int $v new value
+     * @param int $v New value
      * @return $this|\fb_model\fb_model\Optie The current object (for fluent API support)
      */
     public function setHeeftHorizontaleLijn($v)
@@ -947,7 +947,7 @@ abstract class Optie implements ActiveRecordInterface
     /**
      * Set the value of [optietype] column.
      *
-     * @param int $v new value
+     * @param int|null $v New value
      * @return $this|\fb_model\fb_model\Optie The current object (for fluent API support)
      */
     public function setOptieType($v)
@@ -971,7 +971,7 @@ abstract class Optie implements ActiveRecordInterface
     /**
      * Set the value of [groep] column.
      *
-     * @param string $v new value
+     * @param string|null $v New value
      * @return $this|\fb_model\fb_model\Optie The current object (for fluent API support)
      */
     public function setGroep($v)
@@ -991,7 +991,7 @@ abstract class Optie implements ActiveRecordInterface
     /**
      * Set the value of [label] column.
      *
-     * @param string $v new value
+     * @param string|null $v New value
      * @return $this|\fb_model\fb_model\Optie The current object (for fluent API support)
      */
     public function setLabel($v)
@@ -1011,7 +1011,7 @@ abstract class Optie implements ActiveRecordInterface
     /**
      * Set the value of [is_default] column.
      *
-     * @param int $v new value
+     * @param int|null $v New value
      * @return $this|\fb_model\fb_model\Optie The current object (for fluent API support)
      */
     public function setIsDefault($v)
@@ -1031,7 +1031,7 @@ abstract class Optie implements ActiveRecordInterface
     /**
      * Set the value of [later_wijzigen] column.
      *
-     * @param int $v new value
+     * @param int|null $v New value
      * @return $this|\fb_model\fb_model\Optie The current object (for fluent API support)
      */
     public function setLaterWijzigen($v)
@@ -1051,7 +1051,7 @@ abstract class Optie implements ActiveRecordInterface
     /**
      * Set the value of [totaal_aantal] column.
      *
-     * @param int $v new value
+     * @param int|null $v New value
      * @return $this|\fb_model\fb_model\Optie The current object (for fluent API support)
      */
     public function setTotaalAantal($v)
@@ -1071,7 +1071,7 @@ abstract class Optie implements ActiveRecordInterface
     /**
      * Set the value of [prijs] column.
      *
-     * @param string $v new value
+     * @param string|null $v New value
      * @return $this|\fb_model\fb_model\Optie The current object (for fluent API support)
      */
     public function setPrijs($v)
@@ -1091,7 +1091,7 @@ abstract class Optie implements ActiveRecordInterface
     /**
      * Set the value of [status] column.
      *
-     * @param int $v new value
+     * @param int $v New value
      * @return $this|\fb_model\fb_model\Optie The current object (for fluent API support)
      */
     public function setStatus($v)
@@ -1111,7 +1111,7 @@ abstract class Optie implements ActiveRecordInterface
     /**
      * Set the value of [intern_gebruik] column.
      *
-     * @param int $v new value
+     * @param int|null $v New value
      * @return $this|\fb_model\fb_model\Optie The current object (for fluent API support)
      */
     public function setInternGebruik($v)
@@ -1131,7 +1131,7 @@ abstract class Optie implements ActiveRecordInterface
     /**
      * Sets the value of [gemaakt_datum] column to a normalized version of the date/time value specified.
      *
-     * @param  mixed $v string, integer (timestamp), or \DateTimeInterface value.
+     * @param  string|integer|\DateTimeInterface $v string, integer (timestamp), or \DateTimeInterface value.
      *               Empty strings are treated as NULL.
      * @return $this|\fb_model\fb_model\Optie The current object (for fluent API support)
      */
@@ -1151,7 +1151,7 @@ abstract class Optie implements ActiveRecordInterface
     /**
      * Set the value of [gemaakt_door] column.
      *
-     * @param string $v new value
+     * @param string $v New value
      * @return $this|\fb_model\fb_model\Optie The current object (for fluent API support)
      */
     public function setGemaaktDoor($v)
@@ -1171,7 +1171,7 @@ abstract class Optie implements ActiveRecordInterface
     /**
      * Sets the value of [gewijzigd_datum] column to a normalized version of the date/time value specified.
      *
-     * @param  mixed $v string, integer (timestamp), or \DateTimeInterface value.
+     * @param  string|integer|\DateTimeInterface $v string, integer (timestamp), or \DateTimeInterface value.
      *               Empty strings are treated as NULL.
      * @return $this|\fb_model\fb_model\Optie The current object (for fluent API support)
      */
@@ -1191,7 +1191,7 @@ abstract class Optie implements ActiveRecordInterface
     /**
      * Set the value of [gewijzigd_door] column.
      *
-     * @param string $v new value
+     * @param string $v New value
      * @return $this|\fb_model\fb_model\Optie The current object (for fluent API support)
      */
     public function setGewijzigdDoor($v)
@@ -2540,7 +2540,7 @@ abstract class Optie implements ActiveRecordInterface
     /**
      * Declares an association between this object and a ChildType object.
      *
-     * @param  ChildType $v
+     * @param  ChildType|null $v
      * @return $this|\fb_model\fb_model\Optie The current object (for fluent API support)
      * @throws PropelException
      */
@@ -2569,7 +2569,7 @@ abstract class Optie implements ActiveRecordInterface
      * Get the associated ChildType object
      *
      * @param  ConnectionInterface $con Optional Connection object.
-     * @return ChildType The associated ChildType object.
+     * @return ChildType|null The associated ChildType object.
      * @throws PropelException
      */
     public function getType(ConnectionInterface $con = null)
@@ -2599,15 +2599,15 @@ abstract class Optie implements ActiveRecordInterface
      */
     public function initRelation($relationName)
     {
-        if ('DeelnemerHeeftOptie' == $relationName) {
+        if ('DeelnemerHeeftOptie' === $relationName) {
             $this->initDeelnemerHeeftOpties();
             return;
         }
-        if ('EvenementHeeftOptie' == $relationName) {
+        if ('EvenementHeeftOptie' === $relationName) {
             $this->initEvenementHeeftOpties();
             return;
         }
-        if ('InschrijvingHeeftOptie' == $relationName) {
+        if ('InschrijvingHeeftOptie' === $relationName) {
             $this->initInschrijvingHeeftOpties();
             return;
         }
@@ -2676,10 +2676,19 @@ abstract class Optie implements ActiveRecordInterface
     public function getDeelnemerHeeftOpties(Criteria $criteria = null, ConnectionInterface $con = null)
     {
         $partial = $this->collDeelnemerHeeftOptiesPartial && !$this->isNew();
-        if (null === $this->collDeelnemerHeeftOpties || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collDeelnemerHeeftOpties) {
+        if (null === $this->collDeelnemerHeeftOpties || null !== $criteria || $partial) {
+            if ($this->isNew()) {
                 // return empty collection
-                $this->initDeelnemerHeeftOpties();
+                if (null === $this->collDeelnemerHeeftOpties) {
+                    $this->initDeelnemerHeeftOpties();
+                } else {
+                    $collectionClassName = DeelnemerHeeftOptieTableMap::getTableMap()->getCollectionClassName();
+
+                    $collDeelnemerHeeftOpties = new $collectionClassName;
+                    $collDeelnemerHeeftOpties->setModel('\fb_model\fb_model\DeelnemerHeeftOptie');
+
+                    return $collDeelnemerHeeftOpties;
+                }
             } else {
                 $collDeelnemerHeeftOpties = ChildDeelnemerHeeftOptieQuery::create(null, $criteria)
                     ->filterByOptie($this)
@@ -2929,10 +2938,19 @@ abstract class Optie implements ActiveRecordInterface
     public function getEvenementHeeftOpties(Criteria $criteria = null, ConnectionInterface $con = null)
     {
         $partial = $this->collEvenementHeeftOptiesPartial && !$this->isNew();
-        if (null === $this->collEvenementHeeftOpties || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collEvenementHeeftOpties) {
+        if (null === $this->collEvenementHeeftOpties || null !== $criteria || $partial) {
+            if ($this->isNew()) {
                 // return empty collection
-                $this->initEvenementHeeftOpties();
+                if (null === $this->collEvenementHeeftOpties) {
+                    $this->initEvenementHeeftOpties();
+                } else {
+                    $collectionClassName = EvenementHeeftOptieTableMap::getTableMap()->getCollectionClassName();
+
+                    $collEvenementHeeftOpties = new $collectionClassName;
+                    $collEvenementHeeftOpties->setModel('\fb_model\fb_model\EvenementHeeftOptie');
+
+                    return $collEvenementHeeftOpties;
+                }
             } else {
                 $collEvenementHeeftOpties = ChildEvenementHeeftOptieQuery::create(null, $criteria)
                     ->filterByOptie($this)
@@ -3182,10 +3200,19 @@ abstract class Optie implements ActiveRecordInterface
     public function getInschrijvingHeeftOpties(Criteria $criteria = null, ConnectionInterface $con = null)
     {
         $partial = $this->collInschrijvingHeeftOptiesPartial && !$this->isNew();
-        if (null === $this->collInschrijvingHeeftOpties || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collInschrijvingHeeftOpties) {
+        if (null === $this->collInschrijvingHeeftOpties || null !== $criteria || $partial) {
+            if ($this->isNew()) {
                 // return empty collection
-                $this->initInschrijvingHeeftOpties();
+                if (null === $this->collInschrijvingHeeftOpties) {
+                    $this->initInschrijvingHeeftOpties();
+                } else {
+                    $collectionClassName = InschrijvingHeeftOptieTableMap::getTableMap()->getCollectionClassName();
+
+                    $collInschrijvingHeeftOpties = new $collectionClassName;
+                    $collInschrijvingHeeftOpties->setModel('\fb_model\fb_model\InschrijvingHeeftOptie');
+
+                    return $collInschrijvingHeeftOpties;
+                }
             } else {
                 $collInschrijvingHeeftOpties = ChildInschrijvingHeeftOptieQuery::create(null, $criteria)
                     ->filterByOptie($this)
@@ -4435,10 +4462,7 @@ abstract class Optie implements ActiveRecordInterface
      */
     public function preSave(ConnectionInterface $con = null)
     {
-        if (is_callable('parent::preSave')) {
-            return parent::preSave($con);
-        }
-        return true;
+                return true;
     }
 
     /**
@@ -4447,10 +4471,7 @@ abstract class Optie implements ActiveRecordInterface
      */
     public function postSave(ConnectionInterface $con = null)
     {
-        if (is_callable('parent::postSave')) {
-            parent::postSave($con);
-        }
-    }
+            }
 
     /**
      * Code to be run before inserting to database
@@ -4459,10 +4480,7 @@ abstract class Optie implements ActiveRecordInterface
      */
     public function preInsert(ConnectionInterface $con = null)
     {
-        if (is_callable('parent::preInsert')) {
-            return parent::preInsert($con);
-        }
-        return true;
+                return true;
     }
 
     /**
@@ -4471,10 +4489,7 @@ abstract class Optie implements ActiveRecordInterface
      */
     public function postInsert(ConnectionInterface $con = null)
     {
-        if (is_callable('parent::postInsert')) {
-            parent::postInsert($con);
-        }
-    }
+            }
 
     /**
      * Code to be run before updating the object in database
@@ -4483,10 +4498,7 @@ abstract class Optie implements ActiveRecordInterface
      */
     public function preUpdate(ConnectionInterface $con = null)
     {
-        if (is_callable('parent::preUpdate')) {
-            return parent::preUpdate($con);
-        }
-        return true;
+                return true;
     }
 
     /**
@@ -4495,10 +4507,7 @@ abstract class Optie implements ActiveRecordInterface
      */
     public function postUpdate(ConnectionInterface $con = null)
     {
-        if (is_callable('parent::postUpdate')) {
-            parent::postUpdate($con);
-        }
-    }
+            }
 
     /**
      * Code to be run before deleting the object in database
@@ -4507,10 +4516,7 @@ abstract class Optie implements ActiveRecordInterface
      */
     public function preDelete(ConnectionInterface $con = null)
     {
-        if (is_callable('parent::preDelete')) {
-            return parent::preDelete($con);
-        }
-        return true;
+                return true;
     }
 
     /**
@@ -4519,10 +4525,7 @@ abstract class Optie implements ActiveRecordInterface
      */
     public function postDelete(ConnectionInterface $con = null)
     {
-        if (is_callable('parent::postDelete')) {
-            parent::postDelete($con);
-        }
-    }
+            }
 
 
     /**

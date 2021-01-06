@@ -37,6 +37,7 @@ require_once 'utilities.php';
 
 use Respect\Validation\Validator as v;
 use Propel\Runtime\Propel;
+use \fb_model\fb_model\SystemQuery;
 
 // https://www.smarty.net/docs/en/
 $smarty = new Smarty();
@@ -557,13 +558,16 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
 
                                 if ( $insertErrors == 0 )
                                 {
+
                                     $con->commit();
+
+                                    $systeem = SystemQuery::create()->findOne();
 
                                     $fp = fopen( DATABASE_CONFIG_FILENAME, 'w' );
                                     fprintf( $fp, '<?php' . "\n" );
                                     fprintf( $fp, '#' . "\n" );
-                                    fprintf( $fp, 'define("DB_VERSION_MAJOR", 0);' . "\n" );
-                                    fprintf( $fp, 'define("DB_VERSION_MINOR", 91);' . "\n" );
+                                    fprintf( $fp, 'define("DB_VERSION_MAJOR", "%s");' . "\n", $systeem->getDbVersionMajor() );
+                                    fprintf( $fp, 'define("DB_VERSION_MINOR", "%s");' . "\n", $systeem->getDbVersionMinor() );
                                     fprintf( $fp, '#' . "\n" );
                                     fprintf( $fp, 'define("DB_HOST", "%s");' . "\n", $hostname );
                                     fprintf( $fp, 'define("DB_NAME", "%s");' . "\n", $dbname );
@@ -572,6 +576,9 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                                     fprintf( $fp, 'define("DB_PASSWORD", "%s");' . "\n", $password );
                                     fclose( $fp );
 
+                                    $systeem->setValid( DB_VALID );
+                                    $systeem->save();
+                    
                                     $logger->info( "Database geladen." );
                                     alert( "De database is met succes geladen." );
                                     $schermdeel = 3;
@@ -680,28 +687,31 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
 } // POST
 
 $logger->debug( "Voor autorisatie" );
-$autorisatie = new Autorisatie();
-if ( $autorisatie->check( AUTORISATIE_STATUS_ROOT ) )
+if ( $schermdeel == 3)
 {
-    $rootchanged = "1";
-}
-$logger->debug( "Voor settings" );
-if ( isset( $_SESSION['settings'] ) )
-{
-    $settingschanged = "1";
-}
-$logger->debug( "Voor gebruikers" );
-if ( isset( $_SESSION['gebruikers'] ) )
-{
-    $userschanged = "1";
-}
-if ( file_exists( "install.php" ) )
-{
-    $installDelete = "0";
-}
-else
-{
-    $installDelete = "1";
+    $autorisatie = new Autorisatie();
+    if ( $autorisatie->check( AUTORISATIE_STATUS_ROOT ) )
+    {
+        $rootchanged = "1";
+    }
+    $logger->debug( "Voor settings" );
+    if ( isset( $_SESSION['settings'] ) )
+    {
+        $settingschanged = "1";
+    }
+    $logger->debug( "Voor gebruikers" );
+    if ( isset( $_SESSION['gebruikers'] ) )
+    {
+        $userschanged = "1";
+    }
+    if ( file_exists( "install.php" ) )
+    {
+        $installDelete = "0";
+    }
+    else
+    {
+        $installDelete = "1";
+    }
 }
 $smarty->assign( "hostname", $hostname );
 $smarty->assign( "dbname", $dbname );

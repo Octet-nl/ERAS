@@ -25,7 +25,6 @@ use fb_model\fb_model\SystemQuery;
  * For example, the createSelectSql() method checks the type of a given column used in an
  * ORDER BY clause to know whether it needs to apply SQL to make the ORDER BY case-insensitive
  * (i.e. if it's a text column type).
- *
  */
 class SystemTableMap extends TableMap
 {
@@ -88,9 +87,9 @@ class SystemTableMap extends TableMap
     const COL_VERSION_MINOR = 'fb_system.version_minor';
 
     /**
-     * the column name for the otap field
+     * the column name for the valid field
      */
-    const COL_OTAP = 'fb_system.otap';
+    const COL_VALID = 'fb_system.valid';
 
     /**
      * the column name for the debug field
@@ -144,10 +143,10 @@ class SystemTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Naam', 'VersionMajor', 'VersionMinor', 'Otap', 'Debug', 'DeployDirectory', 'DbVersionMajor', 'DbVersionMinor', 'DatumGemaakt', 'GemaaktDoor', 'DatumGewijzigd', 'GewijzigdDoor', ),
-        self::TYPE_CAMELNAME     => array('naam', 'versionMajor', 'versionMinor', 'otap', 'debug', 'deployDirectory', 'dbVersionMajor', 'dbVersionMinor', 'datumGemaakt', 'gemaaktDoor', 'datumGewijzigd', 'gewijzigdDoor', ),
-        self::TYPE_COLNAME       => array(SystemTableMap::COL_NAAM, SystemTableMap::COL_VERSION_MAJOR, SystemTableMap::COL_VERSION_MINOR, SystemTableMap::COL_OTAP, SystemTableMap::COL_DEBUG, SystemTableMap::COL_DEPLOY_DIRECTORY, SystemTableMap::COL_DB_VERSION_MAJOR, SystemTableMap::COL_DB_VERSION_MINOR, SystemTableMap::COL_GEMAAKT_DATUM, SystemTableMap::COL_GEMAAKT_DOOR, SystemTableMap::COL_GEWIJZIGD_DATUM, SystemTableMap::COL_GEWIJZIGD_DOOR, ),
-        self::TYPE_FIELDNAME     => array('naam', 'version_major', 'version_minor', 'otap', 'debug', 'deploy_directory', 'db_version_major', 'db_version_minor', 'gemaakt_datum', 'gemaakt_door', 'gewijzigd_datum', 'gewijzigd_door', ),
+        self::TYPE_PHPNAME       => array('Naam', 'VersionMajor', 'VersionMinor', 'Valid', 'Debug', 'DeployDirectory', 'DbVersionMajor', 'DbVersionMinor', 'DatumGemaakt', 'GemaaktDoor', 'DatumGewijzigd', 'GewijzigdDoor', ),
+        self::TYPE_CAMELNAME     => array('naam', 'versionMajor', 'versionMinor', 'valid', 'debug', 'deployDirectory', 'dbVersionMajor', 'dbVersionMinor', 'datumGemaakt', 'gemaaktDoor', 'datumGewijzigd', 'gewijzigdDoor', ),
+        self::TYPE_COLNAME       => array(SystemTableMap::COL_NAAM, SystemTableMap::COL_VERSION_MAJOR, SystemTableMap::COL_VERSION_MINOR, SystemTableMap::COL_VALID, SystemTableMap::COL_DEBUG, SystemTableMap::COL_DEPLOY_DIRECTORY, SystemTableMap::COL_DB_VERSION_MAJOR, SystemTableMap::COL_DB_VERSION_MINOR, SystemTableMap::COL_GEMAAKT_DATUM, SystemTableMap::COL_GEMAAKT_DOOR, SystemTableMap::COL_GEWIJZIGD_DATUM, SystemTableMap::COL_GEWIJZIGD_DOOR, ),
+        self::TYPE_FIELDNAME     => array('naam', 'version_major', 'version_minor', 'valid', 'debug', 'deploy_directory', 'db_version_major', 'db_version_minor', 'gemaakt_datum', 'gemaakt_door', 'gewijzigd_datum', 'gewijzigd_door', ),
         self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, )
     );
 
@@ -158,10 +157,10 @@ class SystemTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Naam' => 0, 'VersionMajor' => 1, 'VersionMinor' => 2, 'Otap' => 3, 'Debug' => 4, 'DeployDirectory' => 5, 'DbVersionMajor' => 6, 'DbVersionMinor' => 7, 'DatumGemaakt' => 8, 'GemaaktDoor' => 9, 'DatumGewijzigd' => 10, 'GewijzigdDoor' => 11, ),
-        self::TYPE_CAMELNAME     => array('naam' => 0, 'versionMajor' => 1, 'versionMinor' => 2, 'otap' => 3, 'debug' => 4, 'deployDirectory' => 5, 'dbVersionMajor' => 6, 'dbVersionMinor' => 7, 'datumGemaakt' => 8, 'gemaaktDoor' => 9, 'datumGewijzigd' => 10, 'gewijzigdDoor' => 11, ),
-        self::TYPE_COLNAME       => array(SystemTableMap::COL_NAAM => 0, SystemTableMap::COL_VERSION_MAJOR => 1, SystemTableMap::COL_VERSION_MINOR => 2, SystemTableMap::COL_OTAP => 3, SystemTableMap::COL_DEBUG => 4, SystemTableMap::COL_DEPLOY_DIRECTORY => 5, SystemTableMap::COL_DB_VERSION_MAJOR => 6, SystemTableMap::COL_DB_VERSION_MINOR => 7, SystemTableMap::COL_GEMAAKT_DATUM => 8, SystemTableMap::COL_GEMAAKT_DOOR => 9, SystemTableMap::COL_GEWIJZIGD_DATUM => 10, SystemTableMap::COL_GEWIJZIGD_DOOR => 11, ),
-        self::TYPE_FIELDNAME     => array('naam' => 0, 'version_major' => 1, 'version_minor' => 2, 'otap' => 3, 'debug' => 4, 'deploy_directory' => 5, 'db_version_major' => 6, 'db_version_minor' => 7, 'gemaakt_datum' => 8, 'gemaakt_door' => 9, 'gewijzigd_datum' => 10, 'gewijzigd_door' => 11, ),
+        self::TYPE_PHPNAME       => array('Naam' => 0, 'VersionMajor' => 1, 'VersionMinor' => 2, 'Valid' => 3, 'Debug' => 4, 'DeployDirectory' => 5, 'DbVersionMajor' => 6, 'DbVersionMinor' => 7, 'DatumGemaakt' => 8, 'GemaaktDoor' => 9, 'DatumGewijzigd' => 10, 'GewijzigdDoor' => 11, ),
+        self::TYPE_CAMELNAME     => array('naam' => 0, 'versionMajor' => 1, 'versionMinor' => 2, 'valid' => 3, 'debug' => 4, 'deployDirectory' => 5, 'dbVersionMajor' => 6, 'dbVersionMinor' => 7, 'datumGemaakt' => 8, 'gemaaktDoor' => 9, 'datumGewijzigd' => 10, 'gewijzigdDoor' => 11, ),
+        self::TYPE_COLNAME       => array(SystemTableMap::COL_NAAM => 0, SystemTableMap::COL_VERSION_MAJOR => 1, SystemTableMap::COL_VERSION_MINOR => 2, SystemTableMap::COL_VALID => 3, SystemTableMap::COL_DEBUG => 4, SystemTableMap::COL_DEPLOY_DIRECTORY => 5, SystemTableMap::COL_DB_VERSION_MAJOR => 6, SystemTableMap::COL_DB_VERSION_MINOR => 7, SystemTableMap::COL_GEMAAKT_DATUM => 8, SystemTableMap::COL_GEMAAKT_DOOR => 9, SystemTableMap::COL_GEWIJZIGD_DATUM => 10, SystemTableMap::COL_GEWIJZIGD_DOOR => 11, ),
+        self::TYPE_FIELDNAME     => array('naam' => 0, 'version_major' => 1, 'version_minor' => 2, 'valid' => 3, 'debug' => 4, 'deploy_directory' => 5, 'db_version_major' => 6, 'db_version_minor' => 7, 'gemaakt_datum' => 8, 'gemaakt_door' => 9, 'gewijzigd_datum' => 10, 'gewijzigd_door' => 11, ),
         self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, )
     );
 
@@ -185,7 +184,7 @@ class SystemTableMap extends TableMap
         $this->addColumn('naam', 'Naam', 'VARCHAR', true, 255, null);
         $this->addColumn('version_major', 'VersionMajor', 'VARCHAR', true, 10, null);
         $this->addColumn('version_minor', 'VersionMinor', 'VARCHAR', true, 10, null);
-        $this->addColumn('otap', 'Otap', 'INTEGER', true, 1, null);
+        $this->addColumn('valid', 'Valid', 'INTEGER', true, 1, null);
         $this->addColumn('debug', 'Debug', 'INTEGER', true, 1, null);
         $this->addColumn('deploy_directory', 'DeployDirectory', 'VARCHAR', true, 255, null);
         $this->addColumn('db_version_major', 'DbVersionMajor', 'VARCHAR', true, 10, null);
@@ -351,7 +350,7 @@ class SystemTableMap extends TableMap
             $criteria->addSelectColumn(SystemTableMap::COL_NAAM);
             $criteria->addSelectColumn(SystemTableMap::COL_VERSION_MAJOR);
             $criteria->addSelectColumn(SystemTableMap::COL_VERSION_MINOR);
-            $criteria->addSelectColumn(SystemTableMap::COL_OTAP);
+            $criteria->addSelectColumn(SystemTableMap::COL_VALID);
             $criteria->addSelectColumn(SystemTableMap::COL_DEBUG);
             $criteria->addSelectColumn(SystemTableMap::COL_DEPLOY_DIRECTORY);
             $criteria->addSelectColumn(SystemTableMap::COL_DB_VERSION_MAJOR);
@@ -364,7 +363,7 @@ class SystemTableMap extends TableMap
             $criteria->addSelectColumn($alias . '.naam');
             $criteria->addSelectColumn($alias . '.version_major');
             $criteria->addSelectColumn($alias . '.version_minor');
-            $criteria->addSelectColumn($alias . '.otap');
+            $criteria->addSelectColumn($alias . '.valid');
             $criteria->addSelectColumn($alias . '.debug');
             $criteria->addSelectColumn($alias . '.deploy_directory');
             $criteria->addSelectColumn($alias . '.db_version_major');

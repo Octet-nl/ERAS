@@ -290,7 +290,7 @@ abstract class Contactlog implements ActiveRecordInterface
      * @param string $name  The virtual column name
      * @param mixed  $value The value to give to the virtual column
      *
-     * @return $this|Contactlog The current object, for fluid interface
+     * @return $this The current object, for fluid interface
      */
     public function setVirtualColumn($name, $value)
     {
@@ -304,11 +304,11 @@ abstract class Contactlog implements ActiveRecordInterface
      *
      * @param  string  $msg
      * @param  int     $priority One of the Propel::LOG_* logging levels
-     * @return boolean
+     * @return void
      */
     protected function log($msg, $priority = Propel::LOG_INFO)
     {
-        return Propel::log(get_class($this) . ': ' . $msg, $priority);
+        Propel::log(get_class($this) . ': ' . $msg, $priority);
     }
 
     /**
@@ -385,14 +385,14 @@ abstract class Contactlog implements ActiveRecordInterface
      * Get the [optionally formatted] temporal [gemaakt_datum] column value.
      *
      *
-     * @param      string|null $format The date/time format string (either date()-style or strftime()-style).
-     *                            If format is NULL, then the raw DateTime object will be returned.
+     * @param string|null $format The date/time format string (either date()-style or strftime()-style).
+     *   If format is NULL, then the raw DateTime object will be returned.
      *
      * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
      *
      * @throws PropelException - if unable to parse/validate the date/time value.
      */
-    public function getDatumGemaakt($format = NULL)
+    public function getDatumGemaakt($format = null)
     {
         if ($format === null) {
             return $this->gemaakt_datum;
@@ -415,14 +415,14 @@ abstract class Contactlog implements ActiveRecordInterface
      * Get the [optionally formatted] temporal [gewijzigd_datum] column value.
      *
      *
-     * @param      string|null $format The date/time format string (either date()-style or strftime()-style).
-     *                            If format is NULL, then the raw DateTime object will be returned.
+     * @param string|null $format The date/time format string (either date()-style or strftime()-style).
+     *   If format is NULL, then the raw DateTime object will be returned.
      *
      * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
      *
      * @throws PropelException - if unable to parse/validate the date/time value.
      */
-    public function getDatumGewijzigd($format = NULL)
+    public function getDatumGewijzigd($format = null)
     {
         if ($format === null) {
             return $this->gewijzigd_datum;
@@ -444,7 +444,7 @@ abstract class Contactlog implements ActiveRecordInterface
     /**
      * Set the value of [id] column.
      *
-     * @param int $v new value
+     * @param int $v New value
      * @return $this|\fb_model\fb_model\Contactlog The current object (for fluent API support)
      */
     public function setId($v)
@@ -464,7 +464,7 @@ abstract class Contactlog implements ActiveRecordInterface
     /**
      * Set the value of [persoon_id] column.
      *
-     * @param int $v new value
+     * @param int $v New value
      * @return $this|\fb_model\fb_model\Contactlog The current object (for fluent API support)
      */
     public function setPersoonId($v)
@@ -488,7 +488,7 @@ abstract class Contactlog implements ActiveRecordInterface
     /**
      * Set the value of [tekst] column.
      *
-     * @param string $v new value
+     * @param string $v New value
      * @return $this|\fb_model\fb_model\Contactlog The current object (for fluent API support)
      */
     public function setTekst($v)
@@ -508,7 +508,7 @@ abstract class Contactlog implements ActiveRecordInterface
     /**
      * Sets the value of [gemaakt_datum] column to a normalized version of the date/time value specified.
      *
-     * @param  mixed $v string, integer (timestamp), or \DateTimeInterface value.
+     * @param  string|integer|\DateTimeInterface $v string, integer (timestamp), or \DateTimeInterface value.
      *               Empty strings are treated as NULL.
      * @return $this|\fb_model\fb_model\Contactlog The current object (for fluent API support)
      */
@@ -528,7 +528,7 @@ abstract class Contactlog implements ActiveRecordInterface
     /**
      * Set the value of [gemaakt_door] column.
      *
-     * @param string $v new value
+     * @param string $v New value
      * @return $this|\fb_model\fb_model\Contactlog The current object (for fluent API support)
      */
     public function setGemaaktDoor($v)
@@ -548,7 +548,7 @@ abstract class Contactlog implements ActiveRecordInterface
     /**
      * Sets the value of [gewijzigd_datum] column to a normalized version of the date/time value specified.
      *
-     * @param  mixed $v string, integer (timestamp), or \DateTimeInterface value.
+     * @param  string|integer|\DateTimeInterface $v string, integer (timestamp), or \DateTimeInterface value.
      *               Empty strings are treated as NULL.
      * @return $this|\fb_model\fb_model\Contactlog The current object (for fluent API support)
      */
@@ -568,7 +568,7 @@ abstract class Contactlog implements ActiveRecordInterface
     /**
      * Set the value of [gewijzigd_door] column.
      *
-     * @param string $v new value
+     * @param string $v New value
      * @return $this|\fb_model\fb_model\Contactlog The current object (for fluent API support)
      */
     public function setGewijzigdDoor($v)
@@ -1494,10 +1494,7 @@ abstract class Contactlog implements ActiveRecordInterface
      */
     public function preSave(ConnectionInterface $con = null)
     {
-        if (is_callable('parent::preSave')) {
-            return parent::preSave($con);
-        }
-        return true;
+                return true;
     }
 
     /**
@@ -1506,10 +1503,7 @@ abstract class Contactlog implements ActiveRecordInterface
      */
     public function postSave(ConnectionInterface $con = null)
     {
-        if (is_callable('parent::postSave')) {
-            parent::postSave($con);
-        }
-    }
+            }
 
     /**
      * Code to be run before inserting to database
@@ -1518,10 +1512,7 @@ abstract class Contactlog implements ActiveRecordInterface
      */
     public function preInsert(ConnectionInterface $con = null)
     {
-        if (is_callable('parent::preInsert')) {
-            return parent::preInsert($con);
-        }
-        return true;
+                return true;
     }
 
     /**
@@ -1530,10 +1521,7 @@ abstract class Contactlog implements ActiveRecordInterface
      */
     public function postInsert(ConnectionInterface $con = null)
     {
-        if (is_callable('parent::postInsert')) {
-            parent::postInsert($con);
-        }
-    }
+            }
 
     /**
      * Code to be run before updating the object in database
@@ -1542,10 +1530,7 @@ abstract class Contactlog implements ActiveRecordInterface
      */
     public function preUpdate(ConnectionInterface $con = null)
     {
-        if (is_callable('parent::preUpdate')) {
-            return parent::preUpdate($con);
-        }
-        return true;
+                return true;
     }
 
     /**
@@ -1554,10 +1539,7 @@ abstract class Contactlog implements ActiveRecordInterface
      */
     public function postUpdate(ConnectionInterface $con = null)
     {
-        if (is_callable('parent::postUpdate')) {
-            parent::postUpdate($con);
-        }
-    }
+            }
 
     /**
      * Code to be run before deleting the object in database
@@ -1566,10 +1548,7 @@ abstract class Contactlog implements ActiveRecordInterface
      */
     public function preDelete(ConnectionInterface $con = null)
     {
-        if (is_callable('parent::preDelete')) {
-            return parent::preDelete($con);
-        }
-        return true;
+                return true;
     }
 
     /**
@@ -1578,10 +1557,7 @@ abstract class Contactlog implements ActiveRecordInterface
      */
     public function postDelete(ConnectionInterface $con = null)
     {
-        if (is_callable('parent::postDelete')) {
-            parent::postDelete($con);
-        }
-    }
+            }
 
 
     /**

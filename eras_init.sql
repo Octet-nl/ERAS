@@ -26,7 +26,7 @@ CREATE TABLE `fb_system` (
   `naam` varchar(255) NOT NULL DEFAULT 'ERAS',
   `version_major` varchar(10) NOT NULL,
   `version_minor` varchar(10) NOT NULL,
-  `otap` int(1) NOT NULL DEFAULT 1,
+  `valid` int(1) NOT NULL DEFAULT 1,
   `debug` int(1) NOT NULL DEFAULT 0,
   `deploy_directory` varchar(255) NOT NULL DEFAULT 'eras',
   `db_version_major` varchar(10) NOT NULL,
@@ -41,8 +41,8 @@ CREATE TABLE `fb_system` (
 -- Dumping data for table `fb_system`
 --
 
-INSERT INTO `fb_system` (`naam`, `version_major`, `version_minor`, `otap`, `debug`, `deploy_directory`, `db_version_major`, `db_version_minor`, `gemaakt_datum`, `gemaakt_door`, `gewijzigd_datum`, `gewijzigd_door`) VALUES
-('eras', '1', '01', 1, 0, 'ERAS', '0', '91', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '');
+INSERT INTO `fb_system` (`naam`, `version_major`, `version_minor`, `valid`, `debug`, `deploy_directory`, `db_version_major`, `db_version_minor`, `gemaakt_datum`, `gemaakt_door`, `gewijzigd_datum`, `gewijzigd_door`) VALUES
+('eras', '1', '02', 0, 0, 'ERAS', '1', '01', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '');
 
 --
 -- Indexes for table `fb_system`

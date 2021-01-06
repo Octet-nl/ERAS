@@ -408,7 +408,7 @@
     <column name="naam" phpName="Naam" type="VARCHAR" size="255"  required="true"/>
     <column name="version_major" phpName="VersionMajor" type="VARCHAR" size="10"  required="true"/>
     <column name="version_minor" phpName="VersionMinor" type="VARCHAR" size="10"  required="true"/>
-    <column name="otap" phpName="Otap" type="INTEGER" size="1" required="true"/>
+    <column name="valid" phpName="Valid" type="INTEGER" size="1" required="true"/>
     <column name="debug" phpName="Debug" type="INTEGER" size="1" required="true"/>
     <column name="deploy_directory" phpName="DeployDirectory" type="VARCHAR" size="255" required="true"/>
     <column name="db_version_major" phpName="DbVersionMajor" type="VARCHAR" size="10" required="true"/>

@@ -498,7 +498,7 @@ abstract class Evenement implements ActiveRecordInterface
      * @param string $name  The virtual column name
      * @param mixed  $value The value to give to the virtual column
      *
-     * @return $this|Evenement The current object, for fluid interface
+     * @return $this The current object, for fluid interface
      */
     public function setVirtualColumn($name, $value)
     {
@@ -512,11 +512,11 @@ abstract class Evenement implements ActiveRecordInterface
      *
      * @param  string  $msg
      * @param  int     $priority One of the Propel::LOG_* logging levels
-     * @return boolean
+     * @return void
      */
     protected function log($msg, $priority = Propel::LOG_INFO)
     {
-        return Propel::log(get_class($this) . ': ' . $msg, $priority);
+        Propel::log(get_class($this) . ': ' . $msg, $priority);
     }
 
     /**
@@ -613,14 +613,14 @@ abstract class Evenement implements ActiveRecordInterface
      * Get the [optionally formatted] temporal [datum_begin] column value.
      *
      *
-     * @param      string|null $format The date/time format string (either date()-style or strftime()-style).
-     *                            If format is NULL, then the raw DateTime object will be returned.
+     * @param string|null $format The date/time format string (either date()-style or strftime()-style).
+     *   If format is NULL, then the raw DateTime object will be returned.
      *
      * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00
      *
      * @throws PropelException - if unable to parse/validate the date/time value.
      */
-    public function getDatumBegin($format = NULL)
+    public function getDatumBegin($format = null)
     {
         if ($format === null) {
             return $this->datum_begin;
@@ -633,14 +633,14 @@ abstract class Evenement implements ActiveRecordInterface
      * Get the [optionally formatted] temporal [datum_eind] column value.
      *
      *
-     * @param      string|null $format The date/time format string (either date()-style or strftime()-style).
-     *                            If format is NULL, then the raw DateTime object will be returned.
+     * @param string|null $format The date/time format string (either date()-style or strftime()-style).
+     *   If format is NULL, then the raw DateTime object will be returned.
      *
      * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00
      *
      * @throws PropelException - if unable to parse/validate the date/time value.
      */
-    public function getDatumEind($format = NULL)
+    public function getDatumEind($format = null)
     {
         if ($format === null) {
             return $this->datum_eind;
@@ -673,14 +673,14 @@ abstract class Evenement implements ActiveRecordInterface
      * Get the [optionally formatted] temporal [inschrijving_begin] column value.
      *
      *
-     * @param      string|null $format The date/time format string (either date()-style or strftime()-style).
-     *                            If format is NULL, then the raw DateTime object will be returned.
+     * @param string|null $format The date/time format string (either date()-style or strftime()-style).
+     *   If format is NULL, then the raw DateTime object will be returned.
      *
      * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
      *
      * @throws PropelException - if unable to parse/validate the date/time value.
      */
-    public function getInschrijvingBegin($format = NULL)
+    public function getInschrijvingBegin($format = null)
     {
         if ($format === null) {
             return $this->inschrijving_begin;
@@ -693,14 +693,14 @@ abstract class Evenement implements ActiveRecordInterface
      * Get the [optionally formatted] temporal [inschrijving_eind] column value.
      *
      *
-     * @param      string|null $format The date/time format string (either date()-style or strftime()-style).
-     *                            If format is NULL, then the raw DateTime object will be returned.
+     * @param string|null $format The date/time format string (either date()-style or strftime()-style).
+     *   If format is NULL, then the raw DateTime object will be returned.
      *
      * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
      *
      * @throws PropelException - if unable to parse/validate the date/time value.
      */
-    public function getInschrijvingEind($format = NULL)
+    public function getInschrijvingEind($format = null)
     {
         if ($format === null) {
             return $this->inschrijving_eind;
@@ -803,14 +803,14 @@ abstract class Evenement implements ActiveRecordInterface
      * Get the [optionally formatted] temporal [gemaakt_datum] column value.
      *
      *
-     * @param      string|null $format The date/time format string (either date()-style or strftime()-style).
-     *                            If format is NULL, then the raw DateTime object will be returned.
+     * @param string|null $format The date/time format string (either date()-style or strftime()-style).
+     *   If format is NULL, then the raw DateTime object will be returned.
      *
      * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
      *
      * @throws PropelException - if unable to parse/validate the date/time value.
      */
-    public function getDatumGemaakt($format = NULL)
+    public function getDatumGemaakt($format = null)
     {
         if ($format === null) {
             return $this->gemaakt_datum;
@@ -833,14 +833,14 @@ abstract class Evenement implements ActiveRecordInterface
      * Get the [optionally formatted] temporal [gewijzigd_datum] column value.
      *
      *
-     * @param      string|null $format The date/time format string (either date()-style or strftime()-style).
-     *                            If format is NULL, then the raw DateTime object will be returned.
+     * @param string|null $format The date/time format string (either date()-style or strftime()-style).
+     *   If format is NULL, then the raw DateTime object will be returned.
      *
      * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
      *
      * @throws PropelException - if unable to parse/validate the date/time value.
      */
-    public function getDatumGewijzigd($format = NULL)
+    public function getDatumGewijzigd($format = null)
     {
         if ($format === null) {
             return $this->gewijzigd_datum;
@@ -862,7 +862,7 @@ abstract class Evenement implements ActiveRecordInterface
     /**
      * Set the value of [id] column.
      *
-     * @param int $v new value
+     * @param int $v New value
      * @return $this|\fb_model\fb_model\Evenement The current object (for fluent API support)
      */
     public function setId($v)
@@ -882,7 +882,7 @@ abstract class Evenement implements ActiveRecordInterface
     /**
      * Set the value of [naam] column.
      *
-     * @param string $v new value
+     * @param string $v New value
      * @return $this|\fb_model\fb_model\Evenement The current object (for fluent API support)
      */
     public function setNaam($v)
@@ -902,7 +902,7 @@ abstract class Evenement implements ActiveRecordInterface
     /**
      * Set the value of [categorie] column.
      *
-     * @param string $v new value
+     * @param string $v New value
      * @return $this|\fb_model\fb_model\Evenement The current object (for fluent API support)
      */
     public function setCategorie($v)
@@ -922,7 +922,7 @@ abstract class Evenement implements ActiveRecordInterface
     /**
      * Set the value of [korte_omschrijving] column.
      *
-     * @param string $v new value
+     * @param string $v New value
      * @return $this|\fb_model\fb_model\Evenement The current object (for fluent API support)
      */
     public function setKorteOmschrijving($v)
@@ -942,7 +942,7 @@ abstract class Evenement implements ActiveRecordInterface
     /**
      * Set the value of [lange_omschrijving] column.
      *
-     * @param string $v new value
+     * @param string $v New value
      * @return $this|\fb_model\fb_model\Evenement The current object (for fluent API support)
      */
     public function setLangeOmschrijving($v)
@@ -962,7 +962,7 @@ abstract class Evenement implements ActiveRecordInterface
     /**
      * Sets the value of [datum_begin] column to a normalized version of the date/time value specified.
      *
-     * @param  mixed $v string, integer (timestamp), or \DateTimeInterface value.
+     * @param  string|integer|\DateTimeInterface $v string, integer (timestamp), or \DateTimeInterface value.
      *               Empty strings are treated as NULL.
      * @return $this|\fb_model\fb_model\Evenement The current object (for fluent API support)
      */
@@ -982,7 +982,7 @@ abstract class Evenement implements ActiveRecordInterface
     /**
      * Sets the value of [datum_eind] column to a normalized version of the date/time value specified.
      *
-     * @param  mixed $v string, integer (timestamp), or \DateTimeInterface value.
+     * @param  string|integer|\DateTimeInterface $v string, integer (timestamp), or \DateTimeInterface value.
      *               Empty strings are treated as NULL.
      * @return $this|\fb_model\fb_model\Evenement The current object (for fluent API support)
      */
@@ -1002,7 +1002,7 @@ abstract class Evenement implements ActiveRecordInterface
     /**
      * Set the value of [aantal_dagen] column.
      *
-     * @param int $v new value
+     * @param int $v New value
      * @return $this|\fb_model\fb_model\Evenement The current object (for fluent API support)
      */
     public function setAantalDagen($v)
@@ -1022,7 +1022,7 @@ abstract class Evenement implements ActiveRecordInterface
     /**
      * Set the value of [frequentie] column.
      *
-     * @param string $v new value
+     * @param string $v New value
      * @return $this|\fb_model\fb_model\Evenement The current object (for fluent API support)
      */
     public function setFrequentie($v)
@@ -1042,7 +1042,7 @@ abstract class Evenement implements ActiveRecordInterface
     /**
      * Sets the value of [inschrijving_begin] column to a normalized version of the date/time value specified.
      *
-     * @param  mixed $v string, integer (timestamp), or \DateTimeInterface value.
+     * @param  string|integer|\DateTimeInterface $v string, integer (timestamp), or \DateTimeInterface value.
      *               Empty strings are treated as NULL.
      * @return $this|\fb_model\fb_model\Evenement The current object (for fluent API support)
      */
@@ -1062,7 +1062,7 @@ abstract class Evenement implements ActiveRecordInterface
     /**
      * Sets the value of [inschrijving_eind] column to a normalized version of the date/time value specified.
      *
-     * @param  mixed $v string, integer (timestamp), or \DateTimeInterface value.
+     * @param  string|integer|\DateTimeInterface $v string, integer (timestamp), or \DateTimeInterface value.
      *               Empty strings are treated as NULL.
      * @return $this|\fb_model\fb_model\Evenement The current object (for fluent API support)
      */
@@ -1082,7 +1082,7 @@ abstract class Evenement implements ActiveRecordInterface
     /**
      * Set the value of [extra_deelnemer_gegevens] column.
      *
-     * @param int $v new value
+     * @param int $v New value
      * @return $this|\fb_model\fb_model\Evenement The current object (for fluent API support)
      */
     public function setExtraDeelnemerGegevens($v)
@@ -1102,7 +1102,7 @@ abstract class Evenement implements ActiveRecordInterface
     /**
      * Set the value of [extra_contact_gegevens] column.
      *
-     * @param int $v new value
+     * @param int $v New value
      * @return $this|\fb_model\fb_model\Evenement The current object (for fluent API support)
      */
     public function setExtraContactGegevens($v)
@@ -1122,7 +1122,7 @@ abstract class Evenement implements ActiveRecordInterface
     /**
      * Set the value of [prijs] column.
      *
-     * @param string $v new value
+     * @param string $v New value
      * @return $this|\fb_model\fb_model\Evenement The current object (for fluent API support)
      */
     public function setPrijs($v)
@@ -1142,7 +1142,7 @@ abstract class Evenement implements ActiveRecordInterface
     /**
      * Set the value of [betaalwijze] column.
      *
-     * @param int $v new value
+     * @param int $v New value
      * @return $this|\fb_model\fb_model\Evenement The current object (for fluent API support)
      */
     public function setBetaalwijze($v)
@@ -1162,7 +1162,7 @@ abstract class Evenement implements ActiveRecordInterface
     /**
      * Set the value of [max_deelnemers] column.
      *
-     * @param int $v new value
+     * @param int $v New value
      * @return $this|\fb_model\fb_model\Evenement The current object (for fluent API support)
      */
     public function setMaxDeelnemers($v)
@@ -1182,7 +1182,7 @@ abstract class Evenement implements ActiveRecordInterface
     /**
      * Set the value of [annuleringsverzekering] column.
      *
-     * @param int $v new value
+     * @param int $v New value
      * @return $this|\fb_model\fb_model\Evenement The current object (for fluent API support)
      */
     public function setAnnuleringsverzekering($v)
@@ -1202,7 +1202,7 @@ abstract class Evenement implements ActiveRecordInterface
     /**
      * Set the value of [account_nodig] column.
      *
-     * @param int $v new value
+     * @param int $v New value
      * @return $this|\fb_model\fb_model\Evenement The current object (for fluent API support)
      */
     public function setAccountNodig($v)
@@ -1222,7 +1222,7 @@ abstract class Evenement implements ActiveRecordInterface
     /**
      * Set the value of [groepsinschrijving] column.
      *
-     * @param int $v new value
+     * @param int $v New value
      * @return $this|\fb_model\fb_model\Evenement The current object (for fluent API support)
      */
     public function setGroepsInschrijving($v)
@@ -1242,7 +1242,7 @@ abstract class Evenement implements ActiveRecordInterface
     /**
      * Set the value of [status] column.
      *
-     * @param int $v new value
+     * @param int $v New value
      * @return $this|\fb_model\fb_model\Evenement The current object (for fluent API support)
      */
     public function setStatus($v)
@@ -1266,7 +1266,7 @@ abstract class Evenement implements ActiveRecordInterface
     /**
      * Sets the value of [gemaakt_datum] column to a normalized version of the date/time value specified.
      *
-     * @param  mixed $v string, integer (timestamp), or \DateTimeInterface value.
+     * @param  string|integer|\DateTimeInterface $v string, integer (timestamp), or \DateTimeInterface value.
      *               Empty strings are treated as NULL.
      * @return $this|\fb_model\fb_model\Evenement The current object (for fluent API support)
      */
@@ -1286,7 +1286,7 @@ abstract class Evenement implements ActiveRecordInterface
     /**
      * Set the value of [gemaakt_door] column.
      *
-     * @param string $v new value
+     * @param string $v New value
      * @return $this|\fb_model\fb_model\Evenement The current object (for fluent API support)
      */
     public function setGemaaktDoor($v)
@@ -1306,7 +1306,7 @@ abstract class Evenement implements ActiveRecordInterface
     /**
      * Sets the value of [gewijzigd_datum] column to a normalized version of the date/time value specified.
      *
-     * @param  mixed $v string, integer (timestamp), or \DateTimeInterface value.
+     * @param  string|integer|\DateTimeInterface $v string, integer (timestamp), or \DateTimeInterface value.
      *               Empty strings are treated as NULL.
      * @return $this|\fb_model\fb_model\Evenement The current object (for fluent API support)
      */
@@ -1326,7 +1326,7 @@ abstract class Evenement implements ActiveRecordInterface
     /**
      * Set the value of [gewijzigd_door] column.
      *
-     * @param string $v new value
+     * @param string $v New value
      * @return $this|\fb_model\fb_model\Evenement The current object (for fluent API support)
      */
     public function setGewijzigdDoor($v)
@@ -2817,19 +2817,19 @@ abstract class Evenement implements ActiveRecordInterface
      */
     public function initRelation($relationName)
     {
-        if ('EvenementHeeftOptie' == $relationName) {
+        if ('EvenementHeeftOptie' === $relationName) {
             $this->initEvenementHeeftOpties();
             return;
         }
-        if ('Inschrijving' == $relationName) {
+        if ('Inschrijving' === $relationName) {
             $this->initInschrijvings();
             return;
         }
-        if ('Mailinglist' == $relationName) {
+        if ('Mailinglist' === $relationName) {
             $this->initMailinglists();
             return;
         }
-        if ('Voucher' == $relationName) {
+        if ('Voucher' === $relationName) {
             $this->initVouchers();
             return;
         }
@@ -2898,10 +2898,19 @@ abstract class Evenement implements ActiveRecordInterface
     public function getEvenementHeeftOpties(Criteria $criteria = null, ConnectionInterface $con = null)
     {
         $partial = $this->collEvenementHeeftOptiesPartial && !$this->isNew();
-        if (null === $this->collEvenementHeeftOpties || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collEvenementHeeftOpties) {
+        if (null === $this->collEvenementHeeftOpties || null !== $criteria || $partial) {
+            if ($this->isNew()) {
                 // return empty collection
-                $this->initEvenementHeeftOpties();
+                if (null === $this->collEvenementHeeftOpties) {
+                    $this->initEvenementHeeftOpties();
+                } else {
+                    $collectionClassName = EvenementHeeftOptieTableMap::getTableMap()->getCollectionClassName();
+
+                    $collEvenementHeeftOpties = new $collectionClassName;
+                    $collEvenementHeeftOpties->setModel('\fb_model\fb_model\EvenementHeeftOptie');
+
+                    return $collEvenementHeeftOpties;
+                }
             } else {
                 $collEvenementHeeftOpties = ChildEvenementHeeftOptieQuery::create(null, $criteria)
                     ->filterByEvenement($this)
@@ -3151,10 +3160,19 @@ abstract class Evenement implements ActiveRecordInterface
     public function getInschrijvings(Criteria $criteria = null, ConnectionInterface $con = null)
     {
         $partial = $this->collInschrijvingsPartial && !$this->isNew();
-        if (null === $this->collInschrijvings || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collInschrijvings) {
+        if (null === $this->collInschrijvings || null !== $criteria || $partial) {
+            if ($this->isNew()) {
                 // return empty collection
-                $this->initInschrijvings();
+                if (null === $this->collInschrijvings) {
+                    $this->initInschrijvings();
+                } else {
+                    $collectionClassName = InschrijvingTableMap::getTableMap()->getCollectionClassName();
+
+                    $collInschrijvings = new $collectionClassName;
+                    $collInschrijvings->setModel('\fb_model\fb_model\Inschrijving');
+
+                    return $collInschrijvings;
+                }
             } else {
                 $collInschrijvings = ChildInschrijvingQuery::create(null, $criteria)
                     ->filterByEvenement($this)
@@ -3451,10 +3469,19 @@ abstract class Evenement implements ActiveRecordInterface
     public function getMailinglists(Criteria $criteria = null, ConnectionInterface $con = null)
     {
         $partial = $this->collMailinglistsPartial && !$this->isNew();
-        if (null === $this->collMailinglists || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collMailinglists) {
+        if (null === $this->collMailinglists || null !== $criteria || $partial) {
+            if ($this->isNew()) {
                 // return empty collection
-                $this->initMailinglists();
+                if (null === $this->collMailinglists) {
+                    $this->initMailinglists();
+                } else {
+                    $collectionClassName = MailinglistTableMap::getTableMap()->getCollectionClassName();
+
+                    $collMailinglists = new $collectionClassName;
+                    $collMailinglists->setModel('\fb_model\fb_model\Mailinglist');
+
+                    return $collMailinglists;
+                }
             } else {
                 $collMailinglists = ChildMailinglistQuery::create(null, $criteria)
                     ->filterByEvenement($this)
@@ -3676,10 +3703,19 @@ abstract class Evenement implements ActiveRecordInterface
     public function getVouchers(Criteria $criteria = null, ConnectionInterface $con = null)
     {
         $partial = $this->collVouchersPartial && !$this->isNew();
-        if (null === $this->collVouchers || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collVouchers) {
+        if (null === $this->collVouchers || null !== $criteria || $partial) {
+            if ($this->isNew()) {
                 // return empty collection
-                $this->initVouchers();
+                if (null === $this->collVouchers) {
+                    $this->initVouchers();
+                } else {
+                    $collectionClassName = VoucherTableMap::getTableMap()->getCollectionClassName();
+
+                    $collVouchers = new $collectionClassName;
+                    $collVouchers->setModel('\fb_model\fb_model\Voucher');
+
+                    return $collVouchers;
+                }
             } else {
                 $collVouchers = ChildVoucherQuery::create(null, $criteria)
                     ->filterByEvenement($this)
@@ -4270,10 +4306,7 @@ abstract class Evenement implements ActiveRecordInterface
      */
     public function preSave(ConnectionInterface $con = null)
     {
-        if (is_callable('parent::preSave')) {
-            return parent::preSave($con);
-        }
-        return true;
+                return true;
     }
 
     /**
@@ -4282,10 +4315,7 @@ abstract class Evenement implements ActiveRecordInterface
      */
     public function postSave(ConnectionInterface $con = null)
     {
-        if (is_callable('parent::postSave')) {
-            parent::postSave($con);
-        }
-    }
+            }
 
     /**
      * Code to be run before inserting to database
@@ -4294,10 +4324,7 @@ abstract class Evenement implements ActiveRecordInterface
      */
     public function preInsert(ConnectionInterface $con = null)
     {
-        if (is_callable('parent::preInsert')) {
-            return parent::preInsert($con);
-        }
-        return true;
+                return true;
     }
 
     /**
@@ -4306,10 +4333,7 @@ abstract class Evenement implements ActiveRecordInterface
      */
     public function postInsert(ConnectionInterface $con = null)
     {
-        if (is_callable('parent::postInsert')) {
-            parent::postInsert($con);
-        }
-    }
+            }
 
     /**
      * Code to be run before updating the object in database
@@ -4318,10 +4342,7 @@ abstract class Evenement implements ActiveRecordInterface
      */
     public function preUpdate(ConnectionInterface $con = null)
     {
-        if (is_callable('parent::preUpdate')) {
-            return parent::preUpdate($con);
-        }
-        return true;
+                return true;
     }
 
     /**
@@ -4330,10 +4351,7 @@ abstract class Evenement implements ActiveRecordInterface
      */
     public function postUpdate(ConnectionInterface $con = null)
     {
-        if (is_callable('parent::postUpdate')) {
-            parent::postUpdate($con);
-        }
-    }
+            }
 
     /**
      * Code to be run before deleting the object in database
@@ -4342,10 +4360,7 @@ abstract class Evenement implements ActiveRecordInterface
      */
     public function preDelete(ConnectionInterface $con = null)
     {
-        if (is_callable('parent::preDelete')) {
-            return parent::preDelete($con);
-        }
-        return true;
+                return true;
     }
 
     /**
@@ -4354,10 +4369,7 @@ abstract class Evenement implements ActiveRecordInterface
      */
     public function postDelete(ConnectionInterface $con = null)
     {
-        if (is_callable('parent::postDelete')) {
-            parent::postDelete($con);
-        }
-    }
+            }
 
 
     /**

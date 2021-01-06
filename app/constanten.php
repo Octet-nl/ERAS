@@ -136,10 +136,8 @@ define("OPTIETYPE_VASTE_TEKST", "9");
 define("OPTIETYPE_AKKOORD", "10");
 define("OPTIETYPE_VOORWAARDE", "11");
 
-define("OTAP_ONTWIKKEL", "1");
-define("OTAP_TEST", "2");
-define("OTAP_ACCEPTATIE", "3");
-define("OTAP_PRODUCTIE", "4");
+define("DB_INVALID", "0");
+define("DB_VALID", "1");
 
 // 1800 seconden is een half uur
 define("SESSIE_GELDIGHEID_SECONDEN", 7200);

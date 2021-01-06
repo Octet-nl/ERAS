@@ -22,7 +22,7 @@ use fb_model\fb_model\Map\SystemTableMap;
  * @method     ChildSystemQuery orderByNaam($order = Criteria::ASC) Order by the naam column
  * @method     ChildSystemQuery orderByVersionMajor($order = Criteria::ASC) Order by the version_major column
  * @method     ChildSystemQuery orderByVersionMinor($order = Criteria::ASC) Order by the version_minor column
- * @method     ChildSystemQuery orderByOtap($order = Criteria::ASC) Order by the otap column
+ * @method     ChildSystemQuery orderByValid($order = Criteria::ASC) Order by the valid column
  * @method     ChildSystemQuery orderByDebug($order = Criteria::ASC) Order by the debug column
  * @method     ChildSystemQuery orderByDeployDirectory($order = Criteria::ASC) Order by the deploy_directory column
  * @method     ChildSystemQuery orderByDbVersionMajor($order = Criteria::ASC) Order by the db_version_major column
@@ -35,7 +35,7 @@ use fb_model\fb_model\Map\SystemTableMap;
  * @method     ChildSystemQuery groupByNaam() Group by the naam column
  * @method     ChildSystemQuery groupByVersionMajor() Group by the version_major column
  * @method     ChildSystemQuery groupByVersionMinor() Group by the version_minor column
- * @method     ChildSystemQuery groupByOtap() Group by the otap column
+ * @method     ChildSystemQuery groupByValid() Group by the valid column
  * @method     ChildSystemQuery groupByDebug() Group by the debug column
  * @method     ChildSystemQuery groupByDeployDirectory() Group by the deploy_directory column
  * @method     ChildSystemQuery groupByDbVersionMajor() Group by the db_version_major column
@@ -59,7 +59,7 @@ use fb_model\fb_model\Map\SystemTableMap;
  * @method     ChildSystem findOneByNaam(string $naam) Return the first ChildSystem filtered by the naam column
  * @method     ChildSystem findOneByVersionMajor(string $version_major) Return the first ChildSystem filtered by the version_major column
  * @method     ChildSystem findOneByVersionMinor(string $version_minor) Return the first ChildSystem filtered by the version_minor column
- * @method     ChildSystem findOneByOtap(int $otap) Return the first ChildSystem filtered by the otap column
+ * @method     ChildSystem findOneByValid(int $valid) Return the first ChildSystem filtered by the valid column
  * @method     ChildSystem findOneByDebug(int $debug) Return the first ChildSystem filtered by the debug column
  * @method     ChildSystem findOneByDeployDirectory(string $deploy_directory) Return the first ChildSystem filtered by the deploy_directory column
  * @method     ChildSystem findOneByDbVersionMajor(string $db_version_major) Return the first ChildSystem filtered by the db_version_major column
@@ -75,7 +75,7 @@ use fb_model\fb_model\Map\SystemTableMap;
  * @method     ChildSystem requireOneByNaam(string $naam) Return the first ChildSystem filtered by the naam column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildSystem requireOneByVersionMajor(string $version_major) Return the first ChildSystem filtered by the version_major column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildSystem requireOneByVersionMinor(string $version_minor) Return the first ChildSystem filtered by the version_minor column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildSystem requireOneByOtap(int $otap) Return the first ChildSystem filtered by the otap column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildSystem requireOneByValid(int $valid) Return the first ChildSystem filtered by the valid column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildSystem requireOneByDebug(int $debug) Return the first ChildSystem filtered by the debug column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildSystem requireOneByDeployDirectory(string $deploy_directory) Return the first ChildSystem filtered by the deploy_directory column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildSystem requireOneByDbVersionMajor(string $db_version_major) Return the first ChildSystem filtered by the db_version_major column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -89,7 +89,7 @@ use fb_model\fb_model\Map\SystemTableMap;
  * @method     ChildSystem[]|ObjectCollection findByNaam(string $naam) Return ChildSystem objects filtered by the naam column
  * @method     ChildSystem[]|ObjectCollection findByVersionMajor(string $version_major) Return ChildSystem objects filtered by the version_major column
  * @method     ChildSystem[]|ObjectCollection findByVersionMinor(string $version_minor) Return ChildSystem objects filtered by the version_minor column
- * @method     ChildSystem[]|ObjectCollection findByOtap(int $otap) Return ChildSystem objects filtered by the otap column
+ * @method     ChildSystem[]|ObjectCollection findByValid(int $valid) Return ChildSystem objects filtered by the valid column
  * @method     ChildSystem[]|ObjectCollection findByDebug(int $debug) Return ChildSystem objects filtered by the debug column
  * @method     ChildSystem[]|ObjectCollection findByDeployDirectory(string $deploy_directory) Return ChildSystem objects filtered by the deploy_directory column
  * @method     ChildSystem[]|ObjectCollection findByDbVersionMajor(string $db_version_major) Return ChildSystem objects filtered by the db_version_major column
@@ -275,16 +275,16 @@ abstract class SystemQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the otap column
+     * Filter the query on the valid column
      *
      * Example usage:
      * <code>
-     * $query->filterByOtap(1234); // WHERE otap = 1234
-     * $query->filterByOtap(array(12, 34)); // WHERE otap IN (12, 34)
-     * $query->filterByOtap(array('min' => 12)); // WHERE otap > 12
+     * $query->filterByValid(1234); // WHERE valid = 1234
+     * $query->filterByValid(array(12, 34)); // WHERE valid IN (12, 34)
+     * $query->filterByValid(array('min' => 12)); // WHERE valid > 12
      * </code>
      *
-     * @param     mixed $otap The value to use as filter.
+     * @param     mixed $valid The value to use as filter.
      *              Use scalar values for equality.
      *              Use array values for in_array() equivalent.
      *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
@@ -292,16 +292,16 @@ abstract class SystemQuery extends ModelCriteria
      *
      * @return $this|ChildSystemQuery The current query, for fluid interface
      */
-    public function filterByOtap($otap = null, $comparison = null)
+    public function filterByValid($valid = null, $comparison = null)
     {
-        if (is_array($otap)) {
+        if (is_array($valid)) {
             $useMinMax = false;
-            if (isset($otap['min'])) {
-                $this->addUsingAlias(SystemTableMap::COL_OTAP, $otap['min'], Criteria::GREATER_EQUAL);
+            if (isset($valid['min'])) {
+                $this->addUsingAlias(SystemTableMap::COL_VALID, $valid['min'], Criteria::GREATER_EQUAL);
                 $useMinMax = true;
             }
-            if (isset($otap['max'])) {
-                $this->addUsingAlias(SystemTableMap::COL_OTAP, $otap['max'], Criteria::LESS_EQUAL);
+            if (isset($valid['max'])) {
+                $this->addUsingAlias(SystemTableMap::COL_VALID, $valid['max'], Criteria::LESS_EQUAL);
                 $useMinMax = true;
             }
             if ($useMinMax) {
@@ -312,7 +312,7 @@ abstract class SystemQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(SystemTableMap::COL_OTAP, $otap, $comparison);
+        return $this->addUsingAlias(SystemTableMap::COL_VALID, $valid, $comparison);
     }
 
     /**
