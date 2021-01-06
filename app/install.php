@@ -589,18 +589,12 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                     }
                     else
                     {
-                        //$sql = file_get_contents( $sqlfile );
-
                         if ( !file_exists( $sqlfile ) )
-                        //if ( $sql === false )
                         {
                             $createErr = "Kan SQL bestand " . $sqlfile . " niet lezen.";
                         }
                         else
                         {
-                            $con = Propel::getConnection( fb_model\fb_model\Map\OptieTableMap::DATABASE_NAME );
-                            $con->beginTransaction();
-
                             try
                             {
 
@@ -640,16 +634,24 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
 
                                 if ( $insertErrors == 0 )
                                 {
+                                    $sql = 'SELECT db_version_major, db_version_minor FROM fb_system WHERE naam="eras"';
+                                    $result = mysqli_query($conn, $sql);
 
-                                    $con->commit();
-
-                                    $systeem = SystemQuery::create()->findPk( "eras" );
+                                    $dbVersionMajor = "0";
+                                    $dbVersionMinor = "0";
+                                    if (mysqli_num_rows($result) > 0) 
+                                    {
+                                        $row = mysqli_fetch_assoc($result);
+                                        $dbVersionMajor = $row["db_version_major"];
+                                        $dbVersionMinor = $row["db_version_minor"];
+                                    } 
+                                    mysqli_free_result( $result );
 
                                     $fp = fopen( DATABASE_CONFIG_FILENAME, 'w' );
                                     fprintf( $fp, '<?php' . "\n" );
                                     fprintf( $fp, '#' . "\n" );
-                                    fprintf( $fp, 'define("DB_VERSION_MAJOR", "%s");' . "\n", $systeem->getDbVersionMajor() );
-                                    fprintf( $fp, 'define("DB_VERSION_MINOR", "%s");' . "\n", $systeem->getDbVersionMinor() );
+                                    fprintf( $fp, 'define("DB_VERSION_MAJOR", "%s");' . "\n", $dbVersionMajor );
+                                    fprintf( $fp, 'define("DB_VERSION_MINOR", "%s");' . "\n", $dbVersionMinor );
                                     fprintf( $fp, '#' . "\n" );
                                     fprintf( $fp, 'define("DB_HOST", "%s");' . "\n", $hostname );
                                     fprintf( $fp, 'define("DB_NAME", "%s");' . "\n", $dbname );
@@ -658,17 +660,25 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                                     fprintf( $fp, 'define("DB_PASSWORD", "%s");' . "\n", $password );
                                     fclose( $fp );
 
-                                    $systeem->setValid( DB_VALID );
-                                    $systeem->save();
+                                    $sql = "UPDATE fb_system SET valid='1' WHERE naam='eras'";
+                                    $result = mysqli_query($conn, $sql);
+                                    mysqli_query($conn, "COMMIT");
 
-                                    $logger->info( "Database geladen." );
-                                    alert( "De database is met succes geladen." );
-                                    $schermdeel = 3;
+                                    if ( $result )
+                                    {
+                                        $logger->info( "Database geladen." );
+                                        alert( "De database is met succes geladen." );
+                                        $schermdeel = 3;
+                                    }
+                                    else
+                                    {
+                                        $logger->info( "Database opt 'valid' zetten is mislukt: " . mysqli_error( $conn ) );
+                                        alert( "Probleem met valideren database. " . mysqli_error( $conn ) );
+                                    }
+
                                 }
                                 else
                                 {
-                                    $con->rollback();
-
                                     $logger->error( "Er is iets misgegaan bij het laden van de database: " . mysqli_error( $conn ) );
                                     alert( "Er is iets misgegaan bij het laden van de database: " . mysqli_error( $conn ) . "\nZie ERAS.log voor meer informatie. \nMaak de database leeg voor nieuwe poging." );
                                     $createErr = "Laden database is mislukt: " . mysqli_error( $conn ) . "<br/>Zie ERAS.log voor meer informatie.";
@@ -676,7 +686,6 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                             }
                             catch ( Exception $ex )
                             {
-                                $con->rollback();
                                 $logger->error( 'Exceptie bij uitvoeren query in regel ' . $regelnummer . ' bij uitvoeren query ' . $statement . ': ' . mysqli_error( $conn ) );
                                 $logger->errordump( $ex );
                                 alert( "Er is iets misgegaan bij het laden van de database: " . $ex->getMessage() );
