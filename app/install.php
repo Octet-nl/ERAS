@@ -36,6 +36,7 @@
 require_once 'utilities.php';
 
 use Respect\Validation\Validator as v;
+use Propel\Runtime\Propel;
 
 // https://www.smarty.net/docs/en/
 $smarty = new Smarty();
@@ -84,6 +85,8 @@ $sqlfile = '../eras_init.sql';
 $schermdeel = "0";
 
 error_reporting( E_ERROR | E_PARSE );
+
+$con = Propel::getConnection( fb_model\fb_model\Map\OptieTableMap::DATABASE_NAME );
 
 $history = new History();
 $sessie = new Sessie();
@@ -513,61 +516,84 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                         }
                         else
                         {
-                            // Temporary variable, used to store current query
-                            $templine = '';
-                            // Read in entire file
-                            $lines = file( $sqlfile );
-                            // Loop through each line
-                            $insertErrors = 0;
-                            foreach ( $lines as $line )
-                            {
-                                // Skip it if it's a comment
-                                if ( substr( $line, 0, 2 ) == '--' || $line == '' )
-                                {
-                                    continue;
-                                }
+                            $con->beginTransaction();
 
-                                // Add this line to the current segment
-                                $templine .= $line;
-                                // If it has a semicolon at the end, it's the end of the query
-                                if ( substr( trim( $line ), -1, 1 ) == ';' )
+                            try
+                            {
+
+                                // Temporary variable, used to store current query
+                                $statement = '';
+                                // Read in entire file
+                                $regels = file( $sqlfile );
+                                // Loop through each line
+                                $insertErrors = 0;
+                                $regelnummer = 0;
+
+                                foreach ( $regels as $regel )
                                 {
-                                    // Perform the query
-                                    if ( mysqli_query( $conn, $templine ) != true )
+                                    $regelnummer += 1;
+                                    // Skip als het een commentaarregel is
+                                    if ( substr( $regel, 0, 2 ) == '--' || $regel == '' )
                                     {
-                                        $logger->error( 'Error bij uitvoeren query ' . $templine . ': ' . mysqli_error( $conn ) );
-                                        $insertErrors += 1;
+                                        continue;
                                     }
-                                    // Reset temp variable to empty
-                                    $templine = '';
+
+                                    // Regel toevoegen aan statement
+                                    $statement .= $regel;
+                                    // Als de regel eindigt op puntkomma is het het einde van de query
+                                    if ( substr( trim( $regel ), -1, 1 ) == ';' )
+                                    {
+                                        // Query uitvoeren
+                                        if ( mysqli_query( $conn, $statement ) != true )
+                                        {
+                                            $logger->error( 'Fout in regel ' . $regelnummer . ' bij uitvoeren query ' . $statement . ': ' . mysqli_error( $conn ) );
+                                            $insertErrors += 1;
+                                            break;
+                                        }
+                                        // statement leegmaken
+                                        $statement = '';
+                                    }
+                                }
+
+                                if ( $insertErrors == 0 )
+                                {
+                                    $con->commit();
+
+                                    $fp = fopen( DATABASE_CONFIG_FILENAME, 'w' );
+                                    fprintf( $fp, '<?php' . "\n" );
+                                    fprintf( $fp, '#' . "\n" );
+                                    fprintf( $fp, 'define("DB_VERSION_MAJOR", 0);' . "\n" );
+                                    fprintf( $fp, 'define("DB_VERSION_MINOR", 91);' . "\n" );
+                                    fprintf( $fp, '#' . "\n" );
+                                    fprintf( $fp, 'define("DB_HOST", "%s");' . "\n", $hostname );
+                                    fprintf( $fp, 'define("DB_NAME", "%s");' . "\n", $dbname );
+                                    fprintf( $fp, 'define("DB_PORT", "%s");' . "\n", $poortnummer );
+                                    fprintf( $fp, 'define("DB_USER", "%s");' . "\n", $userid );
+                                    fprintf( $fp, 'define("DB_PASSWORD", "%s");' . "\n", $password );
+                                    fclose( $fp );
+
+                                    $logger->info( "Database geladen." );
+                                    alert( "De database is met succes geladen." );
+                                    $schermdeel = 3;
+                                }
+                                else
+                                {
+                                    $con->rollback();
+
+                                    $logger->error( "Er is iets misgegaan bij het laden van de database: " . mysqli_error( $conn ) );
+                                    alert( "Er is iets misgegaan bij het laden van de database: " . mysqli_error( $conn ) . "\nZie ERAS.log voor meer informatie. \nMaak de database leeg voor nieuwe poging." );
+                                    $createErr = "Laden database is mislukt: " . mysqli_error( $conn ) . "<br/>Zie ERAS.log voor meer informatie.";
                                 }
                             }
-
-                            if ( $insertErrors == 0 )
+                            catch( Exception $ex )
                             {
-                                $fp = fopen( DATABASE_CONFIG_FILENAME, 'w' );
-                                fprintf( $fp, '<?php' . "\n" );
-                                fprintf( $fp, '#' . "\n" );
-                                fprintf( $fp, 'define("DB_VERSION_MAJOR", 0);' . "\n" );
-                                fprintf( $fp, 'define("DB_VERSION_MINOR", 91);' . "\n" );
-                                fprintf( $fp, '#' . "\n" );
-                                fprintf( $fp, 'define("DB_HOST", "%s");' . "\n", $hostname );
-                                fprintf( $fp, 'define("DB_NAME", "%s");' . "\n", $dbname );
-                                fprintf( $fp, 'define("DB_PORT", "%s");' . "\n", $poortnummer );
-                                fprintf( $fp, 'define("DB_USER", "%s");' . "\n", $userid );
-                                fprintf( $fp, 'define("DB_PASSWORD", "%s");' . "\n", $password );
-                                fclose( $fp );
-
-                                $logger->info( "Database geladen." );
-                                alert( "De database is met succes geladen." );
-                                $schermdeel = 3;
+                                $con->rollback();
+                                $logger->error( 'Exceptie bij uitvoeren query in regel ' . $regelnummer . ' bij uitvoeren query ' . $statement . ': ' . mysqli_error( $conn ) );
+                                $logger->errordump( $ex );
+                                alert( "Er is iets misgegaan bij het laden van de database: " . $ex->getMessage() );
+                                $createErr = "Er is iets misgegaan bij het laden van de database: " . $ex->getMessage() . "<br/>Zie ERAS.log voor meer informatie.";
                             }
-                            else
-                            {
-                                alert( "Er is iets misgegaan bij het laden van de database: " . mysqli_error( $conn ) );
-                                $logger->error( "Er is iets misgegaan bij het laden van de database: " . mysqli_error( $conn ) );
-                                $createErr = "Laden database is mislukt: " . mysqli_error( $conn );
-                            }
+    
                         }
 
                     }
