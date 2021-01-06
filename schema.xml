@@ -405,7 +405,7 @@
     </vendor>
   </table>
   <table name="fb_system" idMethod="native" phpName="System" namespace="fb_model">
-    <column name="naam" phpName="Naam" type="VARCHAR" size="255"  required="true"/>
+    <column name="naam" phpName="Naam" primaryKey="true" type="VARCHAR" size="255"  required="true"/>
     <column name="version_major" phpName="VersionMajor" type="VARCHAR" size="10"  required="true"/>
     <column name="version_minor" phpName="VersionMinor" type="VARCHAR" size="10"  required="true"/>
     <column name="valid" phpName="Valid" type="INTEGER" size="1" required="true"/>

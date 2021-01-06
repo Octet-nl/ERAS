@@ -1507,7 +1507,8 @@ abstract class System implements ActiveRecordInterface
      */
     public function buildPkeyCriteria()
     {
-        throw new LogicException('The System object has no primary key');
+        $criteria = ChildSystemQuery::create();
+        $criteria->add(SystemTableMap::COL_NAAM, $this->naam);
 
         return $criteria;
     }
@@ -1520,7 +1521,7 @@ abstract class System implements ActiveRecordInterface
      */
     public function hashCode()
     {
-        $validPk = false;
+        $validPk = null !== $this->getNaam();
 
         $validPrimaryKeyFKs = 0;
         $primaryKeyFKs = [];
@@ -1535,27 +1536,23 @@ abstract class System implements ActiveRecordInterface
     }
 
     /**
-     * Returns NULL since this table doesn't have a primary key.
-     * This method exists only for BC and is deprecated!
-     * @return null
+     * Returns the primary key for this object (row).
+     * @return string
      */
     public function getPrimaryKey()
     {
-        return null;
+        return $this->getNaam();
     }
 
     /**
-     * Dummy primary key setter.
+     * Generic method to set the primary key (naam column).
      *
-     * This function only exists to preserve backwards compatibility.  It is no longer
-     * needed or required by the Persistent interface.  It will be removed in next BC-breaking
-     * release of Propel.
-     *
-     * @deprecated
+     * @param       string $key Primary key.
+     * @return void
      */
-    public function setPrimaryKey($pk)
+    public function setPrimaryKey($key)
     {
-        // do nothing, because this object doesn't have any primary keys
+        $this->setNaam($key);
     }
 
     /**
@@ -1564,7 +1561,7 @@ abstract class System implements ActiveRecordInterface
      */
     public function isPrimaryKeyNull()
     {
-        return ;
+        return null === $this->getNaam();
     }
 
     /**

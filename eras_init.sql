@@ -48,7 +48,8 @@ INSERT INTO `fb_system` (`naam`, `version_major`, `version_minor`, `valid`, `deb
 -- Indexes for table `fb_system`
 --
 ALTER TABLE `fb_system`
-  ADD UNIQUE KEY `version_major` (`version_major`,`version_minor`);
+  ADD PRIMARY KEY (`naam`),
+  ADD UNIQUE KEY `version_major` (`naam`,`version_major`,`version_minor`);
 
 --
 -- **** ALLES HIERONDER KAN NAAR ACCEPTATIE EN PRODUCTIE OVERGEZET WORDEN ****

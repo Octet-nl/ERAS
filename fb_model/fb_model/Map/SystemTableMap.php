@@ -7,7 +7,6 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\InstancePoolTrait;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\DataFetcher\DataFetcherInterface;
-use Propel\Runtime\Exception\LogicException;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Map\RelationMap;
 use Propel\Runtime\Map\TableMap;
@@ -181,7 +180,7 @@ class SystemTableMap extends TableMap
         $this->setPackage('fb_model.fb_model');
         $this->setUseIdGenerator(false);
         // columns
-        $this->addColumn('naam', 'Naam', 'VARCHAR', true, 255, null);
+        $this->addPrimaryKey('naam', 'Naam', 'VARCHAR', true, 255, null);
         $this->addColumn('version_major', 'VersionMajor', 'VARCHAR', true, 10, null);
         $this->addColumn('version_minor', 'VersionMinor', 'VARCHAR', true, 10, null);
         $this->addColumn('valid', 'Valid', 'INTEGER', true, 1, null);
@@ -230,7 +229,12 @@ class SystemTableMap extends TableMap
      */
     public static function getPrimaryKeyHashFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-        return null;
+        // If the PK cannot be derived from the row, return NULL.
+        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Naam', TableMap::TYPE_PHPNAME, $indexType)] === null) {
+            return null;
+        }
+
+        return null === $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Naam', TableMap::TYPE_PHPNAME, $indexType)] || is_scalar($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Naam', TableMap::TYPE_PHPNAME, $indexType)]) || is_callable([$row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Naam', TableMap::TYPE_PHPNAME, $indexType)], '__toString']) ? (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Naam', TableMap::TYPE_PHPNAME, $indexType)] : $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Naam', TableMap::TYPE_PHPNAME, $indexType)];
     }
 
     /**
@@ -247,7 +251,11 @@ class SystemTableMap extends TableMap
      */
     public static function getPrimaryKeyFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-        return '';
+        return (string) $row[
+            $indexType == TableMap::TYPE_NUM
+                ? 0 + $offset
+                : self::translateFieldName('Naam', TableMap::TYPE_PHPNAME, $indexType)
+        ];
     }
 
     /**
@@ -419,10 +427,11 @@ class SystemTableMap extends TableMap
             // rename for clarity
             $criteria = $values;
         } elseif ($values instanceof \fb_model\fb_model\System) { // it's a model object
-            // create criteria based on pk value
-            $criteria = $values->buildCriteria();
+            // create criteria based on pk values
+            $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks
-            throw new LogicException('The System object has no primary key');
+            $criteria = new Criteria(SystemTableMap::DATABASE_NAME);
+            $criteria->add(SystemTableMap::COL_NAAM, (array) $values, Criteria::IN);
         }
 
         $query = SystemQuery::create()->mergeWith($criteria);

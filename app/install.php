@@ -35,8 +35,8 @@
 
 require_once 'utilities.php';
 
-use Respect\Validation\Validator as v;
 use Propel\Runtime\Propel;
+use Respect\Validation\Validator as v;
 use \fb_model\fb_model\SystemQuery;
 
 // https://www.smarty.net/docs/en/
@@ -87,7 +87,7 @@ $schermdeel = "0";
 
 error_reporting( E_ERROR | E_PARSE );
 
-$con = Propel::getConnection( fb_model\fb_model\Map\OptieTableMap::DATABASE_NAME );
+$con = null;
 
 $history = new History();
 $sessie = new Sessie();
@@ -362,55 +362,136 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                         if ( !mysqli_query( $conn, 'DROP DATABASE testDB' ) )
                         {
                             $logger->error( "Drop testdatabase error: " . mysqli_error( $conn ) );
-                        }
-                        else if ( !mysqli_query( $conn, 'CREATE DATABASE ' . $createdb . ' DEFAULT CHARACTER SET utf8mb4;' ) )
-                        {
-                            $createErr = "Create database " . $createdb . " is mislukt: " . mysqli_error( $conn );
-                            $logger->error( "Create database " . $createdb . " is mislukt: " . mysqli_error( $conn ) );
-                        }
-                        else if ( !mysqli_query( $conn, "GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,INDEX,ALTER,CREATE TEMPORARY TABLES ON " . $createdb . ".* TO " . $erasuser . "@" . $createhost . " IDENTIFIED BY '" . $eraspassword . "';" ) )
-                        {
-                            $createErr = "GRANT toegang is mislukt: " . mysqli_error( $conn );
-                            $logger->error( "GRANT toegang is mislukt: " . mysqli_error( $conn ) );
+                            $createErr = "Kan testdatabase niet verwijderen: " . mysqli_error( $conn );
                         }
                         else
                         {
-                            $logger->info( "Database " . $createdb . " is aangemaakt" );
-                            $sql = file_get_contents( $sqlfile );
-
-                            if ( $sql === false )
+                            if ( !mysqli_query( $conn, 'CREATE DATABASE ' . $createdb . ' DEFAULT CHARACTER SET utf8mb4;' ) )
                             {
-                                $createErr = "Kan SQL bestand " . $sqlfile . " niet lezen.";
+                                $createErr = "Create database " . $createdb . " is mislukt: " . mysqli_error( $conn );
+                                $logger->error( "Create database " . $createdb . " is mislukt: " . mysqli_error( $conn ) );
                             }
                             else
                             {
-                                /* execute multi query */
-                                $result = mysqli_multi_query( $conn, $sql );
-                                if ( $result )
+                                if ( !mysqli_query( $conn, "GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,INDEX,ALTER,CREATE TEMPORARY TABLES ON " . $createdb . ".* TO " . $erasuser . "@" . $createhost . " IDENTIFIED BY '" . $eraspassword . "';" ) )
                                 {
-                                    $logger->info( "Database geladen." );
-
-                                    $fp = fopen( DATABASE_CONFIG_FILENAME, 'w' );
-                                    fprintf( $fp, '<?php' . "\n" );
-                                    fprintf( $fp, '#' . "\n" );
-                                    fprintf( $fp, 'define("DB_VERSION_MAJOR", 0);' . "\n" );
-                                    fprintf( $fp, 'define("DB_VERSION_MINOR", 91);' . "\n" );
-                                    fprintf( $fp, '#' . "\n" );
-                                    fprintf( $fp, 'define("DB_HOST", "%s");' . "\n", $createhost );
-                                    fprintf( $fp, 'define("DB_NAME", "%s");' . "\n", $createdb );
-                                    fprintf( $fp, 'define("DB_PORT", "%s");' . "\n", $createport );
-                                    fprintf( $fp, 'define("DB_USER", "%s");' . "\n", $erasuser );
-                                    fprintf( $fp, 'define("DB_PASSWORD", "%s");' . "\n", $eraspassword );
-                                    fclose( $fp );
-
-                                    alert( "De database is met succes aangemaakt en geladen." );
-
-                                    $schermdeel = "3";
+                                    $createErr = "GRANT toegang is mislukt: " . mysqli_error( $conn );
+                                    $logger->error( "GRANT toegang is mislukt: " . mysqli_error( $conn ) );
                                 }
                                 else
                                 {
-                                    $logger->error( "Laden database is mislukt: " . mysqli_error( $conn ) );
-                                    $createErr = "Laden database is mislukt: " . mysqli_error( $conn );
+                                    $logger->info( "Database " . $createdb . " is aangemaakt" );
+
+                                    if ( !mysqli_query( $conn, 'USE ' . $createdb ) )
+                                    {
+                                        $logger->error( "USE database mislukt: " . mysqli_error( $conn ) );
+                                        $createErr = "Kan database niet selecteren.: " . mysqli_error( $conn );
+                                    }
+                                    else
+                                    {
+                                        if ( !file_exists( $sqlfile ) )
+                                        {
+                                            $createErr = "Kan SQL bestand " . $sqlfile . " niet lezen.";
+                                        }
+                                        else
+                                        {
+                                            try
+                                            {
+
+                                                // Huidige query
+                                                $statement = '';
+                                                // Lees bestand in
+                                                $regels = file( $sqlfile );
+                                                $insertErrors = 0;
+                                                $regelnummer = 0;
+
+                                                foreach ( $regels as $regel )
+                                                {
+                                                    $regelnummer += 1;
+                                                    // Skip als het een commentaarregel is
+                                                    if ( substr( $regel, 0, 2 ) == '--' || $regel == '' )
+                                                    {
+                                                        continue;
+                                                    }
+
+                                                    // Regel toevoegen aan statement
+                                                    $statement .= $regel;
+                                                    // Als de regel eindigt op puntkomma is het het einde van de query
+                                                    if ( substr( trim( $regel ), -1, 1 ) == ';' )
+                                                    {
+                                                        // Query uitvoeren
+                                                        if ( mysqli_query( $conn, $statement ) != true )
+                                                        {
+                                                            $logger->error( 'Fout in regel ' . $regelnummer . ' bij uitvoeren query ' . $statement . ': ' . mysqli_error( $conn ) );
+                                                            $insertErrors += 1;
+                                                            break;
+                                                        }
+                                                        // statement leegmaken
+                                                        $statement = '';
+                                                    }
+                                                }
+
+                                                if ( $insertErrors == 0 )
+                                                {
+                                                    $sql = 'SELECT db_version_major, db_version_minor FROM fb_system WHERE naam="eras"';
+                                                    $result = mysqli_query($conn, $sql);
+
+                                                    $dbVersionMajor = "0";
+                                                    $dbVersionMinor = "0";
+                                                    if (mysqli_num_rows($result) > 0) 
+                                                    {
+                                                        $row = mysqli_fetch_assoc($result);
+                                                        $dbVersionMajor = $row["db_version_major"];
+                                                        $dbVersionMinor = $row["db_version_minor"];
+                                                    } 
+                                                    mysqli_free_result( $result );
+
+                                                    $fp = fopen( DATABASE_CONFIG_FILENAME, 'w' );
+                                                    fprintf( $fp, '<?php' . "\n" );
+                                                    fprintf( $fp, '#' . "\n" );
+                                                    fprintf( $fp, 'define("DB_VERSION_MAJOR", "%s");' . "\n", $dbVersionMajor );
+                                                    fprintf( $fp, 'define("DB_VERSION_MINOR", "%s");' . "\n", $dbVersionMinor );
+                                                    fprintf( $fp, '#' . "\n" );
+                                                    fprintf( $fp, 'define("DB_HOST", "%s");' . "\n", $createhost );
+                                                    fprintf( $fp, 'define("DB_NAME", "%s");' . "\n", $createdb );
+                                                    fprintf( $fp, 'define("DB_PORT", "%s");' . "\n", $createport );
+                                                    fprintf( $fp, 'define("DB_USER", "%s");' . "\n", $erasuser );
+                                                    fprintf( $fp, 'define("DB_PASSWORD", "%s");' . "\n", $eraspassword );
+                                                    fclose( $fp );
+
+                                                    $sql = "UPDATE fb_system SET valid='1' WHERE naam='eras'";
+                                                    $result = mysqli_query($conn, $sql);
+                                                    mysqli_query($conn, "COMMIT");
+
+                                                    if ( $result )
+                                                    {
+                                                        $logger->info( "Database geladen." );
+                                                        alert( "De database is met succes geladen." );
+                                                        $schermdeel = 3;
+                                                    }
+                                                    else
+                                                    {
+                                                        $logger->info( "Database opt 'valid' zetten is mislukt: " . mysqli_error( $conn ) );
+                                                        alert( "Probleem met valideren database. " . mysqli_error( $conn ) );
+                                                    }
+
+                                                }
+                                                else
+                                                {
+                                                    $logger->error( "Er is iets misgegaan bij het laden van de database: " . mysqli_error( $conn ) );
+                                                    alert( "Er is iets misgegaan bij het laden van de database: " . mysqli_error( $conn ) . "\nZie ERAS.log voor meer informatie. \nMaak de database leeg voor nieuwe poging." );
+                                                    $createErr = "Laden database is mislukt: " . mysqli_error( $conn ) . "<br/>Zie ERAS.log voor meer informatie.";
+                                                }
+                                            }
+                                            catch ( Exception $ex )
+                                            {
+                                                $logger->error( 'Exceptie bij uitvoeren query in regel ' . $regelnummer . ' bij uitvoeren query ' . $statement . ': ' . mysqli_error( $conn ) );
+                                                $logger->errordump( $ex );
+                                                alert( "Er is iets misgegaan bij het laden van de database: " . $ex->getMessage() );
+                                                $createErr = "Er is iets misgegaan bij het laden van de database: " . $ex->getMessage() . "<br/>Zie ERAS.log voor meer informatie.";
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -517,6 +598,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                         }
                         else
                         {
+                            $con = Propel::getConnection( fb_model\fb_model\Map\OptieTableMap::DATABASE_NAME );
                             $con->beginTransaction();
 
                             try
@@ -561,7 +643,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
 
                                     $con->commit();
 
-                                    $systeem = SystemQuery::create()->findOne();
+                                    $systeem = SystemQuery::create()->findPk( "eras" );
 
                                     $fp = fopen( DATABASE_CONFIG_FILENAME, 'w' );
                                     fprintf( $fp, '<?php' . "\n" );
@@ -578,7 +660,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
 
                                     $systeem->setValid( DB_VALID );
                                     $systeem->save();
-                    
+
                                     $logger->info( "Database geladen." );
                                     alert( "De database is met succes geladen." );
                                     $schermdeel = 3;
@@ -592,7 +674,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                                     $createErr = "Laden database is mislukt: " . mysqli_error( $conn ) . "<br/>Zie ERAS.log voor meer informatie.";
                                 }
                             }
-                            catch( Exception $ex )
+                            catch ( Exception $ex )
                             {
                                 $con->rollback();
                                 $logger->error( 'Exceptie bij uitvoeren query in regel ' . $regelnummer . ' bij uitvoeren query ' . $statement . ': ' . mysqli_error( $conn ) );
@@ -600,7 +682,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                                 alert( "Er is iets misgegaan bij het laden van de database: " . $ex->getMessage() );
                                 $createErr = "Er is iets misgegaan bij het laden van de database: " . $ex->getMessage() . "<br/>Zie ERAS.log voor meer informatie.";
                             }
-    
+
                         }
 
                     }
@@ -687,7 +769,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
 } // POST
 
 $logger->debug( "Voor autorisatie" );
-if ( $schermdeel == 3)
+if ( $schermdeel == 3 )
 {
     $autorisatie = new Autorisatie();
     if ( $autorisatie->check( AUTORISATIE_STATUS_ROOT ) )
