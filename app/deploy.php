@@ -140,10 +140,10 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
     $deployDirectory = $systeem->getDeployDirectory();
     $logger->debug( "Omgeving " . $omgeving . ", Deploy directory " . $deployDirectory );
 
-    if ( !dirIsWritable( "/" . $deployDirectory ) )
+    if ( !dirIsWritable( "./" ) )
     {
-        $logger->error( "Kan directory /" . $deployDirectory . " niet schrijven" );
-        alertAndGo( "Kan directory /" . $deployDirectory . " niet schrijven, terug naar hoofdmenu", "index.php" );
+        $logger->error( "Kan directory ./ niet schrijven" );
+        alertAndGo( "Kan directory ./ niet schrijven, terug naar hoofdmenu", "index.php" );
         exit();
     }
 }
