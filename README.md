@@ -39,6 +39,7 @@ Download het complete ERAS pakket:
 
 ### Via GIT
 git clone https://github.com/Octet-nl/ERAS.git
+
 Alle bestanden worden nu gedownload in directory ERAS. Na het downloaden kunt u de .git directory verwijderen. 
 
 ### Via download
