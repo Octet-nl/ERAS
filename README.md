@@ -43,7 +43,7 @@ git clone https://github.com/Octet-nl/ERAS.git
 Alle bestanden worden nu gedownload in directory ERAS. Na het downloaden kunt u de .git directory verwijderen. 
 
 ### Via download
-Download de ZIP file uit Github en pak deze uit.
+Download de ZIP of de TAR file uit Github en pak deze uit. Na het uitpakken hernoemt u de directory met de bestanden naar 'ERAS'.
 
 ### Installeren
 Start de installatieprocedure door met uw browser het bestand 'install.php' te openen.
