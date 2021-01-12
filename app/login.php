@@ -136,8 +136,6 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
     {
         try
         {
-            // Afremmen wachtwoord raden
-            sleep(1);
             $allOk = false;
             $gebruiker = GebruikerQuery::create()->filterByUserId( $userid )->filterByIsActief("1")->findOne();
             if ( $gebruiker != null )
@@ -230,12 +228,16 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                 }
                 else
                 {
+                    // Afremmen wachtwoord raden
+                    sleep(3);
                     $logger->security( "User " . $userid . " onjuist wachtwoord." );
                     $passwordErr = "Gebruikers ID of wachtwoord is niet correct";
                 }
             }
             else
             {
+                // Afremmen userid raden
+                sleep(2);
                 $logger->info( "User " . $userid . " bestaat niet of is niet actief." );
                 $passwordErr = "Gebruikers ID of wachtwoord is niet correct";
             }

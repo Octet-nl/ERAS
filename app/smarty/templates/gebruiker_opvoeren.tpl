@@ -9,15 +9,15 @@
 
                 <div>
                     <label for="userid">Gebruikers ID:</label>
-                    <input class="short" type="text" name="userid" placeholder="userid" value={$userid}>
+                    <input class="medium" type="text" name="userid" placeholder="userid" value={$userid}>
                     <span class="error">{$useridErr}</span>
                 </div>
 
                 <div>
                     <label for="password">Initieel wachtwoord:</label>
-                    <input class="short" type="text" name="password" placeholder="wachtwoord" value={$password}><br />
+                    <input class="short" type="text" name="password" placeholder="wachtwoord" value={$password}>
+                    <span class="error">{$passwordErr}</span><br/>
                     (Gebruiker moet dit wijzigen bij eerste maal aanloggen)
-                    <span class="error">{$passwordErr}</span>
                 </div>
                 <br />
                 <div>

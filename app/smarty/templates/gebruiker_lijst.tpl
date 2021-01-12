@@ -55,7 +55,7 @@
                   {$gebruiker.rol}
                 {if $gebruiker.actief == "0" }</del>{/if}
               </td>
-              <td>
+              <td style="text-align: center;">
                 {if $gebruiker.actief == "0" }<del>{/if}
                   {$gebruiker.actief}
                 {if $gebruiker.actief == "0" }</del>{/if}
@@ -71,9 +71,11 @@
                 {if $gebruiker.actief == "0" }</del>{/if}
               </td>
 
-              <td>
+              <td style="text-align: center;">
                 {if $gebruiker.wijzigen == "1"}
                 <button name="wijzigen" value={$gebruiker.id}>Wijzigen</button>
+                {else}
+                Niet<br/>bevoegd
                 {/if}
               </td>
             </tr>

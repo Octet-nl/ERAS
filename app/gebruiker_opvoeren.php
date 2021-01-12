@@ -76,7 +76,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
 if ( $_SERVER["REQUEST_METHOD"] == "POST" )
 {
     // HIER GEEN $_POST dumpen, daar staat het wachtwoord in!
-    //$logger->dump( $_POST );
+    // $logger->dump( $_POST );
 
     if ( isset( $_POST['afmelden'] ) )
     {
@@ -97,20 +97,41 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
     try
     {
         $setVar = new SetVariable();
-        $validateOk += $setVar->name( $userid )
-            ->onerror( $useridErr )
-            ->formatter( 'strtolower' )
-            ->validator( v::alnum()->noWhitespace()->length( 1, 32 ) )
-            ->required( true )
+        $validateOk += $setVar->name( $rol )
+            ->onerror( $rolErr )
+            ->validator( v::numericVal()->min(1)->max($autorisatie->getRol() ) )
+            ->required()
             ->go();
+        if ( $rol == AUTORISATIE_STATUS_KLANT )
+        {
+            $validateOk += $setVar->name( $userid )
+                ->onerror( $useridErr )
+                ->errormessage( "Voor klanten moet het userid een email adres zijn." )
+                ->formatter( 'strtolower' )
+                ->validator( v::regex( "/[a-zA-Z0-9_\-.+]+@[a-zA-Z0-9-]+.[a-zA-Z]+/" )->length( 1, 200 ) )
+                ->required( true )
+                ->go();
+        }
+        else
+        {
+            $validateOk += $setVar->name( $userid )
+                ->onerror( $useridErr )
+                ->formatter( 'strtolower' )
+                ->validator( v::alnum()->noWhitespace()->length( 1, 32 ) )
+                ->required( true )
+                ->go();
+
+            if ( preg_match( "/[a-zA-Z0-9_\-.+]+@[a-zA-Z0-9-]+.[a-zA-Z]+/", $userid ) ) 
+            {
+                $useridErr = "Userid is een e-mailadres maar de gebruiker is geen klant.";
+                $validateOk = 99;
+            }
+        }
         $validateOk += $setVar->name( $password )
             ->onerror( $passwordErr )
             ->errormessage( "Het wachtwoord moet minimaal 6 tekens lang zijn" )
             ->validator( v::alwaysValid()->length( 6, 255 ) )
             ->required( true )
-            ->go();
-        $validateOk += $setVar->name( $rol )
-            ->validator( v::alwaysValid() )
             ->go();
     }
     catch ( Exception $ex )
