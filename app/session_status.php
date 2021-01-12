@@ -54,9 +54,9 @@ function setSessieVariabelen( $id, $userid )
         return false;
     }
 
-    $gebruiker = GebruikerQuery::create()->filterByUserId( $userid )->findOne(  );
+    $gebruiker = GebruikerQuery::create()->filterByUserId( $userid )->filterByIsActief("1")->findOne(  );
 
-    if ( $gebruiker->getRol() < AUTORISATIE_STATUS_MEDEWERKER && $gebruiker->getPersoonId() != $inschrijving->getContactPersoonId() )
+    if ( $gebruiker == null || ( $gebruiker->getRol() < AUTORISATIE_STATUS_MEDEWERKER && $gebruiker->getPersoonId() != $inschrijving->getContactPersoonId() ) )
     {
         $logger->security( "Gebruiker " .$userid. " is niet gemachtigd om inschrijving nr. " .$id. " te bekijken.");
         return false;

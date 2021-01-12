@@ -241,7 +241,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             $persoonsGegevens->save();
 
             $gebruiker = GebruikerQuery::create()->findPk( $gebruiker_email );
-            if ( $gebruiker != null )
+            if ( $gebruiker != null && $gebruiker->getIsActief() == "1" )
             {
                 $gebruiker->setPersoonId( $persoonsGegevens->getId() );
                 $gebruiker->setGewijzigdDoor( $autorisatie->getUserId() );
@@ -266,7 +266,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
 
 //            $autorisatie->setRol( AUTORISATIE_STATUS_KLANT );
 
-            $gebruiker = GebruikerQuery::create()->filterByUserId( $autorisatie->getUserId() )->findOne();
+            $gebruiker = GebruikerQuery::create()->filterByUserId( $autorisatie->getUserId() )->filterByIsActief( "1" )->findOne();
             if ( $gebruiker == null )
             {
                 $logger->warning( "Gebruiker " . $autorisatie->getUserId() . " is niet gevonden." );

@@ -89,7 +89,6 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
 if ( $_SERVER["REQUEST_METHOD"] == "POST" )
 {
     // Geen $_POST dumpen, hier staat het wachtwoord in klare tekst in!
-    // $logger->dump( $_POST );
 
     $validateOk = 0;
     try
@@ -140,7 +139,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             // Afremmen wachtwoord raden
             sleep(1);
             $allOk = false;
-            $gebruiker = GebruikerQuery::create()->filterByUserId( $userid )->findOne();
+            $gebruiker = GebruikerQuery::create()->filterByUserId( $userid )->filterByIsActief("1")->findOne();
             if ( $gebruiker != null )
             {
                 if ( password_verify( $password, $gebruiker->getWachtwoord() ) )
@@ -237,7 +236,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             }
             else
             {
-                $logger->info( "User " . $userid . " bestaat niet." );
+                $logger->info( "User " . $userid . " bestaat niet of is niet actief." );
                 $passwordErr = "Gebruikers ID of wachtwoord is niet correct";
             }
         }

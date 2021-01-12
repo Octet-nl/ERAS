@@ -115,7 +115,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
              $klant = $_GET['klant'];
         }
 
-        $gebruiker = GebruikerQuery::create()->filterByUserId( $autorisatie->getUserId() )->findOne();
+        $gebruiker = GebruikerQuery::create()->filterByUserId( $autorisatie->getUserId() )->filterByIsActief("1")->findOne();
         if ( $gebruiker == null )
         {
             $logger->info( "Userid " . $autorisatie->getUserId() . " is niet gevonden!" );

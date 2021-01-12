@@ -119,6 +119,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
         // Testen of we dit mailadres kennen
         $gebruiker = GebruikerQuery::create()
             ->filterByUserId( $email )
+            ->filterByIsActief("1")
             ->findOne();
         if ( $gebruiker == null )
         {

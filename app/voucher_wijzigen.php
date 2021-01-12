@@ -396,7 +396,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
 
                 if ( $email != null )
                 {
-                    $gebruiker = GebruikerQuery::create()->filterByUserId( $email )->findOne();
+                    $gebruiker = GebruikerQuery::create()->filterByUserId( $email )->filterByIsActief("1")->findOne();
                     if ( $gebruiker != null )
                     {
                         $persoonId = $gebruiker->getPersoonId();

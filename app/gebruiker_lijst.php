@@ -49,6 +49,7 @@ $smarty->setConfigDir( 'smarty/configs' );
 use \fb_model\fb_model\GebruikerQuery;
 use \fb_model\fb_model\KeuzesQuery;
 use \fb_model\fb_model\PersoonQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 
 $logger = new Logger();
 $logger->level( LOGLEVEL );
@@ -57,6 +58,7 @@ $statusRegel = "";
 $signalError = false;
 
 $gebruiker_lijst = array();
+$filter = "Alles";
 
 $history = new History();
 $autorisatie = new Autorisatie();
@@ -69,9 +71,35 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
 {
     $history->set();
 
-    $gebruikers = GebruikerQuery::create()
+    getGetVar( $filter );
+
+    if ( $filter == null )
+    {
+        $filter = 'Actief';
+        $logger->debug( "Filter op 'Actief' gezet" );
+    }
+
+    if ( $filter == 'Alles' )
+    {
+        $logger->debug( "Filter op 'Alles'" );
+        $gebruikers = GebruikerQuery::create()
+        ->filterByRol( AUTORISATIE_STATUS_KLANT, Criteria::GREATER_THAN )
         ->find();
-    //  ->paginate(2, 10);
+        //  ->paginate(2, 10);
+    }
+    else if ( $filter == 'Actief' )
+    {
+        $logger->debug( "Filter op 'Actief'" );
+        $gebruikers = GebruikerQuery::create()
+        ->filterByRol( AUTORISATIE_STATUS_KLANT, Criteria::GREATER_THAN )
+        ->findByIsActief( "1" );
+    }
+    else if ( $filter == 'Klanten' )
+    {
+        $logger->debug( "Filter op 'Klanten'" );
+        $gebruikers = GebruikerQuery::create()
+        ->findByIsActief( "1" );
+    }
 
     $rolArray = array();
     if ( $rolArray == null )
@@ -92,10 +120,10 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
             continue;
         }
 
-        if ( $gebruiker->getRol() > $autorisatie->getRol())
-        {
-            continue;
-        }
+//        if ( $gebruiker->getRol() > $autorisatie->getRol())
+//        {
+//            continue;
+//        }
 
         $gbr_lijst = array();
         $gbr_lijst["id"] = $gebruiker->getId();
@@ -116,6 +144,15 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
         $dnr_lijst["id"] = $gebruiker->getId();
         $dnr_lijst["userid"] = $gebruiker->getUserId();
         $dnr_lijst["rol"] = $rolArray[$gebruiker->getRol()];
+        $dnr_lijst["actief"] = $gebruiker->getIsActief();
+        if ( $gebruiker->getRol() > $autorisatie->getRol())
+        {
+            $dnr_lijst["wijzigen"] = "0";
+        }
+        else
+        {
+            $dnr_lijst["wijzigen"] = "1";
+        }
         $dnr_lijst["laatste_logindatum"] = formatDatum( $gebruiker->getDatumLaatsteLogin() );
         $dnr_lijst["laatste_loginadres"] = $gebruiker->getLaatsteLoginAdres();
 
@@ -155,6 +192,30 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
         $autorisatie->logout();
         header( "Refresh:0" );
         exit;
+    }
+
+    if ( isset( $_POST['filter'] ) )
+    {
+        $filter = $_POST["filter"];
+
+        if ( $filter == 'Alles' )
+        {
+            $logger->debug( 'Alle gebruikers.' );
+            header( "Location:gebruiker_lijst.php?filter=Alles" );
+            exit();
+        }
+        else if ( $filter == 'Actief' )
+        {
+            $logger->debug( 'Alleen actieve gebruikers.' );
+            header( "Location:gebruiker_lijst.php?filter=Actief" );
+            exit();
+        }
+        else if ( $filter == 'Klanten' )
+        {
+            $logger->debug( 'Ook klanten.' );
+            header( "Location:gebruiker_lijst.php?filter=Klanten" );
+            exit();
+        }
     }
 
     $validateOk = 0;
@@ -202,6 +263,7 @@ $smarty->assign( 'doctitle', $doctitle );
 $smarty->assign( 'Gebruikers', $gebruiker_lijst );
 $smarty->assign( 'aantal', count( $gebruiker_lijst ) );
 $smarty->assign( 'admin_taken', $admin_taken);
+$smarty->assign( 'filter', $filter );
 
 // Voor statusregel
 $smarty->assign( 'isError', $signalError );

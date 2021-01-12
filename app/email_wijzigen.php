@@ -158,8 +158,6 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
     {
         try
         {
-            // Afremmen wachtwoord raden
-            sleep(1);
             $allOk = false;
             $gebruiker = GebruikerQuery::create()->filterByUserId( $email )->findOne();
             if ( $gebruiker != null )
@@ -215,12 +213,16 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                 }
                 else
                 {
+                    // Afremmen wachtwoord raden
+                    sleep(3);
                     $logger->security( "Mailadres " . $email . " onjuist wachtwoord." );
                     $passwordErr = "Mailadres of wachtwoord is niet correct";
                 }
             }
             else
             {
+                // Afremmen mailadres raden
+                sleep(2);
                 $logger->info( "Email adres " . $email . " bestaat niet." );
                 $passwordErr = "Mailadres of wachtwoord is niet correct";
             }

@@ -178,7 +178,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
         {
             $persoonId = $deelnemer->getPersoonId();
             $persoon = PersoonQuery::create()->findPk( $persoonId );
-            $gebruiker = GebruikerQuery::create()->filterByUserId( $persoon->getEmail() )->filterByPersoonId( $persoonId )->findOne( );
+            $gebruiker = GebruikerQuery::create()->filterByUserId( $persoon->getEmail() )->filterByPersoonId( $persoonId )->filterByIsActief("1")->findOne( );
             if ( $gebruiker != null )
             {
                 $logger->debug( "PersoonId " . $persoonId . ", email " . $persoon->getEmail() . " is contactpersoon");
@@ -381,7 +381,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
 
             $persoonsGegevens->save();
 
-            $gebruiker = GebruikerQuery::create()->filterByUserId( $email )->findone();
+            $gebruiker = GebruikerQuery::create()->filterByUserId( $email )->filterByIsActief("1")->findone();
             if ( $gebruiker != null )
             {
                 $logger->debug( "Gebruikersgegevens aanpassen" );

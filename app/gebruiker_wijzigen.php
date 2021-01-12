@@ -57,8 +57,8 @@ use \fb_model\fb_model\GebruikerQuery;
 use \fb_model\fb_model\KeuzesQuery;
 
 // Defineer variabelen voor aanmelden
-$userid = $useridErr = $password = $passwordErr = $rolErr = "";
-$rol = 0;
+$userid = $useridErr = $password = $passwordErr = $rolErr = $actiefErr = "";
+$rol = $actief = 0;
 
 $history = new History();
 $autorisatie = new Autorisatie();
@@ -74,7 +74,14 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
     $history->set();
     getGetVar( $id );
 
-    $gebruiker = GebruikerQuery::create()->findPk( $id );
+    if ( $autorisatie->getRol() > AUTORISATIE_STATUS_MEDEWERKER )
+    {
+        $gebruiker = GebruikerQuery::create()->findPk( $id );
+    }
+    else
+    {
+        $gebruiker = GebruikerQuery::create()->filterByIsActief("1")->findPk( $id );
+    }
     if ( $gebruiker != null )
     {
         if ( $gebruiker->getUserId() == 'root' )
@@ -86,6 +93,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
         }
         $rol = $gebruiker->getRol();
         $userid = $gebruiker->getUserId();
+        $actief = $gebruiker->getIsActief();
     }
     else
     {
@@ -93,7 +101,6 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
     }
 }
 
-// Na drukken op de "inschrijven" knop
 if ( $_SERVER["REQUEST_METHOD"] == "POST" )
 {
     // HIER GEEN $_POST dumpen, daar staat het wachtwoord in!
@@ -139,6 +146,11 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
         $validateOk += $setVar->name( $rol )
             ->validator( v::alwaysValid() )
             ->go();
+        $validateOk += $setVar->name( $actief )
+            ->onerror( $actiefErr )
+            ->validator( v::alwaysValid() )
+            ->required( true )
+            ->go();
     }
     catch ( Exception $ex )
     {
@@ -161,6 +173,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                 $gebruiker->setDatumWachtwoordWijzig( null );
             }
             $gebruiker->setRol( $rol );
+            $gebruiker->setIsActief( $actief );
             $gebruiker->setLaatsteLoginAdres( "" );
             $gebruiker->setGewijzigdDoor( $autorisatie->getUserId() );
             $gebruiker->save();
@@ -178,6 +191,10 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
         $statusRegel = "Herstel de invoer a.u.b";
         $signalError = true;
     }
+    $terug =  $history->get( );
+    $logger->debug( "History get: " . $terug );
+    header( "Location:" . $terug );
+    exit;
 }
 
 // Deel 3
@@ -204,6 +221,13 @@ $smarty->assign( 'rollijst', $rolArray );
 $smarty->assign( 'id', $id );
 $smarty->assign( 'rol', $rol );
 $smarty->assign( 'rolErr', $rolErr );
+$smarty->assign( 'ROL_KLANT', AUTORISATIE_STATUS_KLANT );
+
+$smarty->assign( 'actiefKeus', array(
+    "1" => OPTIE_KEUZE_JA,
+    "0" => OPTIE_KEUZE_NEE ) );
+$smarty->assign( 'isActief', $actief );
+$smarty->assign( 'isActiefErr', $actiefErr );
 
 // Voor statusregel
 $smarty->assign( 'isError', $signalError );

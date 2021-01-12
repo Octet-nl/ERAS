@@ -168,7 +168,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
         try
         {
             $allOk = false;
-            $gebruiker = GebruikerQuery::create()->filterByUserId( $email )->findOne();
+            $gebruiker = GebruikerQuery::create()->filterByUserId( $email )->filterByIsActief("1")->findOne();
             if ( $gebruiker != null )
             {
                 $allOk = true;

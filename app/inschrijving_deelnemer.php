@@ -157,7 +157,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
             {
                 $persoonId = $deelnemer->getPersoonId();
                 $persoon = PersoonQuery::create()->findPk( $persoonId );
-                $gebruiker = GebruikerQuery::create()->filterByUserId( $persoon->getEmail() )->filterByPersoonId( $persoonId )->findOne( );
+                $gebruiker = GebruikerQuery::create()->filterByUserId( $persoon->getEmail() )->filterByPersoonId( $persoonId )->filterByIsActief("1")->findOne( );
                 if ( $gebruiker != null )
                 {
                     $logger->debug( "PersoonId " . $persoonId . ", email " . $persoon->getEmail() . " is contactpersoon");
