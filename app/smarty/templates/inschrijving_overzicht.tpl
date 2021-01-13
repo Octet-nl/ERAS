@@ -96,6 +96,14 @@
               <td>Totaalbedrag:</td>
               <td>&euro; {$totaalprijs}</td>
             </tr>
+            <tr>
+              <td class="noborder"></td>
+              <td class="noborder"></td>
+              <td class="noborder"></td>
+              <td class="noborder"></td>
+              <td class="noborder"><i>Deze berekening is ter indicatie.<br/>Er kunnen geen rechten aan ontleend worden!</i></td>
+              <td class="noborder"></td>
+            </tr>
         </table>
 
        {if $aantal_beschikbaar > 0 && (!$changeDefinitief || $isMedewerker) }
