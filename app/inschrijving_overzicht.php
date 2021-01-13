@@ -288,33 +288,63 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
     if ( $wijzigingDefinitieveInschrijving )
     {
             // Tonen van alle inschrijvingsopties
-            $inschrijvingsOpties = InschrijvingHeeftOptieQuery::create()->filterByInschrijvingId( $inschrijvingId )->find();
+            //$inschrijvingsOpties = InschrijvingHeeftOptieQuery::create()->filterByInschrijvingId( $inschrijvingId )->find();
+            try
+            {
+                $inschrijvingsOpties = OptieQuery::create()
+                  ->filterByPerDeelnemer( '0' )
+                  ->useEvenementHeeftOptieQuery()
+                  ->filterByEvenementId( $evenement->getId() )
+                  ->orderByVolgorde()
+                  ->endUse()
+                  ->useInschrijvingHeeftOptieQuery()
+                      ->filterByInschrijvingId( $inschrijvingId )
+                  ->endUse()
+                  ->orderByGroep()
+                  ->join('InschrijvingHeeftOptie')
+                  ->select(array('naam', 
+                                 'InschrijvingHeeftOptie.waarde', 
+                                 'InschrijvingHeeftOptie.optie_id', 
+                                 'InschrijvingHeeftOptie.prijs', 
+                                 'groep', 
+                                 'tekst_voor' ))
+                    ->find();                
+            }
+            catch( Exception $ex)
+            {
+                $logger->error( "Exceptie bij opvragen inschrijvingsopties en volgorde daarvan" );
+                $logger->errordump( $ex );
+                alert("Exceptie bij opvragen inschrijvingsopties en volgorde daarvan");
+                exit;
+            }
+    
             $optieTekst = "";
             foreach ( $inschrijvingsOpties as $inschrijvingsOptie )
             {
-                $optie = OptieQuery::create()->findPk( $inschrijvingsOptie->getOptieId() );
-    
-                if ( $optie->getGroep() != "" )
+                //$optie = OptieQuery::create()->findPk( $inschrijvingsOptie['InschrijvingHeeftOptie.optie_id'] );
+                $logger->dump( $inschrijvingsOptie );
+
+                if ( $inschrijvingsOptie['groep'] != "" )
                 {
-                    $optieTekst .= $optie->getGroep();
-                    if ( $optie->getTekstVoor() != "" )
+                    $optieTekst .= $inschrijvingsOptie['groep'];
+                    if ( $inschrijvingsOptie['tekst_voor'] != "" )
                     {
                         $optieTekst .= ": ";
                     }
                 }
-                $optieTekst .= $optie->getTekstVoor();
-                if ($optie->getGroep() == "" )
+                $optieTekst .= $inschrijvingsOptie['tekst_voor'];
+                if ($inschrijvingsOptie['groep'] == "" )
                 {
                     $optieTekst .=": " ;
                 }
-                if ( $inschrijvingsOptie->getWaarde() != $inschrijvingsOptie->getOptieId() )
+                if ( $inschrijvingsOptie['InschrijvingHeeftOptie.waarde'] != $inschrijvingsOptie['InschrijvingHeeftOptie.optie_id'] )
                 {
-                    $optieTekst .= $inschrijvingsOptie->getWaarde() . ", ";
+                    $optieTekst .= $inschrijvingsOptie['InschrijvingHeeftOptie.waarde'] . ", ";
                 }
-                if ( !isNul( $optie->getPrijs() ) )
+                if ( !isNul( $inschrijvingsOptie['InschrijvingHeeftOptie.prijs'] ) )
                 {
-                    $optieTekst .= " &euro;" . $optie->getPrijs();
-                    $inschrijvingsprijs += $optie->getPrijs();
+                    $optieTekst .= " &euro;" . $inschrijvingsOptie['InschrijvingHeeftOptie.prijs'];
+                    $inschrijvingsprijs += $inschrijvingsOptie['InschrijvingHeeftOptie.prijs'];
                 }
                 $optieTekst .=  "<br/>";
             }
