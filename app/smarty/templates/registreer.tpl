@@ -5,7 +5,7 @@
 {else}
 <h2>Welkom</h2>
 {/if}
-<form method="post" action="{$SCRIPT_NAME}">
+<form id="myForm" method="post" action="{$SCRIPT_NAME}">
 
     {if $evenementNaam != "" && $groepsInschrijving == "1"}
     <fieldset id="soort">
@@ -60,7 +60,7 @@
             <label>E-mailadres</label>
             <input class="medium" type="text" name="mailadres" value="{$mailadres}" placeholder="E-mailadres" />
             <span class="error">{$mailadresErr}</span>
-            <button name="wijzigEmail">Wijzigen</button>
+            <button type="button" onclick="goWijzig()" name="wijzigEmail">Wijzigen</button>
         </div>
         <div>
          <label for="input-login_password">Uw wachtwoord</label>
@@ -99,7 +99,7 @@
     </div>
 
     <div>
-        <button name="inloggen">Inloggen</button>
+        <button type="submit" name="inloggen" style="width: 10em; height: 5em;">Aanmelden</button>
     </div>
 
     </fieldset>
@@ -259,4 +259,17 @@ function tochRegister()
         document.getElementById("inloggen").className = "hide";
     }
 
+function goWijzig() 
+{
+    var form=document.getElementById('myForm');     //retrieve the form as a DOM element
+
+    var input = document.createElement('input');    //prepare a new input DOM element
+    input.setAttribute('name', "wijzigEmail");      //set the param name
+    input.setAttribute('value', "");        //set the value
+    input.setAttribute('type', "hidden")           //set the type, like "hidden" or other
+
+    form.appendChild(input);//append the input to the form
+
+    form.submit();//send with added input
+}
 </script>

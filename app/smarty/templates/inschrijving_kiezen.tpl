@@ -54,7 +54,7 @@
                 {if file_exists( "{$inschrijving.factuurNaam}"  ) }
                 <button name="factuur" value={$inschrijving.factuurNaam}>Factuur</button> 
                 {/if}
-                <button name="annuleer" value={$inschrijving.id} onclick="return verwijderKlik('Inschrijving met inschrijfnummer {$inschrijving.id}\nContactpersoon: {$inschrijving.naam}')">Annuleren</button>
+                <button name="annuleer" value={$inschrijving.id} onclick="return verwijderKlik('Inschrijving met inschrijfnummer {$inschrijving.id}\nContactpersoon: {$inschrijving.naam}')">Inschrijving<br/>Annuleren</button>
             </td>
         </tr>
         {/foreach}
