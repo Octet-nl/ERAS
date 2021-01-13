@@ -1240,6 +1240,18 @@ function trimDir( $dirName )
 }
 // /Formatters
 
+function isNul( $bedrag )
+{
+    if ( abs($bedrag) < 0.00001 )
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
 function rondNul( $bedrag )
 {
     if ( abs($bedrag) < 0.00001 )

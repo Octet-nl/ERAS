@@ -52,6 +52,7 @@
              <th>Geb.datum</th>
              <th>Mail adres</th>
              <th>Telefoonnr.</th>
+             <th>Opties</th>
              <th>Bedrag</th>
              <th>Acties</th>
           </tr>
@@ -63,6 +64,7 @@
               <td>{$deelnemer.geb_datum}</td>
               <td>{$deelnemer.mail}</td>
               <td>{$deelnemer.telefoonnr}</td>
+              <td>{$deelnemer.opties}</td>
               <td>&euro;{$deelnemer.bedrag}</td>
               <td>
        {if $aantal_beschikbaar > -10 }
@@ -76,11 +78,22 @@
               </td> 
             </tr>  
         {/foreach}
-            <tr>
+        {if $inschrijvingsopties != ""}
+          <tr>
               <td class="noborder"></td>
               <td class="noborder"></td>
               <td class="noborder"></td>
-              <td>Totaal</td>
+              <td class="noborder"></td>
+              <td>{$inschrijvingsopties}</td>
+              <td>{$inschrijvingsprijs}</td>
+          </tr>
+          {/if}
+          <tr>
+              <td class="noborder"></td>
+              <td class="noborder"></td>
+              <td class="noborder"></td>
+              <td class="noborder"></td>
+              <td>Totaalbedrag:</td>
               <td>&euro; {$totaalprijs}</td>
             </tr>
         </table>

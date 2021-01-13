@@ -33,6 +33,7 @@
 require_once '../vendor/autoload.php';
 require_once 'constanten.php';
 require_once 'utilities.php';
+require_once 'annuleringsverzekering.php';
 
 $sessie = new Sessie();
 
@@ -45,8 +46,14 @@ $smarty->setCompileDir( 'smarty/templates_c' );
 $smarty->setCacheDir( 'smarty/cache' );
 $smarty->setConfigDir( 'smarty/configs' );
 
+use fb_model\fb_model\AnnuleringsverzekeringQuery;
+use fb_model\fb_model\BetaalwijzeQuery;
 use fb_model\fb_model\DeelnemerQuery;
+use fb_model\fb_model\DeelnemerHeeftOptieQuery;
+use fb_model\fb_model\EvenementQuery;
 use fb_model\fb_model\InschrijvingQuery;
+use fb_model\fb_model\InschrijvingHeeftOptieQuery;
+use fb_model\fb_model\OptieQuery;
 use fb_model\fb_model\PersoonQuery;
 
 // Defineer variabelen voor evenement
@@ -60,6 +67,8 @@ $totaalprijs = "";
 $wijzigingDefinitieveInschrijving = false;
 $isMedewerker = false;
 $inschrijvingId = 0;
+$inschrijvingsopties = "";
+$inschrijvingsprijs = 0;
 
 $logger = new Logger();
 $logger->level( LOGLEVEL );
@@ -128,8 +137,6 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
         $isMedewerker = true;
     }
 
-    //ToDo: Dit kan weg
-//    if ( !empty( $sessieVariabelen['wijzigen'] ) && $sessieVariabelen['wijzigen'] == "1" )
     if ( $autorisatie->getRol() <= AUTORISATIE_STATUS_KLANT )
     {
         if (  ( $sessieVariabelen['inschrijving_status'] == INSCHRIJVING_STATUS_DEFINITIEF ) )
@@ -160,20 +167,25 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
     $inschrijvingId = $sessieVariabelen["inschrijving_id"];
 
     $deelnemers = DeelnemerQuery::create()->filterByInschrijvingId( $inschrijvingId );
+    $inschrijving = InschrijvingQuery::create()->findPk( $inschrijvingId );
+    $evenement = EvenementQuery::create()->findPk( $inschrijving->getEvenementId() );
 
     $aantalDeelnemers = 0;
     $deelnemerId = 0;
     $totaalprijs = 0;
     foreach ( $deelnemers as $deelnemer )
     {
+        $logger->debug( "Deelnemer " . $deelnemer->getId() );
+        $deelnemer_lijst = array();
         $aantalDeelnemers += 1;
         $persoon = PersoonQuery::create()->findPK( $deelnemer->getPersoonId() );
         $deelnemer_lijst["deelnemer_naam"] = $persoon->getVoornaam() . " " . $persoon->getTussenvoegsel() . " " . $persoon->getAchternaam();
         $deelnemer_lijst["deelnemer_id"] = $deelnemer->getId();
-        if ( $deelnemerId == 0 )
-        {
-            $deelnemerId = $deelnemer->getPersoonId();
-        }
+//        if ( $deelnemerId == 0 )
+//        {
+//            $deelnemerId = $deelnemer->getPersoonId();
+            $deelnemerId = $deelnemer->getId();
+//        }
         $deelnemer_lijst["deelnemer_persoon_id"] = $persoon->getId();
         if ( $persoon->getGeboortedatum() != null )
         {
@@ -186,23 +198,126 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
         $deelnemer_lijst["mail"] = $persoon->getEmail();
         $deelnemer_lijst["telefoonnr"] = $persoon->getTelefoonnummer();
         $deelnemer_lijst["bedrag"] = $deelnemer->getTotaalbedrag();
+
+//        if ( $wijzigingDefinitieveInschrijving )
+                 
+            $optieTekst = $evenement->getNaam();
+            if ( !isNul( $evenement->getPrijs() ) )
+            {
+                $optieTekst .= " &euro;" .$evenement->getPrijs();
+            }
+            $optieTekst .= "<br/>";
+
+            // Tonen van alle deelnemer-opties
+            $deelnemerOpties = DeelnemerHeeftOptieQuery::create()->filterByDeelnemerId( $deelnemer->getId() )->find();
+
+            foreach ( $deelnemerOpties as $deelnemerOptie )
+            {
+                $optie = OptieQuery::create()->findPk( $deelnemerOptie->getOptieId() );
+
+                if ( $optie->getGroep() != "" )
+                {
+                    $optieTekst .= $optie->getGroep();
+                    if ( $optie->getTekstVoor() != "" )
+                    {
+                        $optieTekst .= ": ";
+                    }
+                }
+                $optieTekst .= $optie->getTekstVoor();
+                if ($optie->getGroep() == "" )
+                {
+                    $optieTekst .=": " ;
+                }
+                if ( $deelnemerOptie->getWaarde() != $deelnemerOptie->getOptieId() )
+                {
+                    $optieTekst .= $deelnemerOptie->getWaarde() . ", ";
+                }
+                if ( $optie->getPrijs() != 0 )
+                {
+                    $optieTekst .= " &euro;" . $optie->getPrijs();
+                }
+                $optieTekst .=  "<br/>";
+            }
+            $deelnemer_lijst["opties"] = $optieTekst;
+        
+
         array_push( $deelnemers_lijst, $deelnemer_lijst );
 
         $totaalprijs += $deelnemer->getTotaalbedrag();
     }
 
-    $inschrijving = InschrijvingQuery::create()->findPk( $inschrijvingId );
     if ( $aantalDeelnemers == 1 && $inschrijving->getContactpersoonId() == $deelnemerId )
     {
         $deelnemerIsContactpersoon = true;
-        $logger->debug( "Deelnemer is contactpersoon" );
+        $logger->debug( "Deelnemer " . $deelnemerId . " is contactpersoon" );
     }
     else
     {
         $logger->debug( "Deelnemer " . $deelnemerId . ", contactpersoon " . $inschrijving->getContactpersoonId() . ", aantal deelnemers " . $aantalDeelnemers );
     }
 
-    if ( !$wijzigingDefinitieveInschrijving )
+    if ( $wijzigingDefinitieveInschrijving )
+    {
+            // Tonen van alle inschrijvingsopties
+            $inschrijvingsOpties = InschrijvingHeeftOptieQuery::create()->filterByInschrijvingId( $inschrijvingId )->find();
+            $optieTekst = "";
+            foreach ( $inschrijvingsOpties as $inschrijvingsOptie )
+            {
+                $optie = OptieQuery::create()->findPk( $inschrijvingsOptie->getOptieId() );
+    
+                if ( $optie->getGroep() != "" )
+                {
+                    $optieTekst .= $optie->getGroep();
+                    if ( $optie->getTekstVoor() != "" )
+                    {
+                        $optieTekst .= ": ";
+                    }
+                }
+                $optieTekst .= $optie->getTekstVoor();
+                if ($optie->getGroep() == "" )
+                {
+                    $optieTekst .=": " ;
+                }
+                if ( $inschrijvingsOptie->getWaarde() != $inschrijvingsOptie->getOptieId() )
+                {
+                    $optieTekst .= $inschrijvingsOptie->getWaarde() . ", ";
+                }
+                if ( !isNul( $optie->getPrijs() ) )
+                {
+                    $optieTekst .= " &euro;" . $optie->getPrijs();
+                    $inschrijvingsprijs += $optie->getPrijs();
+                }
+                $optieTekst .=  "<br/>";
+            }
+
+            if ( $evenement->getAnnuleringsverzekering() != 0 )
+            {
+                $annuleringsverzekering = new AnnuleringsVerzekering();
+            
+                $optieTekst .= "Annuleringsverzekering: " . $annuleringsverzekering->getNaam( $inschrijving->getAnnuleringsverzekering() );
+                $prijs = $annuleringsverzekering->bereken( $totaalprijs, $inschrijving->getAnnuleringsverzekering() );
+                if ( !isNul($prijs) )
+                {
+                    $optieTekst .= ", &euro;" . number_format( $prijs, 2, ",", "." );
+                    $totaalprijs += $prijs;
+                    $inschrijvingsprijs += $prijs;
+                }
+                $optieTekst .= "<br/>";
+            }
+
+            $betaalwijze = BetaalwijzeQuery::create()->findOneByCode( $inschrijving->getBetaalwijze() );
+            $optieTekst .= "Betaalwijze: " . $betaalwijze->getNaam();
+            if ( !isNul( $betaalwijze->getKosten() ) )
+            {
+                $optieTekst .= ", &euro;" . $betaalwijze->getKosten();
+                $totaalprijs += $betaalwijze->getKosten();
+                $inschrijvingsprijs += $betaalwijze->getKosten();
+            }
+            $optieTekst .= "<br/>";
+
+            $inschrijvingsopties = $optieTekst;
+    }
+    else
     {
         $aantal_beschikbaar -= $aantalDeelnemers;
     }
@@ -279,14 +394,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
     elseif ( isset( $_POST["bewerk"] ) )
     {
         $logger->debug( 'Bewerk deelnemer.' );
-//        if ( $deelnemerIsContactpersoon )
-//        {
-//            header( "Location:inschrijving_individu.php?evt=" . $sessieVariabelen["evenement_id"] . "&mut=" . $_POST['bewerk'] );
-//        }
-//        else
-//        {
-            header( "Location:inschrijving_deelnemer.php?evt=" . $sessieVariabelen["evenement_id"] . "&mut=" . $_POST['bewerk'] );
-//        }
+        header( "Location:inschrijving_deelnemer.php?evt=" . $sessieVariabelen["evenement_id"] . "&mut=" . $_POST['bewerk'] );
         exit();
     }
     elseif ( isset( $_POST["bewerk_contact"] ) )
@@ -329,7 +437,8 @@ $smarty->assign( 'aantalDeelnemers', $aantalDeelnemers );
 $smarty->assign( 'deelnemerIsContactpersoon', $deelnemerIsContactpersoon );
 $smarty->assign( 'changeDefinitief', $wijzigingDefinitieveInschrijving );
 $smarty->assign( 'isMedewerker', $isMedewerker );
-
+$smarty->assign( 'inschrijvingsopties', $inschrijvingsopties );
+$smarty->assign( 'inschrijvingsprijs', geld($inschrijvingsprijs) );
 // Voor statusregel
 $smarty->assign( 'isError', $signalError );
 $smarty->assign( 'statusRegel', $statusRegel );
