@@ -31,7 +31,7 @@
                 }
                 else if ( document.getElementById("aantal"+i) != null && document.getElementById("aantal"+i).type == "number" )
                 {
-                    totaal += parseFloat ( computePrice( document.getElementById("prijs"+i), computePrice( document.getElementById("aantal"+i).value ) ) );
+                    totaal += parseFloat ( computePrice( document.getElementById("prijs"+i), document.getElementById("aantal"+i).value ) );
                 }
  
                 if (document.getElementById("extra_bedrag"+i) != null)

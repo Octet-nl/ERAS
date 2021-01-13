@@ -182,7 +182,7 @@
                 // Bij numerieke gegevens wordt aantal vermenigvuldigd met de prijs
                 else if ( document.getElementById("aantal"+i) != null && document.getElementById("aantal"+i).type == "number" )
                 {
-                    subTotaal += parseInt(computePrice(document.getElementById("prijs" + i), document.getElementById("aantal" + i).value));
+                    subTotaal += parseFloat(computePrice(document.getElementById("prijs" + i), document.getElementById("aantal" + i).value));
                 }
 
                 // extra_bedragX worden bij subtotaal opgeteld

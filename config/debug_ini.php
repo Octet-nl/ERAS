@@ -1,3 +1,3 @@
 <?php
 // Deze file wordt overschreven!
-define("LOGLEVEL", LOGLEVEL_DUMP);
+define("LOGLEVEL", LOGLEVEL_INFO);
