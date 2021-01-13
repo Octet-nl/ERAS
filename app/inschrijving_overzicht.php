@@ -181,12 +181,10 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
         $persoon = PersoonQuery::create()->findPK( $deelnemer->getPersoonId() );
         $deelnemer_lijst["deelnemer_naam"] = $persoon->getVoornaam() . " " . $persoon->getTussenvoegsel() . " " . $persoon->getAchternaam();
         $deelnemer_lijst["deelnemer_id"] = $deelnemer->getId();
-//        if ( $deelnemerId == 0 )
-//        {
-//            $deelnemerId = $deelnemer->getPersoonId();
-            $deelnemerId = $deelnemer->getId();
-//        }
         $deelnemer_lijst["deelnemer_persoon_id"] = $persoon->getId();
+
+        $deelnemerId = $deelnemer->getId();
+
         if ( $persoon->getGeboortedatum() != null )
         {
             $deelnemer_lijst["geb_datum"] = $persoon->getGeboortedatum()->format( 'd-m-Y' );
@@ -199,75 +197,72 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
         $deelnemer_lijst["telefoonnr"] = $persoon->getTelefoonnummer();
         $deelnemer_lijst["bedrag"] = $deelnemer->getTotaalbedrag();
 
-//        if ( $wijzigingDefinitieveInschrijving )
-                 
-            $optieTekst = $evenement->getNaam();
-            if ( !isNul( $evenement->getPrijs() ) )
-            {
-                $optieTekst .= " &euro;" .$evenement->getPrijs();
-            }
-            $optieTekst .= "<br/>";
+        $optieTekst = $evenement->getNaam();
+        if ( !isNul( $evenement->getPrijs() ) )
+        {
+            $optieTekst .= " &euro;" .$evenement->getPrijs();
+        }
+        $optieTekst .= "<br/>";
 
-            // Tonen van alle deelnemer-opties
-            $deelnemerOpties = DeelnemerHeeftOptieQuery::create()->filterByDeelnemerId( $deelnemer->getId() )->find();
-            try
-            {
-                $deelnemerOpties = OptieQuery::create()
-                ->filterByPerDeelnemer( '1' )
-                ->useEvenementHeeftOptieQuery()
-                ->filterByEvenementId( $evenement->getId() )
-                ->orderByVolgorde()
-                ->endUse()
-                ->useDeelnemerHeeftOptieQuery()
-                    ->filterByDeelnemerId( $deelnemer->getId() )
-                ->endUse()
-                ->orderByGroep()
-                ->join('DeelnemerHeeftOptie')
-                ->select(array('naam', 
-                               'DeelnemerHeeftOptie.waarde', 
-                               'DeelnemerHeeftOptie.optie_id', 
-                               'DeelnemerHeeftOptie.prijs', 
-                               'groep', 
-                               'tekst_voor' ))
-                ->find();                
-            }
-            catch( Exception $ex)
-            {
-                $logger->error( "Exceptie bij opvragen deelnemeropties en volgorde daarvan" );
-                $logger->errordump( $ex );
-                alert( "Er is een probleem opgetreden." );
-                exit;
-            }
+        // Tonen van alle deelnemer-opties
+        try
+        {
+            $deelnemerOpties = OptieQuery::create()
+            ->filterByPerDeelnemer( '1' )
+            ->useEvenementHeeftOptieQuery()
+            ->filterByEvenementId( $evenement->getId() )
+            ->orderByVolgorde()
+            ->endUse()
+            ->useDeelnemerHeeftOptieQuery()
+                ->filterByDeelnemerId( $deelnemer->getId() )
+            ->endUse()
+            ->orderByGroep()
+            ->join('DeelnemerHeeftOptie')
+            ->select(array('naam', 
+                            'DeelnemerHeeftOptie.waarde', 
+                            'DeelnemerHeeftOptie.optie_id', 
+                            'DeelnemerHeeftOptie.prijs', 
+                            'groep', 
+                            'tekst_voor' ))
+            ->find();                
+        }
+        catch( Exception $ex)
+        {
+            $logger->error( "Exceptie bij opvragen deelnemeropties en volgorde daarvan" );
+            $logger->errordump( $ex );
+            alert( "Er is een probleem opgetreden." );
+            exit;
+        }
 
-            foreach ( $deelnemerOpties as $deelnemerOptie )
-            {
-                $logger->dump( $deelnemerOptie );
-                //$optie = OptieQuery::create()->findPk( $deelnemerOptie->getOptieId() );
+        foreach ( $deelnemerOpties as $deelnemerOptie )
+        {
+            $logger->dump( $deelnemerOptie );
+            //$optie = OptieQuery::create()->findPk( $deelnemerOptie->getOptieId() );
 
-                if ( $deelnemerOptie['groep'] != "" )
+            if ( $deelnemerOptie['groep'] != "" )
+            {
+                $optieTekst .= $deelnemerOptie['groep'];
+                if ( $deelnemerOptie['tekst_voor'] != "" )
                 {
-                    $optieTekst .= $deelnemerOptie['groep'];
-                    if ( $deelnemerOptie['tekst_voor'] != "" )
-                    {
-                        $optieTekst .= ": ";
-                    }
+                    $optieTekst .= ": ";
                 }
-                $optieTekst .= $deelnemerOptie['tekst_voor'];
-                if ($deelnemerOptie['groep'] == "" )
-                {
-                    $optieTekst .=": " ;
-                }
-                if ( $deelnemerOptie['DeelnemerHeeftOptie.waarde'] != $deelnemerOptie['DeelnemerHeeftOptie.optie_id'] )
-                {
-                    $optieTekst .= $deelnemerOptie['DeelnemerHeeftOptie.waarde'] . ", ";
-                }
-                if ( $deelnemerOptie['DeelnemerHeeftOptie.prijs'] != 0 )
-                {
-                    $optieTekst .= " &euro;" . $deelnemerOptie['DeelnemerHeeftOptie.prijs'];
-                }
-                $optieTekst .=  "<br/>";
             }
-            $deelnemer_lijst["opties"] = $optieTekst;
+            $optieTekst .= $deelnemerOptie['tekst_voor'];
+            if ($deelnemerOptie['groep'] == "" )
+            {
+                $optieTekst .=": " ;
+            }
+            if ( $deelnemerOptie['DeelnemerHeeftOptie.waarde'] != $deelnemerOptie['DeelnemerHeeftOptie.optie_id'] )
+            {
+                $optieTekst .= $deelnemerOptie['DeelnemerHeeftOptie.waarde'] . ", ";
+            }
+            if ( $deelnemerOptie['DeelnemerHeeftOptie.prijs'] != 0 )
+            {
+                $optieTekst .= " &euro;" . $deelnemerOptie['DeelnemerHeeftOptie.prijs'];
+            }
+            $optieTekst .=  "<br/>";
+        }
+        $deelnemer_lijst["opties"] = $optieTekst;
         
 
         array_push( $deelnemers_lijst, $deelnemer_lijst );
@@ -287,94 +282,93 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
 
     if ( $wijzigingDefinitieveInschrijving )
     {
-            // Tonen van alle inschrijvingsopties
-            //$inschrijvingsOpties = InschrijvingHeeftOptieQuery::create()->filterByInschrijvingId( $inschrijvingId )->find();
-            try
-            {
-                $inschrijvingsOpties = OptieQuery::create()
-                  ->filterByPerDeelnemer( '0' )
-                  ->useEvenementHeeftOptieQuery()
-                  ->filterByEvenementId( $evenement->getId() )
-                  ->orderByVolgorde()
-                  ->endUse()
-                  ->useInschrijvingHeeftOptieQuery()
-                      ->filterByInschrijvingId( $inschrijvingId )
-                  ->endUse()
-                  ->orderByGroep()
-                  ->join('InschrijvingHeeftOptie')
-                  ->select(array('naam', 
-                                 'InschrijvingHeeftOptie.waarde', 
-                                 'InschrijvingHeeftOptie.optie_id', 
-                                 'InschrijvingHeeftOptie.prijs', 
-                                 'groep', 
-                                 'tekst_voor' ))
-                    ->find();                
-            }
-            catch( Exception $ex)
-            {
-                $logger->error( "Exceptie bij opvragen inschrijvingsopties en volgorde daarvan" );
-                $logger->errordump( $ex );
-                alert("Exceptie bij opvragen inschrijvingsopties en volgorde daarvan");
-                exit;
-            }
-    
-            $optieTekst = "";
-            foreach ( $inschrijvingsOpties as $inschrijvingsOptie )
-            {
-                //$optie = OptieQuery::create()->findPk( $inschrijvingsOptie['InschrijvingHeeftOptie.optie_id'] );
-                $logger->dump( $inschrijvingsOptie );
+        // Tonen van alle inschrijvingsopties
+        try
+        {
+            $inschrijvingsOpties = OptieQuery::create()
+                ->filterByPerDeelnemer( '0' )
+                ->useEvenementHeeftOptieQuery()
+                ->filterByEvenementId( $evenement->getId() )
+                ->orderByVolgorde()
+                ->endUse()
+                ->useInschrijvingHeeftOptieQuery()
+                    ->filterByInschrijvingId( $inschrijvingId )
+                ->endUse()
+                ->orderByGroep()
+                ->join('InschrijvingHeeftOptie')
+                ->select(array('naam', 
+                                'InschrijvingHeeftOptie.waarde', 
+                                'InschrijvingHeeftOptie.optie_id', 
+                                'InschrijvingHeeftOptie.prijs', 
+                                'groep', 
+                                'tekst_voor' ))
+                ->find();                
+        }
+        catch( Exception $ex)
+        {
+            $logger->error( "Exceptie bij opvragen inschrijvingsopties en volgorde daarvan" );
+            $logger->errordump( $ex );
+            alert("Exceptie bij opvragen inschrijvingsopties en volgorde daarvan");
+            exit;
+        }
 
-                if ( $inschrijvingsOptie['groep'] != "" )
-                {
-                    $optieTekst .= $inschrijvingsOptie['groep'];
-                    if ( $inschrijvingsOptie['tekst_voor'] != "" )
-                    {
-                        $optieTekst .= ": ";
-                    }
-                }
-                $optieTekst .= $inschrijvingsOptie['tekst_voor'];
-                if ($inschrijvingsOptie['groep'] == "" )
-                {
-                    $optieTekst .=": " ;
-                }
-                if ( $inschrijvingsOptie['InschrijvingHeeftOptie.waarde'] != $inschrijvingsOptie['InschrijvingHeeftOptie.optie_id'] )
-                {
-                    $optieTekst .= $inschrijvingsOptie['InschrijvingHeeftOptie.waarde'] . ", ";
-                }
-                if ( !isNul( $inschrijvingsOptie['InschrijvingHeeftOptie.prijs'] ) )
-                {
-                    $optieTekst .= " &euro;" . $inschrijvingsOptie['InschrijvingHeeftOptie.prijs'];
-                    $inschrijvingsprijs += $inschrijvingsOptie['InschrijvingHeeftOptie.prijs'];
-                }
-                $optieTekst .=  "<br/>";
-            }
+        $optieTekst = "";
+        foreach ( $inschrijvingsOpties as $inschrijvingsOptie )
+        {
+            //$optie = OptieQuery::create()->findPk( $inschrijvingsOptie['InschrijvingHeeftOptie.optie_id'] );
+            $logger->dump( $inschrijvingsOptie );
 
-            if ( $evenement->getAnnuleringsverzekering() != 0 )
+            if ( $inschrijvingsOptie['groep'] != "" )
             {
-                $annuleringsverzekering = new AnnuleringsVerzekering();
-            
-                $optieTekst .= "Annuleringsverzekering: " . $annuleringsverzekering->getNaam( $inschrijving->getAnnuleringsverzekering() );
-                $prijs = $annuleringsverzekering->bereken( $totaalprijs, $inschrijving->getAnnuleringsverzekering() );
-                if ( !isNul($prijs) )
+                $optieTekst .= $inschrijvingsOptie['groep'];
+                if ( $inschrijvingsOptie['tekst_voor'] != "" )
                 {
-                    $optieTekst .= ", &euro;" . number_format( $prijs, 2, ",", "." );
-                    $totaalprijs += $prijs;
-                    $inschrijvingsprijs += $prijs;
+                    $optieTekst .= ": ";
                 }
-                $optieTekst .= "<br/>";
             }
-
-            $betaalwijze = BetaalwijzeQuery::create()->findOneByCode( $inschrijving->getBetaalwijze() );
-            $optieTekst .= "Betaalwijze: " . $betaalwijze->getNaam();
-            if ( !isNul( $betaalwijze->getKosten() ) )
+            $optieTekst .= $inschrijvingsOptie['tekst_voor'];
+            if ($inschrijvingsOptie['groep'] == "" )
             {
-                $optieTekst .= ", &euro;" . $betaalwijze->getKosten();
-                $totaalprijs += $betaalwijze->getKosten();
-                $inschrijvingsprijs += $betaalwijze->getKosten();
+                $optieTekst .=": " ;
+            }
+            if ( $inschrijvingsOptie['InschrijvingHeeftOptie.waarde'] != $inschrijvingsOptie['InschrijvingHeeftOptie.optie_id'] )
+            {
+                $optieTekst .= $inschrijvingsOptie['InschrijvingHeeftOptie.waarde'] . ", ";
+            }
+            if ( !isNul( $inschrijvingsOptie['InschrijvingHeeftOptie.prijs'] ) )
+            {
+                $optieTekst .= " &euro;" . $inschrijvingsOptie['InschrijvingHeeftOptie.prijs'];
+                $inschrijvingsprijs += $inschrijvingsOptie['InschrijvingHeeftOptie.prijs'];
+            }
+            $optieTekst .=  "<br/>";
+        }
+
+        if ( $evenement->getAnnuleringsverzekering() != 0 )
+        {
+            $annuleringsverzekering = new AnnuleringsVerzekering();
+        
+            $optieTekst .= "Annuleringsverzekering: " . $annuleringsverzekering->getNaam( $inschrijving->getAnnuleringsverzekering() );
+            $prijs = $annuleringsverzekering->bereken( $totaalprijs, $inschrijving->getAnnuleringsverzekering() );
+            if ( !isNul($prijs) )
+            {
+                $optieTekst .= ", &euro;" . number_format( $prijs, 2, ",", "." );
+                $totaalprijs += $prijs;
+                $inschrijvingsprijs += $prijs;
             }
             $optieTekst .= "<br/>";
+        }
 
-            $inschrijvingsopties = $optieTekst;
+        $betaalwijze = BetaalwijzeQuery::create()->findOneByCode( $inschrijving->getBetaalwijze() );
+        $optieTekst .= "Betaalwijze: " . $betaalwijze->getNaam();
+        if ( !isNul( $betaalwijze->getKosten() ) )
+        {
+            $optieTekst .= ", &euro;" . $betaalwijze->getKosten();
+            $totaalprijs += $betaalwijze->getKosten();
+            $inschrijvingsprijs += $betaalwijze->getKosten();
+        }
+        $optieTekst .= "<br/>";
+
+        $inschrijvingsopties = $optieTekst;
     }
     else
     {

@@ -290,8 +290,12 @@ class InschrijvingBevestiging
                         {
                             $regel = array( "deelnemer" => $deelnemerNaam, "naam" => $optie->getGroep(), "omschrijving" => $optie->getTekstVoor(), "aantal" => 1, "prijs" => $optie->getPrijs() );
                             array_push( $this->factuurArray, $regel );
+                            $messageRegel = "   " . $optie->getGroep() . ": " . $optie->getTekstVoor() . " " . geldAnsi( $optie->getPrijs() );
                         }
-                        $messageRegel = "   " . $optie->getGroep() . ": " . $optie->getTekstVoor() . " " . geldAnsi( $optie->getPrijs() );
+                        else
+                        {
+                            $messageRegel = "   " . $optie->getGroep() . ": " . $optie->getTekstVoor();
+                        }
                         $totaalprijs += $optie->getPrijs();
                     }
                     else
@@ -319,6 +323,7 @@ class InschrijvingBevestiging
                                         $regel = array( "deelnemer" => $deelnemerNaam, "naam" => $optie->getTekstVoor(), "omschrijving" => "", "aantal" => 1, "prijs" => $optie->getPrijs() );
                                         array_push( $this->factuurArray, $regel );
                                         $totaalprijs += $optie->getPrijs();
+                                        $messageRegel .= ", Prijs: " . geldAnsi( $optie->getPrijs() );
                                     }
                                 }
                                 else
@@ -326,7 +331,6 @@ class InschrijvingBevestiging
                                     $totaalprijs += $optie->getPrijs();
                                 }
 
-                                $messageRegel .= ", Prijs: " . geldAnsi( $optie->getPrijs() );
                             }
                         }
                     }
