@@ -210,31 +210,60 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
 
             // Tonen van alle deelnemer-opties
             $deelnemerOpties = DeelnemerHeeftOptieQuery::create()->filterByDeelnemerId( $deelnemer->getId() )->find();
+            try
+            {
+                $deelnemerOpties = OptieQuery::create()
+                ->filterByPerDeelnemer( '1' )
+                ->useEvenementHeeftOptieQuery()
+                ->filterByEvenementId( $evenement->getId() )
+                ->orderByVolgorde()
+                ->endUse()
+                ->useDeelnemerHeeftOptieQuery()
+                    ->filterByDeelnemerId( $deelnemer->getId() )
+                ->endUse()
+                ->orderByGroep()
+                ->join('DeelnemerHeeftOptie')
+                ->select(array('naam', 
+                               'DeelnemerHeeftOptie.waarde', 
+                               'DeelnemerHeeftOptie.optie_id', 
+                               'DeelnemerHeeftOptie.prijs', 
+                               'groep', 
+                               'tekst_voor' ))
+                ->find();                
+            }
+            catch( Exception $ex)
+            {
+                $logger->error( "Exceptie bij opvragen deelnemeropties en volgorde daarvan" );
+                $logger->errordump( $ex );
+                alert( "Er is een probleem opgetreden." );
+                exit;
+            }
 
             foreach ( $deelnemerOpties as $deelnemerOptie )
             {
-                $optie = OptieQuery::create()->findPk( $deelnemerOptie->getOptieId() );
+                $logger->dump( $deelnemerOptie );
+                //$optie = OptieQuery::create()->findPk( $deelnemerOptie->getOptieId() );
 
-                if ( $optie->getGroep() != "" )
+                if ( $deelnemerOptie['groep'] != "" )
                 {
-                    $optieTekst .= $optie->getGroep();
-                    if ( $optie->getTekstVoor() != "" )
+                    $optieTekst .= $deelnemerOptie['groep'];
+                    if ( $deelnemerOptie['tekst_voor'] != "" )
                     {
                         $optieTekst .= ": ";
                     }
                 }
-                $optieTekst .= $optie->getTekstVoor();
-                if ($optie->getGroep() == "" )
+                $optieTekst .= $deelnemerOptie['tekst_voor'];
+                if ($deelnemerOptie['groep'] == "" )
                 {
                     $optieTekst .=": " ;
                 }
-                if ( $deelnemerOptie->getWaarde() != $deelnemerOptie->getOptieId() )
+                if ( $deelnemerOptie['DeelnemerHeeftOptie.waarde'] != $deelnemerOptie['DeelnemerHeeftOptie.optie_id'] )
                 {
-                    $optieTekst .= $deelnemerOptie->getWaarde() . ", ";
+                    $optieTekst .= $deelnemerOptie['DeelnemerHeeftOptie.waarde'] . ", ";
                 }
-                if ( $optie->getPrijs() != 0 )
+                if ( $deelnemerOptie['DeelnemerHeeftOptie.prijs'] != 0 )
                 {
-                    $optieTekst .= " &euro;" . $optie->getPrijs();
+                    $optieTekst .= " &euro;" . $deelnemerOptie['DeelnemerHeeftOptie.prijs'];
                 }
                 $optieTekst .=  "<br/>";
             }
