@@ -27,6 +27,9 @@
                <span class="error">{$organisatieWebsiteErr}</span>
                <span class=setting_label>Adres van de leveringsvoorwaarden van de organisatie</span>
                <input type="text" class="setting_input" name="organisatieVoorwaarden" value="{$organisatieVoorwaarden}">
+               <div class="tooltip">?
+                <span class="tooltiptext right">Optioneel. Als u geen link naar leveringsvoorwaarden invult, wordt er ook geen akkoord gevraagd bij het afronden van de inschrijving.</span>
+               </div>
                <span class="error">{$organisatieVoorwaardenErr}</span>
             </fieldset>
         </div>
