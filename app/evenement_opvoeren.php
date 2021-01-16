@@ -72,7 +72,7 @@ $isAnnuleringsverzekeringErr = $betaalwijze_deelnemerErr = $isAccountNodigErr = 
 $status = $extraContact = $extraDeelnemer = 0;
 $isAccountNodig = null;
 $isAnnuleringsverzekering = null;
-$groepsInschrijving = OPTIE_KEUZE_NEE;
+$groepsInschrijving = null;
 $volledigheid_contact = array();
 $volledigheid_deelnemer = array(); 
 $betaalwijze_deelnemer = array();

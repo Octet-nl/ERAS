@@ -382,6 +382,10 @@ del {
    width:5em;
 }
 
+.xxshort {
+  width:2em;
+}
+
 .subtotaalprijs {
   border: 1px solid gray;
   font-family: Arial, Helvetica, sans-serif;

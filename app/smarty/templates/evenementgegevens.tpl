@@ -89,31 +89,35 @@
             <label for="status">Status:</label>
             {html_options name=status id=status options=$statuslijst selected=$status class="selectinput" }
             <span class="error">{$statusErr}</span>
+        </div>
 
-            <label class="datuminput" for="isAccountNodig">Is een account nodig:</label>
+        <div style="text-align: left;">
+            <label class="short" for="isAccountNodig" >Is een account nodig?</label>
             {html_radios name='isAccountNodig' id=isAccountNodig options=$accountNodigKeus selected=$isAccountNodig labels=FALSE}
             <div class="tooltip">?
                 <span class="tooltiptext right">Kan er ook ingeschreven worden zonder een account aan te maken, of is voor inschrijving in dit evenement een account noodzakelijk?</span>
             </div>
             <span class="error">{$isAccountNodigErr}</span>
-   
-            <label class="datuminput" for="groepsInschrijving">Groepsinschrijving mogelijk?</label>
+
+            <label style="margin-left: 3em;" class="short" for="groepsInschrijving">Groepsinschrijving mogelijk?</label>
             {html_radios name='groepsInschrijving' id=groepsInschrijving options=$groepsInschrijvingKeus selected=$groepsInschrijving labels=FALSE}
             <div class="tooltip">?
                 <span class="tooltiptext left">Kan voor een groep of voor iemand anders dan de contactpersoon worden ingeschreven, of is alleen individuele inschrijving mogelijk?</span>
             </div>
             <span class="error">{$groepsInschrijvingErr}</span>
-        </div>
 
-        {if $heeftAV}
-        <div>
-            {my_radios naam='isAnnuleringsverzekering' options=$annuleringsverzekeringKeus selected=$isAnnuleringsverzekering tekst='Annuleringsverzekering:'}
-            <div class="tooltip">?
-                <span class="tooltiptext right">Kan voor dit evenement een annuleringsverzekering afgesloten worden?</span>
-            </div>
-            <span class="error">{$isAnnuleringsverzekeringErr}</span>
+            <span class="xshort"> </span>
+
+            {if $heeftAV}
+                <label style="margin-left: 3em;" class="short" for="isAnnuleringsverzekering">Annuleringsverzekering?</label>
+                {html_radios naam='isAnnuleringsverzekering' options=$annuleringsverzekeringKeus selected=$isAnnuleringsverzekering tekst='' labels=FALSE}
+                <div class="tooltip">?
+                    <span class="tooltiptext left">Kan voor dit evenement een annuleringsverzekering afgesloten worden?</span>
+                </div>
+                <span class="error">{$isAnnuleringsverzekeringErr}</span>
+            {/if}
+   
         </div>
-        {/if}
 
         <br/>
 
