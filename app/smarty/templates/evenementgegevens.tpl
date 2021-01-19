@@ -110,7 +110,7 @@
 
             {if $heeftAV}
                 <label style="margin-left: 3em;" class="short" for="isAnnuleringsverzekering">Annuleringsverzekering?</label>
-                {html_radios naam='isAnnuleringsverzekering' options=$annuleringsverzekeringKeus selected=$isAnnuleringsverzekering tekst='' labels=FALSE}
+                {html_radios name='isAnnuleringsverzekering' id=isAnnuleringsverzekering options=$annuleringsverzekeringKeus selected=$isAnnuleringsverzekering labels=FALSE}
                 <div class="tooltip">?
                     <span class="tooltiptext left">Kan voor dit evenement een annuleringsverzekering afgesloten worden?</span>
                 </div>

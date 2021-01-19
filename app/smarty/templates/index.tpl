@@ -64,6 +64,7 @@
                     <ul>
                       <li><a href=annuleringsverzekering_aanpassen.php>Annuleringsverzekering aanpassen</a></li>
                       <li><a href=categorie_aanpassen.php>Evenement categorieën</a></li>
+                      <li><a href=nummering_aanpassen.php>Automatische nummering</a></li>
                       <li><a href=settings.php>Instellingen</a></li>
                     </ul>
                   </li>
