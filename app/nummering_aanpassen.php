@@ -48,7 +48,7 @@ use Respect\Validation\Validator as v;
 $sessie = new Sessie();
 
 // Variabelen + functies definiëren
-$doctitle = 'Categorie aanpassen';
+$doctitle = 'Nummering aanpassen';
 $error = '';
 
 $evenementStart = 0;
@@ -57,9 +57,6 @@ $evenementErr = "";
 $inschrijvingStart = 0;
 $inschrijvingNummer = 0;
 $inschrijvingErr = "";
-$factuurStart = 0;
-$factuurNummer = 0;
-$factuurErr = "";
 $mailingStart = 0;
 $mailingNummer = 0;
 $mailingErr = "";
@@ -121,17 +118,6 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
             $logger->error( "Probleem met opvragen inschrijving AUTO_INCREMENT" . mysqli_error($conn ) );
             alertAndGo( "Probleem met opvragen inschrijving AUTO_INCREMENT" . mysqli_error($conn ), "index.php" );
         }
-        $result = mysqli_query( $conn, "SELECT `AUTO_INCREMENT` FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='eras' AND TABLE_NAME='fb_factuur';");
-        if( $result )
-        {
-            $factuurStart = mysqli_fetch_assoc($result)['AUTO_INCREMENT'];
-            mysqli_free_result( $result );
-        }
-        else
-        {
-            $logger->error( "Probleem met opvragen factuur AUTO_INCREMENT" . mysqli_error($conn ) );
-            alertAndGo( "Probleem met opvragen factuur AUTO_INCREMENT" . mysqli_error($conn ), "index.php" );
-        }
         $result = mysqli_query( $conn, "SELECT `AUTO_INCREMENT` FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='eras' AND TABLE_NAME='fb_mailinglist';");
         if( $result )
         {
@@ -167,7 +153,6 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
 
         $validateOk += $setVar->name( $evenementStart )->required()->go();
         $validateOk += $setVar->name( $inschrijvingStart )->required()->go();
-        $validateOk += $setVar->name( $factuurStart )->required()->go();
         $validateOk += $setVar->name( $mailingStart )->required()->go();
 
         $validateOk += $setVar->name( $evenementNummer )
@@ -180,12 +165,6 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             ->onerror( $inschrijvingErr )
             ->errormessage( "Startwaarde moet hoger zijn dan huidige waarde" )
             ->validator( v::intVal()->min( (int)$inschrijvingStart + 1 ) )
-            ->required( true )
-            ->go();
-        $validateOk += $setVar->name( $factuurNummer )
-            ->onerror( $factuurErr )
-            ->errormessage( "Startwaarde moet hoger zijn dan huidige waarde" )
-            ->validator( v::intVal()->min( (int)$factuurStart + 1 ) )
             ->required( true )
             ->go();
         $validateOk += $setVar->name( $mailingNummer )
@@ -232,17 +211,6 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                     }
                     $logger->debug( "Auto increment inschrijvingsnummer is gewijzigd" );
                 }
-                if ( $factuurNummer != $factuurStart + 1 )
-                {
-                    $result = mysqli_query( $conn, "ALTER TABLE fb_factuur AUTO_INCREMENT = " . $factuurNummer . ";");
-                    if ( $result == false )
-                    {
-                        $logger->error( "Er is iets misgegaan bij het wijzigen van het factuurnummer<br/>" . mysqli_error( $conn ) );
-                        alert( "Er is iets misgegaan bij het wijzigen van het factuurnummer<br/>" . mysqli_error( $conn ) );
-                        exit;
-                    }
-                    $logger->debug( "Auto increment factuurnummer is gewijzigd" );
-                }
                 if ( $mailingNummer != $mailingStart + 1 )
                 {
                     $result = mysqli_query( $conn, "ALTER TABLE fb_mailinglist AUTO_INCREMENT = " . $mailingNummer . ";");
@@ -280,9 +248,6 @@ $smarty->assign( 'evenementErr', $evenementErr );
 $smarty->assign( 'inschrijvingStart', $inschrijvingStart );
 $smarty->assign( 'inschrijvingNummer', $inschrijvingStart + 1 );
 $smarty->assign( 'inschrijvingErr', $inschrijvingErr );
-$smarty->assign( 'factuurStart', $factuurStart );
-$smarty->assign( 'factuurNummer', $factuurStart + 1 );
-$smarty->assign( 'factuurErr', $factuurErr );
 $smarty->assign( 'mailingStart', $mailingStart );
 $smarty->assign( 'mailingNummer', $mailingStart + 1 );
 $smarty->assign( 'mailingErr', $mailingErr );

@@ -43,13 +43,6 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>Factuur</td>
-                        <td>{$factuurStart}</td>
-                        <td><input value="{$factuurNummer}" name="factuurNummer">
-                            <span class="error">{$factuurErr}</span>
-                        </td>
-                    </tr>
-                    <tr>
                         <td>Mailing</td>
                         <td>{$mailingStart}</td>
                         <td><input value="{$mailingNummer}" name="mailingNummer">
@@ -65,7 +58,6 @@
 
                 <input type="hidden" name="evenementStart" value="{$evenementStart}">
                 <input type="hidden" name="inschrijvingStart" value="{$inschrijvingStart}">
-                <input type="hidden" name="factuurStart" value="{$factuurStart}">
                 <input type="hidden" name="mailingStart" value="{$mailingStart}">
 
                 {include file="statusregel.tpl"}
