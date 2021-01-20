@@ -188,7 +188,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             else
             {
                 $logger->debug( "Connected" );
-        
+                $ietsGewijzigd = false;
                 if ( $evenementNummer != $evenementStart + 1 )
                 {
                     $result = mysqli_query( $conn, "ALTER TABLE fb_evenement AUTO_INCREMENT = " . $evenementNummer . ";");
@@ -199,6 +199,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                         exit;
                     }
                     $logger->debug( "Auto increment evenementnummer is gewijzigd" );
+                    $ietsGewijzigd = true;
                 }
                 if ( $inschrijvingNummer != $inschrijvingStart + 1 )
                 {
@@ -209,6 +210,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                         alert( "Er is iets misgegaan bij het wijzigen van het inschrijfnummer<br/>" . mysqli_error( $conn ) );
                         exit;
                     }
+                    $ietsGewijzigd = true;
                     $logger->debug( "Auto increment inschrijvingsnummer is gewijzigd" );
                 }
                 if ( $mailingNummer != $mailingStart + 1 )
@@ -220,15 +222,24 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                         alert( "Er is iets misgegaan bij het wijzigen van het mailingnummer<br/>" . mysqli_error( $conn ) );
                         exit;
                     }
+                    $ietsGewijzigd = true;
                     $logger->debug( "Auto increment mailingnummer is gewijzigd" );
                 }
+
+                mysqli_close( $conn );
 
                 $statusRegel = "Nieuwe waarden zijn opgeslagen.";
                 $terug =  $history->get( );
                 $logger->debug( "History get: " . $terug );
-//                alertAndGo( "Nieuwe waarden zijn opgeslagen.", $terug );
-header("Refresh:0");
-                mysqli_close( $conn );
+
+                if ( $ietsGewijzigd )
+                {
+                    alertAndGo( "Nieuwe waarden zijn opgeslagen.", $terug );
+                }
+                else
+                {
+                    alertAndGo( "Er is niets gewijzigd.", $terug );
+                }
             }
         }
     }
