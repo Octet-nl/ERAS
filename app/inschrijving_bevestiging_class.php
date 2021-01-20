@@ -183,6 +183,8 @@ class InschrijvingBevestiging
             return null;
         }
 
+        $ini = parse_ini_file( CONFIG_FILENAME, true );
+
         if ( $inschrijving->getStatus() != INSCHRIJVING_STATUS_DEFINITIEF )
         {
 //            $this->logger->error( "Deze inschrijving (" . $this->inschrijfnummer . ") is niet definitief." );
@@ -225,25 +227,54 @@ class InschrijvingBevestiging
 
         $categorie = CategorieQuery::create()->filterByCode( $evenement->getCategorie() )->findOne();
 
-        $this->messageBody .= "Uw inschrijfnummer is: " . $this->inschrijfnummer . "<br/>";
-        $this->messageBody .= 'Omschrijving: ' . $categorie->getNaam() . ' "' . $this->evenementNaam . '"<br/><br/>';
+        $this->messageBody .= "<div><span class='cap'>Uw inschrijfnummer is: " . $this->inschrijfnummer . "</span></div>";
 
         $deelnemers = DeelnemerQuery::create()->filterByInschrijvingId( $this->inschrijfnummer )->find();
-
         $this->aantalDeelnemers = sizeof( $deelnemers );
-        $this->messageBody .= "Aantal deelnemers: " . $this->aantalDeelnemers . " x " . geldAnsi( $evenement->getPrijs() ) . " = " . geldAnsi( $this->aantalDeelnemers * $evenement->getPrijs() ) . "<br/><br/>";
-
+ 
         $this->evenementPrijs = $evenement->getPrijs();
         $totaalprijs = $this->aantalDeelnemers * $this->evenementPrijs;
+
+        $this->messageBody .= "<table>
+        <tr>
+          <th>" . $ini['pdf_factuur']['evenement-kolom1'] . "</th>
+          <th>" . $ini['pdf_factuur']['evenement-kolom2'] . "</th>
+          <th>" . $ini['pdf_factuur']['evenement-kolom3'] . "</th>
+          <th>" . $ini['pdf_factuur']['evenement-kolom4'] . "</th>
+          <th>" . $ini['pdf_factuur']['evenement-kolom5'] . "</th>
+        </tr>
+        <tr>
+          <td>" . $categorie->getNaam() . " " . $this->evenementNaam . "</td>
+          <td>" . $this->evenementDatum . "</td>
+          <td>" . $this->aantalDeelnemers . "</td>
+          <td>" . geldHtml( $evenement->getPrijs() ) . "</td>
+          <td>" . geldHtml( $totaalprijs ) . "</td>
+        </tr>
+        </table><br/>";
+
+
+        $this->messageBody .= "<table>
+        <tr>
+          <th>" . $ini['pdf_factuur']['deelnemer-kolom1'] . "</th>
+          <th>" . $ini['pdf_factuur']['deelnemer-kolom2'] . "</th>
+          <th>" . $ini['pdf_factuur']['deelnemer-kolom3'] . "</th>
+          <th>" . $ini['pdf_factuur']['deelnemer-kolom4'] . "</th>
+          <th>" . $ini['pdf_factuur']['deelnemer-kolom5'] . "</th>
+        </tr>
+        <tr>";
 
         foreach ( $deelnemers as $deelnemer )
         {
             $persoon = PersoonQuery::create()->findPk( $deelnemer->getPersoonId() );
 
             $deelnemerNaam = $persoon->getVoornaam() . " " . $persoon->getTussenvoegsel() . " " . $persoon->getAchternaam();
-
-            $this->messageBody .= "<u>Deelnemer: " . $deelnemerNaam . "</u><br/>";
-
+            // Kolommen:
+            // Deelnemer
+            // Omschrijving
+            // Aantal
+            // à
+            // Prijs
+            
             try
             {
                 $opties = OptieQuery::create()
@@ -274,7 +305,9 @@ class InschrijvingBevestiging
 
                 foreach ( $opties as $optie )
                 {
-                    $messageRegel = "";
+                    $messageRegel = "<td>" . $deelnemerNaam . "</td>";
+                    $deelnemerNaam = "";
+
                     $this->logger->debug( "Deelnemer optie " . $optie->getId() );
 
                     $deelnemerOptie = DeelnemerHeeftOptieQuery::create()
@@ -284,23 +317,33 @@ class InschrijvingBevestiging
 
                     $this->logger->verbose( $deelnemerOptie );
 
+                    $omschrijving = "";
+                    $aantal = "1";
+                    $a = "";
+                    $prijs = "";
                     if ( $optie->getGroep() != "" )
                     {
                         if ( $optie->getPrijs() != 0 )
                         {
                             $regel = array( "deelnemer" => $deelnemerNaam, "naam" => $optie->getGroep(), "omschrijving" => $optie->getTekstVoor(), "aantal" => 1, "prijs" => $optie->getPrijs() );
                             array_push( $this->factuurArray, $regel );
-                            $messageRegel = "   " . $optie->getGroep() . ": " . $optie->getTekstVoor() . " " . geldAnsi( $optie->getPrijs() );
+                            $omschrijving = $optie->getGroep() . " " . $optie->getTekstVoor();
+                            $a = geldHtml( $optie->getPrijs() );
+                            $prijs = geldHtml( $deelnemerOptie->getWaarde() );
+//                            $messageRegel = "   " . $optie->getGroep() . ": " . $optie->getTekstVoor() . " " . geldHtml( $optie->getPrijs() );
                         }
                         else
                         {
-                            $messageRegel = "   " . $optie->getGroep() . ": " . $optie->getTekstVoor();
+                            $omschrijving = $optie->getGroep() . " " . $optie->getTekstVoor();
+                            $omschrijving .= " &emsp; &emsp; " . $deelnemerOptie->getWaarde();
+//                            $messageRegel = "   " . $optie->getGroep() . ": " . $optie->getTekstVoor();
                         }
                         $totaalprijs += $optie->getPrijs();
                     }
                     else
                     {
-                        $messageRegel = "   " . $optie->getTekstVoor() . ": " . $deelnemerOptie->getWaarde();
+                        $omschrijving = $optie->getTekstVoor();
+//                      $messageRegel = "   " . $optie->getTekstVoor() . ": " . $deelnemerOptie->getWaarde();
                         if ( $optie->getPrijs() != 0 )
                         {
                             if ( $optie->getOptieType() == OPTIETYPE_AANTAL )
@@ -310,7 +353,11 @@ class InschrijvingBevestiging
                                     $regel = array( "deelnemer" => $deelnemerNaam, "naam" => "", "omschrijving" => $optie->getTekstVoor(), "aantal" => $deelnemerOptie->getWaarde(), "prijs" => $optie->getPrijs() );
                                     array_push( $this->factuurArray, $regel );
 
-                                    $messageRegel .= "   " . " x &agrave; " . geldAnsi( $optie->getPrijs() ) . " = " . geldAnsi( $optie->getPrijs() * $deelnemerOptie->getWaarde() );
+//                                    $messageRegel .= "   " . " x &agrave; " . geldHtml( $optie->getPrijs() ) . " = " . geldHtml( $optie->getPrijs() * $deelnemerOptie->getWaarde() );
+                                    $a = geldHtml( $optie->getPrijs() );
+                                    $aantal = $deelnemerOptie->getWaarde();
+                                    $prijs = geldHtml( $optie->getPrijs() * $deelnemerOptie->getWaarde() );
+
                                     $totaalprijs += $optie->getPrijs() * $deelnemerOptie->getWaarde();
                                 }
                             }
@@ -323,26 +370,39 @@ class InschrijvingBevestiging
                                         $regel = array( "deelnemer" => $deelnemerNaam, "naam" => $optie->getTekstVoor(), "omschrijving" => "", "aantal" => 1, "prijs" => $optie->getPrijs() );
                                         array_push( $this->factuurArray, $regel );
                                         $totaalprijs += $optie->getPrijs();
-                                        $messageRegel .= ", Prijs: " . geldAnsi( $optie->getPrijs() );
+                                        //$messageRegel .= ", Prijs: " . geldHtml( $optie->getPrijs() );
+                                        $a = geldHtml( $optie->getPrijs() );
+                                        $prijs = geldHtml( $optie->getPrijs() );
                                     }
                                 }
                                 else
                                 {
+                                    $a = geldHtml( $optie->getPrijs() );
                                     $totaalprijs += $optie->getPrijs();
                                 }
 
+                                $omschrijving .= " &emsp; &emsp; " . $deelnemerOptie->getWaarde();
                             }
                         }
+                        else
+                        {
+                            $prijs .= geldHtml( $deelnemerOptie->getWaarde() );
+                        }
                     }
+                    $messageRegel .= "<td>" . $omschrijving . "</td>";
+                    $messageRegel .= "<td class='cen'>" . $aantal . "</td>";
+                    $messageRegel .= "<td class='cen'>" . $a . "</td>";
+                    $messageRegel .= "<td class='cen'>" . $prijs . "</td>";
 
                     $this->logger->debug("deelnemerregel: " . $messageRegel );
                     $this->messageBody .= $messageRegel;
-                    $this->messageBody .= "<br/>";
+                    $this->messageBody .= "</tr>";
 
                 }
             }
         }
 
+        // Inschrijvingsopties
         try
         {
             $opties = OptieQuery::create()
@@ -368,10 +428,22 @@ class InschrijvingBevestiging
 
         if ( $opties->count() > 0 )
         {
-            $this->messageBody .= "<br/><u>Inschrijvingsopties</u><br/>";
+//            $this->messageBody .= "<br/><u>Inschrijvingsopties</u><br/>";
+
+
+            $deelnemerNaam = "Algemeen";
 
             foreach ( $opties as $optie )
             {
+                $messageRegel = "<tr>";
+                $messageRegel .= "<td>" . $deelnemerNaam . "</td>";
+                $deelnemerNaam = "";
+
+                $omschrijving = "";
+                $aantal = "1";
+                $a = "";
+                $prijs = "";
+
                 $this->logger->debug( "Inschrijvings optie " . $optie->getId() );
 
                 $inschrijvingsOptie = InschrijvingHeeftOptieQuery::create()
@@ -392,12 +464,15 @@ class InschrijvingBevestiging
                         $regel = array( "deelnemer" => "Algemeen", "naam" => $optie->getGroep(), "omschrijving" => $optie->getTekstVoor(), "aantal" => 1, "prijs" => $optie->getPrijs() );
                         array_push( $this->factuurArray, $regel );
                     }
-                    $this->messageBody .= "   " . $optie->getGroep() . ": " . $optie->getTekstVoor() . " " . geldAnsi( $optie->getPrijs() ) . "<br/>";
+                    $omschrijving = $optie->getGroep() . ": " . $optie->getTekstVoor();
+                    $prijs = $optie->getPrijs();
+                    //$this->messageBody .= "   " . $optie->getGroep() . ": " . $optie->getTekstVoor() . " " . geldHtml( $optie->getPrijs() ) . "<br/>";
                     $totaalprijs += $optie->getPrijs();
                 }
                 else
                 {
-                    $this->messageBody .= "   " . $optie->getTekstVoor() . ": " . $inschrijvingsOptie->getWaarde();
+//tab                    $this->messageBody .= "   " . $optie->getTekstVoor() . ": " . $inschrijvingsOptie->getWaarde();
+                    $omschrijving = $optie->getTekstVoor() . ": " . $inschrijvingsOptie->getWaarde();
                     if ( $optie->getPrijs() != 0 )
                     {
                         if ( $optie->getOptieType() == OPTIETYPE_AANTAL )
@@ -407,7 +482,10 @@ class InschrijvingBevestiging
                                 $regel = array( "deelnemer" => "Algemeen", "naam" => $optie->getTekstVoor(), "omschrijving" => "", "aantal" => $inschrijvingsOptie->getWaarde(), "prijs" => $optie->getPrijs() );
                                 array_push( $this->factuurArray, $regel );
 
-                                $this->messageBody .= " x &agrave; " . geldAnsi( $optie->getPrijs() ) . " = " . geldAnsi( $optie->getPrijs() * $inschrijvingsOptie->getWaarde() );
+                                //$this->messageBody .= " x &agrave; " . geldHtml( $optie->getPrijs() ) . " = " . geldHtml( $optie->getPrijs() * $inschrijvingsOptie->getWaarde() );
+                                $a = geldHtml( $optie->getPrijs() );
+                                $aantal = $inschrijvingsOptie->getWaarde();
+                                $prijs = geldHtml( $optie->getPrijs() * $inschrijvingsOptie->getWaarde());
                                 $totaalprijs += $optie->getPrijs() * $inschrijvingsOptie->getWaarde();
                             }
                         }
@@ -427,15 +505,25 @@ class InschrijvingBevestiging
                                 $totaalprijs += $optie->getPrijs();
                             }
 
-                            $this->messageBody .= ", Prijs: " . geldAnsi( $optie->getPrijs() );
+                            //$this->messageBody .= ", Prijs: " . geldHtml( $optie->getPrijs() );
+                            $prijs = geldHtml( $optie->getPrijs() );
                         }
                     }
-                    $this->messageBody .= "<br/>";
+                    //$this->messageBody .= "<br/>";
                 }
-            }
-        }
+                $messageRegel .= "<td>" . $omschrijving . "</td>";
+                $messageRegel .= "<td class='cen'>" . $aantal . "</td>";
+                $messageRegel .= "<td class='cen'>" . $a . "</td>";
+                $messageRegel .= "<td class='cen'>" . $prijs . "</td>";
 
-        $this->messageBody .= "<br/><u>Afrekening</u><br/>Subtotaal: " . geldAnsi( $totaalprijs ) . "<br/><br/>";
+                $this->logger->debug("inschrijvingsregel: " . $messageRegel );
+                $this->messageBody .= $messageRegel;
+                $this->messageBody .= "</tr>";
+        }
+        }
+        $this->messageBody .= "</table><br/>";
+
+        $this->messageBody .= "<br/><u>Afrekening</u><br/>Subtotaal: " . geldHtml( $totaalprijs ) . "<br/><br/>";
 
         $betaling = $inschrijving->getBetaalwijze();
         $wijze = BetaalwijzeQuery::create()->filterByCode( $betaling )->findOne();
@@ -450,7 +538,7 @@ class InschrijvingBevestiging
                 $annuleringsverzekering = new AnnuleringsVerzekering();
                 $avpremie = $annuleringsverzekering->bereken( $totaalprijs, $inschrijving->getAnnuleringsverzekering() );
                 $totaalprijs += $avpremie;
-                $this->messageBody .= "Annuleringsverzekering: " . annuleringsverzekeringNaam( $inschrijving->getAnnuleringsverzekering() ) . ", premie " . geldAnsi( $avpremie ) . "<br/>";
+                $this->messageBody .= "Annuleringsverzekering: " . annuleringsverzekeringNaam( $inschrijving->getAnnuleringsverzekering() ) . ", premie " . geldHtml( $avpremie ) . "<br/>";
 
                 if ( $inschrijving->getAnnuleringsverzekering() != ANNULERINGSVERZEKERING_GEEN )
                 {
@@ -490,10 +578,10 @@ class InschrijvingBevestiging
             array_push( $this->factuurArray, $regel );
 
             $totaalprijs += $wijze->getKosten();
-            $this->messageBody .= $naam . ": " . geldAnsi( $wijze->getKosten() ) . "<br/>";
+            $this->messageBody .= $naam . ": " . geldHtml( $wijze->getKosten() ) . "<br/>";
         }
 
-        $this->messageBody .= "<br/>Totaalbedrag: " . geldAnsi( $totaalprijs ) . "<br/>";
+        $this->messageBody .= "<br/>Totaalbedrag: " . geldHtml( $totaalprijs ) . "<br/>";
         $this->logger->verbose( $this->messageBody );
 
         $this->reedsBetaaldBedrag = $inschrijving->getReedsBetaald();
@@ -506,7 +594,7 @@ class InschrijvingBevestiging
 
         if ( rondNul( $this->reedsBetaaldBedrag ) > 0 )
         {
-            $this->messageBody .= "<br/>U heeft reeds betaald: " . geldAnsi( $this->reedsBetaaldBedrag ) . "<br/>";
+            $this->messageBody .= "<br/>U heeft reeds betaald: " . geldHtml( $this->reedsBetaaldBedrag ) . "<br/>";
         }
 
         // $inschrijving->getBetaaldPerVoucher > 0 , dan hier regel toevoegen hoeveel er betaald is.
@@ -519,17 +607,17 @@ class InschrijvingBevestiging
 
                 if ( $voucher->getVoucherType() == VOUCHERTYPE_VOUCHER )
                 {
-                    $this->messageBody .= "<br/>U heeft met een tegoedbon/voucher betaald: " . geldAnsi( $inschrijving->getBetaaldPerVoucher() ) . "<br/><br/>";
+                    $this->messageBody .= "<br/>U heeft met een tegoedbon/voucher betaald: " . geldHtml( $inschrijving->getBetaaldPerVoucher() ) . "<br/><br/>";
                 }
                 elseif ( $voucher->getVoucherType() == VOUCHERTYPE_KORTING )
                 {
-                    $this->messageBody .= "<br/>U heeft met een kortingsbon betaald: " . geldAnsi( $inschrijving->getBetaaldPerVoucher() ) . "<br/><br/>";
+                    $this->messageBody .= "<br/>U heeft met een kortingsbon betaald: " . geldHtml( $inschrijving->getBetaaldPerVoucher() ) . "<br/><br/>";
                 }
 
                 $waarde = $voucher->getRestWaarde( );
                 if ( $voucher->getEmail() && $waarde > 0 )
                 {
-                    $this->messageBody .= "Op de voucher resteert nog een bedrag van " . geldAnsi( $waarde ) . "<br/><br/>";
+                    $this->messageBody .= "Op de voucher resteert nog een bedrag van " . geldHtml( $waarde ) . "<br/><br/>";
                 }
             }
             else // Betaald per voucher == 0, dan kortingsbon
@@ -539,7 +627,7 @@ class InschrijvingBevestiging
                 $type = $voucher->getVoucherType();
                 if ( $type == VOUCHERTYPE_KORTING )
                 {
-                    $this->messageBody .= "<br/>Korting: " . geldAnsi( $waarde ) . "<br/>";
+                    $this->messageBody .= "<br/>Korting: " . geldHtml( $waarde ) . "<br/>";
                     $regel = array( "deelnemer" => "Algemeen", "naam" => "Korting", "omschrijving" => "", "aantal" => 1, "prijs" => $waarde );
                     array_push( $this->factuurArray, $regel );
                 }
@@ -550,11 +638,9 @@ class InschrijvingBevestiging
             }
         }
 
-        $ini = parse_ini_file( CONFIG_FILENAME, true );
-
         if ( $this->nogTeBetalenBedrag > 0 )
         {
-            $this->messageBody .= "<br/><strong>U moet nog betalen: " . geldAnsi( $this->nogTeBetalenBedrag ) . "</strong><br/><br/>";
+            $this->messageBody .= "<br/><strong>U moet nog betalen: " . geldHtml( $this->nogTeBetalenBedrag ) . "</strong><br/><br/>";
 
             $this->messageBody .= "<u>Betaling</u><br/><br/>";
 
@@ -576,7 +662,7 @@ class InschrijvingBevestiging
             $verschil = $inschrijving->getTotaalBedrag() - $this->reedsBetaaldBedrag;
             if ( $verschil < 0 )
             {
-                $this->messageBody .= "Neem a.u.b. contact met ons op over het teveel betaalde bedrag van " . geldAnsi( 0-$verschil ) . "<br/><br/>";
+                $this->messageBody .= "Neem a.u.b. contact met ons op over het teveel betaalde bedrag van " . geldHtml( 0-$verschil ) . "<br/><br/>";
             }
             else
             {

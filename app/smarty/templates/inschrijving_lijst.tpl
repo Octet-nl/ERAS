@@ -62,7 +62,7 @@
             <td>
                 {$inschrijving.status}
                 {if $inschrijving.status == {$statusDefinitief} || $inschrijving.status == {$statusGeannuleerd} }
-                  <button name="open" value={$inschrijving.id} onclick="return openKlik('Inschrijving nummer {$inschrijving.id}\nvan {$inschrijving.naam} openen')">Open</button> 
+                  <button name="open" value={$inschrijving.id} onclick="return openKlik('Inschrijving nummer {$inschrijving.id}\nvan {$inschrijving.naam} openen')">Heropen<br/>inschrijving</button> 
                 {/if}
             </td>
             <td>

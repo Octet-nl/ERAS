@@ -1269,6 +1269,11 @@ function geld( $bedrag )
     return "€ " . number_format( $bedrag, 2, ",", "." );
 }
 
+function geldHtml( $bedrag )
+{
+    return "&euro; " . number_format( $bedrag, 2, ",", "." );
+}
+
 function geldAnsi( $bedrag )
 {
     return chr( 128 ) . " " . number_format( $bedrag, 2, ",", "." );

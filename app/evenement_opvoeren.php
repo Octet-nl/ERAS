@@ -134,6 +134,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
             $status = $evenement->getStatus();
             $isAnnuleringsverzekering = naarJaNee( $evenement->getAnnuleringsverzekering() );
             $isAccountNodig = naarJaNee( $evenement->getAccountNodig() );
+            $groepsInschrijving = naarJaNee( $evenement->getGroepsinschrijving() );
             $volledigheid_deelnemer = getDecimal( $extraDeelnemer );
             $logger->dump( $volledigheid_deelnemer );
             $volledigheid_contact = getDecimal( $extraContact );
