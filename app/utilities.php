@@ -1238,6 +1238,7 @@ function trimDir( $dirName )
     $dirName = rtrim($dirName, '/\\');
     return $dirName;
 }
+
 // /Formatters
 
 function isNul( $bedrag )

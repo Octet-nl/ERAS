@@ -318,7 +318,7 @@ function saveBevestiging( $inschrijfnummer, $message )
     {
         throw new Exception( "Kan bestand " . $facturenDirectory . $inschrijfnummer . ".html" . " niet openen." );
     }
-    fprintf( $fp, "<html><head><style>table{font-family: sans-serif;font-size: 0.85em;}
+    fprintf( $fp, "<html><head><style>table{font-family: sans-serif;font-size: 0.85em;width: 60%%;}
         th {border: 0.0625em solid lightgray;padding: 0.44em 0.3em 0.44em 0.3em;background-color: lightgray;border-radius: 0.20em;color: black;}
         td {padding: 0.3em 0.3em 0.3em 0.3em;}
         .cen {text-align: center;}
