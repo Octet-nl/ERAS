@@ -226,7 +226,8 @@ class InschrijvingBevestiging
         }
 
         $categorie = CategorieQuery::create()->filterByCode( $evenement->getCategorie() )->findOne();
-
+        
+        $this->messageBody .= "<h4>Gegevens evenement</h4>";
         $this->messageBody .= "<br/><div><span class='cap'>Uw inschrijfnummer is: " . $this->inschrijfnummer . "</span></div><br/><br/>";
 
         $deelnemers = DeelnemerQuery::create()->filterByInschrijvingId( $this->inschrijfnummer )->find();
@@ -247,11 +248,12 @@ class InschrijvingBevestiging
           <td>" . $categorie->getNaam() . " " . $this->evenementNaam . "</td>
           <td class='cen'>" . $this->evenementDatum . "</td>
           <td class='cen'>" . $this->aantalDeelnemers . "</td>
-          <td class='cen'>" . geldHtml( $evenement->getPrijs() ) . "</td>
-          <td class='cen'>" . geldHtml( $totaalprijs ) . "</td>
+          <td class='rig'>" . geldHtml( $evenement->getPrijs() ) . "</td>
+          <td class='rig'>" . geldHtml( $totaalprijs ) . "</td>
         </tr>
         </table><br/>";
 
+        $this->messageBody .= "<h4>Opties en bijzonderheden</h4>";
 
         $this->messageBody .= "<table>
         <tr>
@@ -331,7 +333,6 @@ class InschrijvingBevestiging
                             $a = geldHtml( $optie->getPrijs() );
                             $prijs = geldHtml( $optie->getPrijs() );
                             $aantal = "1";
-//                            $messageRegel = "   " . $optie->getGroep() . ": " . $optie->getTekstVoor() . " " . geldHtml( $optie->getPrijs() );
                         }
                         else
                         {
@@ -340,14 +341,12 @@ class InschrijvingBevestiging
                             {
                                 $omschrijving .= ": &emsp; &emsp; " . $deelnemerOptie->getWaarde();
                             }
-//                            $messageRegel = "   " . $optie->getGroep() . ": " . $optie->getTekstVoor();
                         }
                         $totaalprijs += $optie->getPrijs();
                     }
                     else
                     {
                         $omschrijving = $optie->getTekstVoor();
-//                      $messageRegel = "   " . $optie->getTekstVoor() . ": " . $deelnemerOptie->getWaarde();
                         if ( $optie->getPrijs() != 0 )
                         {
                             if ( $optie->getOptieType() == OPTIETYPE_AANTAL )
@@ -357,7 +356,6 @@ class InschrijvingBevestiging
                                     $regel = array( "deelnemer" => $deelnemerNaam, "naam" => "", "omschrijving" => $optie->getTekstVoor(), "aantal" => $deelnemerOptie->getWaarde(), "prijs" => $optie->getPrijs() );
                                     array_push( $this->factuurArray, $regel );
 
-//                                    $messageRegel .= "   " . " x &agrave; " . geldHtml( $optie->getPrijs() ) . " = " . geldHtml( $optie->getPrijs() * $deelnemerOptie->getWaarde() );
                                     $a = geldHtml( $optie->getPrijs() );
                                     $aantal = $deelnemerOptie->getWaarde();
                                     $prijs = geldHtml( $optie->getPrijs() * $deelnemerOptie->getWaarde() );
@@ -374,7 +372,6 @@ class InschrijvingBevestiging
                                         $regel = array( "deelnemer" => $deelnemerNaam, "naam" => $optie->getTekstVoor(), "omschrijving" => "", "aantal" => 1, "prijs" => $optie->getPrijs() );
                                         array_push( $this->factuurArray, $regel );
                                         $totaalprijs += $optie->getPrijs();
-                                        //$messageRegel .= ", Prijs: " . geldHtml( $optie->getPrijs() );
                                         $a = geldHtml( $optie->getPrijs() );
                                         $aantal = "1";
                                         $prijs = geldHtml( $optie->getPrijs() );
@@ -398,8 +395,8 @@ class InschrijvingBevestiging
                     }
                     $messageRegel .= "<td>" . $omschrijving . "</td>";
                     $messageRegel .= "<td class='cen'>" . $aantal . "</td>";
-                    $messageRegel .= "<td class='cen'>" . $a . "</td>";
-                    $messageRegel .= "<td class='cen'>" . $prijs . "</td>";
+                    $messageRegel .= "<td class='rig'>" . $a . "</td>";
+                    $messageRegel .= "<td class='rig'>" . $prijs . "</td>";
 
                     $this->logger->debug("deelnemerregel: " . $messageRegel );
                     $this->messageBody .= $messageRegel;
@@ -435,9 +432,6 @@ class InschrijvingBevestiging
 
         if ( $opties->count() > 0 )
         {
-//            $this->messageBody .= "<br/><u>Inschrijvingsopties</u><br/>";
-
-
             $deelnemerNaam = "Algemeen";
 
             foreach ( $opties as $optie )
@@ -478,12 +472,10 @@ class InschrijvingBevestiging
                     }
 
                     $prijs = $optie->getPrijs();
-//tab               $this->messageBody .= "   " . $optie->getGroep() . ": " . $optie->getTekstVoor() . " " . geldHtml( $optie->getPrijs() ) . "<br/>";
                     $totaalprijs += $optie->getPrijs();
                 }
                 else
                 {
-//tab               $this->messageBody .= "   " . $optie->getTekstVoor() . ": " . $inschrijvingsOptie->getWaarde();
                     $omschrijving = $optie->getTekstVoor() . ": " . $inschrijvingsOptie->getWaarde();
                     if ( $optie->getPrijs() != 0 )
                     {
@@ -494,7 +486,6 @@ class InschrijvingBevestiging
                                 $regel = array( "deelnemer" => "Algemeen", "naam" => $optie->getTekstVoor(), "omschrijving" => "", "aantal" => $inschrijvingsOptie->getWaarde(), "prijs" => $optie->getPrijs() );
                                 array_push( $this->factuurArray, $regel );
 
-                                //$this->messageBody .= " x &agrave; " . geldHtml( $optie->getPrijs() ) . " = " . geldHtml( $optie->getPrijs() * $inschrijvingsOptie->getWaarde() );
                                 $a = geldHtml( $optie->getPrijs() );
                                 $aantal = $inschrijvingsOptie->getWaarde();
                                 $prijs = geldHtml( $optie->getPrijs() * $inschrijvingsOptie->getWaarde());
@@ -517,30 +508,34 @@ class InschrijvingBevestiging
                                 $totaalprijs += $optie->getPrijs();
                             }
 
-                            //$this->messageBody .= ", Prijs: " . geldHtml( $optie->getPrijs() );
                             $prijs = geldHtml( $optie->getPrijs() );
                         }
                     }
-                    //$this->messageBody .= "<br/>";
                 }
                 $messageRegel .= "<td>" . $omschrijving . "</td>";
                 $messageRegel .= "<td class='cen'>" . $aantal . "</td>";
-                $messageRegel .= "<td class='cen'>" . $a . "</td>";
-                $messageRegel .= "<td class='cen'>" . $prijs . "</td>";
+                $messageRegel .= "<td class='rig'>" . $a . "</td>";
+                $messageRegel .= "<td class='rig'>" . $prijs . "</td>";
 
                 $this->logger->debug("inschrijvingsregel: " . $messageRegel );
                 $this->messageBody .= $messageRegel;
                 $this->messageBody .= "</tr>";
             }
         }
+        $this->messageBody .= "</table><br/>";
 
-        $messageRegel = '<tr><td colspan="5"></td></tr>';
+        $this->messageBody .= "<h4>Betaling</h4>";
 
-        $messageRegel .= "<tr><td></td>";
+        $this->messageBody .= "<table>
+        <tr>
+          <th>Omschrijving</th>
+          <th>Bedrag</th>
+        </tr>
+        <tr>";
+
+        $messageRegel = '<tr><td colspan="2"></td></tr>';
         $messageRegel .= "<td><strong>Subtotaal:<strong</td>";
-        $messageRegel .= "<td></td>";
-        $messageRegel .= "<td></td>";
-        $messageRegel .= "<td class='cen'>" . geldHtml( $totaalprijs ) . "</td></tr>";
+        $messageRegel .= "<td class='rig'>" . geldHtml( $totaalprijs ) . "</td></tr>";
         $this->messageBody .= $messageRegel;
 
         //$this->messageBody .= "<br/><u>Afrekening</u><br/>Subtotaal: " . geldHtml( $totaalprijs ) . "<br/><br/>";
@@ -558,14 +553,10 @@ class InschrijvingBevestiging
                 $annuleringsverzekering = new AnnuleringsVerzekering();
                 $avpremie = $annuleringsverzekering->bereken( $totaalprijs, $inschrijving->getAnnuleringsverzekering() );
                 $totaalprijs += $avpremie;
-//tab                $this->messageBody .= "Annuleringsverzekering: " . annuleringsverzekeringNaam( $inschrijving->getAnnuleringsverzekering() ) . ", premie " . geldHtml( $avpremie ) . "<br/>";
 
-                $messageRegel = '<tr><td colspan="5"></td></tr>';
-                $messageRegel .= "<tr><td></td>";
-                $messageRegel .= "<td>Annuleringsverzekering: " . annuleringsverzekeringNaam( $inschrijving->getAnnuleringsverzekering() ) . "</td>";
-                $messageRegel .= "<td>Premie:</td>";
-                $messageRegel .= "<td></td>";
-                $messageRegel .= "<td class='cen'>" . geldHtml( $avpremie ) . "</td></tr>";
+                $messageRegel = '<tr><td colspan="2"></td></tr>';
+                $messageRegel .= "<td>Annuleringsverzekering: " . annuleringsverzekeringNaam( $inschrijving->getAnnuleringsverzekering() ) . ", premie:</td>";
+                $messageRegel .= "<td class='rig'>" . geldHtml( $avpremie ) . "</td></tr>";
                 $this->messageBody .= $messageRegel;
         
                 if ( $inschrijving->getAnnuleringsverzekering() != ANNULERINGSVERZEKERING_GEEN )
@@ -576,11 +567,11 @@ class InschrijvingBevestiging
             }
         }
 
-        $tekstwijze = "";
-        if ( rondNul( $this->nogTeBetalenBedrag ) > 0 )
-        {
-            $tekstwijze = "Betaalwijze: " . $wijze->getNaam() . "<br/>";
-        }
+//        $tekstwijze = "";
+//        if ( rondNul( $this->nogTeBetalenBedrag ) > 0 )
+//        {
+//            $tekstwijze = "Betaalwijze: " . $wijze->getNaam() . "<br/>";
+//        }
         if ( $wijze->getKosten() > 0 )
         {
             if ( $wijze->getCode() == BETAALWIJZE_INCASSO )
@@ -612,23 +603,15 @@ class InschrijvingBevestiging
 
             $totaalprijs += $wijze->getKosten();
 
-//tab            $this->messageBody .= $naam . ": " . geldHtml( $wijze->getKosten() ) . "<br/>";
-            $messageRegel = '<tr><td colspan="5"></td></tr>';
-            $messageRegel .= "<tr><td></td>";
+            $messageRegel = '<tr><td colspan="2"></td></tr>';
             $messageRegel .= "<td>" ."Betaalwijze: " . $wijze->getNaam() . "<br/>" . $naam . "</td>";
-            $messageRegel .= "<td></td>";
-            $messageRegel .= "<td></td>";
-            $messageRegel .= "<td class='cen'>" . geldHtml( $wijze->getKosten() ) . "</td></tr>";
+            $messageRegel .= "<td class='rig'>" . geldHtml( $wijze->getKosten() ) . "</td></tr>";
             $this->messageBody .= $messageRegel;
     }
 
-//tab        $this->messageBody .= "<br/>Totaalbedrag: " . geldHtml( $totaalprijs ) . "<br/>";
-        $messageRegel = '<tr><td colspan="5"></td></tr>';
-        $messageRegel .= "<tr><td></td>";
+        $messageRegel = '<tr><td colspan="2"></td></tr>';
         $messageRegel .= "<td><strong>Totaalbedrag: </strong></td>";
-        $messageRegel .= "<td></td>";
-        $messageRegel .= "<td></td>";
-        $messageRegel .= "<td class='cen'>" . geldHtml( $totaalprijs ) . "</td></tr>";
+        $messageRegel .= "<td class='rig'>" . geldHtml( $totaalprijs ) . "</td></tr>";
         $this->messageBody .= $messageRegel;
 
         $this->logger->verbose( $this->messageBody );
@@ -636,27 +619,15 @@ class InschrijvingBevestiging
         $this->reedsBetaaldBedrag = $inschrijving->getReedsBetaald();
         $this->nogTeBetalenBedrag = $inschrijving->getNogTeBetalen();
 
-        //if ( rondNul( $this->nogTeBetalenBedrag ) > 0 )
-        //{
-        //    $this->messageBody .= "Betaalwijze: " . $wijze->getNaam();
-        //}
-
         if ( rondNul( $this->reedsBetaaldBedrag ) > 0 )
         {
-//tab            $this->messageBody .= "<br/>U heeft reeds betaald: " . geldHtml( $this->reedsBetaaldBedrag ) . "<br/>";
-            $messageRegel = '<tr><td colspan="5"></td></tr>';
-            $messageRegel .= "<tr><td></td>";
+            $messageRegel = '<tr><td colspan="2"></td></tr>';
             $messageRegel .= "<td>U heeft reeds betaald:</td>";
-            $messageRegel .= "<td></td>";
-            $messageRegel .= "<td></td>";
-            $messageRegel .= "<td class='cen'>" . geldHtml( $this->reedsBetaaldBedrag ) . "</td></tr>";
+            $messageRegel .= "<td class='rig'>" . geldHtml( $this->reedsBetaaldBedrag ) . "</td></tr>";
             $this->messageBody .= $messageRegel;
         }
 
-        $this->messageBody .= "</table><br/>";
-
-
-        // $inschrijving->getBetaaldPerVoucher > 0 , dan hier regel toevoegen hoeveel er betaald is.
+        $temp = "";
         if ( $inschrijving->getVoucherId() > 0 )
         {
             // Betaald per voucher > 0, dan tegoedbon
@@ -666,17 +637,17 @@ class InschrijvingBevestiging
 
                 if ( $voucher->getVoucherType() == VOUCHERTYPE_VOUCHER )
                 {
-                    $this->messageBody .= "<br/>U heeft met een tegoedbon/voucher betaald: " . geldHtml( $inschrijving->getBetaaldPerVoucher() ) . "<br/><br/>";
+                    $temp = "<br/>U heeft met een tegoedbon/voucher betaald: " . geldHtml( $inschrijving->getBetaaldPerVoucher() ) . "<br/>";
                 }
                 elseif ( $voucher->getVoucherType() == VOUCHERTYPE_KORTING )
                 {
-                    $this->messageBody .= "<br/>U heeft met een kortingsbon betaald: " . geldHtml( $inschrijving->getBetaaldPerVoucher() ) . "<br/><br/>";
+                    $temp = "<br/>U heeft met een kortingsbon betaald: " . geldHtml( $inschrijving->getBetaaldPerVoucher() ) . "<br/>";
                 }
 
                 $waarde = $voucher->getRestWaarde( );
                 if ( $voucher->getEmail() && $waarde > 0 )
                 {
-                    $this->messageBody .= "Op de voucher resteert nog een bedrag van " . geldHtml( $waarde ) . "<br/><br/>";
+                    $temp .= "Op de voucher resteert nog een bedrag van " . geldHtml( $waarde ) . "<br/><br/>";
                 }
             }
             else // Betaald per voucher == 0, dan kortingsbon
@@ -686,7 +657,7 @@ class InschrijvingBevestiging
                 $type = $voucher->getVoucherType();
                 if ( $type == VOUCHERTYPE_KORTING )
                 {
-                    $this->messageBody .= "<br/>Korting: " . geldHtml( $waarde ) . "<br/>";
+                    $temp = "<br/>Korting: " . geldHtml( $waarde ) . "<br/>";
                     $regel = array( "deelnemer" => "Algemeen", "naam" => "Korting", "omschrijving" => "", "aantal" => 1, "prijs" => $waarde );
                     array_push( $this->factuurArray, $regel );
                 }
@@ -695,13 +666,22 @@ class InschrijvingBevestiging
                     $this->logger->error( "Flow error. Geen bedrag betaald per voucher en ook geen kortingsbon" );
                 }
             }
+            if ( $temp != "" )
+            {
+                $messageRegel = '<tr><td colspan="2"></td></tr>';
+                $messageRegel .= "<td>" . $temp . "</td>";
+                $messageRegel .= "<td></td></tr>";
+                $this->messageBody .= $messageRegel;
+            }
         }
+
+        $this->messageBody .= "</table><br/>";
 
         if ( $this->nogTeBetalenBedrag > 0 )
         {
             $this->messageBody .= "<br/><strong>U moet nog betalen: " . geldHtml( $this->nogTeBetalenBedrag ) . "</strong><br/><br/>";
 
-            $this->messageBody .= "<u>Betaling</u><br/><br/>";
+            //$this->messageBody .= "<u></u><br/><br/>";
 
             if( $betaling == BETAALWIJZE_INCASSO )
             {

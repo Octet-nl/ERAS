@@ -322,6 +322,7 @@ function saveBevestiging( $inschrijfnummer, $message )
         th {border: 0.0625em solid lightgray;padding: 0.44em 0.3em 0.44em 0.3em;background-color: lightgray;border-radius: 0.20em;color: black;}
         td {padding: 0.3em 0.3em 0.3em 0.3em;}
         .cen {text-align: center;}
+        .rig {text-align: right;}
         .cap {border: 0.0625em solid;padding: 0.44em 0.3em 0.44em 0.3em;border-radius: 0.20em;}
      </style></head><body>" . $message . "</body></html>" );
 }
