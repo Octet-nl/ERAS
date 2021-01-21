@@ -81,8 +81,8 @@ define("EVENEMENT_EDIT_WYSIWIG", true);
 define("EVENEMENT_DATUM_KALENDERS", true);
 define("TOON_ALERTS", true);
 
-define("GESLACHT_MAN", "1");
-define("GESLACHT_VROUW", "2");
+define("GESLACHT_MAN", "M");
+define("GESLACHT_VROUW", "V");
 
 define("HORIZONTALE_LIJN_GEEN",  "0");
 define("HORIZONTALE_LIJN_BOVEN", "1");

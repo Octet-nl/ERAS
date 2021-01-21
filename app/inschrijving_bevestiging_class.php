@@ -38,7 +38,6 @@ use fb_model\fb_model\BetaalwijzeQuery;
 use fb_model\fb_model\DeelnemerHeeftOptieQuery;
 use fb_model\fb_model\DeelnemerQuery;
 use fb_model\fb_model\EvenementQuery;
-use fb_model\fb_model\EvenementHeeftOptieQuery;
 use fb_model\fb_model\InschrijvingHeeftOptieQuery;
 use fb_model\fb_model\InschrijvingQuery;
 use fb_model\fb_model\OptieQuery;
@@ -530,15 +529,11 @@ class InschrijvingBevestiging
         <tr>
           <th>Omschrijving</th>
           <th>Bedrag</th>
-        </tr>
-        <tr>";
+        </tr>";
 
-        $messageRegel = '<tr><td colspan="2"></td></tr>';
-        $messageRegel .= "<td><strong>Subtotaal:<strong</td>";
+        $messageRegel = "<tr><td><strong>Subtotaal:<strong</td>";
         $messageRegel .= "<td class='rig'>" . geldHtml( $totaalprijs ) . "</td></tr>";
         $this->messageBody .= $messageRegel;
-
-        //$this->messageBody .= "<br/><u>Afrekening</u><br/>Subtotaal: " . geldHtml( $totaalprijs ) . "<br/><br/>";
 
         $betaling = $inschrijving->getBetaalwijze();
         $wijze = BetaalwijzeQuery::create()->filterByCode( $betaling )->findOne();
@@ -554,8 +549,7 @@ class InschrijvingBevestiging
                 $avpremie = $annuleringsverzekering->bereken( $totaalprijs, $inschrijving->getAnnuleringsverzekering() );
                 $totaalprijs += $avpremie;
 
-                $messageRegel = '<tr><td colspan="2"></td></tr>';
-                $messageRegel .= "<td>Annuleringsverzekering: " . annuleringsverzekeringNaam( $inschrijving->getAnnuleringsverzekering() ) . ", premie:</td>";
+                $messageRegel = "<tr><td>Annuleringsverzekering: " . annuleringsverzekeringNaam( $inschrijving->getAnnuleringsverzekering() ) . ", premie:</td>";
                 $messageRegel .= "<td class='rig'>" . geldHtml( $avpremie ) . "</td></tr>";
                 $this->messageBody .= $messageRegel;
         
@@ -576,41 +570,39 @@ class InschrijvingBevestiging
         {
             if ( $wijze->getCode() == BETAALWIJZE_INCASSO )
             {
-                $naam = "Incassokosten";
+                $naam = "Incassokosten:";
             }
             else if ( $wijze->getCode() == BETAALWIJZE_CONTANT )
             {
-                $naam = "Kosten contante betaling";
+                $naam = "Kosten contante betaling:";
             }
             else if ( $wijze->getCode() == BETAALWIJZE_CREDITCARD )
             {
-                $naam = "Kosten creditcard betaling";
+                $naam = "Kosten creditcard betaling:";
             }
             else if ( $wijze->getCode() == BETAALWIJZE_OVERSCHRIJVING )
             {
-                $naam = "Kosten betaling per overschrijving";
+                $naam = "Kosten betaling per overschrijving:";
             }
             else if ( $wijze->getCode() == BETAALWIJZE_IDEAL )
             {
-                $naam = "Kosten betaling per iDeal";
+                $naam = "Kosten betaling per iDeal:";
             }
             else if ( $wijze->getCode() == BETAALWIJZE_VOUCHER )
             {
-                $naam = "Kosten betaling per tegoedbon/voucher";
+                $naam = "Kosten betaling per tegoedbon/voucher:";
             }
             $regel = array( "deelnemer" => "Algemeen", "naam" => $naam, "omschrijving" => "", "aantal" => "1", "prijs" => $wijze->getKosten() );
             array_push( $this->factuurArray, $regel );
 
             $totaalprijs += $wijze->getKosten();
 
-            $messageRegel = '<tr><td colspan="2"></td></tr>';
-            $messageRegel .= "<td>" ."Betaalwijze: " . $wijze->getNaam() . "<br/>" . $naam . "</td>";
+            $messageRegel = "<tr><td>" ."Betaalwijze: " . $wijze->getNaam() . "<br/>" . $naam . "</td>";
             $messageRegel .= "<td class='rig'>" . geldHtml( $wijze->getKosten() ) . "</td></tr>";
             $this->messageBody .= $messageRegel;
     }
 
-        $messageRegel = '<tr><td colspan="2"></td></tr>';
-        $messageRegel .= "<td><strong>Totaalbedrag: </strong></td>";
+        $messageRegel = "<tr><td><strong>Totaalbedrag: </strong></td>";
         $messageRegel .= "<td class='rig'>" . geldHtml( $totaalprijs ) . "</td></tr>";
         $this->messageBody .= $messageRegel;
 
@@ -621,8 +613,7 @@ class InschrijvingBevestiging
 
         if ( rondNul( $this->reedsBetaaldBedrag ) > 0 )
         {
-            $messageRegel = '<tr><td colspan="2"></td></tr>';
-            $messageRegel .= "<td>U heeft reeds betaald:</td>";
+            $messageRegel = "<tr><td>U heeft reeds betaald:</td>";
             $messageRegel .= "<td class='rig'>" . geldHtml( $this->reedsBetaaldBedrag ) . "</td></tr>";
             $this->messageBody .= $messageRegel;
         }
@@ -668,19 +659,29 @@ class InschrijvingBevestiging
             }
             if ( $temp != "" )
             {
-                $messageRegel = '<tr><td colspan="2"></td></tr>';
-                $messageRegel .= "<td>" . $temp . "</td>";
+                $messageRegel = "<tr><td>" . $temp . "</td>";
                 $messageRegel .= "<td></td></tr>";
                 $this->messageBody .= $messageRegel;
             }
+        }
+
+        if ( $this->nogTeBetalenBedrag > 0 )
+        {
+            $messageRegel = "<tr><td><strong>U moet nog betalen:</strong>:</td>";
+            $messageRegel .= "<td class='rig'>" . geldHtml( $this->nogTeBetalenBedrag ) . "</td></tr>";
+            $this->messageBody .= $messageRegel;
+        }
+        else
+        {
+            $messageRegel = "<tr><td>Het volledige bedrag is voldaan</td>";
+            $messageRegel .= "<td class='rig'></td></tr>";
+            $this->messageBody .= $messageRegel;
         }
 
         $this->messageBody .= "</table><br/>";
 
         if ( $this->nogTeBetalenBedrag > 0 )
         {
-            $this->messageBody .= "<br/><strong>U moet nog betalen: " . geldHtml( $this->nogTeBetalenBedrag ) . "</strong><br/><br/>";
-
             //$this->messageBody .= "<u></u><br/><br/>";
 
             if( $betaling == BETAALWIJZE_INCASSO )
@@ -702,10 +703,6 @@ class InschrijvingBevestiging
             if ( $verschil < 0 )
             {
                 $this->messageBody .= "Neem a.u.b. contact met ons op over het teveel betaalde bedrag van " . geldHtml( 0-$verschil ) . "<br/><br/>";
-            }
-            else
-            {
-                $this->messageBody .= "Het volledige bedrag is voldaan<br/><br/>";
             }
         }
 
