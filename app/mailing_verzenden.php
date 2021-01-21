@@ -118,8 +118,8 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
     $logger->debug( "Aanmaken mailing" );
 
     $ini = parse_ini_file( CONFIG_FILENAME, true );
-    $footerRegel = $ini['pdf_factuur']['footer'];
-    $adresRegel = '<div style="font-size:0.8em;">' . $ini['pdf_factuur']['adresregel'] . '</div>';
+    $footerRegel = $ini['organisatie']['footer'];
+    $adresRegel = '<div style="font-size:0.8em;">' . $ini['organisatie']['adresregel'] . '</div>';
 
     // Vullen evenementenlijst
     $evenementen = EvenementQuery::create()
@@ -225,7 +225,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             $unsubscribeLink = $url . '/mailing_afmelden.php';
 
             $ini = parse_ini_file( CONFIG_FILENAME, true );
-            $adresRegel = '<div>' . $ini['pdf_factuur']['adresregel'] . '</div>';
+            $adresRegel = '<div>' . $ini['organisatie']['adresregel'] . '</div>';
         
             $mailingTekst .= '<br/><br/><div align="center" style="font-size:0.8em;">U ontvangt deze mail omdat u zich hiervoor heeft aangemeld. U kunt zich <a href="' . $unsubscribeLink . '">hier</a> afmelden<br/>' . $adresRegel . '</div>';
             

@@ -129,9 +129,9 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
         $pdf = new Factuur();
         $pdf->setIni( $ini );
         $pdf->setDocumentTitle( $ini['pdf_factuur']['titel'] );
-        $pdf->setLogo( $ini['pdf_factuur']['logo'] );
-        $pdf->setFooter( $ini['pdf_factuur']['footer'] );
-        $pdf->setAddress( $ini['pdf_factuur']['adresregel'] );
+        $pdf->setLogo( $ini['organisatie']['logo'] );
+        $pdf->setFooter( $ini['organisatie']['footer'] );
+        $pdf->setAddress( $ini['organisatie']['adresregel'] );
         $pdf->SetFillColor( 214, 214, 214 );
         $pdf->AddPage();
 
@@ -195,8 +195,8 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
         $message .= "Geachte " . $maakBevestiging->getContactAanschrijving();
         $message .= "<br/><br/>Bedankt voor uw inschrijving voor evenement " . $maakBevestiging->getEvenementNaam();
         $message .= "<br/><br/>In deze mail willen wij nog even alles samenvatten.";
-        $message .= "<br/><br/>" . $messageBody . "<br/><br/>";
-        $message .= "<br/><br/>Met vriendelijke groet,<br/><br/>";
+        $message .= "<br/><br/>" . $messageBody;
+        $message .= "<br/><br/>Met vriendelijke groet,<br/>";
         $message .= "<br/><br/>" . $ini['organisatie']['organisatienaam'] . "<br/><br/>";
 
         if ( $ini['pdf_factuur']['verzenden'] == OPTIE_KEUZE_JA )

@@ -9,8 +9,8 @@
         </div>
         <h2>{$doctitle}</h2>
 
-        <button class="softbutton" type="button" onclick='allesKlappen(8, false);' title="Alles inklappen">Inklappen</button>
-        <button class="softbutton" type="button" onclick='allesKlappen(8, true);' title="Alles uitklappen">Uitklappen</button>
+        <button class="softbutton" type="button" onclick='allesKlappen(9, false);' title="Alles inklappen">Inklappen</button>
+        <button class="softbutton" type="button" onclick='allesKlappen(9, true);' title="Alles uitklappen">Uitklappen</button>
 
         <div class="window_back" style="width:100%">
             <input type="checkbox" id="1" checked onchange='handleChecked(this,document.getElementById("organisatie"));'/> 
@@ -31,7 +31,21 @@
                 <span class="tooltiptext right">Optioneel. Als u geen link naar leveringsvoorwaarden invult, wordt er ook geen akkoord gevraagd bij het afronden van de inschrijving.</span>
                </div>
                <span class="error">{$organisatieVoorwaardenErr}</span>
-            </fieldset>
+
+               <br/>
+               <span class=setting_label>
+               <h4>Het logo en de teksten hieronder worden gebruikt in de factuur, de mailings en de bevestigingsmail</h4>
+            </span>
+               <span class=setting_label>Adres van het logo van de organisatie</span>
+               <span><input style="width:60%" type="text" class="setting_input" name="organisatieLogo" value="{$organisatieLogo}"> Voorbeeld: <img src="{$organisatieLogo}" height="50"></span>
+               <span class="error">{$organisatieLogoErr}</span>
+               <span class=setting_label>Bodemregel (plaats hier uw wervende tekst)</span>
+               <input style="width:100%" type="text" class="setting_input" name="organisatieFooter" value="{$organisatieFooter}">
+               <span class="error">{$organisatieFooterErr}</span>
+               <span class=setting_label>Adresregel</span>
+               <input style="width:100%" type="text" class="setting_input" name="organisatieAdresregel" value="{$organisatieAdresregel}">
+               <span class="error">{$organisatieAdresregelErr}</span>
+           </fieldset>
         </div>
 
         <div class="window_back" style="width:100%">
@@ -67,36 +81,6 @@
                 <span class=setting_label>Soort factuur/rekening</span>
                 <input type="text" class="setting_input" name="factuurNotatype" value="{$factuurNotatype}">
                 <span class="error">{$factuurNotatypeErr}</span>
-                <span class=setting_label>Adres van het logo van de organisatie</span>
-                <span><input style="width:60%" type="text" class="setting_input" name="factuurLogo" value="{$factuurLogo}"> Voorbeeld: <img src="{$factuurLogo}" height="50"></span>
-                <span class="error">{$factuurLogoErr}</span>
-                <span class=setting_label>Bodemregel (plaats hier uw wervende tekst)</span>
-                <input style="width:100%" type="text" class="setting_input" name="factuurFooter" value="{$factuurFooter}">
-                <span class="error">{$factuurFooterErr}</span>
-                <span class=setting_label>Adresregel</span>
-                <input style="width:100%" type="text" class="setting_input" name="factuurAdresregel" value="{$factuurAdresregel}">
-                <span class="error">{$factuurAdresregelErr}</span>
-                <span class=setting_label>Kopteksten per kolom voor Evenement</span>
-                <input style="width:8em" type="text" class="setting_input" name="factuurEvenementKolom1" value="{$factuurEvenementKolom1}">
-                <span class="error">{$factuurEvenementKolom1Err}</span>
-                <input style="width:8em" type="text" class="setting_input" name="factuurEvenementKolom2" value="{$factuurEvenementKolom2}">
-                <span class="error">{$factuurEvenementKolom2Err}</span>
-                <input style="width:8em" type="text" class="setting_input" name="factuurEvenementKolom3" value="{$factuurEvenementKolom3}">
-                <span class="error">{$factuurEvenementKolom3Err}</span>
-                <input style="width:8em" type="text" class="setting_input" name="factuurEvenementKolom4" value="{$factuurEvenementKolom4}">
-                <span class="error">{$factuurEvenementKolom4Err}</span>
-                <input style="width:8em" type="text" class="setting_input" name="factuurEvenementKolom5" value="{$factuurEvenementKolom5}">
-                <span class="error">{$factuurEvenementKolom5Err}</span>
-                <span class=setting_label>Kopteksten per kolom voor Deelnemers</span>
-                <input style="width:8em" type="text" class="setting_input" name="factuurDeelnemerKolom1" value="{$factuurDeelnemerKolom1}">
-                <span class="error">{$factuurDeelnemerKolom1Err}</span>
-                <input style="width:8em" type="text" class="setting_input" name="factuurDeelnemerKolom2" value="{$factuurDeelnemerKolom2}">
-                <span class="error">{$factuurDeelnemerKolom2Err}</span>
-                <input style="width:8em" type="text" class="setting_input" name="factuurDeelnemerKolom3" value="{$factuurDeelnemerKolom3}">
-                <span class="error">{$factuurDeelnemerKolom3Err}</span>
-                <input style="width:8em" type="text" class="setting_input" name="factuurDeelnemerKolom4" value="{$factuurDeelnemerKolom4}">
-                <span class="error">{$factuurDeelnemerKolom4Err}</span>
-                <input style="width:8em" type="text" class="setting_input" name="factuurDeelnemerKolom5" value="{$factuurDeelnemerKolom5}">
                 <span class=setting_label>BTW percentage</span>
                 <input style="width:8em" type="text" class="setting_input" name="factuurBtwPercentage" value="{$factuurBtwPercentage}">
                 <span class="error">{$factuurBtwPercentageErr}</span>
@@ -111,7 +95,38 @@
         </div>
 
         <div class="window_back" style="width:100%">
-            <input type="checkbox" id="4" checked onchange='handleChecked(this,document.getElementById("iDeal"));'/> 
+            <input type="checkbox" id="4" checked onchange='handleChecked(this,document.getElementById("tabelkop"));'/> 
+            <h3 style="display: inline-block;">Tabel koppen</h3>
+            <div class="tooltip">?
+                <span class="tooltiptext right">Deze koppen worden gebruikt voor de tabellen in de factuur en in de bevestigingsmail.</span>
+            </div>
+            <fieldset id="tabelkop" class="setting_input">
+                <span class=setting_label>Kopteksten per kolom voor Evenement</span>
+                <input style="width:8em" type="text" class="setting_input" name="tabelEvenementKolom1" value="{$tabelEvenementKolom1}">
+                <span class="error">{$tabelEvenementKolom1Err}</span>
+                <input style="width:8em" type="text" class="setting_input" name="tabelEvenementKolom2" value="{$tabelEvenementKolom2}">
+                <span class="error">{$tabelEvenementKolom2Err}</span>
+                <input style="width:8em" type="text" class="setting_input" name="tabelEvenementKolom3" value="{$tabelEvenementKolom3}">
+                <span class="error">{$tabelEvenementKolom3Err}</span>
+                <input style="width:8em" type="text" class="setting_input" name="tabelEvenementKolom4" value="{$tabelEvenementKolom4}">
+                <span class="error">{$tabelEvenementKolom4Err}</span>
+                <input style="width:8em" type="text" class="setting_input" name="tabelEvenementKolom5" value="{$tabelEvenementKolom5}">
+                <span class="error">{$tabelEvenementKolom5Err}</span>
+                <span class=setting_label>Kopteksten per kolom voor Deelnemers</span>
+                <input style="width:8em" type="text" class="setting_input" name="tabelDeelnemerKolom1" value="{$tabelDeelnemerKolom1}">
+                <span class="error">{$tabelDeelnemerKolom1Err}</span>
+                <input style="width:8em" type="text" class="setting_input" name="tabelDeelnemerKolom2" value="{$tabelDeelnemerKolom2}">
+                <span class="error">{$tabelDeelnemerKolom2Err}</span>
+                <input style="width:8em" type="text" class="setting_input" name="tabelDeelnemerKolom3" value="{$tabelDeelnemerKolom3}">
+                <span class="error">{$tabelDeelnemerKolom3Err}</span>
+                <input style="width:8em" type="text" class="setting_input" name="tabelDeelnemerKolom4" value="{$tabelDeelnemerKolom4}">
+                <span class="error">{$tabelDeelnemerKolom4Err}</span>
+                <input style="width:8em" type="text" class="setting_input" name="tabelDeelnemerKolom5" value="{$tabelDeelnemerKolom5}">
+            </fieldset>
+        </div>
+
+        <div class="window_back" style="width:100%">
+            <input type="checkbox" id="5" checked onchange='handleChecked(this,document.getElementById("iDeal"));'/> 
             <h3 style="display: inline-block;">iDEAL betaling</h3>
             <fieldset id="iDeal" class="setting_input">
                 <span class=setting_label>iDeal betalingen toestaan ({$ja}/{$nee})</span>
@@ -141,7 +156,7 @@
         </div>
 
         <div class="window_back" style="width:100%">
-            <input type="checkbox" id="5" checked onchange='handleChecked(this,document.getElementById("betaling"));'/> 
+            <input type="checkbox" id="6" checked onchange='handleChecked(this,document.getElementById("betaling"));'/> 
             <h3 style="display: inline-block;">Betaling</h3>
             <fieldset id="betaling" class="setting_input">
                 <button type="button" class="bareleft" onClick="toggleBetalingVoorwaarden();">HTML</button>
@@ -158,7 +173,7 @@
         </div>
 
         <div class="window_back" style="width:100%">
-            <input type="checkbox" id="6" checked onchange='handleChecked(this,document.getElementById("directories"));'/> 
+            <input type="checkbox" id="7" checked onchange='handleChecked(this,document.getElementById("directories"));'/> 
             <h3 style="display: inline-block;">Directories</h3>
             <fieldset id="directories" class="setting_input">
                 <span class=setting_label>Directory waar de tijdelijke bestanden geplaatst kunnen worden</span>
@@ -177,7 +192,7 @@
         </div>
 
         <div class="window_back" style="width:100%">
-            <input type="checkbox" id="7" checked onchange='handleChecked(this,document.getElementById("verzekering"));'/> 
+            <input type="checkbox" id="8" checked onchange='handleChecked(this,document.getElementById("verzekering"));'/> 
             <h3 style="display: inline-block;">Verzekering</h3>
             <fieldset id="verzekering" class="setting_input">
                 <span class=setting_label>Annuleringsverzekering mogelijk? ({$ja}/{$nee})</span>
@@ -193,7 +208,7 @@
         </div>
 
         <div class="window_back" style="width:100%">
-            <input type="checkbox" id="8" checked onchange='handleChecked(this,document.getElementById("instellingen"));'/> 
+            <input type="checkbox" id="9" checked onchange='handleChecked(this,document.getElementById("instellingen"));'/> 
             <h3 style="display: inline-block;">Instellingen</h3>
             <fieldset id="instellingen" class="setting_input">
                 <span class=setting_label>Maximaal aantal mails dat tegelijk verstuurd kan worden</span>

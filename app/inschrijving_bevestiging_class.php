@@ -237,11 +237,11 @@ class InschrijvingBevestiging
 
         $this->messageBody .= "<table>
         <tr>
-          <th>" . $ini['pdf_factuur']['evenement-kolom1'] . "</th>
-          <th>" . $ini['pdf_factuur']['evenement-kolom2'] . "</th>
-          <th>" . $ini['pdf_factuur']['evenement-kolom3'] . "</th>
-          <th>" . $ini['pdf_factuur']['evenement-kolom4'] . "</th>
-          <th>" . $ini['pdf_factuur']['evenement-kolom5'] . "</th>
+          <th>" . $ini['tabelkop']['evenement-kolom1'] . "</th>
+          <th>" . $ini['tabelkop']['evenement-kolom2'] . "</th>
+          <th>" . $ini['tabelkop']['evenement-kolom3'] . "</th>
+          <th>" . $ini['tabelkop']['evenement-kolom4'] . "</th>
+          <th>" . $ini['tabelkop']['evenement-kolom5'] . "</th>
         </tr>
         <tr>
           <td>" . $categorie->getNaam() . " " . $this->evenementNaam . "</td>
@@ -256,11 +256,11 @@ class InschrijvingBevestiging
 
         $this->messageBody .= "<table>
         <tr>
-          <th>" . $ini['pdf_factuur']['deelnemer-kolom1'] . "</th>
-          <th>" . $ini['pdf_factuur']['deelnemer-kolom2'] . "</th>
-          <th>" . $ini['pdf_factuur']['deelnemer-kolom3'] . "</th>
-          <th>" . $ini['pdf_factuur']['deelnemer-kolom4'] . "</th>
-          <th>" . $ini['pdf_factuur']['deelnemer-kolom5'] . "</th>
+          <th>" . $ini['tabelkop']['deelnemer-kolom1'] . "</th>
+          <th>" . $ini['tabelkop']['deelnemer-kolom2'] . "</th>
+          <th>" . $ini['tabelkop']['deelnemer-kolom3'] . "</th>
+          <th>" . $ini['tabelkop']['deelnemer-kolom4'] . "</th>
+          <th>" . $ini['tabelkop']['deelnemer-kolom5'] . "</th>
         </tr>
         <tr>";
 
@@ -702,7 +702,7 @@ class InschrijvingBevestiging
             $verschil = $inschrijving->getTotaalBedrag() - $this->reedsBetaaldBedrag;
             if ( $verschil < 0 )
             {
-                $this->messageBody .= "Neem a.u.b. contact met ons op over het teveel betaalde bedrag van " . geldHtml( 0-$verschil ) . "<br/><br/>";
+                $this->messageBody .= "Neem a.u.b. contact met ons op over het teveel betaalde bedrag van " . geldHtml( 0-$verschil ) . "<br/>";
             }
         }
 
@@ -718,13 +718,13 @@ class InschrijvingBevestiging
         if ( $inschrijver != null )
         {
             $unsubscribeLink = $url . '/mailing_afmelden.php?mail=' . $inschrijver->getEmail() . "&code=" . $inschrijver->getCode();
-            $adresRegel = '<div>' . $ini['pdf_factuur']['adresregel'] . '</div>';
-            $ondersteRegels = '<br/><br/><div align="center" style="font-size:0.8em;">U heeft zich aangemeld voor onze nieuwsbrief, u kunt zich <a href="' . $unsubscribeLink . '">hier</a> afmelden.<br/>' . $adresRegel . '</div>';
+            $adresRegel = '<div>' . $ini['organisatie']['adresregel'] . '</div>';
+            $ondersteRegels = '<br/><div align="center" style="font-size:0.8em;">U heeft zich aangemeld voor onze nieuwsbrief, u kunt zich <a href="' . $unsubscribeLink . '">hier</a> afmelden.<br/>' . $adresRegel . '</div>';
         }
         else
         {
-            $adresRegel = '<div>' . $ini['pdf_factuur']['adresregel'] . '</div>';
-            $ondersteRegels = '<br/><br/><div align="center" style="font-size:0.8em;"><br/>' . $adresRegel . '</div>';
+            $adresRegel = '<div>' . $ini['organisatie']['adresregel'] . '</div>';
+            $ondersteRegels = '<br/><div align="center" style="font-size:0.8em;"><br/>' . $adresRegel . '</div>';
         }
 
         $this->ondersteRegels =  $ondersteRegels;

@@ -121,25 +121,25 @@ class Factuur extends FPDF2
         $this->SetFont( 'Helvetica', '', 9 );
         $this->Cell( 550 );
         $this->setXY( $x, $y );
-        $this->Cell( 85, 7, $this->toAnsi($this->ini['pdf_factuur']['evenement-kolom1']), 1, 2, 'L', true );
+        $this->Cell( 85, 7, $this->toAnsi($this->ini['tabelkop']['evenement-kolom1']), 1, 2, 'L', true );
         $this->CellFitScale( 85, 8, $evt, 'LRB', 1 );
         $this->setXY( $x + 85, $y );
-        $this->Cell( 45, 7, $this->toAnsi($this->ini['pdf_factuur']['evenement-kolom2']), 1, 2, 'L', true );
+        $this->Cell( 45, 7, $this->toAnsi($this->ini['tabelkop']['evenement-kolom2']), 1, 2, 'L', true );
         $this->Cell( 45, 8, $rdate, 'LRB', 1 );
 //        $this->setXY( $x + 110, $y );
         //        $this->Cell( 20, 7, 'Inschrijfnr', 1, 2, 'L', true );
         //        $this->Cell( 20, 8, $nummer, 'LRB', 1 );
         $this->setXY( $x + 130, $y );
 
-        $this->Cell( 15, 7, $this->toAnsi($this->ini['pdf_factuur']['evenement-kolom3']), 1, 2, 'C', true );
+        $this->Cell( 15, 7, $this->toAnsi($this->ini['tabelkop']['evenement-kolom3']), 1, 2, 'C', true );
         $this->Cell( 15, 8, $aantal, 'LRB', 1, 'R' );
         $this->setXY( $x + 145, $y );
 
-        $this->Cell( 20, 7, $this->toAnsi($this->ini['pdf_factuur']['evenement-kolom4']), 1, 2, 'C', true );
+        $this->Cell( 20, 7, $this->toAnsi($this->ini['tabelkop']['evenement-kolom4']), 1, 2, 'C', true );
         $this->Cell( 20, 8, geldAnsi( $prijsper ), 'LRB', 1, 'R' );
 
         $this->setXY( $x + 165, $y );
-        $this->Cell( 25, 7, $this->toAnsi($this->ini['pdf_factuur']['evenement-kolom5']), 1, 2, 'C', true );
+        $this->Cell( 25, 7, $this->toAnsi($this->ini['tabelkop']['evenement-kolom5']), 1, 2, 'C', true );
         $this->Cell( 25, 8, geldAnsi( $totaal ), 'LRB', 1, 'R' );
 
         $this->Ln( 10 );
@@ -150,17 +150,17 @@ class Factuur extends FPDF2
         $x = $this->GetX();
         $y = $this->GetY();
         $this->setXY( $x, $y );
-        $this->Cell( 50, 7, $this->toAnsi($this->ini['pdf_factuur']['deelnemer-kolom1']), 1, 2, 'L', true );
+        $this->Cell( 50, 7, $this->toAnsi($this->ini['tabelkop']['deelnemer-kolom1']), 1, 2, 'L', true );
         $this->setXY( $x + 50, $y );
-        $this->Cell( 80, 7, $this->toAnsi($this->ini['pdf_factuur']['deelnemer-kolom2']), 1, 2, 'L', true );
+        $this->Cell( 80, 7, $this->toAnsi($this->ini['tabelkop']['deelnemer-kolom2']), 1, 2, 'L', true );
 //        $this->setXY( $x + 100, $y );
         //        $this->Cell( 30, 7, '', 1, 2, 'L', true );
         $this->setXY( $x + 130, $y );
-        $this->Cell( 15, 7, $this->toAnsi($this->ini['pdf_factuur']['deelnemer-kolom3']), 1, 2, 'C', true );
+        $this->Cell( 15, 7, $this->toAnsi($this->ini['tabelkop']['deelnemer-kolom3']), 1, 2, 'C', true );
         $this->setXY( $x + 145, $y );
-        $this->Cell( 20, 7, $this->toAnsi($this->ini['pdf_factuur']['deelnemer-kolom4']), 1, 2, 'C', true );
+        $this->Cell( 20, 7, $this->toAnsi($this->ini['tabelkop']['deelnemer-kolom4']), 1, 2, 'C', true );
         $this->setXY( $x + 165, $y );
-        $this->Cell( 25, 7, $this->toAnsi($this->ini['pdf_factuur']['deelnemer-kolom5']), 1, 2, 'C', true );
+        $this->Cell( 25, 7, $this->toAnsi($this->ini['tabelkop']['deelnemer-kolom5']), 1, 2, 'C', true );
     }
 
     public function populateTable( $data, $aantal_deelnemers, $startprijs )

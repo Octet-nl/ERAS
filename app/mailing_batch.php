@@ -223,7 +223,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             foreach( $inschrijvers as $inschrijver )
             {
                 $unsubscribeLink = $url . '/mailing_afmelden.php?mail=' . $inschrijver->getEmail() . "&code=" . $inschrijver->getCode();
-                $adresRegel = '<div style="font-size:0.8em;">' . $ini['pdf_factuur']['adresregel'] . '</div>';
+                $adresRegel = '<div style="font-size:0.8em;">' . $ini['organisatie']['adresregel'] . '</div>';
                 $ondersteRegels = '<br/><br/><div align="center"><a href="' . $unsubscribeLink . '">afmelden bij deze nieuwsbrief</a><br/>' . $adresRegel . '</div>';
 
                 $email->Body = $mailingTekst . $ondersteRegels;

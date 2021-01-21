@@ -60,23 +60,23 @@ $factuurAanmaken = "";
 $factuurVerzenden = "";
 $factuurTitel = "";
 $factuurNotatype = "";
-$factuurLogo = "";
-$factuurFooter = "";
-$factuurAdresregel = "";
-$factuurEvenementKolom1 = "";
-$factuurEvenementKolom2 = "";
-$factuurEvenementKolom3 = "";
-$factuurEvenementKolom4 = "";
-$factuurEvenementKolom5 = "";
-$factuurDeelnemerKolom1 = "";
-$factuurDeelnemerKolom2 = "";
-$factuurDeelnemerKolom3 = "";
-$factuurDeelnemerKolom4 = "";
-$factuurDeelnemerKolom5 = "";
+$organisatieLogo = "";
+$organisatieFooter = "";
+$organisatieAdresregel = "";
 $factuurBtwPercentage = "";
 $factuurBtwRegel1 = "";
 $factuurBtwRegel2 = "";
 $factuurBtwRegel3 = "";
+$tabelEvenementKolom1 = "";
+$tabelEvenementKolom2 = "";
+$tabelEvenementKolom3 = "";
+$tabelEvenementKolom4 = "";
+$tabelEvenementKolom5 = "";
+$tabelDeelnemerKolom1 = "";
+$tabelDeelnemerKolom2 = "";
+$tabelDeelnemerKolom3 = "";
+$tabelDeelnemerKolom4 = "";
+$tabelDeelnemerKolom5 = "";
 $enableIDeal = "";
 $idealCheckout = "";
 $idealStatusStopped = "";
@@ -105,19 +105,19 @@ $factuurAanmakenErr = "";
 $factuurVerzendenErr = "";
 $factuurTitelErr = "";
 $factuurNotatypeErr = "";
-$factuurLogoErr = "";
-$factuurFooterErr = "";
-$factuurAdresregelErr = "";
-$factuurEvenementKolom1Err = "";
-$factuurEvenementKolom2Err = "";
-$factuurEvenementKolom3Err = "";
-$factuurEvenementKolom4Err = "";
-$factuurEvenementKolom5Err = "";
-$factuurDeelnemerKolom1Err = "";
-$factuurDeelnemerKolom2Err = "";
-$factuurDeelnemerKolom3Err = "";
-$factuurDeelnemerKolom4Err = "";
-$factuurDeelnemerKolom5Err = "";
+$organisatieLogoErr = "";
+$organisatieFooterErr = "";
+$organisatieAdresregelErr = "";
+$tabelEvenementKolom1Err = "";
+$tabelEvenementKolom2Err = "";
+$tabelEvenementKolom3Err = "";
+$tabelEvenementKolom4Err = "";
+$tabelEvenementKolom5Err = "";
+$tabelDeelnemerKolom1Err = "";
+$tabelDeelnemerKolom2Err = "";
+$tabelDeelnemerKolom3Err = "";
+$tabelDeelnemerKolom4Err = "";
+$tabelDeelnemerKolom5Err = "";
 $factuurBtwPercentageErr = "";
 $factuurBtwRegel1Err = "";
 $factuurBtwRegel2Err = "";
@@ -168,6 +168,9 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
     $organisatieEmail = $ini['organisatie']['email'];
     $organisatieWebsite = $ini['organisatie']['website'];
     $organisatieVoorwaarden = $ini['organisatie']['voorwaarden'];
+    $organisatieLogo = $ini['organisatie']['logo'];
+    $organisatieFooter = $ini['organisatie']['footer'];
+    $organisatieAdresregel = $ini['organisatie']['adresregel'];
 
     $bankIbanNummer = $ini['bank']['IBAN'];
     $bankBicNummer = $ini['bank']['BIC'];
@@ -177,23 +180,21 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
     $factuurVerzenden = $ini['pdf_factuur']['verzenden'];
     $factuurTitel = $ini['pdf_factuur']['titel'];
     $factuurNotatype = $ini['pdf_factuur']['notatype'];
-    $factuurLogo = $ini['pdf_factuur']['logo'];
-    $factuurFooter = $ini['pdf_factuur']['footer'];
-    $factuurAdresregel = $ini['pdf_factuur']['adresregel'];
-    $factuurEvenementKolom1 = $ini['pdf_factuur']['evenement-kolom1'];
-    $factuurEvenementKolom2 = $ini['pdf_factuur']['evenement-kolom2'];
-    $factuurEvenementKolom3 = $ini['pdf_factuur']['evenement-kolom3'];
-    $factuurEvenementKolom4 = $ini['pdf_factuur']['evenement-kolom4'];
-    $factuurEvenementKolom5 = $ini['pdf_factuur']['evenement-kolom5'];
-    $factuurDeelnemerKolom1 = $ini['pdf_factuur']['deelnemer-kolom1'];
-    $factuurDeelnemerKolom2 = $ini['pdf_factuur']['deelnemer-kolom2'];
-    $factuurDeelnemerKolom3 = $ini['pdf_factuur']['deelnemer-kolom3'];
-    $factuurDeelnemerKolom4 = $ini['pdf_factuur']['deelnemer-kolom4'];
-    $factuurDeelnemerKolom5 = $ini['pdf_factuur']['deelnemer-kolom5'];
     $factuurBtwPercentage = $ini['pdf_factuur']['BTW-percentage'];
     $factuurBtwRegel1 = $ini['pdf_factuur']['BTW-regel1'];
     $factuurBtwRegel2 = $ini['pdf_factuur']['BTW-regel2'];
     $factuurBtwRegel3 = $ini['pdf_factuur']['BTW-regel3'];
+
+    $tabelEvenementKolom1 = $ini['tabelkop']['evenement-kolom1'];
+    $tabelEvenementKolom2 = $ini['tabelkop']['evenement-kolom2'];
+    $tabelEvenementKolom3 = $ini['tabelkop']['evenement-kolom3'];
+    $tabelEvenementKolom4 = $ini['tabelkop']['evenement-kolom4'];
+    $tabelEvenementKolom5 = $ini['tabelkop']['evenement-kolom5'];
+    $tabelDeelnemerKolom1 = $ini['tabelkop']['deelnemer-kolom1'];
+    $tabelDeelnemerKolom2 = $ini['tabelkop']['deelnemer-kolom2'];
+    $tabelDeelnemerKolom3 = $ini['tabelkop']['deelnemer-kolom3'];
+    $tabelDeelnemerKolom4 = $ini['tabelkop']['deelnemer-kolom4'];
+    $tabelDeelnemerKolom5 = $ini['tabelkop']['deelnemer-kolom5'];
 
     $enableIDeal = $ini['ideal_payment']['toestaan'];
     $idealCheckout = $ini['ideal_payment']['checkout_script'];
@@ -286,46 +287,46 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             $validateOk += $setVar->name( $factuurNotatype )
                 ->onerror( $factuurNotatypeErr )
                 ->required( true )->go();
-            $validateOk += $setVar->name( $factuurLogo )
+            $validateOk += $setVar->name( $organisatieLogo )
                 ->validator( v::callback( 'file_exists' ) )
-                ->onerror( $factuurLogoErr )
+                ->onerror( $organisatieLogoErr )
                 ->errormessage( "Bestand niet gevonden" )
                 ->required( true )->go();
-            $validateOk += $setVar->name( $factuurFooter )
-                ->onerror( $factuurFooterErr )
+            $validateOk += $setVar->name( $organisatieFooter )
+                ->onerror( $organisatieFooterErr )
                 ->required( true )->go();
-            $validateOk += $setVar->name( $factuurAdresregel )
-                ->onerror( $factuurAdresregelErr )
+            $validateOk += $setVar->name( $organisatieAdresregel )
+                ->onerror( $organisatieAdresregelErr )
                 ->required( true )->go();
-            $validateOk += $setVar->name( $factuurEvenementKolom1 )
-                ->onerror( $factuurEvenementKolom1Err )
+            $validateOk += $setVar->name( $tabelEvenementKolom1 )
+                ->onerror( $tabelEvenementKolom1Err )
                 ->required( true )->go();
-            $validateOk += $setVar->name( $factuurEvenementKolom2 )
-                ->onerror( $factuurEvenementKolom2Err )
+            $validateOk += $setVar->name( $tabelEvenementKolom2 )
+                ->onerror( $tabelEvenementKolom2Err )
                 ->required( true )->go();
-            $validateOk += $setVar->name( $factuurEvenementKolom3 )
-                ->onerror( $factuurEvenementKolom3Err )
+            $validateOk += $setVar->name( $tabelEvenementKolom3 )
+                ->onerror( $tabelEvenementKolom3Err )
                 ->required( true )->go();
-            $validateOk += $setVar->name( $factuurEvenementKolom4 )
-                ->onerror( $factuurEvenementKolom4Err )
+            $validateOk += $setVar->name( $tabelEvenementKolom4 )
+                ->onerror( $tabelEvenementKolom4Err )
                 ->required( true )->go();
-            $validateOk += $setVar->name( $factuurEvenementKolom5 )
-                ->onerror( $factuurEvenementKolom5Err )
+            $validateOk += $setVar->name( $tabelEvenementKolom5 )
+                ->onerror( $tabelEvenementKolom5Err )
                 ->required( true )->go();
-            $validateOk += $setVar->name( $factuurDeelnemerKolom1 )
-                ->onerror( $factuurDeelnemerKolom1Err )
+            $validateOk += $setVar->name( $tabelDeelnemerKolom1 )
+                ->onerror( $tabelDeelnemerKolom1Err )
                 ->required( true )->go();
-            $validateOk += $setVar->name( $factuurDeelnemerKolom2 )
-                ->onerror( $factuurDeelnemerKolom2Err )
+            $validateOk += $setVar->name( $tabelDeelnemerKolom2 )
+                ->onerror( $tabelDeelnemerKolom2Err )
                 ->required( true )->go();
-            $validateOk += $setVar->name( $factuurDeelnemerKolom3 )
-                ->onerror( $factuurDeelnemerKolom3Err )
+            $validateOk += $setVar->name( $tabelDeelnemerKolom3 )
+                ->onerror( $tabelDeelnemerKolom3Err )
                 ->required( true )->go();
-            $validateOk += $setVar->name( $factuurDeelnemerKolom4 )
-                ->onerror( $factuurDeelnemerKolom4Err )
+            $validateOk += $setVar->name( $tabelDeelnemerKolom4 )
+                ->onerror( $tabelDeelnemerKolom4Err )
                 ->required( true )->go();
-            $validateOk += $setVar->name( $factuurDeelnemerKolom5 )
-                ->onerror( $factuurDeelnemerKolom5Err )
+            $validateOk += $setVar->name( $tabelDeelnemerKolom5 )
+                ->onerror( $tabelDeelnemerKolom5Err )
                 ->required( true )->go();
             $validateOk += $setVar->name( $factuurBtwPercentage )
                 ->formatter( 'prijs' )
@@ -351,23 +352,23 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             $setVar->name( $factuurVerzenden )->go();
             $setVar->name( $factuurTitel )->go();
             $setVar->name( $factuurNotatype )->go();
-            $setVar->name( $factuurLogo )->go();
-            $setVar->name( $factuurFooter )->go();
-            $setVar->name( $factuurAdresregel )->go();
-            $setVar->name( $factuurEvenementKolom1 )->go();
-            $setVar->name( $factuurEvenementKolom2 )->go();
-            $setVar->name( $factuurEvenementKolom3 )->go();
-            $setVar->name( $factuurEvenementKolom4 )->go();
-            $setVar->name( $factuurEvenementKolom5 )->go();
-            $setVar->name( $factuurDeelnemerKolom1 )->go();
-            $setVar->name( $factuurDeelnemerKolom2 )->go();
-            $setVar->name( $factuurDeelnemerKolom3 )->go();
-            $setVar->name( $factuurDeelnemerKolom4 )->go();
-            $setVar->name( $factuurDeelnemerKolom5 )->go();
+            $setVar->name( $organisatieLogo )->go();
+            $setVar->name( $organisatieFooter )->go();
+            $setVar->name( $organisatieAdresregel )->go();
             $setVar->name( $factuurBtwPercentage )->go();
             $setVar->name( $factuurBtwRegel1 )->go();
             $setVar->name( $factuurBtwRegel2 )->go();
             $setVar->name( $factuurBtwRegel3 )->go();
+            $setVar->name( $tabelEvenementKolom1 )->go();
+            $setVar->name( $tabelEvenementKolom2 )->go();
+            $setVar->name( $tabelEvenementKolom3 )->go();
+            $setVar->name( $tabelEvenementKolom4 )->go();
+            $setVar->name( $tabelEvenementKolom5 )->go();
+            $setVar->name( $tabelDeelnemerKolom1 )->go();
+            $setVar->name( $tabelDeelnemerKolom2 )->go();
+            $setVar->name( $tabelDeelnemerKolom3 )->go();
+            $setVar->name( $tabelDeelnemerKolom4 )->go();
+            $setVar->name( $tabelDeelnemerKolom5 )->go();
         }
        
 
@@ -499,6 +500,9 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             fprintf( $fp, 'email="%s"' . "\n", $organisatieEmail );
             fprintf( $fp, 'website="%s"' . "\n", $organisatieWebsite );
             fprintf( $fp, 'voorwaarden="%s"' . "\n", $organisatieVoorwaarden );
+            fprintf( $fp, 'logo="%s"' . "\n", $organisatieLogo );
+            fprintf( $fp, 'footer="%s"' . "\n", $organisatieFooter );
+            fprintf( $fp, 'adresregel="%s"' . "\n", $organisatieAdresregel );
             fprintf( $fp, ';' . "\n" );
             fprintf( $fp, '[bank]' . "\n" );
             fprintf( $fp, 'IBAN="%s"' . "\n", $bankIbanNummer );
@@ -510,25 +514,24 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             fprintf( $fp, 'verzenden="%s"' . "\n", $factuurVerzenden );
             fprintf( $fp, 'titel="%s"' . "\n", $factuurTitel );
             fprintf( $fp, 'notatype="%s"' . "\n", $factuurNotatype );
-            fprintf( $fp, 'logo="%s"' . "\n", $factuurLogo );
-            fprintf( $fp, 'footer="%s"' . "\n", $factuurFooter );
-            fprintf( $fp, 'adresregel="%s"' . "\n", $factuurAdresregel );
-            fprintf( $fp, 'evenement-kolom1="%s"' . "\n", $factuurEvenementKolom1 );
-            fprintf( $fp, 'evenement-kolom2="%s"' . "\n", $factuurEvenementKolom2 );
-            fprintf( $fp, 'evenement-kolom3="%s"' . "\n", $factuurEvenementKolom3 );
-            fprintf( $fp, 'evenement-kolom4="%s"' . "\n", $factuurEvenementKolom4 );
-            fprintf( $fp, 'evenement-kolom5="%s"' . "\n", $factuurEvenementKolom5 );
-            fprintf( $fp, ';' . "\n" );
-            fprintf( $fp, 'deelnemer-kolom1="%s"' . "\n", $factuurDeelnemerKolom1 );
-            fprintf( $fp, 'deelnemer-kolom2="%s"' . "\n", $factuurDeelnemerKolom2 );
-            fprintf( $fp, 'deelnemer-kolom3="%s"' . "\n", $factuurDeelnemerKolom3 );
-            fprintf( $fp, 'deelnemer-kolom4="%s"' . "\n", $factuurDeelnemerKolom4 );
-            fprintf( $fp, 'deelnemer-kolom5="%s"' . "\n", $factuurDeelnemerKolom5 );
             fprintf( $fp, ';' . "\n" );
             fprintf( $fp, 'BTW-percentage=%s' . "\n", $factuurBtwPercentage );
             fprintf( $fp, 'BTW-regel1="%s"' . "\n", $factuurBtwRegel1 );
             fprintf( $fp, 'BTW-regel2="%s"' . "\n", $factuurBtwRegel2 );
             fprintf( $fp, 'BTW-regel3="%s"' . "\n", $factuurBtwRegel3 );
+            fprintf( $fp, ';' . "\n" );
+            fprintf( $fp, '[tabelkop]' . "\n" );
+            fprintf( $fp, 'evenement-kolom1="%s"' . "\n", $tabelEvenementKolom1 );
+            fprintf( $fp, 'evenement-kolom2="%s"' . "\n", $tabelEvenementKolom2 );
+            fprintf( $fp, 'evenement-kolom3="%s"' . "\n", $tabelEvenementKolom3 );
+            fprintf( $fp, 'evenement-kolom4="%s"' . "\n", $tabelEvenementKolom4 );
+            fprintf( $fp, 'evenement-kolom5="%s"' . "\n", $tabelEvenementKolom5 );
+            fprintf( $fp, ';' . "\n" );
+            fprintf( $fp, 'deelnemer-kolom1="%s"' . "\n", $tabelDeelnemerKolom1 );
+            fprintf( $fp, 'deelnemer-kolom2="%s"' . "\n", $tabelDeelnemerKolom2 );
+            fprintf( $fp, 'deelnemer-kolom3="%s"' . "\n", $tabelDeelnemerKolom3 );
+            fprintf( $fp, 'deelnemer-kolom4="%s"' . "\n", $tabelDeelnemerKolom4 );
+            fprintf( $fp, 'deelnemer-kolom5="%s"' . "\n", $tabelDeelnemerKolom5 );
             fprintf( $fp, ';' . "\n" );
             fprintf( $fp, '[ideal_payment]' . "\n" );
             fprintf( $fp, 'toestaan="%s"' . "\n", $enableIDeal );
@@ -617,32 +620,32 @@ $smarty->assign( 'factuurTitel', $factuurTitel );
 $smarty->assign( 'factuurTitelErr', $factuurTitelErr );
 $smarty->assign( 'factuurNotatype', $factuurNotatype );
 $smarty->assign( 'factuurNotatypeErr', $factuurNotatypeErr );
-$smarty->assign( 'factuurLogo', $factuurLogo );
-$smarty->assign( 'factuurLogoErr', $factuurLogoErr );
-$smarty->assign( 'factuurFooter', $factuurFooter );
-$smarty->assign( 'factuurFooterErr', $factuurFooterErr );
-$smarty->assign( 'factuurAdresregel', $factuurAdresregel );
-$smarty->assign( 'factuurAdresregelErr', $factuurAdresregelErr );
-$smarty->assign( 'factuurEvenementKolom1', $factuurEvenementKolom1 );
-$smarty->assign( 'factuurEvenementKolom1Err', $factuurEvenementKolom1Err );
-$smarty->assign( 'factuurEvenementKolom2', $factuurEvenementKolom2 );
-$smarty->assign( 'factuurEvenementKolom2Err', $factuurEvenementKolom2Err );
-$smarty->assign( 'factuurEvenementKolom3', $factuurEvenementKolom3 );
-$smarty->assign( 'factuurEvenementKolom3Err', $factuurEvenementKolom3Err );
-$smarty->assign( 'factuurEvenementKolom4', $factuurEvenementKolom4 );
-$smarty->assign( 'factuurEvenementKolom4Err', $factuurEvenementKolom4Err );
-$smarty->assign( 'factuurEvenementKolom5', $factuurEvenementKolom5 );
-$smarty->assign( 'factuurEvenementKolom5Err', $factuurEvenementKolom5Err );
-$smarty->assign( 'factuurDeelnemerKolom1', $factuurDeelnemerKolom1 );
-$smarty->assign( 'factuurDeelnemerKolom1Err', $factuurDeelnemerKolom1Err );
-$smarty->assign( 'factuurDeelnemerKolom2', $factuurDeelnemerKolom2 );
-$smarty->assign( 'factuurDeelnemerKolom2Err', $factuurDeelnemerKolom2Err );
-$smarty->assign( 'factuurDeelnemerKolom3', $factuurDeelnemerKolom3 );
-$smarty->assign( 'factuurDeelnemerKolom3Err', $factuurDeelnemerKolom3Err );
-$smarty->assign( 'factuurDeelnemerKolom4', $factuurDeelnemerKolom4 );
-$smarty->assign( 'factuurDeelnemerKolom4Err', $factuurDeelnemerKolom4Err );
-$smarty->assign( 'factuurDeelnemerKolom5', $factuurDeelnemerKolom5 );
-$smarty->assign( 'factuurDeelnemerKolom5Err', $factuurDeelnemerKolom5Err );
+$smarty->assign( 'organisatieLogo', $organisatieLogo );
+$smarty->assign( 'organisatieLogoErr', $organisatieLogoErr );
+$smarty->assign( 'organisatieFooter', $organisatieFooter );
+$smarty->assign( 'organisatieFooterErr', $organisatieFooterErr );
+$smarty->assign( 'organisatieAdresregel', $organisatieAdresregel );
+$smarty->assign( 'organisatieAdresregelErr', $organisatieAdresregelErr );
+$smarty->assign( 'tabelEvenementKolom1', $tabelEvenementKolom1 );
+$smarty->assign( 'tabelEvenementKolom1Err', $tabelEvenementKolom1Err );
+$smarty->assign( 'tabelEvenementKolom2', $tabelEvenementKolom2 );
+$smarty->assign( 'tabelEvenementKolom2Err', $tabelEvenementKolom2Err );
+$smarty->assign( 'tabelEvenementKolom3', $tabelEvenementKolom3 );
+$smarty->assign( 'tabelEvenementKolom3Err', $tabelEvenementKolom3Err );
+$smarty->assign( 'tabelEvenementKolom4', $tabelEvenementKolom4 );
+$smarty->assign( 'tabelEvenementKolom4Err', $tabelEvenementKolom4Err );
+$smarty->assign( 'tabelEvenementKolom5', $tabelEvenementKolom5 );
+$smarty->assign( 'tabelEvenementKolom5Err', $tabelEvenementKolom5Err );
+$smarty->assign( 'tabelDeelnemerKolom1', $tabelDeelnemerKolom1 );
+$smarty->assign( 'tabelDeelnemerKolom1Err', $tabelDeelnemerKolom1Err );
+$smarty->assign( 'tabelDeelnemerKolom2', $tabelDeelnemerKolom2 );
+$smarty->assign( 'tabelDeelnemerKolom2Err', $tabelDeelnemerKolom2Err );
+$smarty->assign( 'tabelDeelnemerKolom3', $tabelDeelnemerKolom3 );
+$smarty->assign( 'tabelDeelnemerKolom3Err', $tabelDeelnemerKolom3Err );
+$smarty->assign( 'tabelDeelnemerKolom4', $tabelDeelnemerKolom4 );
+$smarty->assign( 'tabelDeelnemerKolom4Err', $tabelDeelnemerKolom4Err );
+$smarty->assign( 'tabelDeelnemerKolom5', $tabelDeelnemerKolom5 );
+$smarty->assign( 'tabelDeelnemerKolom5Err', $tabelDeelnemerKolom5Err );
 $smarty->assign( 'factuurBtwPercentage', $factuurBtwPercentage );
 $smarty->assign( 'factuurBtwPercentageErr', $factuurBtwPercentageErr );
 $smarty->assign( 'factuurBtwRegel1', $factuurBtwRegel1 );

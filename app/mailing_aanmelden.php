@@ -187,7 +187,7 @@
                         $unsubscribeLink = $url . '/mailing_afmelden.php?mail=' . $email . "&code=" . $code;
 
                         $ini = parse_ini_file( CONFIG_FILENAME, true );
-                        $adresRegel = '<div style="font-size:0.8em;">' . $ini['pdf_factuur']['adresregel'] . '</div>';
+                        $adresRegel = '<div style="font-size:0.8em;">' . $ini['organisatie']['adresregel'] . '</div>';
                     
                         $mailingTekst .= '<br/><br/><a href="' . $unsubscribeLink . '">afmelden bij deze nieuwsbrief</a><br/>' . $adresRegel;
                         

@@ -10,6 +10,9 @@ organisatienaam="Mijn Organisatie"
 email="admin@myorg.nl"
 website="https://www.myorg.nl"
 voorwaarden="https://www.myorg.nl/MyOrg-voorwaarden.php"
+logo="res/images/OctetLogo.png"
+footer="Mijn Organisatie is een Zeer Nuttige Organisatie (ZNO)"
+adresregel="Mijn Organisatie    Reuzenweg 14    2345 AB Monster    Tel:012 - 345 66 77    BTW nr:NL5 21 21 21 21 B21    KvK:0123 45678"
 ;
 [bank]
 IBAN="NL12 INGS 0345 6789 01"
@@ -21,9 +24,13 @@ aanmaken="nee"
 verzenden="nee"
 titel="ERAS overzicht"
 notatype="Overzicht"
-logo="res/images/OctetLogo.png"
-footer="Mijn Organisatie is een Zeer Nuttige Organisatie (ZNO)"
-adresregel="Mijn Organisatie    Reuzenweg 14    2345 AB Monster    Tel:012 - 345 66 77    BTW nr:NL5 21 21 21 21 B21    KvK:0123 45678"
+;
+BTW-percentage=21
+BTW-regel1="Exclusief BTW"
+BTW-regel2="BTW (21%)"
+BTW-regel3="Totaal incl. BTW"
+;
+[tabelkop]
 evenement-kolom1="Evenement"
 evenement-kolom2="Datum"
 evenement-kolom3="Aantal"
@@ -36,11 +43,6 @@ deelnemer-kolom3="Aantal"
 deelnemer-kolom4="à"
 deelnemer-kolom5="Prijs"
 ;
-BTW-percentage=21
-BTW-regel1="Exclusief BTW"
-BTW-regel2="BTW (21%)"
-BTW-regel3="Totaal incl. BTW"
-;
 [ideal_payment]
 toestaan="nee"
 checkout_script="../idealcheckout/checkout.php"
@@ -52,7 +54,7 @@ status_pending="html/ideal_onbekend.html"
 [betaling]
 incasso_tekst="<div align=left>U heeft gekozen voor betaling in termijnen. Ongeveer een week na uw inschrijving ontvangt u van ons per mail een incassoformulier waarmee u toestemming geeft. De incassodata verschillen per evenement, kijk hiervoor op de inschrijfpagina. Bij de eerste incasso wordt een eventuele annuleringsverzekering en de incassokosten volledig verrekend, de termijnbedragen worden op het incassoformulier vermeld</div>"
 contant_tekst="<div align=left>U kunt contant betalen bij de aanvang van het evenement</div>"
-voorwaarden="<div align=left>Uw betaling moet binnen een maand na aanmelding bij ons binnen zijn. Als uw iDeal betaling mislukt is dan kunt u het bedrag altijd via een gewone bankopdracht overmaken.<br><br>- Vermeld bij zelf overschrijven zorgvuldig de referentie. Hiermee kunnen we uw betaling aan uw inschrijving koppelen. Niet traceerbare betalingen worden teruggeboekt met mogelijk gevolgen voor uw inschrijving.<br><br>- Een eventuele betaling via iDeal is hier nog niet in verwerkt.</div>"
+voorwaarden="<div align=left>Uw betaling moet binnen een maand na aanmelding bij ons binnen zijn. Als uw iDeal betaling mislukt is dan kunt u het bedrag altijd via een gewone bankopdracht overmaken.<br><br>- Vermeld bij zelf overschrijven zorgvuldig uw inschrijfnummer. Hiermee kunnen we uw betaling aan uw inschrijving koppelen. Niet traceerbare betalingen worden teruggeboekt met mogelijk gevolgen voor uw inschrijving.<br><br>- Een eventuele betaling via iDeal is hier nog niet in verwerkt.</div>"
 ;
 [verzekering]
 toestaan="ja"
