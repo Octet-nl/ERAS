@@ -200,7 +200,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
         $optieTekst = $evenement->getNaam();
         if ( !isNul( $evenement->getPrijs() ) )
         {
-            $optieTekst .= " &euro;" .$evenement->getPrijs();
+            $optieTekst .= ", " . geldHtml( $evenement->getPrijs() );
         }
         $optieTekst .= "<br/>";
 
@@ -237,7 +237,6 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
         foreach ( $deelnemerOpties as $deelnemerOptie )
         {
             $logger->dump( $deelnemerOptie );
-            //$optie = OptieQuery::create()->findPk( $deelnemerOptie->getOptieId() );
 
             if ( $deelnemerOptie['groep'] != "" )
             {
@@ -254,17 +253,15 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
             }
             if ( $deelnemerOptie['DeelnemerHeeftOptie.waarde'] != $deelnemerOptie['DeelnemerHeeftOptie.optie_id'] )
             {
-                $optieTekst .= $deelnemerOptie['DeelnemerHeeftOptie.waarde'] . ", ";
+                $optieTekst .= $deelnemerOptie['DeelnemerHeeftOptie.waarde'];
             }
             if ( $deelnemerOptie['DeelnemerHeeftOptie.prijs'] != 0 )
             {
-                $optieTekst .= " &euro;" . $deelnemerOptie['DeelnemerHeeftOptie.prijs'];
+                $optieTekst .= ", " . geldHtml( $deelnemerOptie['DeelnemerHeeftOptie.prijs'] );
             }
             $optieTekst .=  "<br/>";
         }
         $deelnemer_lijst["opties"] = $optieTekst;
-        
-
         array_push( $deelnemers_lijst, $deelnemer_lijst );
 
         $totaalprijs += $deelnemer->getTotaalbedrag();
@@ -300,7 +297,9 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
                                 'InschrijvingHeeftOptie.waarde', 
                                 'InschrijvingHeeftOptie.optie_id', 
                                 'InschrijvingHeeftOptie.prijs', 
-                                'groep', 
+                                'groep',
+                                'prijs',
+                                'optietype', 
                                 'tekst_voor' ))
                 ->find();                
         }
@@ -333,12 +332,22 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
             }
             if ( $inschrijvingsOptie['InschrijvingHeeftOptie.waarde'] != $inschrijvingsOptie['InschrijvingHeeftOptie.optie_id'] )
             {
-                $optieTekst .= $inschrijvingsOptie['InschrijvingHeeftOptie.waarde'] . ", ";
+                $optieTekst .= $inschrijvingsOptie['InschrijvingHeeftOptie.waarde'];
             }
-            if ( !isNul( $inschrijvingsOptie['InschrijvingHeeftOptie.prijs'] ) )
+            if ( !isNul( $inschrijvingsOptie['prijs'] ) )
             {
-                $optieTekst .= " &euro;" . $inschrijvingsOptie['InschrijvingHeeftOptie.prijs'];
-                $inschrijvingsprijs += $inschrijvingsOptie['InschrijvingHeeftOptie.prijs'];
+                if ($inschrijvingsOptie['optietype'] == OPTIETYPE_AANTAL )
+                {
+                    $optieTekst .= ", " . geldHtml( $inschrijvingsOptie['InschrijvingHeeftOptie.waarde'] * $inschrijvingsOptie['prijs'] );
+                    $inschrijvingsprijs += $inschrijvingsOptie['InschrijvingHeeftOptie.waarde'] * $inschrijvingsOptie['prijs'];
+                }
+                else
+                {
+                    $optieTekst .= ", " . geldHtml( $inschrijvingsOptie['prijs'] );
+                    $inschrijvingsprijs += $inschrijvingsOptie['prijs'];
+                }
+                $totaalprijs += $inschrijvingsprijs;
+
             }
             $optieTekst .=  "<br/>";
         }
@@ -351,7 +360,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
             $prijs = $annuleringsverzekering->bereken( $totaalprijs, $inschrijving->getAnnuleringsverzekering() );
             if ( !isNul($prijs) )
             {
-                $optieTekst .= ", &euro;" . number_format( $prijs, 2, ",", "." );
+                $optieTekst .= ", " . geldHtml( $prijs );
                 $totaalprijs += $prijs;
                 $inschrijvingsprijs += $prijs;
             }
@@ -362,7 +371,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
         $optieTekst .= "Betaalwijze: " . $betaalwijze->getNaam();
         if ( !isNul( $betaalwijze->getKosten() ) )
         {
-            $optieTekst .= ", &euro;" . $betaalwijze->getKosten();
+            $optieTekst .= ", " . geldHtml( $betaalwijze->getKosten() );
             $totaalprijs += $betaalwijze->getKosten();
             $inschrijvingsprijs += $betaalwijze->getKosten();
         }

@@ -603,7 +603,7 @@ class InschrijvingBevestiging
     }
 
         $messageRegel = "<tr><td><strong>Totaalbedrag: </strong></td>";
-        $messageRegel .= "<td class='rig'>" . geldHtml( $totaalprijs ) . "</td></tr>";
+        $messageRegel .= "<td class='rig'><strong>" . geldHtml( $totaalprijs ) . "</strong></td></tr>";
         $this->messageBody .= $messageRegel;
 
         $this->logger->verbose( $this->messageBody );
@@ -668,7 +668,7 @@ class InschrijvingBevestiging
         if ( $this->nogTeBetalenBedrag > 0 )
         {
             $messageRegel = "<tr><td><strong>U moet nog betalen:</strong>:</td>";
-            $messageRegel .= "<td class='rig'>" . geldHtml( $this->nogTeBetalenBedrag ) . "</td></tr>";
+            $messageRegel .= "<td class='rig'><strong>" . geldHtml( $this->nogTeBetalenBedrag ) . "</strong></td></tr>";
             $this->messageBody .= $messageRegel;
         }
         else
