@@ -227,7 +227,7 @@ class InschrijvingBevestiging
         $categorie = CategorieQuery::create()->filterByCode( $evenement->getCategorie() )->findOne();
         
         $this->messageBody .= "<h4>Gegevens evenement</h4>";
-        $this->messageBody .= "<br/><div><span class='cap'>Uw inschrijfnummer is: " . $this->inschrijfnummer . "</span></div><br/><br/>";
+        $this->messageBody .= "<br/><div><span style='border: 0.0625em solid; padding: 0.44em 0.3em 0.44em 0.3em; border-radius: 0.20em;'>Uw inschrijfnummer is: " . $this->inschrijfnummer . "</span></div><br/><br/>";
 
         $deelnemers = DeelnemerQuery::create()->filterByInschrijvingId( $this->inschrijfnummer )->find();
         $this->aantalDeelnemers = sizeof( $deelnemers );
@@ -235,34 +235,33 @@ class InschrijvingBevestiging
         $this->evenementPrijs = $evenement->getPrijs();
         $totaalprijs = $this->aantalDeelnemers * $this->evenementPrijs;
 
-        $this->messageBody .= "<table>
+        $this->messageBody .= "<table style='margin-left: 5em; font-family: sans-serif; font-size: 0.85em; width: 60%%; border-collapse: collapse;'>
         <tr>
-          <th>" . $ini['tabelkop']['evenement-kolom1'] . "</th>
-          <th>" . $ini['tabelkop']['evenement-kolom2'] . "</th>
-          <th>" . $ini['tabelkop']['evenement-kolom3'] . "</th>
-          <th>" . $ini['tabelkop']['evenement-kolom4'] . "</th>
-          <th>" . $ini['tabelkop']['evenement-kolom5'] . "</th>
+          <th style='padding: 0.44em 0.3em 0.44em 0.3em; background-color: lightgray; border-radius: 0.20em; color: black;'>" . $ini['tabelkop']['evenement-kolom1'] . "</th>
+          <th style='padding: 0.44em 0.3em 0.44em 0.3em; background-color: lightgray; border-radius: 0.20em; color: black;'>" . $ini['tabelkop']['evenement-kolom2'] . "</th>
+          <th style='padding: 0.44em 0.3em 0.44em 0.3em; background-color: lightgray; border-radius: 0.20em; color: black;'>" . $ini['tabelkop']['evenement-kolom3'] . "</th>
+          <th style='padding: 0.44em 0.3em 0.44em 0.3em; background-color: lightgray; border-radius: 0.20em; color: black;'>" . $ini['tabelkop']['evenement-kolom4'] . "</th>
+          <th style='padding: 0.44em 0.3em 0.44em 0.3em; background-color: lightgray; border-radius: 0.20em; color: black;'>" . $ini['tabelkop']['evenement-kolom5'] . "</th>
         </tr>
         <tr>
-          <td>" . $categorie->getNaam() . " " . $this->evenementNaam . "</td>
-          <td class='cen'>" . $this->evenementDatum . "</td>
-          <td class='cen'>" . $this->aantalDeelnemers . "</td>
-          <td class='rig'>" . geldHtml( $evenement->getPrijs() ) . "</td>
-          <td class='rig'>" . geldHtml( $totaalprijs ) . "</td>
+          <td style='border-left: 1px solid; border-right: 1px solid; border-bottom: 1px solid; border-color: #dddddd #444444; padding: 0.3em 0.3em 0.3em 0.3em;'>" . $categorie->getNaam() . " " . $this->evenementNaam . "</td>
+          <td style='border-left: 1px solid; border-right: 1px solid; border-bottom: 1px solid; border-color: #dddddd #444444; padding: 0.3em 0.3em 0.3em 0.3em;text-align: center;'>" . $this->evenementDatum . "</td>
+          <td style='border-left: 1px solid; border-right: 1px solid; border-bottom: 1px solid; border-color: #dddddd #444444; padding: 0.3em 0.3em 0.3em 0.3em;text-align: center;'>" . $this->aantalDeelnemers . "</td>
+          <td style='border-left: 1px solid; border-right: 1px solid; border-bottom: 1px solid; border-color: #dddddd #444444; padding: 0.3em 0.3em 0.3em 0.3em;text-align: right;'>" . geldHtml( $evenement->getPrijs() ) . "</td>
+          <td style='border-left: 1px solid; border-right: 1px solid; border-bottom: 1px solid; border-color: #dddddd #444444; padding: 0.3em 0.3em 0.3em 0.3em;text-align: right;'>" . geldHtml( $totaalprijs ) . "</td>
         </tr>
         </table><br/>";
 
         $this->messageBody .= "<h4>Opties en bijzonderheden</h4>";
 
-        $this->messageBody .= "<table>
+        $this->messageBody .= "<table style='margin-left: 5em; font-family: sans-serif; font-size: 0.85em; width: 60%%; border-collapse: collapse;>'
         <tr>
-          <th>" . $ini['tabelkop']['deelnemer-kolom1'] . "</th>
-          <th>" . $ini['tabelkop']['deelnemer-kolom2'] . "</th>
-          <th>" . $ini['tabelkop']['deelnemer-kolom3'] . "</th>
-          <th>" . $ini['tabelkop']['deelnemer-kolom4'] . "</th>
-          <th>" . $ini['tabelkop']['deelnemer-kolom5'] . "</th>
-        </tr>
-        <tr>";
+          <th style='padding: 0.44em 0.3em 0.44em 0.3em; background-color: lightgray; border-radius: 0.20em; color: black;'>" . $ini['tabelkop']['deelnemer-kolom1'] . "</th>
+          <th style='padding: 0.44em 0.3em 0.44em 0.3em; background-color: lightgray; border-radius: 0.20em; color: black;'>" . $ini['tabelkop']['deelnemer-kolom2'] . "</th>
+          <th style='padding: 0.44em 0.3em 0.44em 0.3em; background-color: lightgray; border-radius: 0.20em; color: black;'>" . $ini['tabelkop']['deelnemer-kolom3'] . "</th>
+          <th style='padding: 0.44em 0.3em 0.44em 0.3em; background-color: lightgray; border-radius: 0.20em; color: black;'>" . $ini['tabelkop']['deelnemer-kolom4'] . "</th>
+          <th style='padding: 0.44em 0.3em 0.44em 0.3em; background-color: lightgray; border-radius: 0.20em; color: black;'>" . $ini['tabelkop']['deelnemer-kolom5'] . "</th>
+        </tr>";
 
         foreach ( $deelnemers as $deelnemer )
         {
@@ -307,7 +306,7 @@ class InschrijvingBevestiging
 
                 foreach ( $opties as $optie )
                 {
-                    $messageRegel = "<td>" . $deelnemerNaam . "</td>";
+                    $messageRegel = "<tr><td style='border-left: 1px solid; border-right: 1px solid; border-bottom: 1px solid; border-color: #dddddd #444444; padding: 0.3em 0.3em 0.3em 0.3em;'>" . $deelnemerNaam . "</td>";
                     $deelnemerNaam = "";
 
                     $this->logger->debug( "Deelnemer optie " . $optie->getId() );
@@ -397,10 +396,10 @@ class InschrijvingBevestiging
                             $prijs .= geldHtml( $deelnemerOptie->getWaarde() );
                         }
                     }
-                    $messageRegel .= "<td>" . $omschrijving . "</td>";
-                    $messageRegel .= "<td class='cen'>" . $aantal . "</td>";
-                    $messageRegel .= "<td class='rig'>" . $a . "</td>";
-                    $messageRegel .= "<td class='rig'>" . $prijs . "</td>";
+                    $messageRegel .= "<td style='border-left: 1px solid; border-right: 1px solid; border-bottom: 1px solid; border-color: #dddddd #444444; padding: 0.3em 0.3em 0.3em 0.3em;'>" . $omschrijving . "</td>";
+                    $messageRegel .= "<td style='border-left: 1px solid; border-right: 1px solid; border-bottom: 1px solid; border-color: #dddddd #444444; padding: 0.3em 0.3em 0.3em 0.3em;text-align: center;'>" . $aantal . "</td>";
+                    $messageRegel .= "<td style='border-left: 1px solid; border-right: 1px solid; border-bottom: 1px solid; border-color: #dddddd #444444; padding: 0.3em 0.3em 0.3em 0.3em;text-align: right;'>" . $a . "</td>";
+                    $messageRegel .= "<td style='border-left: 1px solid; border-right: 1px solid; border-bottom: 1px solid; border-color: #dddddd #444444; padding: 0.3em 0.3em 0.3em 0.3em;text-align: right;'>" . $prijs . "</td>";
 
                     $this->logger->debug("deelnemerregel: " . $messageRegel );
                     $this->messageBody .= $messageRegel;
@@ -410,12 +409,12 @@ class InschrijvingBevestiging
 
                 if ( $this->aantalDeelnemers > 1 )
                 {
-                    $messageRegel = "<td></td>";
+                    $messageRegel = "<tr><td style='border-left: 1px solid; border-right: 1px solid; border-bottom: 1px solid; border-color: #dddddd #444444; padding: 0.3em 0.3em 0.3em 0.3em;'</td>";
                     $messageRegel .= "<td style='font-size: 0.8em;'>Deze deelnemer:<br/>Totaalprijs opties: " . geldHtml($deelnemertotaal) . "
                     ,<br/>Inclusief evenementprijs: " . geldHtml($this->evenementPrijs+$deelnemertotaal) . "</td>";
-                    $messageRegel .= "<td></td>";
-                    $messageRegel .= "<td></td>";
-                    $messageRegel .= "<td></td>";
+                    $messageRegel .= "<td style='border-left: 1px solid; border-right: 1px solid; border-bottom: 1px solid; border-color: #dddddd #444444; padding: 0.3em 0.3em 0.3em 0.3em;'</td>";
+                    $messageRegel .= "<td style='border-left: 1px solid; border-right: 1px solid; border-bottom: 1px solid; border-color: #dddddd #444444; padding: 0.3em 0.3em 0.3em 0.3em;'</td>";
+                    $messageRegel .= "<td style='border-left: 1px solid; border-right: 1px solid; border-bottom: 1px solid; border-color: #dddddd #444444; padding: 0.3em 0.3em 0.3em 0.3em;'</td>";
                     $this->messageBody .= $messageRegel;
                     $this->messageBody .= "</tr>";
                 }
@@ -453,7 +452,7 @@ class InschrijvingBevestiging
             foreach ( $opties as $optie )
             {
                 $messageRegel = "<tr>";
-                $messageRegel .= "<td>" . $deelnemerNaam . "</td>";
+                $messageRegel .= "<td style='border-left: 1px solid; border-right: 1px solid; border-bottom: 1px solid; border-color: #dddddd #444444; padding: 0.3em 0.3em 0.3em 0.3em;'>" . $deelnemerNaam . "</td>";
                 $deelnemerNaam = "";
 
                 $omschrijving = "";
@@ -528,10 +527,10 @@ class InschrijvingBevestiging
                         }
                     }
                 }
-                $messageRegel .= "<td>" . $omschrijving . "</td>";
-                $messageRegel .= "<td class='cen'>" . $aantal . "</td>";
-                $messageRegel .= "<td class='rig'>" . $a . "</td>";
-                $messageRegel .= "<td class='rig'>" . $prijs . "</td>";
+                $messageRegel .= "<td style='border-left: 1px solid; border-right: 1px solid; border-bottom: 1px solid; border-color: #dddddd #444444; padding: 0.3em 0.3em 0.3em 0.3em;'>" . $omschrijving . "</td>";
+                $messageRegel .= "<td style='border-left: 1px solid; border-right: 1px solid; border-bottom: 1px solid; border-color: #dddddd #444444; padding: 0.3em 0.3em 0.3em 0.3em;text-align: center;'>" . $aantal . "</td>";
+                $messageRegel .= "<td style='border-left: 1px solid; border-right: 1px solid; border-bottom: 1px solid; border-color: #dddddd #444444; padding: 0.3em 0.3em 0.3em 0.3em;text-align: right;'>" . $a . "</td>";
+                $messageRegel .= "<td style='border-left: 1px solid; border-right: 1px solid; border-bottom: 1px solid; border-color: #dddddd #444444; padding: 0.3em 0.3em 0.3em 0.3em;text-align: right;'>" . $prijs . "</td>";
 
                 $this->logger->debug("inschrijvingsregel: " . $messageRegel );
                 $this->messageBody .= $messageRegel;
@@ -542,14 +541,14 @@ class InschrijvingBevestiging
 
         $this->messageBody .= "<h4>Betaling</h4>";
 
-        $this->messageBody .= "<table>
+        $this->messageBody .= "<table style='margin-left: 5em; font-family: sans-serif; font-size: 0.85em; width: 60%%; border-collapse: collapse;'
         <tr>
           <th>Omschrijving</th>
           <th>Bedrag</th>
         </tr>";
 
-        $messageRegel = "<tr><td><strong>Subtotaal:<strong</td>";
-        $messageRegel .= "<td class='rig'>" . geldHtml( $totaalprijs ) . "</td></tr>";
+        $messageRegel = "<tr><td style='border-left: 1px solid; border-right: 1px solid; border-bottom: 1px solid; border-color: #dddddd #444444; padding: 0.3em 0.3em 0.3em 0.3em;'<strong>Subtotaal:</strong></td>";
+        $messageRegel .= "<td style='border-left: 1px solid; border-right: 1px solid; border-bottom: 1px solid; border-color: #dddddd #444444; padding: 0.3em 0.3em 0.3em 0.3em;text-align: right;'>" . geldHtml( $totaalprijs ) . "</td></tr>";
         $this->messageBody .= $messageRegel;
 
         $betaling = $inschrijving->getBetaalwijze();
@@ -566,8 +565,8 @@ class InschrijvingBevestiging
                 $avpremie = $annuleringsverzekering->bereken( $totaalprijs, $inschrijving->getAnnuleringsverzekering() );
                 $totaalprijs += $avpremie;
 
-                $messageRegel = "<tr><td>Annuleringsverzekering: " . annuleringsverzekeringNaam( $inschrijving->getAnnuleringsverzekering() ) . ", premie:</td>";
-                $messageRegel .= "<td class='rig'>" . geldHtml( $avpremie ) . "</td></tr>";
+                $messageRegel = "<tr><td style='border-left: 1px solid; border-right: 1px solid; border-bottom: 1px solid; border-color: #dddddd #444444; padding: 0.3em 0.3em 0.3em 0.3em;'Annuleringsverzekering: " . annuleringsverzekeringNaam( $inschrijving->getAnnuleringsverzekering() ) . ", premie:</td>";
+                $messageRegel .= "<td style='border-left: 1px solid; border-right: 1px solid; border-bottom: 1px solid; border-color: #dddddd #444444; padding: 0.3em 0.3em 0.3em 0.3em;text-align: right;'>" . geldHtml( $avpremie ) . "</td></tr>";
                 $this->messageBody .= $messageRegel;
         
                 if ( $inschrijving->getAnnuleringsverzekering() != ANNULERINGSVERZEKERING_GEEN )
@@ -614,13 +613,13 @@ class InschrijvingBevestiging
 
             $totaalprijs += $wijze->getKosten();
 
-            $messageRegel = "<tr><td>" ."Betaalwijze: " . $wijze->getNaam() . "<br/>" . $naam . "</td>";
-            $messageRegel .= "<td class='rig'>" . geldHtml( $wijze->getKosten() ) . "</td></tr>";
+            $messageRegel = "<tr><td style='border-left: 1px solid; border-right: 1px solid; border-bottom: 1px solid; border-color: #dddddd #444444; padding: 0.3em 0.3em 0.3em 0.3em;'>" ."Betaalwijze: " . $wijze->getNaam() . "<br/>" . $naam . "</td>";
+            $messageRegel .= "<td style='border-left: 1px solid; border-right: 1px solid; border-bottom: 1px solid; border-color: #dddddd #444444; padding: 0.3em 0.3em 0.3em 0.3em;text-align: right;'>" . geldHtml( $wijze->getKosten() ) . "</td></tr>";
             $this->messageBody .= $messageRegel;
     }
 
-        $messageRegel = "<tr><td><strong>Totaalbedrag: </strong></td>";
-        $messageRegel .= "<td class='rig'><strong>" . geldHtml( $totaalprijs ) . "</strong></td></tr>";
+        $messageRegel = "<tr><td style='border-left: 1px solid; border-right: 1px solid; border-bottom: 1px solid; border-color: #dddddd #444444; padding: 0.3em 0.3em 0.3em 0.3em;'<strong>Totaalbedrag: </strong></td>";
+        $messageRegel .= "<td style='border-left: 1px solid; border-right: 1px solid; border-bottom: 1px solid; border-color: #dddddd #444444; padding: 0.3em 0.3em 0.3em 0.3em;text-align: right;'><strong>" . geldHtml( $totaalprijs ) . "</strong></td></tr>";
         $this->messageBody .= $messageRegel;
 
         $this->logger->verbose( $this->messageBody );
@@ -630,8 +629,8 @@ class InschrijvingBevestiging
 
         if ( rondNul( $this->reedsBetaaldBedrag ) > 0 )
         {
-            $messageRegel = "<tr><td>U heeft reeds betaald:</td>";
-            $messageRegel .= "<td class='rig'>" . geldHtml( $this->reedsBetaaldBedrag ) . "</td></tr>";
+            $messageRegel = "<tr><td style='border-left: 1px solid; border-right: 1px solid; border-bottom: 1px solid; border-color: #dddddd #444444; padding: 0.3em 0.3em 0.3em 0.3em;'U heeft reeds betaald:</td>";
+            $messageRegel .= "<td style='border-left: 1px solid; border-right: 1px solid; border-bottom: 1px solid; border-color: #dddddd #444444; padding: 0.3em 0.3em 0.3em 0.3em;text-align: right;'>" . geldHtml( $this->reedsBetaaldBedrag ) . "</td></tr>";
             $this->messageBody .= $messageRegel;
         }
 
@@ -676,22 +675,22 @@ class InschrijvingBevestiging
             }
             if ( $temp != "" )
             {
-                $messageRegel = "<tr><td>" . $temp . "</td>";
-                $messageRegel .= "<td></td></tr>";
+                $messageRegel = "<tr><td style='border-left: 1px solid; border-right: 1px solid; border-bottom: 1px solid; border-color: #dddddd #444444; padding: 0.3em 0.3em 0.3em 0.3em;'>" . $temp . "</td>";
+                $messageRegel .= "<td style='border-left: 1px solid; border-right: 1px solid; border-bottom: 1px solid; border-color: #dddddd #444444; padding: 0.3em 0.3em 0.3em 0.3em;'</td></tr>";
                 $this->messageBody .= $messageRegel;
             }
         }
 
         if ( $this->nogTeBetalenBedrag > 0 )
         {
-            $messageRegel = "<tr><td><strong>U moet nog betalen:</strong>:</td>";
-            $messageRegel .= "<td class='rig'><strong>" . geldHtml( $this->nogTeBetalenBedrag ) . "</strong></td></tr>";
+            $messageRegel = "<tr><td style='border-left: 1px solid; border-right: 1px solid; border-bottom: 1px solid; border-color: #dddddd #444444; padding: 0.3em 0.3em 0.3em 0.3em;'<strong>U moet nog betalen:</strong>:</td>";
+            $messageRegel .= "<td style='border-left: 1px solid; border-right: 1px solid; border-bottom: 1px solid; border-color: #dddddd #444444; padding: 0.3em 0.3em 0.3em 0.3em;text-align: right;'><strong>" . geldHtml( $this->nogTeBetalenBedrag ) . "</strong></td></tr>";
             $this->messageBody .= $messageRegel;
         }
         else
         {
-            $messageRegel = "<tr><td>Het volledige bedrag is voldaan</td>";
-            $messageRegel .= "<td class='rig'></td></tr>";
+            $messageRegel = "<tr><td style='border-left: 1px solid; border-right: 1px solid; border-bottom: 1px solid; border-color: #dddddd #444444; padding: 0.3em 0.3em 0.3em 0.3em;'Het volledige bedrag is voldaan</td>";
+            $messageRegel .= "<td style='border-left: 1px solid; border-right: 1px solid; border-bottom: 1px solid; border-color: #dddddd #444444; padding: 0.3em 0.3em 0.3em 0.3em;text-align: right;'></td></tr>";
             $this->messageBody .= $messageRegel;
         }
 
