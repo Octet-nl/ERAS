@@ -266,6 +266,7 @@ class InschrijvingBevestiging
 
         foreach ( $deelnemers as $deelnemer )
         {
+            $deelnemertotaal = 0;
             $persoon = PersoonQuery::create()->findPk( $deelnemer->getPersoonId() );
 
             $deelnemerNaam = $persoon->getVoornaam() . " " . $persoon->getTussenvoegsel() . " " . $persoon->getAchternaam();
@@ -342,6 +343,7 @@ class InschrijvingBevestiging
                             }
                         }
                         $totaalprijs += $optie->getPrijs();
+                        $deelnemertotaal += $optie->getPrijs();
                     }
                     else
                     {
@@ -360,6 +362,7 @@ class InschrijvingBevestiging
                                     $prijs = geldHtml( $optie->getPrijs() * $deelnemerOptie->getWaarde() );
 
                                     $totaalprijs += $optie->getPrijs() * $deelnemerOptie->getWaarde();
+                                    $deelnemertotaal += $optie->getPrijs() * $deelnemerOptie->getWaarde();
                                 }
                             }
                             else
@@ -371,6 +374,7 @@ class InschrijvingBevestiging
                                         $regel = array( "deelnemer" => $deelnemerNaam, "naam" => $optie->getTekstVoor(), "omschrijving" => "", "aantal" => 1, "prijs" => $optie->getPrijs() );
                                         array_push( $this->factuurArray, $regel );
                                         $totaalprijs += $optie->getPrijs();
+                                        $deelnemertotaal += $optie->getPrijs();
                                         $a = geldHtml( $optie->getPrijs() );
                                         $aantal = "1";
                                         $prijs = geldHtml( $optie->getPrijs() );
@@ -382,6 +386,7 @@ class InschrijvingBevestiging
                                     $aantal = "1";
                                     $prijs = geldHtml( $optie->getPrijs() );
                                     $totaalprijs += $optie->getPrijs();
+                                    $deelnemertotaal += $optie->getPrijs();
                                 }
 
                                 $omschrijving .= ": &emsp; &emsp; " . $deelnemerOptie->getWaarde();
@@ -401,6 +406,18 @@ class InschrijvingBevestiging
                     $this->messageBody .= $messageRegel;
                     $this->messageBody .= "</tr>";
 
+                }
+
+                if ( $this->aantalDeelnemers > 1 )
+                {
+                    $messageRegel = "<td></td>";
+                    $messageRegel .= "<td style='font-size: 0.8em;'>Deze deelnemer:<br/>Totaalprijs opties: " . geldHtml($deelnemertotaal) . "
+                    ,<br/>Inclusief evenementprijs: " . geldHtml($this->evenementPrijs+$deelnemertotaal) . "</td>";
+                    $messageRegel .= "<td></td>";
+                    $messageRegel .= "<td></td>";
+                    $messageRegel .= "<td></td>";
+                    $this->messageBody .= $messageRegel;
+                    $this->messageBody .= "</tr>";
                 }
             }
         }
@@ -728,7 +745,6 @@ class InschrijvingBevestiging
         }
 
         $this->ondersteRegels =  $ondersteRegels;
-
 
         //////////////////////////////////////////////////////
         // Controle of de nu berekende totaalprijs gelijk is aan wat de website berekend heeft.
