@@ -202,6 +202,12 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                 $contactlog->save();
 
                 $con->commit();
+
+                // Terugkeeradres maar wel van stack verwijderen
+                $terug =  $history->get( );
+                header( "Location:inschrijving_gegevens.php?id=" . $inschrijfnummer );
+                exit;
+        
             }
             catch ( \Exception $e )
             {
@@ -220,9 +226,9 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
 
     if ( isset( $_POST['terug'] ) )
     {
+        // Terugkeeradres maar wel van stack verwijderen
         $terug =  $history->get( );
-        $logger->debug( "History get: " . $terug );
-        header( "Location:" . $terug );
+        header( "Location:inschrijving_gegevens.php?id=" . $inschrijfnummer );
         exit;
     }
 

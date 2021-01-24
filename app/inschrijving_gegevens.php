@@ -63,6 +63,7 @@ $inschrijving_lijst = array();
 
 $sessie = new Sessie();
 
+$history = new History();
 $autorisatie = new Autorisatie();
 $autorisatie->setNotAuth( "login.php" );
 $autorisatie->validate( AUTORISATIE_STATUS_MEDEWERKER );
@@ -74,7 +75,9 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
     $logger->dump( $_GET );
     $logger->dump( $_SESSION );
 
-//    unset( $_SESSION["inschrijving"] );
+    $history->set();
+
+    //    unset( $_SESSION["inschrijving"] );
 
     $isget = '1';
     if ( isset( $_GET['id'] ) )
@@ -220,7 +223,9 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
 
     if ( isset( $_POST['terug'] ) )
     {
-        header( "Location:deelnemer_lijst.php" );
+        $terug =  $history->get( );
+        $logger->debug( "History get: " . $terug );
+        header( "Location:" . $terug );
         exit;
     }
 
