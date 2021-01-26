@@ -67,6 +67,7 @@ $signalError = false;
 
 $evt = 0;
 $evenementnaam = "";
+$verwijderbaar = 0;
 
 $opties = null;
 
@@ -268,6 +269,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
                     if ( sizeof( $opties ) == 0 )
                     {
                         $opt_lijst["kanVerwijderd"] = "1";
+                        $verwijderbaar += 1;
                     }
                 }
             }
@@ -531,6 +533,7 @@ $smarty->assign( 'buttonitemtekst', $buttonitemtekst );
 $smarty->assign( 'buttonitemname', $buttonitemname );
 $smarty->assign( 'zonderVragenCheck', $zonderVragenCheck );
 $smarty->assign( 'Opties', $optie_lijst );
+$smarty->assign( 'verwijderbaar', $verwijderbaar );
 $smarty->assign( 'filterlijst', $filter_lijst );
 $smarty->assign( 'evenement', $evt );
 $smarty->assign( 'evenementenLijst', $evenement_lijst );

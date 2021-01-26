@@ -36,11 +36,12 @@
         </tr>
         </table>
 
-       <div style="float: right;">
-        <input type="checkbox"  name="zonderVragen" id="zonderVragen" {$zonderVragenCheck}>
-        <label for="zonderVragen">Verwijder zonder vragen</label>
-      </div>
-        
+        {if $verwijderbaar > 1}
+          <div style="float: right;">
+            <input type="checkbox"  name="zonderVragen" id="zonderVragen" {$zonderVragenCheck}>
+            <label for="zonderVragen">Verwijder zonder vragen</label>
+          </div>
+        {/if}
         <table>
           <thead>
           <tr>
