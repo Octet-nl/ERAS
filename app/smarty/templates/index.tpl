@@ -112,11 +112,11 @@
 
         </ul>
         {if !$loggedin}
-          <a href=login.php title="Aanmelden" style="float: right;"><img src="res/icons/login.png" alt="Login" height="36" width="36"></a>
+          <a href=login.php title="Aanmelden" style="float: right;"><img src="res/icons/login.png" alt="Login" height="36" width="36">Aanmelden</a>
         {else}
-          <a href=logout.php title="Afmelden" style="float: right;"><img src="res/icons/logout.png" alt="Logout" height="36" width="36"></a>
+          <a href=logout.php title="Afmelden" style="float: right;"><img src="res/icons/logout.png" alt="Logout" height="36" width="36">Afmelden</a>
           {if $autorisatie > $KLANT}
-            <a href=klant_zoeken.php title="Klant zoeken" style="float: right;margin-right:2em;"><img src="res/icons/search.png" alt="Klant zoeken" height="36" width="36"></a>
+            <a href=klant_zoeken.php title="Klant zoeken" style="float: right;margin-right:2em;"><img src="res/icons/search.png" alt="Klant zoeken" height="36" width="36">Zoeken</a>
           {/if}
         {/if}
       </nav>
