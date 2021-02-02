@@ -10,7 +10,7 @@ organisatienaam="Mijn Organisatie"
 email="admin@myorg.nl"
 website="https://www.myorg.nl"
 voorwaarden="https://www.myorg.nl/MyOrg-voorwaarden.php"
-logo="res/images/OctetLogo.png"
+logo="../images/OctetLogo.png"
 footer="Mijn Organisatie is een Zeer Nuttige Organisatie (ZNO)"
 adresregel="Mijn Organisatie    Reuzenweg 14    2345 AB Monster    Tel:012 - 345 66 77    BTW nr:NL5 21 21 21 21 B21    KvK:0123 45678"
 ;
@@ -21,9 +21,9 @@ ten_name_van="Mijn Organisatie"
 ;
 [pdf_factuur]
 aanmaken="nee"
-verzenden="nee"
-titel="ERAS overzicht"
-notatype="Overzicht"
+verzenden="nee" 
+titel="ERAS factuur"
+notatype="Factuur"
 ;
 BTW-percentage=21
 BTW-regel1="Exclusief BTW"
@@ -40,7 +40,7 @@ evenement-kolom5="Prijs"
 deelnemer-kolom1="Deelnemer"
 deelnemer-kolom2="Omschrijving"
 deelnemer-kolom3="Aantal"
-deelnemer-kolom4="Ã "
+deelnemer-kolom4="à"
 deelnemer-kolom5="Prijs"
 ;
 [ideal_payment]
