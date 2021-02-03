@@ -31,7 +31,7 @@
               Aangemeld als '{$loggedin}'
               |
               <span style="padding-right: 2.5em;">
-                <input class="barebutton" type="button" id="afmelden" name="afmelden" value="[afmelden]" onclick="afmeld()">
+                <input class="barebutton" class="icontekst" type="button" id="afmelden" name="afmelden" value="[afmelden]" onclick="afmeld()">
               </span>
             {/if}
           {/if}

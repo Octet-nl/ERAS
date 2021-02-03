@@ -9,8 +9,8 @@ Voorbeelden hiervan zijn:
 - Een Yoga cursus
 - Een schilderwedstrijd
 
-## Wat doet ERAS?
-ERAS is een compleet systeem om inschrijvingen voor de meest uiteenlopende soorten activiteiten en evenementen af te handelen.
+## Wat is ERAS?
+ERAS is een compleet systeem om inschrijvingen voor de meest uiteenlopende soorten activiteiten, gebeurtenissen en evenementen af te handelen.
 Het is speciaal bedoeld om mensen zonder speciale kennis snel een compleet inschrijvingssysteem op te laten zetten.
 
 Eras is heel erg flexibel en aanpasbaar aan verschillende situaties. 
@@ -27,12 +27,13 @@ Eras zorgt onder andere voor het volgende:
 - De betaalwijze is instelbaar
 - Er is een volledig back-office systeem aanwezig. Een lijst opvragen van wie nog niet (alles) betaald heeft is eenvoudig.
 
-Een logische opzet kan zijn om alle content af te laten handelen door WordPress en consorten, en vervolgens een link te plaatsen naar ERAS. Zo krijg je het beste van twee werelden.
+Een logische opzet kan zijn om alle content af te laten handelen door WordPress en consorten, en vervolgens een link te plaatsen naar ERAS voor 
+het afhandelen van de inschrijving. Zo krijg je het beste van twee werelden.
 
 ## Systeem vereisten
 ERAS is speciaal bedoeld voor een Apache-PHP-MySQL/MariaDB omgeving. Dit kan in een Linux omgeving zijn, maar een XAMP omgeving onder
 Windows werkt ook prima.
-PHP versie 7.4 is minimaal vereist. Verder moet ERAS schrijftoegang hebben tot een aantal eigen directories. De installatieprocedure test hier op.
+PHP versie 7.3 is minimaal vereist. Verder moet ERAS schrijftoegang hebben tot een aantal eigen directories. De installatieprocedure test hier op.
 
 ## Installatie
 Download het complete ERAS pakket:
@@ -43,14 +44,17 @@ git clone https://github.com/Octet-nl/ERAS.git
 Alle bestanden worden nu gedownload in directory ERAS. Na het downloaden kunt u de .git directory verwijderen. 
 
 ### Via download
-Download de ZIP of de TAR file uit Github en pak deze uit. Na het uitpakken hernoemt u de directory met de bestanden naar 'ERAS'.
+Download de ZIP of de TAR file uit Github en pak deze uit (tar -xvf of unzip met 'use folder names'). Er wordt een directory aangemaakt met een naam als ERAS-1.1.  
+Na het uitpakken hernoemt u deze directory naar 'ERAS'. Dit is de root directory van het ERAS systeem.
 
 ### Installeren
-Start de installatieprocedure door met uw browser het bestand 'install.php' te openen.
+Start de installatieprocedure door met uw browser het bestand 'ERAS/app/install.php' te openen. De installatieprocedure test eerst een aantal
+randvoorwaarden, en maakt desgewenst een nieuwe database aan. Ook kan gebruik gemaakt worden van een bestaande (lege) database.
 
 ### Voorbeeld
 
-Om een beeld te vormen van de manier waarop ERAS werkt volgen hieronder een paar screenshots.
+Om een beeld te vormen van de manier waarop ERAS werkt volgen hieronder een paar screenshots. Het thema (kleur en lettertype) kan aangepast
+worden, er worden verschillende thema's meegeleverd.
 
 #### Definitie evenement
 
