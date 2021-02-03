@@ -35,7 +35,7 @@
             <div>
               <label class="short" for="password">Nieuw wachtwoord:</label>
               <input class="short" type="password" name="newPassword" id="newPassword" placeholder="nieuw wachtwoord"
-                onkeyup='check();'>
+                onkeyup='passwordComplexity(this.value, "sterkteTekst", "login");'><span style="font-size: 2em;" id="sterkteTekst"></span>
               <span class="error" id="newPasswordErr">{$newPasswordErr}</span>
             </div>
             <div>
@@ -47,9 +47,11 @@
           </div>
 
           <div align="center" />
-            <button name="login" value=1>Aanmelden</button>
+            <button name="login" id="login" value=1>Aanmelden</button>
           </div>
           <input type="hidden" name=previous value={$previous}>
+          <input type="hidden" name=wachtwoordSterkte id=wachtwoordSterkte value={$wachtwoordSterkte}>
+          <input type="hidden" name=sterkteOk id=sterkteOk value={$sterkteOk}>
 
         </div>
         <div class="tiny">
@@ -58,12 +60,11 @@
           Voor inschrijvingen ga <a href="evenement_kiezen.php">hier</a> heen.
         </div>
       </div>
-
     </div>
-
   </div>
-
 </form>
+
+{include file="js/password_complex.js"}
 
 <script>
   document.getElementById('change').onchange = function () {
@@ -89,5 +90,6 @@
       }
     }
   }
+
 </script>
 {include file="footer.tpl"}

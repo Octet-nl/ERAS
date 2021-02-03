@@ -64,6 +64,9 @@ define("CONFIG_FILENAME", '../config/config_ini.php' );
 define("DEBUG_CONFIG_FILENAME", '../config/debug_ini.php' );
 define("DATABASE_CONFIG_FILENAME", '../config/database_ini.php' );
 
+define("DB_INVALID", "0");
+define("DB_VALID", "1");
+
 define("DEELNEMER_STATUS_ACTIEF", "1");
 define("DEELNEMER_STATUS_NIET_ACTIEF", "2");
 define("DEELNEMER_STATUS_GEANNULEERD", "9");
@@ -136,8 +139,10 @@ define("OPTIETYPE_VASTE_TEKST", "9");
 define("OPTIETYPE_AKKOORD", "10");
 define("OPTIETYPE_VOORWAARDE", "11");
 
-define("DB_INVALID", "0");
-define("DB_VALID", "1");
+define("PASSWORD_ZWAK", "1");
+define("PASSWORD_MEDIUM", "2");
+define("PASSWORD_STERK", "3");
+define("PASSWORD_ZEERSTERK", "4");
 
 // 1800 seconden is een half uur
 define("SESSIE_GELDIGHEID_SECONDEN", 7200);

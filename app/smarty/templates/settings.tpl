@@ -28,7 +28,7 @@
                <span class=setting_label>Adres van de leveringsvoorwaarden van de organisatie</span>
                <input type="text" class="setting_input" name="organisatieVoorwaarden" value="{$organisatieVoorwaarden}">
                <div class="tooltip">?
-                <span class="tooltiptext right">Optioneel. Als u geen link naar leveringsvoorwaarden invult, wordt er ook geen akkoord gevraagd bij het afronden van de inschrijving.</span>
+                <span class="tooltiptext right">Optioneel. Als u geen link naar leveringsvoorwaarden invult, wordt er ook geen akkoord met de voorwaarden gevraagd bij het afronden van de inschrijving.</span>
                </div>
                <span class="error">{$organisatieVoorwaardenErr}</span>
 
@@ -52,8 +52,9 @@
             <input type="checkbox" id="3" checked onchange='handleChecked(this,document.getElementById("factuur"));'/> 
             <h3 style="display: inline-block;">Factuur</h3>
             <fieldset id="factuur" class="setting_input">
-                <span class=setting_label>Factuur aanmaken ({$ja}/{$nee})</span>
-                <input type="text" class="setting_input" name="factuurAanmaken" value="{$factuurAanmaken}">
+                <span class=setting_label>Factuur aanmaken:&emsp;
+                {html_options name=factuurAanmaken options=$jaNeeLijst selected=$factuurAanmaken}
+                </span>
                 <span class="error">{$factuurAanmakenErr}</span>
 
                 <div class="window_back" style="width:100%">
@@ -72,8 +73,9 @@
                     </fieldset>
                 </div>
         
-                <span class=setting_label>Factuur verzenden ({$ja}/{$nee})</span>
-                <input type="text" class="setting_input" name="factuurVerzenden" value="{$factuurVerzenden}">
+                <span class=setting_label>Factuur verzenden:&emsp;
+                    {html_options name=factuurVerzenden options=$jaNeeLijst selected=$factuurVerzenden}
+                </span>
                 <span class="error">{$factuurVerzendenErr}</span>
                 <span class=setting_label>Titel van de factuur</span>
                 <input type="text" class="setting_input" name="factuurTitel" value="{$factuurTitel}">
@@ -129,13 +131,14 @@
             <input type="checkbox" id="5" checked onchange='handleChecked(this,document.getElementById("iDeal"));'/> 
             <h3 style="display: inline-block;">iDEAL betaling</h3>
             <fieldset id="iDeal" class="setting_input">
-                <span class=setting_label>iDeal betalingen toestaan ({$ja}/{$nee})</span>
-                <input type="text" class="setting_input" name="enableIDeal" value="{$enableIDeal}">
-                <div class="tooltip">?
-                    <span class="tooltiptext right">Voor iDeal betaling moet een afzonderlijk programma geinstalleerd worden. 
-                        We hebben goede ervaringen met <a href="https://www.ideal-checkout.nl/" target="_blank">ideal-checkout</a>. 
-                        Dit werkt goed en is in veel gevallen gratis.</span>
-                </div>
+                <span class=setting_label>iDeal betalingen toestaan:&emsp;
+                  {html_options name=enableIDeal options=$jaNeeLijst selected=$enableIDeal}
+                    <div class="tooltip">?
+                        <span class="tooltiptext right">Voor iDeal betaling moet een afzonderlijk programma geinstalleerd worden. 
+                            We hebben goede ervaringen met <a href="https://www.ideal-checkout.nl/" target="_blank">ideal-checkout</a>. 
+                            Dit werkt goed en is in veel gevallen gratis.</span>
+                    </div>
+                </span>
                 <span class="error">{$enableIDealErr}</span>
                 <span class=setting_label>Adres van de routine die de iDeal betaling verzorgt</span>
                 <input type="text" class="setting_input" name="idealCheckout" value="{$idealCheckout}">
@@ -173,33 +176,15 @@
         </div>
 
         <div class="window_back" style="width:100%">
-            <input type="checkbox" id="7" checked onchange='handleChecked(this,document.getElementById("directories"));'/> 
-            <h3 style="display: inline-block;">Directories</h3>
-            <fieldset id="directories" class="setting_input">
-                <span class=setting_label>Directory waar de tijdelijke bestanden geplaatst kunnen worden</span>
-                <input type="text" class="setting_input" name="settingTempDirectory" value="{$settingTempDirectory}">
-                <span class="error">{$settingTempDirectoryErr}</span>
-                <span class=setting_label>Directory waar de logbestanden geplaatst worden</span>
-                <input type="text" class="setting_input" name="settingLogDirectory" value="{$settingLogDirectory}">
-                <span class="error">{$settingLogDirectoryErr}</span>
-                <span class=setting_label>Directory waar de facturen geplaatst worden</span>
-                <input type="text" class="setting_input" name="settingFacturenDirectory" value="{$settingFacturenDirectory}">
-                <span class="error">{$settingFacturenDirectoryErr}</span>
-                <span class=setting_label>Directory waar de afbeeldingen geplaatst worden</span>
-                <input type="text" class="setting_input" name="settingImageDirectory" value="{$settingImageDirectory}">
-                <span class="error">{$settingImageDirectoryErr}</span>
-            </fieldset>
-        </div>
-
-        <div class="window_back" style="width:100%">
             <input type="checkbox" id="8" checked onchange='handleChecked(this,document.getElementById("verzekering"));'/> 
             <h3 style="display: inline-block;">Verzekering</h3>
             <fieldset id="verzekering" class="setting_input">
-                <span class=setting_label>Annuleringsverzekering mogelijk? ({$ja}/{$nee})</span>
-                <input type="text" class="setting_input" name="enableVerzekering" value="{$enableVerzekering}">
-                <div class="tooltip">?
+                <span class=setting_label>Annuleringsverzekering mogelijk:&emsp;
+                  {html_options name=enableVerzekering options=$jaNeeLijst selected=$enableVerzekering}
+                  <div class="tooltip">?
                     <span class="tooltiptext right">Is het in het algemeen mogelijk om annuleringsverzekeringen af te sluiten? Als u "ja" invult kunt u dit per evenement nog aanpassen. Als u hier "nee" invult, kan dit niet meer aangepast worden.</span>
-                </div>
+                  </div>
+                </span>
                 <span class="error">{$enableVerzekeringErr}</span>
                 <span class=setting_label>Adres van de voorwaarden voor de annuleringsverzekering (als annuleringsverzekering mogelijk is)</span>
                 <input type="text" class="setting_input" name="settingVerzekeringVoorwaarden" value="{$settingVerzekeringVoorwaarden}">
@@ -217,6 +202,42 @@
                     <span class="tooltiptext right">Veel providers stellen een grens aan het maximaal in één keer te verzenden mails. Voor de nieuwbrief is dat soms onvoldoende. Geef hier aan hoeveel mails tegelijk verstuurd kunnen worden. Zijn het er meer, dan wordt een batchverwerking aangeboden.</span>
                 </div>
                 <span class="error">{$settingBatchSizeErr}</span>
+
+                <span class=setting_label>Wachtwoord sterkte voor klanten:&emsp;
+                    {html_options name=settingPasswordKlant options=$settingPasswordLijst selected=$settingPasswordKlant}
+                    <div class="tooltip">?
+                        <span class="tooltiptext right">Geef aan hoe sterk een wachtwoord moet zijn. Bij een sterkte groter dan 'zwak' mag het oude wachtwoord niet gebruikt worden.</span>
+                    </div>
+                </span>
+                <span class="error">{$settingPasswordKlantErr}</span>
+                <span class=setting_label>Wachtwoord sterkte voor medewerkers:&emsp;
+                    {html_options name=settingPasswordMedewerker options=$settingPasswordLijst selected=$settingPasswordMedewerker}
+                    <div class="tooltip">?
+                        <span class="tooltiptext right">Geef aan hoe sterk een wachtwoord moet zijn. Bij een sterkte groter dan 'zwak' mag het oude wachtwoord niet gebruikt worden.</span>
+                    </div>
+                </span>
+                <span class="error">{$settingPasswordMedewerkerErr}</span>
+
+                <div class="window_back" style="width:100%">
+                    <input type="checkbox" id="7" checked onchange='handleChecked(this,document.getElementById("directories"));'/> 
+                    <h3 style="display: inline-block;">Directories</h3>
+                    <fieldset id="directories" class="setting_input">
+                        <span class=setting_label>Directory waar de tijdelijke bestanden geplaatst kunnen worden</span>
+                        <input type="text" class="setting_input" name="settingTempDirectory" value="{$settingTempDirectory}">
+                        <span class="error">{$settingTempDirectoryErr}</span>
+                        <span class=setting_label>Directory waar de logbestanden geplaatst worden</span>
+                        <input type="text" class="setting_input" name="settingLogDirectory" value="{$settingLogDirectory}">
+                        <span class="error">{$settingLogDirectoryErr}</span>
+                        <span class=setting_label>Directory waar de facturen geplaatst worden</span>
+                        <input type="text" class="setting_input" name="settingFacturenDirectory" value="{$settingFacturenDirectory}">
+                        <span class="error">{$settingFacturenDirectoryErr}</span>
+                        <span class=setting_label>Directory waar de afbeeldingen geplaatst worden</span>
+                        <input type="text" class="setting_input" name="settingImageDirectory" value="{$settingImageDirectory}">
+                        <span class="error">{$settingImageDirectoryErr}</span>
+                    </fieldset>
+                </div>
+        
+        
             </fieldset>
         </div>
 

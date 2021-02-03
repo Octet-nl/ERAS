@@ -91,6 +91,8 @@ $settingTempDirectory = "";
 $settingFacturenDirectory = "";
 $settingImageDirectory = "";
 $settingBatchSize = "";
+$settingPasswordKlant = "";
+$settingPasswordMedewerker = "";
 $enableVerzekering = "";
 $settingVerzekeringVoorwaarden = "";
 
@@ -136,6 +138,8 @@ $settingTempDirectoryErr = "";
 $settingFacturenDirectoryErr = "";
 $settingImageDirectoryErr = "";
 $settingBatchSizeErr = "";
+$settingPasswordKlantErr = "";
+$settingPasswordMedewerkerErr = "";
 $enableVerzekeringErr = "";
 $settingVerzekeringVoorwaardenErr = "";
 
@@ -207,15 +211,17 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
     $betalingIncassoTekst = $ini['betaling']['incasso_tekst'];
     $betalingContantTekst = $ini['betaling']['contant_tekst'];
     
+    $enableVerzekering = $ini['verzekering']['toestaan'];
+    $settingVerzekeringVoorwaarden = $ini['verzekering']['voorwaarden'];
+
+    $settingBatchSize = $ini['settings']['batch_size'];
+    $settingPasswordKlant = $ini['settings']['password_klant'];
+    $settingPasswordMedewerker = $ini['settings']['password_medewerker'];
     $settingLogDirectory = $ini['settings']['log_directory'];
     $settingTempDirectory = $ini['settings']['temp_directory'];
     $settingFacturenDirectory = $ini['settings']['facturen_directory'];
     $settingImageDirectory = $ini['settings']['image_directory'];
 
-    $enableVerzekering = $ini['verzekering']['toestaan'];
-    $settingVerzekeringVoorwaarden = $ini['verzekering']['voorwaarden'];
-
-    $settingBatchSize = $ini['settings']['batch_size'];
 
 }
 
@@ -461,6 +467,12 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             ->onerror( $settingBatchSizeErr )
             ->validator( v::number() )
             ->required( true )->go();
+        $validateOk += $setVar->name( $settingPasswordKlant )
+            ->onerror( $settingPasswordKlantErr )
+            ->required( true )->go();
+        $validateOk += $setVar->name( $settingPasswordMedewerker )
+            ->onerror( $settingPasswordMedewerkerErr )
+            ->required( true )->go();
         $validateOk += $setVar->name( $enableVerzekering )
             ->onerror( $enableVerzekeringErr )
             ->validator( v::oneOf( v::equals( OPTIE_KEUZE_JA ), v::equals( OPTIE_KEUZE_NEE ) ) )
@@ -557,6 +569,8 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             fprintf( $fp, 'image_directory="%s"' . "\n", $settingImageDirectory );
             fprintf( $fp, ';' . "\n" );
             fprintf( $fp, 'batch_size="%s"' . "\n", $settingBatchSize );
+            fprintf( $fp, 'password_klant="%s"' . "\n", $settingPasswordKlant );
+            fprintf( $fp, 'password_medewerker="%s"' . "\n", $settingPasswordMedewerker );
             fprintf( $fp, ';' . "\n" );            
             fprintf( $fp, ';*/' . "\n" );
             fprintf( $fp, ';?>' . "\n" );
@@ -592,6 +606,13 @@ if ( EVENEMENT_EDIT_WYSIWIG == true && LOGLEVEL > LOGLEVEL_DEBUG )
 }
 $smarty->assign( 'toonWysiwig', $toonWysiwig );
 
+$smarty->assign( 'ja', OPTIE_KEUZE_JA );
+$smarty->assign( 'nee', OPTIE_KEUZE_NEE );
+
+$jaNeeLijst[OPTIE_KEUZE_JA] = OPTIE_KEUZE_JA;
+$jaNeeLijst[OPTIE_KEUZE_NEE] = OPTIE_KEUZE_NEE;
+$smarty->assign( 'jaNeeLijst', $jaNeeLijst );
+
 $smarty->assign( 'doctitle', $doctitle );
 $smarty->assign( 'organisatieNaam', $organisatieNaam );
 $smarty->assign( 'organisatieNaamErr', $organisatieNaamErr );
@@ -608,9 +629,6 @@ $smarty->assign( 'bankBicNummer', $bankBicNummer );
 $smarty->assign( 'bankBicNummerErr', $bankBicNummerErr );
 $smarty->assign( 'bankTenNameVan', $bankTenNameVan );
 $smarty->assign( 'bankTenNameVanErr', $bankTenNameVanErr );
-
-$smarty->assign( 'ja', OPTIE_KEUZE_JA );
-$smarty->assign( 'nee', OPTIE_KEUZE_NEE );
 
 $smarty->assign( 'factuurAanmaken', $factuurAanmaken );
 $smarty->assign( 'factuurAanmakenErr', $factuurAanmakenErr );
@@ -686,6 +704,17 @@ $smarty->assign( 'settingImageDirectoryErr', $settingImageDirectoryErr );
 
 $smarty->assign( 'settingBatchSize', $settingBatchSize );
 $smarty->assign( 'settingBatchSizeErr', $settingBatchSizeErr );
+
+$settingPasswordLijst[PASSWORD_ZWAK] = "Zwak";
+$settingPasswordLijst[PASSWORD_MEDIUM] = "Medium";
+$settingPasswordLijst[PASSWORD_STERK] = "Sterk";
+$settingPasswordLijst[PASSWORD_ZEERSTERK] = "Zeer sterk";
+
+$smarty->assign( 'settingPasswordLijst', $settingPasswordLijst );
+$smarty->assign( 'settingPasswordMedewerker', $settingPasswordMedewerker );
+$smarty->assign( 'settingPasswordMedewerkerErr', $settingPasswordMedewerkerErr );
+$smarty->assign( 'settingPasswordKlant', $settingPasswordKlant );
+$smarty->assign( 'settingPasswordKlantErr', $settingPasswordKlantErr );
 $smarty->assign( 'enableVerzekering', $enableVerzekering );
 $smarty->assign( 'enableVerzekeringErr', $enableVerzekeringErr );
 $smarty->assign( 'settingVerzekeringVoorwaarden', $settingVerzekeringVoorwaarden );

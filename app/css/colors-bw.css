@@ -7,7 +7,7 @@
     --button-achtergrond-kleur: #cecece;
     --button-voorgrond-kleur: rgb(42, 42, 42);
     --disabled-achtergrond-kleur: rgb(226, 227, 228);
-    --disabled-voorgrond-kleur: rgb(138, 138, 138);
+    --disabled-voorgrond-kleur: rgba(138, 138, 138, 0.534);
     --status-achtergrond-kleur: rgb(226, 226, 226);
     --status-voorgrond-kleur: rgb(73, 73, 73);
     --readonly-voorgrond-kleur: rgb(138, 138, 138);

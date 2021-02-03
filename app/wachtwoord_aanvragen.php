@@ -218,8 +218,8 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             }
             else
             {
-                $bevestig = "De mail met de reset-link is verzonden naar uw email adres (" . $mailadres . ").<br/>Deze link is 30 minuten geldig.";
-                $logger->debug( 'De mail met de reset-link is verzonden naar ' . $mailadres );
+                $bevestig = "De mail met de reset-link is verzonden naar uw email adres (" . $email . ").<br/>Deze link is 30 minuten geldig.";
+                $logger->debug( 'De mail met de reset-link is verzonden naar ' . $email );
             }
         }
         catch ( Exception $e )

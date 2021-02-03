@@ -86,20 +86,20 @@
     {/if}
         <div>
             <label for="password">Nieuw wachtwoord:</label>
-            <input class="short" type="password" name="newPassword" id="newPassword" value="{$newPassword}"
-                placeholder="nieuw wachtwoord" onkeyup='check();'>
+            <input class="short" type="password" name="newPassword" id="newPassword" value="{$newPassword}" 
+                placeholder="nieuw wachtwoord" onkeyup='passwordComplexity(this.value, "sterkteAanmelden", "aanmelden");'><span style="font-size: 2em;" id="sterkteAanmelden"></span>
             <span class="error" id="newPasswordErr">{$newPasswordErr}</span>
         </div>
         <div>
             <label for="password">Bevestig nieuw wachtwoord:</label>
             <input class="short" type="password" name="repeatPassword" id="repeatPassword"  value="{$repeatPassword}"
-                placeholder="bevestig wachtwoord" onkeyup='check();'>
+                placeholder="bevestig wachtwoord" onkeyup='check("aanmelden");'>
             <span class="error" id="repeatPasswordErr">{$repeatPasswordErr}</span><span id="repeatcheck"></span>
         </div>
     </div>
 
     <div>
-        <button type="submit" name="inloggen" style="width: 10em; height: 5em;">Aanmelden</button>
+        <button type="submit" name="inloggen" id="aanmelden" style="width: 10em; height: 5em;">Aanmelden</button>
     </div>
 
     </fieldset>
@@ -146,18 +146,19 @@
             <h4>Kies uw wachtwoord</h4>
             <div>
                 <label class="control-label" for="input-payment-password">Uw wachtwoord</label>
-                <input class="short" type="password" name="password" id="password" value="{$password}" placeholder="Uw wachtwoord" onkeyup='check2();' />
+                <input class="short" type="password" name="password" id="password" value="{$password}" 
+                placeholder="nieuw wachtwoord" onkeyup='check3(this.value, "sterkteTekst", "register");'><span style="font-size: 2em;" id="sterkteTekst"></span>
                 <div class="tooltip">?
                     <span class="tooltiptext">Uw kunt uw wachtwoord later zelf wijzigen.
                     </span>
                 </div>
-                    <span class="error">{$passwordErr}</span>
+                <span class="error">{$passwordErr}</span>
             </div>
             <label class="control-label" for="input-payment-confirm">Bevestig uw wachtwoord</label>
-            <input class="short" type="password" name="bevestig" id="bevestig" value="{$bevestig}" placeholder="Bevestig uw wachtwoord" onkeyup='check2();' />
+            <input class="short" type="password" name="bevestig" id="bevestig" value="{$bevestig}" placeholder="Bevestig uw wachtwoord" onkeyup='check2("register");' />
             <span class="error">{$bevestigErr}</span><span id="repeatcheck2"></span>
             <div>
-                <button name="register">Aanmelden</button>
+                <button name="register" id="register">Aanmelden</button>
             </div>
 
     </fieldset>
@@ -165,10 +166,13 @@
     <input type="hidden" name="evt" value="{$evt}">
     <input type="hidden" name="evenementNaam" value="{$evenementNaam}">
     <input type="hidden" name="accountNodig" value="{$accountNodig}">
+    <input type="hidden" name=wachtwoordSterkte id=wachtwoordSterkte value={$wachtwoordSterkte}>
+    <input type="hidden" name=sterkteOk id=sterkteOk value={$sterkteOk}>
 </form>
 
-<script>
+{include file="js/password_complex.js"}
 
+<script>
 document.getElementById('change').onchange=function() 
    {
         if( this.value==='wijzig' && this.checked===true )
@@ -181,13 +185,14 @@ document.getElementById('change').onchange=function()
         }
     };
 
-var check = function() 
+var check = function( knop ) 
   {
     if ( document.getElementById('newPassword').value ==
            document.getElementById('repeatPassword').value ) 
     {
         document.getElementById('repeatcheck').style.color = 'green';
         document.getElementById('repeatcheck').innerHTML = 'OK';
+        document.getElementById(knop).disabled=false;
     } 
     else 
     {
@@ -196,16 +201,18 @@ var check = function()
             document.getElementById('repeatcheck').style.color = 'red';
             document.getElementById('repeatcheck').innerHTML = 'X';
         } 
+        document.getElementById(knop).disabled=true;
     }
    }
 
-var check2 = function() 
+var check2 = function(knop) 
   {
     if ( (document.getElementById('password').value ==
            document.getElementById('bevestig').value) && (document.getElementById('password').value != "") ) 
     {
         document.getElementById('repeatcheck2').style.color = 'green';
         document.getElementById('repeatcheck2').innerHTML = 'OK';
+        document.getElementById(knop).disabled=false;
     } 
     else 
     {
@@ -218,8 +225,15 @@ var check2 = function()
         {
             document.getElementById('repeatcheck2').innerHTML = '';
         }
+        document.getElementById(knop).disabled=true;
     }
    }
+
+var check3 = function( password, tekst, knop )
+{
+    passwordComplexity(password, tekst, knop);
+    check2();
+}
 
 function tochRegister()
 {

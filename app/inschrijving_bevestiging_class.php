@@ -311,11 +311,12 @@ class InschrijvingBevestiging
             if ( $opties->count() > 0 )
             {
                 $this->logger->verbose( $opties );
+                $bevestigingNaam = $deelnemerNaam;
 
                 foreach ( $opties as $optie )
                 {
-                    $messageRegel = "<tr>" . TD_NORMAAL . "" . $deelnemerNaam . "</td>";
-                    $deelnemerNaam = "";
+                    $messageRegel = "<tr>" . TD_NORMAAL . "" . $bevestigingNaam . "</td>";
+                    $bevestigingNaam = "";
 
                     $this->logger->debug( "Deelnemer optie " . $optie->getId() );
 
@@ -340,6 +341,7 @@ class InschrijvingBevestiging
                             $a = geldHtml( $optie->getPrijs() );
                             $prijs = geldHtml( $optie->getPrijs() );
                             $aantal = "1";
+                            $deelnemerNaam = "";
                         }
                         else
                         {
@@ -370,6 +372,7 @@ class InschrijvingBevestiging
 
                                     $totaalprijs += $optie->getPrijs() * $deelnemerOptie->getWaarde();
                                     $deelnemertotaal += $optie->getPrijs() * $deelnemerOptie->getWaarde();
+                                    $deelnemerNaam = "";
                                 }
                             }
                             else
@@ -378,13 +381,14 @@ class InschrijvingBevestiging
                                 {
                                     if ( $deelnemerOptie->getWaarde() == OPTIE_KEUZE_JA )
                                     {
-                                        $regel = array( "deelnemer" => $deelnemerNaam, "naam" => $optie->getTekstVoor(), "omschrijving" => "", "aantal" => 1, "prijs" => $optie->getPrijs() );
+                                        $regel = array( "deelnemer" => $deelnemerNaam, "naam" => $optie->getTekstVoor(), "omschrijving" => "ja", "aantal" => 1, "prijs" => $optie->getPrijs() );
                                         array_push( $this->factuurArray, $regel );
                                         $totaalprijs += $optie->getPrijs();
                                         $deelnemertotaal += $optie->getPrijs();
                                         $a = geldHtml( $optie->getPrijs() );
                                         $aantal = "1";
                                         $prijs = geldHtml( $optie->getPrijs() );
+                                        $deelnemerNaam = "";
                                     }
                                 }
                                 else
@@ -410,13 +414,12 @@ class InschrijvingBevestiging
                     $this->logger->debug("deelnemerregel: " . $messageRegel );
                     $this->messageBody .= $messageRegel;
                     $this->messageBody .= "</tr>";
-
                 }
 
                 if ( $this->aantalDeelnemers > 1 )
                 {
                     $messageRegel = "<tr>" . TD_NORMAAL . "</td>";
-                    $messageRegel .= "<td style='font-size: 0.8em;border-bottom: 1px solid; border-color: #dddddd #444444;'>Deze deelnemer:<br/>Totaalprijs opties: " . geldHtml($deelnemertotaal) . "
+                    $messageRegel .= "<td style='font-size: 0.8em;border-bottom: 1px solid; border-color: #dddddd #444444;'><u>Deze deelnemer:</u><br/>Totaalprijs opties: " . geldHtml($deelnemertotaal) . "
                     ,<br/>Inclusief evenementprijs: " . geldHtml($this->evenementPrijs+$deelnemertotaal) . "</td>";
                     $messageRegel .= TD_NORMAAL . "</td>";
                     $messageRegel .= TD_NORMAAL . "</td>";

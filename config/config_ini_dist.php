@@ -15,7 +15,7 @@ footer="Mijn Organisatie is een Zeer Nuttige Organisatie (ZNO)"
 adresregel="Mijn Organisatie    Reuzenweg 14    2345 AB Monster    Tel:012 - 345 66 77    BTW nr:NL5 21 21 21 21 B21    KvK:0123 45678"
 ;
 [bank]
-IBAN="NL12 INGS 0345 6789 01"
+IBAN="NL44RABO0123456789"
 BIC="INGSNL3Z"
 ten_name_van="Mijn Organisatie"
 ;
@@ -25,7 +25,7 @@ verzenden="nee"
 titel="ERAS factuur"
 notatype="Factuur"
 ;
-BTW-percentage=21
+BTW-percentage=21.00
 BTW-regel1="Exclusief BTW"
 BTW-regel2="BTW (21%)"
 BTW-regel3="Totaal incl. BTW"
@@ -67,6 +67,8 @@ facturen_directory="../facturen"
 image_directory="../images"
 ;
 batch_size="10"
+password_klant="1"
+password_medewerker="2"
 ;
 ;*/
 ;?>

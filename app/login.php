@@ -58,6 +58,10 @@ $newPassword = $newPasswordErr = $repeatPassword = $repeatPasswordErr = "";
 $wijzigchecked = $previous = "";
 $wijzigWachtwoord = false;
 
+$ini = parse_ini_file( CONFIG_FILENAME, true );
+$wachtwoordSterkte = $ini['settings']['password_medewerker'];
+$sterkteOk = "1";
+
 // DEEL 1
 if ( $_SERVER["REQUEST_METHOD"] == "GET" )
 {
@@ -123,6 +127,12 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             ->noHtmlCleaning()
             ->validator( v::alwaysValid()->length( 1, 255 ) )
             ->required( false )
+            ->go();
+        $validateOk += $setVar->name( $sterkteOk )
+            ->onerror( $newPasswordErr )
+            ->errormessage("Wachtwoord sterkte is onvoldoende")
+            ->validator( v::trueVal() )
+            ->required( true )
             ->go();
     }
     catch ( Exception $ex )
@@ -277,5 +287,7 @@ $smarty->assign( 'wijzigchecked', $wijzigchecked );
 $smarty->assign( 'newPasswordErr', $newPasswordErr );
 $smarty->assign( 'repeatPassword', $repeatPassword );
 $smarty->assign( 'repeatPasswordErr', $repeatPasswordErr );
+$smarty->assign( 'wachtwoordSterkte', $wachtwoordSterkte );
+$smarty->assign( 'sterkteOk', $sterkteOk );
 
 $smarty->display( 'login.tpl' );

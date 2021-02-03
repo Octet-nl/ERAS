@@ -61,6 +61,10 @@ $newPassword = $newPasswordErr = $repeatPassword = $repeatPasswordErr = "";
 $previous = "";
 $wijzigWachtwoord = false;
 
+$ini = parse_ini_file( CONFIG_FILENAME, true );
+$wachtwoordSterkte = $ini['settings']['password_klant'];
+$sterkteOk = "1";
+
 $email = "";
 $token = "";
 $klaar = "";
@@ -98,9 +102,9 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
         {
             $logger->debug( "Token is geldig" );
 
-            $token = WachtwoordResetQuery::create()->filterByToken( $token )->findOne();
+            $wwtoken = WachtwoordResetQuery::create()->filterByToken( $token )->findOne();
 
-            if ( $token == null )
+            if ( $wwtoken == null )
             {
                 $logger->security( "Onjuist token opgegeven: " . $token . ", IP adres: " . $_SERVER['REMOTE_ADDR'] );
                 $klaar = "Dit is geen geldige link.";
@@ -108,7 +112,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
             }
             else
             {
-                $ouderdom = tijdVerschil( date( "Y-m-d H:i:s" ), $token->getGeldigTot()->format( "Y-m-d H:i:s" ) );
+                $ouderdom = tijdVerschil( date( "Y-m-d H:i:s" ), $wwtoken->getGeldigTot()->format( "Y-m-d H:i:s" ) );
                 if ( $ouderdom < 0 )
                 {
                     $klaar = "Deze link is te oud. Vraag a.u.b. opnieuw aan.";
@@ -116,8 +120,8 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
                 }
                 else
                 {
-                    $logger->debug( "Nog geldig (s) " . $ouderdom );
-                    $email = $token->getEmail();
+                    $logger->debug( "Wachtwoord reset, Token nog geldig (s) " . $ouderdom );
+                    $email = $wwtoken->getEmail();
                     //$mail->delete();
                 }
             }
@@ -140,6 +144,8 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
         $setVar = new SetVariable();
         $validateOk += $setVar->name( $previous )
             ->go();
+        $validateOk += $setVar->name( $token )
+            ->go();
         $validateOk += $setVar->name( $email )
             ->required( true )
             ->go();
@@ -154,6 +160,12 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             ->noHtmlCleaning()
             ->validator( v::alwaysValid()->length( 1, 255 ) )
             ->required( false )
+            ->go();
+        $validateOk += $setVar->name( $sterkteOk )
+            ->onerror( $newPasswordErr )
+            ->errormessage("Wachtwoord sterkte is onvoldoende")
+            ->validator( v::trueVal() )
+            ->required( true )
             ->go();
     }
     catch ( Exception $ex )
@@ -196,6 +208,12 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                                 $contactlog->setGemaaktDoor( $email );
                                 $contactlog->save();
                             }
+                        }
+
+                        $token = WachtwoordResetQuery::create()->filterByToken( $token )->findOne();
+                        if ( $token != null )
+                        {
+                            $token->delete();
                         }
 
                         $logger->debug( "Wachtwoord is gewijzigd" );
@@ -245,9 +263,12 @@ $smarty->assign( 'doctitle', $doctitle );
 $smarty->assign( 'previous', $previous );
 $smarty->assign( 'klaar', $klaar );
 $smarty->assign( 'email', $email );
+$smarty->assign( 'token', $token );
 $smarty->assign( 'newPassword', $newPassword );
 $smarty->assign( 'newPasswordErr', $newPasswordErr );
 $smarty->assign( 'repeatPassword', $repeatPassword );
 $smarty->assign( 'repeatPasswordErr', $repeatPasswordErr );
+$smarty->assign( 'wachtwoordSterkte', $wachtwoordSterkte );
+$smarty->assign( 'sterkteOk', $sterkteOk );
 
 $smarty->display( 'wachtwoord_nieuw.tpl' );

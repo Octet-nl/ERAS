@@ -70,6 +70,10 @@ $evt = "";
 
 $systeem = new Sysdb();
 
+$ini = parse_ini_file( CONFIG_FILENAME, true );
+$wachtwoordSterkte = $ini['settings']['password_klant'];
+$sterkteOk = "1";
+
 // DEEL 1
 if ( $_SERVER["REQUEST_METHOD"] == "GET" )
 {
@@ -165,9 +169,15 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             $validateOk += $setVar->name( $password )
                 ->onerror( $passwordErr )
                 ->emptymessage( "Vul uw wachtwoord in" )
-                ->errormessage( "Uw wachtwoord moet minimaal 6 tekens lang zijn" )
+                ->errormessage( "Uw wachtwoord moet minimaal 2 tekens lang zijn" )
                 ->noHtmlCleaning()
-                ->validator( v::alwaysValid()->length( 6, 255 ) )
+                ->validator( v::alwaysValid()->length( 2, 255 ) )
+                ->required( true )
+                ->go();
+            $validateOk += $setVar->name( $sterkteOk )
+                ->onerror( $passwordErr )
+                ->errormessage("Wachtwoord sterkte is onvoldoende")
+                ->validator( v::trueVal() )
                 ->required( true )
                 ->go();
             $validateOk += $setVar->name( $bevestig )
@@ -330,23 +340,29 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             $validateOk += $setVar->name( $wachtwoord )
                 ->onerror( $wachtwoordErr )
                 ->emptymessage( "Vul uw wachtwoord in" )
-                ->errormessage( "Uw wachtwoord moet minimaal 6 tekens lang zijn" )
+                ->errormessage( "Uw wachtwoord moet minimaal 2 tekens lang zijn" )
                 ->noHtmlCleaning()
-                ->validator( v::alwaysValid()->length( 1, 255 ) )
+                ->validator( v::alwaysValid()->length( 2, 255 ) )
                 ->required( true )
                 ->go();
             $validateOk += $setVar->name( $newPassword )
                 ->onerror( $newPasswordErr )
-                ->errormessage( "Uw wachtwoord moet minimaal 6 tekens lang zijn" )
+                ->errormessage( "Uw wachtwoord moet minimaal 2 tekens lang zijn" )
                 ->noHtmlCleaning()
-                ->validator( v::alwaysValid()->length( 6, 255 ) )
+                ->validator( v::alwaysValid()->length( 2, 255 ) )
                 ->required( false )
                 ->go();
             $validateOk += $setVar->name( $repeatPassword )
                 ->onerror( $repeatPasswordErr )
                 ->noHtmlCleaning()
-                ->validator( v::alwaysValid()->length( 6, 255 ) )
+                ->validator( v::alwaysValid()->length( 2, 255 ) )
                 ->required( false )
+                ->go();
+            $validateOk += $setVar->name( $sterkteOk )
+                ->onerror( $newPasswordErr )
+                ->errormessage("Wachtwoord sterkte is onvoldoende")
+                ->validator( v::trueVal() )
+                ->required( true )
                 ->go();
 
             $allOk = false;
@@ -490,6 +506,8 @@ $smarty->assign( 'newPassword', $newPassword );
 $smarty->assign( 'newPasswordErr', $newPasswordErr );
 $smarty->assign( 'repeatPassword', $repeatPassword );
 $smarty->assign( 'repeatPasswordErr', $repeatPasswordErr );
+$smarty->assign( 'wachtwoordSterkte', $wachtwoordSterkte );
+$smarty->assign( 'sterkteOk', $sterkteOk );
 
 $smarty->assign( 'registerchecked', $registerchecked );
 $smarty->assign( 'directchecked', $directchecked );
