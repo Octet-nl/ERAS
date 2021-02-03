@@ -42,22 +42,30 @@
             </td>
         </tr>
     </table>
+    <br/>
+    
+    <div>
+        Contact info toevoegen:<br/>
+        <textarea rows="5" cols="90" name="nieuweLog" id="nieuweLog">{$nieuweLog}</textarea><br/>
+        <span class="error">{$nieuweLogErr}</span>
+        <br/>
+        <button name="toevoegen">Toevoegen</button> 
+        <button name="terug">Terug</button> 
+    </div>
+    <br/>
 
-    <br/>
-    Klantcontacten:
-    {if $invers == 0}
-    <input class="barebutton" type="button" name="invers" value="Zet oudste bovenaan" onclick="oudste()">
-    {else}
-    <input class="barebutton" type="button" name="gewoon" value="Zet nieuwste bovenaan" onclick="nieuwste()">
-    {/if}    
-    <br/>
-    <textarea rows="15" cols="90" name="klantcontact" id="klantcontact" readonly>{$logTekst}</textarea>
-    <br/>
-    Contact info toevoegen:<br/>
-    <textarea rows="5" cols="90" name="nieuweLog" id="nieuweLog">{$nieuweLog}</textarea><br/>
-    <span class="error">{$nieuweLogErr}</span>
-    <br/>
-    <button name="toevoegen">Toevoegen</button> 
+    <div>
+        Klantcontacten:
+        {if $invers == 0}
+        <input class="barebutton" type="button" name="invers" value="Zet oudste bovenaan" onclick="oudste()">
+        {else}
+        <input class="barebutton" type="button" name="gewoon" value="Zet nieuwste bovenaan" onclick="nieuwste()">
+        {/if}    
+        <br/>
+        <textarea rows="15" cols="90" name="klantcontact" id="klantcontact" readonly>{$logTekst}</textarea>
+        <br/>
+    </div>
+
     <button name="terug">Terug</button> 
 
     <input type="hidden" name="id" id="id" value={$id}>
