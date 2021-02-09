@@ -148,8 +148,8 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
         }
 
         $evt_lijst["kanVerwijderd"] = "0";
-        $evenementopties = EvenementHeeftOptieQuery::create()->filterByEvenementId( $evenement->getId() )->find();
-        if ( sizeof( $evenementopties ) == 0 )
+//        $evenementopties = EvenementHeeftOptieQuery::create()->filterByEvenementId( $evenement->getId() )->find();
+//        if ( sizeof( $evenementopties ) == 0 )
         {
             $inschrijving = InschrijvingQuery::create()->findOneByEvenementId( $evenement->getId() );
             if ( $inschrijving == null )
@@ -216,6 +216,12 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
         $evenement = EvenementQuery::create()->findPk( $_POST['verwijder'] );
         try
         {
+            $evenementopties = EvenementHeeftOptieQuery::create()->filterByEvenementId( $evenement->getId() )->find();
+            if ( sizeof( $evenementopties ) != 0 )
+            {
+                $evenementopties->delete();
+            }
+
             $evenement->delete();
         }
         catch ( Exception $ex )

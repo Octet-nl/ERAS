@@ -160,7 +160,7 @@
         {
             if ( document.getElementById( "zonderVragen" ).checked == false )
             {
-                return confirm( naam + "\nOptie verwijderen?");
+                return confirm( "Optie: " + naam + "\nOptie verwijderen?");
             }
             return true;
         }

@@ -80,8 +80,8 @@
                   <button name="aanpassen" value={$evenement.id}>Aanpassen</button>
                   <button name="statistiek"  value={$evenement.id}>Statistiek</button>
                   {if $evenement.kanVerwijderd == "1"}
-                      <button name="verwijder" value={$evenement.id}>Verwijder</button>
-                  {/if}
+                      <button name="verwijder" value={$evenement.id} onclick="return verwijderKlik('{$evenement.naam}')">Verwijder</button> 
+                      {/if}
               </td> 
             </tr>  
         {/foreach}
@@ -96,5 +96,12 @@
     {include file="statusregel.tpl"}
  
     </form>
+
+    <script>
+        function verwijderKlik(naam)
+        {
+            return confirm( "Evenement: " + naam + "\nEvenement verwijderen?");
+        }
+    </script>
 
 {include file="footer.tpl"}
