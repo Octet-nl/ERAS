@@ -110,7 +110,7 @@
   <br />
   <br />
 
-  {if !$isPersoneel && {$voorwaarden} != ""}
+  {if {$voorwaarden} != ""}
   <input type="checkbox" title="Akkoord voorwaarden" name="akkoord_voorwaarden" required value="0">
   <label class="medium"> <a href="{$voorwaarden}" alt="Bekijk onze voorwaarden" target="_blank">Ik ga
       akkoord met de inschrijfvoorwaarden</a></label>
