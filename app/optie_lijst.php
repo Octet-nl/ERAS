@@ -259,18 +259,14 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
             }
     
             $opt_lijst["kanVerwijderd"] = "0";
-            $opties = EvenementHeeftOptieQuery::create()->filterByOptieId( $optie->getId() )->find();
+            $opties = DeelnemerHeeftOptieQuery::create()->filterByOptieId( $optie->getId() )->find();
             if ( sizeof( $opties ) == 0 )
             {
-                $opties = DeelnemerHeeftOptieQuery::create()->filterByOptieId( $optie->getId() )->find();
+                $opties = InschrijvingHeeftOptieQuery::create()->filterByOptieId( $optie->getId() )->find();
                 if ( sizeof( $opties ) == 0 )
                 {
-                    $opties = InschrijvingHeeftOptieQuery::create()->filterByOptieId( $optie->getId() )->find();
-                    if ( sizeof( $opties ) == 0 )
-                    {
-                        $opt_lijst["kanVerwijderd"] = "1";
-                        $verwijderbaar += 1;
-                    }
+                    $opt_lijst["kanVerwijderd"] = "1";
+                    $verwijderbaar += 1;
                 }
             }
     
@@ -378,6 +374,13 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
         $optie = OptieQuery::create()->findPk( $_POST['verwijder'] );
         try
         {
+            // Als optie aan een evenement hangt, dan eerst deze relatie verwijderen.
+            $evtoptie = EvenementHeeftOptieQuery::create()->filterByOptieId( $optie->getId() )->find();
+            if ( sizeof( $evtoptie ) != 0 )
+            {
+                $evtoptie->delete();
+            }
+
             $optie->delete();
         }
         catch ( Exception $ex )
