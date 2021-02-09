@@ -66,6 +66,7 @@ temp_directory="../temp"
 facturen_directory="../facturen"
 image_directory="../images"
 ;
+refresh="30"
 batch_size="10"
 password_klant="1"
 password_medewerker="2"

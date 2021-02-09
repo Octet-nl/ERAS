@@ -199,9 +199,18 @@
                 <span class=setting_label>Maximaal aantal mails dat tegelijk verstuurd kan worden</span>
                 <input style="width:8em" type="text" class="setting_input" name="settingBatchSize" value="{$settingBatchSize}">
                 <div class="tooltip">?
-                    <span class="tooltiptext right">Veel providers stellen een grens aan het maximaal in één keer te verzenden mails. Voor de nieuwbrief is dat soms onvoldoende. Geef hier aan hoeveel mails tegelijk verstuurd kunnen worden. Zijn het er meer, dan wordt een batchverwerking aangeboden.</span>
+                    <span class="tooltiptext right">Veel providers stellen een grens aan het maximaal in één keer te verzenden mails.
+                         Voor de nieuwbrief is dat soms onvoldoende. Geef hier aan hoeveel mails tegelijk verstuurd mogen worden. Zijn het er meer, dan wordt een batchverwerking aangeboden.</span>
                 </div>
                 <span class="error">{$settingBatchSizeErr}</span>
+
+                <span class=setting_label>Automatische refresh van preview (seconden)</span>
+                <input style="width:8em" type="text" class="setting_input" name="settingRefresh" value="{$settingRefresh}">
+                <div class="tooltip">?
+                    <span class="tooltiptext right">De preview wordt automatisch ververst. 
+                        Geef hier het interval aan, tussen de 5 en 300 seconden (=5 minuten). </span>
+                </div>
+                <span class="error">{$settingRefreshErr}</span>
 
                 <span class=setting_label>Wachtwoord sterkte voor klanten:&emsp;
                     {html_options name=settingPasswordKlant options=$settingPasswordLijst selected=$settingPasswordKlant}
@@ -210,6 +219,7 @@
                     </div>
                 </span>
                 <span class="error">{$settingPasswordKlantErr}</span>
+
                 <span class=setting_label>Wachtwoord sterkte voor medewerkers:&emsp;
                     {html_options name=settingPasswordMedewerker options=$settingPasswordLijst selected=$settingPasswordMedewerker}
                     <div class="tooltip">?

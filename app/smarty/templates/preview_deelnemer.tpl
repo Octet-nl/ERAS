@@ -1,5 +1,5 @@
 {include file="header-klant.tpl"}
-<meta http-equiv="refresh" content="30">
+<meta http-equiv="refresh" content="{$refresh}">
 
 <div class="tlwrapper">
 	<ol class="timeline">

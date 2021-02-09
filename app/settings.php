@@ -91,6 +91,7 @@ $settingTempDirectory = "";
 $settingFacturenDirectory = "";
 $settingImageDirectory = "";
 $settingBatchSize = "";
+$settingRefresh = "";
 $settingPasswordKlant = "";
 $settingPasswordMedewerker = "";
 $enableVerzekering = "";
@@ -138,6 +139,7 @@ $settingTempDirectoryErr = "";
 $settingFacturenDirectoryErr = "";
 $settingImageDirectoryErr = "";
 $settingBatchSizeErr = "";
+$settingRefreshErr = "";
 $settingPasswordKlantErr = "";
 $settingPasswordMedewerkerErr = "";
 $enableVerzekeringErr = "";
@@ -215,6 +217,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
     $settingVerzekeringVoorwaarden = $ini['verzekering']['voorwaarden'];
 
     $settingBatchSize = $ini['settings']['batch_size'];
+    $settingRefresh = $ini['settings']['refresh'];
     $settingPasswordKlant = $ini['settings']['password_klant'];
     $settingPasswordMedewerker = $ini['settings']['password_medewerker'];
     $settingLogDirectory = $ini['settings']['log_directory'];
@@ -465,7 +468,13 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
 
         $validateOk += $setVar->name( $settingBatchSize )
             ->onerror( $settingBatchSizeErr )
-            ->validator( v::number() )
+            ->validator( v::intVal()->between(2, 100) )
+            ->errormessage( "Kies een waarde tussen 2 en 100" )
+            ->required( true )->go();
+        $validateOk += $setVar->name( $settingRefresh )
+            ->onerror( $settingRefreshErr )
+            ->validator( v::intVal()->between(5, 300) )
+            ->errormessage( "Kies een waarde tussen 5 en 300" )
             ->required( true )->go();
         $validateOk += $setVar->name( $settingPasswordKlant )
             ->onerror( $settingPasswordKlantErr )
@@ -569,6 +578,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             fprintf( $fp, 'image_directory="%s"' . "\n", $settingImageDirectory );
             fprintf( $fp, ';' . "\n" );
             fprintf( $fp, 'batch_size="%s"' . "\n", $settingBatchSize );
+            fprintf( $fp, 'refresh="%s"' . "\n", $settingRefresh );
             fprintf( $fp, 'password_klant="%s"' . "\n", $settingPasswordKlant );
             fprintf( $fp, 'password_medewerker="%s"' . "\n", $settingPasswordMedewerker );
             fprintf( $fp, ';' . "\n" );            
@@ -704,6 +714,8 @@ $smarty->assign( 'settingImageDirectoryErr', $settingImageDirectoryErr );
 
 $smarty->assign( 'settingBatchSize', $settingBatchSize );
 $smarty->assign( 'settingBatchSizeErr', $settingBatchSizeErr );
+$smarty->assign( 'settingRefresh', $settingRefresh );
+$smarty->assign( 'settingRefreshErr', $settingRefreshErr );
 
 $settingPasswordLijst[PASSWORD_ZWAK] = "Zwak";
 $settingPasswordLijst[PASSWORD_MEDIUM] = "Medium";

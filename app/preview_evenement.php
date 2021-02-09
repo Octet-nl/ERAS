@@ -198,6 +198,8 @@ else
     $buttonname = "wachten";
 }
 
+$ini= parse_ini_file( CONFIG_FILENAME, true );
+$smarty->assign( 'refresh', $ini['settings']['refresh'] );
 $smarty->assign( 'doctitle', $doctitle );
 $smarty->assign( 'statusGeannuleerd', EVENEMENT_STATUS_GEANNULEERD );
 $smarty->assign( 'buttontekst', $buttontekst );

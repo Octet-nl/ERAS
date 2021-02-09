@@ -191,7 +191,10 @@ $id_visibility = "hide";
 require_once
  'persoon_template.php';
 
-$namen = array("Jan Modaal", "Otto Normalverbraucher", "Joe Average", "Matti Meikäläinen", "M. Moyen");
+ $ini= parse_ini_file( CONFIG_FILENAME, true );
+ $smarty->assign( 'refresh', $ini['settings']['refresh'] );
+
+$namen = array("Jan Modaal", "Otto Normalverbraucher", "Joe Average", "Matti Meikäläinen", "M. Moyen", "Juan del Pueblo");
 $contactnaam = $namen[array_rand($namen, 1)];
 $smarty->assign( 'doctitle', $doctitle );
 $smarty->assign( 'evenement_naam', $evenement_naam );

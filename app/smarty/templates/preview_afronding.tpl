@@ -1,5 +1,5 @@
 {include file="header-klant.tpl"}
-<meta http-equiv="refresh" content="30">
+<meta http-equiv="refresh" content="{$refresh}">
 
 <div class="tlwrapper">
   <ol class="timeline">
@@ -110,7 +110,7 @@
   <br />
   <br />
 
-  {if !$isPersoneel}
+  {if !$isPersoneel && {$voorwaarden} != ""}
   <input type="checkbox" title="Akkoord voorwaarden" name="akkoord_voorwaarden" required value="0">
   <label class="medium"> <a href="{$voorwaarden}" alt="Bekijk onze voorwaarden" target="_blank">Ik ga
       akkoord met de inschrijfvoorwaarden</a></label>
