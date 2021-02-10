@@ -219,7 +219,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
 
             if ( $optie->getPerDeelnemer() == "1" )
             {
-                if ( $optie->getOptieType() == OPTIETYPE_KEUZE_JA_NEE )
+                if ( $optie->getOptieType() == OPTIETYPE_KEUZE_JA_NEE || $optie->getOptieType() == OPTIETYPE_VOORWAARDE )
                 {
                     $aantalOpties = DeelnemerHeeftOptieQuery::create()
                         ->useDeelnemerQuery( 'a', 'left join' )
@@ -260,7 +260,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
             }
             else
             {
-                if ( $optie->getOptieType() == OPTIETYPE_KEUZE_JA_NEE )
+                if ( $optie->getOptieType() == OPTIETYPE_KEUZE_JA_NEE || $optie->getOptieType() == OPTIETYPE_VOORWAARDE )
                 {
                     $aantalOpties = InschrijvingHeeftOptieQuery::create()
                         ->useInschrijvingQuery( 'b', 'left join' )
