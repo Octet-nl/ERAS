@@ -79,6 +79,20 @@ abstract class FactuurNummer implements ActiveRecordInterface
     protected $inschrijving_id;
 
     /**
+     * The value for the factuurnummer field.
+     *
+     * @var        string
+     */
+    protected $factuurnummer;
+
+    /**
+     * The value for the verzonden field.
+     *
+     * @var        int
+     */
+    protected $verzonden;
+
+    /**
      * The value for the gemaakt_datum field.
      *
      * @var        DateTime
@@ -365,6 +379,26 @@ abstract class FactuurNummer implements ActiveRecordInterface
     }
 
     /**
+     * Get the [factuurnummer] column value.
+     *
+     * @return string
+     */
+    public function getfactuurNummer()
+    {
+        return $this->factuurnummer;
+    }
+
+    /**
+     * Get the [verzonden] column value.
+     *
+     * @return int
+     */
+    public function getverzonden()
+    {
+        return $this->verzonden;
+    }
+
+    /**
      * Get the [optionally formatted] temporal [gemaakt_datum] column value.
      *
      *
@@ -467,6 +501,46 @@ abstract class FactuurNummer implements ActiveRecordInterface
 
         return $this;
     } // setInschrijvingId()
+
+    /**
+     * Set the value of [factuurnummer] column.
+     *
+     * @param string $v New value
+     * @return $this|\fb_model\fb_model\FactuurNummer The current object (for fluent API support)
+     */
+    public function setfactuurNummer($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->factuurnummer !== $v) {
+            $this->factuurnummer = $v;
+            $this->modifiedColumns[FactuurNummerTableMap::COL_FACTUURNUMMER] = true;
+        }
+
+        return $this;
+    } // setfactuurNummer()
+
+    /**
+     * Set the value of [verzonden] column.
+     *
+     * @param int $v New value
+     * @return $this|\fb_model\fb_model\FactuurNummer The current object (for fluent API support)
+     */
+    public function setverzonden($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->verzonden !== $v) {
+            $this->verzonden = $v;
+            $this->modifiedColumns[FactuurNummerTableMap::COL_VERZONDEN] = true;
+        }
+
+        return $this;
+    } // setverzonden()
 
     /**
      * Sets the value of [gemaakt_datum] column to a normalized version of the date/time value specified.
@@ -590,22 +664,28 @@ abstract class FactuurNummer implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : FactuurNummerTableMap::translateFieldName('InschrijvingId', TableMap::TYPE_PHPNAME, $indexType)];
             $this->inschrijving_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : FactuurNummerTableMap::translateFieldName('DatumGemaakt', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : FactuurNummerTableMap::translateFieldName('factuurNummer', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->factuurnummer = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : FactuurNummerTableMap::translateFieldName('verzonden', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->verzonden = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : FactuurNummerTableMap::translateFieldName('DatumGemaakt', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->gemaakt_datum = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : FactuurNummerTableMap::translateFieldName('GemaaktDoor', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : FactuurNummerTableMap::translateFieldName('GemaaktDoor', TableMap::TYPE_PHPNAME, $indexType)];
             $this->gemaakt_door = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : FactuurNummerTableMap::translateFieldName('DatumGewijzigd', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : FactuurNummerTableMap::translateFieldName('DatumGewijzigd', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->gewijzigd_datum = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : FactuurNummerTableMap::translateFieldName('GewijzigdDoor', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : FactuurNummerTableMap::translateFieldName('GewijzigdDoor', TableMap::TYPE_PHPNAME, $indexType)];
             $this->gewijzigd_door = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
@@ -615,7 +695,7 @@ abstract class FactuurNummer implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 6; // 6 = FactuurNummerTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 8; // 8 = FactuurNummerTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\fb_model\\fb_model\\FactuurNummer'), 0, $e);
@@ -851,6 +931,12 @@ abstract class FactuurNummer implements ActiveRecordInterface
         if ($this->isColumnModified(FactuurNummerTableMap::COL_INSCHRIJVING_ID)) {
             $modifiedColumns[':p' . $index++]  = 'inschrijving_id';
         }
+        if ($this->isColumnModified(FactuurNummerTableMap::COL_FACTUURNUMMER)) {
+            $modifiedColumns[':p' . $index++]  = 'factuurnummer';
+        }
+        if ($this->isColumnModified(FactuurNummerTableMap::COL_VERZONDEN)) {
+            $modifiedColumns[':p' . $index++]  = 'verzonden';
+        }
         if ($this->isColumnModified(FactuurNummerTableMap::COL_GEMAAKT_DATUM)) {
             $modifiedColumns[':p' . $index++]  = 'gemaakt_datum';
         }
@@ -879,6 +965,12 @@ abstract class FactuurNummer implements ActiveRecordInterface
                         break;
                     case 'inschrijving_id':
                         $stmt->bindValue($identifier, $this->inschrijving_id, PDO::PARAM_INT);
+                        break;
+                    case 'factuurnummer':
+                        $stmt->bindValue($identifier, $this->factuurnummer, PDO::PARAM_STR);
+                        break;
+                    case 'verzonden':
+                        $stmt->bindValue($identifier, $this->verzonden, PDO::PARAM_INT);
                         break;
                     case 'gemaakt_datum':
                         $stmt->bindValue($identifier, $this->gemaakt_datum ? $this->gemaakt_datum->format("Y-m-d H:i:s.u") : null, PDO::PARAM_STR);
@@ -961,15 +1053,21 @@ abstract class FactuurNummer implements ActiveRecordInterface
                 return $this->getInschrijvingId();
                 break;
             case 2:
-                return $this->getDatumGemaakt();
+                return $this->getfactuurNummer();
                 break;
             case 3:
-                return $this->getGemaaktDoor();
+                return $this->getverzonden();
                 break;
             case 4:
-                return $this->getDatumGewijzigd();
+                return $this->getDatumGemaakt();
                 break;
             case 5:
+                return $this->getGemaaktDoor();
+                break;
+            case 6:
+                return $this->getDatumGewijzigd();
+                break;
+            case 7:
                 return $this->getGewijzigdDoor();
                 break;
             default:
@@ -1004,17 +1102,19 @@ abstract class FactuurNummer implements ActiveRecordInterface
         $result = array(
             $keys[0] => $this->getId(),
             $keys[1] => $this->getInschrijvingId(),
-            $keys[2] => $this->getDatumGemaakt(),
-            $keys[3] => $this->getGemaaktDoor(),
-            $keys[4] => $this->getDatumGewijzigd(),
-            $keys[5] => $this->getGewijzigdDoor(),
+            $keys[2] => $this->getfactuurNummer(),
+            $keys[3] => $this->getverzonden(),
+            $keys[4] => $this->getDatumGemaakt(),
+            $keys[5] => $this->getGemaaktDoor(),
+            $keys[6] => $this->getDatumGewijzigd(),
+            $keys[7] => $this->getGewijzigdDoor(),
         );
-        if ($result[$keys[2]] instanceof \DateTimeInterface) {
-            $result[$keys[2]] = $result[$keys[2]]->format('c');
-        }
-
         if ($result[$keys[4]] instanceof \DateTimeInterface) {
             $result[$keys[4]] = $result[$keys[4]]->format('c');
+        }
+
+        if ($result[$keys[6]] instanceof \DateTimeInterface) {
+            $result[$keys[6]] = $result[$keys[6]]->format('c');
         }
 
         $virtualColumns = $this->virtualColumns;
@@ -1079,15 +1179,21 @@ abstract class FactuurNummer implements ActiveRecordInterface
                 $this->setInschrijvingId($value);
                 break;
             case 2:
-                $this->setDatumGemaakt($value);
+                $this->setfactuurNummer($value);
                 break;
             case 3:
-                $this->setGemaaktDoor($value);
+                $this->setverzonden($value);
                 break;
             case 4:
-                $this->setDatumGewijzigd($value);
+                $this->setDatumGemaakt($value);
                 break;
             case 5:
+                $this->setGemaaktDoor($value);
+                break;
+            case 6:
+                $this->setDatumGewijzigd($value);
+                break;
+            case 7:
                 $this->setGewijzigdDoor($value);
                 break;
         } // switch()
@@ -1123,16 +1229,22 @@ abstract class FactuurNummer implements ActiveRecordInterface
             $this->setInschrijvingId($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
-            $this->setDatumGemaakt($arr[$keys[2]]);
+            $this->setfactuurNummer($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setGemaaktDoor($arr[$keys[3]]);
+            $this->setverzonden($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setDatumGewijzigd($arr[$keys[4]]);
+            $this->setDatumGemaakt($arr[$keys[4]]);
         }
         if (array_key_exists($keys[5], $arr)) {
-            $this->setGewijzigdDoor($arr[$keys[5]]);
+            $this->setGemaaktDoor($arr[$keys[5]]);
+        }
+        if (array_key_exists($keys[6], $arr)) {
+            $this->setDatumGewijzigd($arr[$keys[6]]);
+        }
+        if (array_key_exists($keys[7], $arr)) {
+            $this->setGewijzigdDoor($arr[$keys[7]]);
         }
     }
 
@@ -1180,6 +1292,12 @@ abstract class FactuurNummer implements ActiveRecordInterface
         }
         if ($this->isColumnModified(FactuurNummerTableMap::COL_INSCHRIJVING_ID)) {
             $criteria->add(FactuurNummerTableMap::COL_INSCHRIJVING_ID, $this->inschrijving_id);
+        }
+        if ($this->isColumnModified(FactuurNummerTableMap::COL_FACTUURNUMMER)) {
+            $criteria->add(FactuurNummerTableMap::COL_FACTUURNUMMER, $this->factuurnummer);
+        }
+        if ($this->isColumnModified(FactuurNummerTableMap::COL_VERZONDEN)) {
+            $criteria->add(FactuurNummerTableMap::COL_VERZONDEN, $this->verzonden);
         }
         if ($this->isColumnModified(FactuurNummerTableMap::COL_GEMAAKT_DATUM)) {
             $criteria->add(FactuurNummerTableMap::COL_GEMAAKT_DATUM, $this->gemaakt_datum);
@@ -1280,6 +1398,8 @@ abstract class FactuurNummer implements ActiveRecordInterface
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
         $copyObj->setInschrijvingId($this->getInschrijvingId());
+        $copyObj->setfactuurNummer($this->getfactuurNummer());
+        $copyObj->setverzonden($this->getverzonden());
         $copyObj->setDatumGemaakt($this->getDatumGemaakt());
         $copyObj->setGemaaktDoor($this->getGemaaktDoor());
         $copyObj->setDatumGewijzigd($this->getDatumGewijzigd());
@@ -1375,6 +1495,8 @@ abstract class FactuurNummer implements ActiveRecordInterface
         }
         $this->id = null;
         $this->inschrijving_id = null;
+        $this->factuurnummer = null;
+        $this->verzonden = null;
         $this->gemaakt_datum = null;
         $this->gemaakt_door = null;
         $this->gewijzigd_datum = null;

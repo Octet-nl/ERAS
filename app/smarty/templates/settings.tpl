@@ -75,6 +75,15 @@
         
                 <span class=setting_label>Factuur verzenden:&emsp;
                     {html_options name=factuurVerzenden options=$jaNeeLijst selected=$factuurVerzenden}
+                    <div class="tooltip">?
+                        <span class="tooltiptext right">Als u de factuur automatisch laat verzenden, krijgt deze een factuurnummer van ERAS 
+                            toegewezen. Dit werkt prima als u verder geen facturering doet. Heeft u al een ander factureringssysteem 
+                            met een eigen nummering, kies hier dan 'nee', 
+                            u kunt dan later de facturen verzenden en er uw eigen factuurnummer aan toekennen.
+                            <br/><strong>LET OP:</strong><br/>
+                            Als u dit wijzigt, denk er dan aan dat uw factuurnummering niet meer een aaneengesloten geheel vormt. 
+                            <i>Het is een eis van de belastingdienst dat factuurnummers aaneengesloten zijn!</i></span>
+                    </div>        
                 </span>
                 <span class="error">{$factuurVerzendenErr}</span>
                 <span class=setting_label>Titel van de factuur</span>

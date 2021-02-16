@@ -69,6 +69,19 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
 
             try
             {
+                $regels = json_decode(file_get_contents("../update.json"), true);
+                
+                $dbOldMajor = $regels["database"]["dbold"]["major"];
+                $dbOldMinor = $regels["database"]["dbold"]["minor"];
+                $dbNewMajor = $regels["database"]["dbnew"]["major"];
+                $dbNewMinor = $regels["database"]["dbnew"]["minor"];
+                $sqlFile    = $regels["database"]["sqlfile"];
+                
+                echo( "<br/>Database oud: " . $dbOldMajor . "." . $dbOldMinor . "<br/>" );
+                echo( "Database nieuw: " . $dbNewMajor . "." . $dbNewMinor . "<br/>" );
+                echo( "SQL update file: " . $sqlFile . "<br/>" );
+//                exit;
+                
                 ///////////////////////////////////////////////////////////////////
                 //  Download van de gewenste tag uit GitHub.
                 ///////////////////////////////////////////////////////////////////

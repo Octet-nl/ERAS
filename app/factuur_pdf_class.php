@@ -37,6 +37,7 @@ class Factuur extends FPDF2
     private $footer = "";
     private $address = "";
     private $ini = array();
+    private $factnrline = 0;
 
     //iconv("UTF-8", "ISO-8859-1", $factuurEvenementKolom1 )
 
@@ -102,6 +103,7 @@ class Factuur extends FPDF2
         $this->MultiCell( 25, 4, $str, 'LB', 1 );
         $this->setXY( $x + 25, $y );
         $this->MultiCell( 75, 4, $str2, 'RB', 1 );
+        $this->factnrline = $this->GetY();
     }
 
     public function addTo( $str )
@@ -114,10 +116,25 @@ class Factuur extends FPDF2
         $this->Ln( 10 );
     }
 
+    public function addFactuurnr( $nummer, $datum )
+    {
+        $this->SetFont('Helvetica','B',9);
+        $y = $this->factnrline + 7;
+        $x = $this->GetX();
+        $this->setXY( $x, $y );
+        $this->Cell( 30, 5, 'Factuurnummer:', 0, 0, '', 0 );
+        $this->setXY( $x + 28, $y );
+        $this->Cell( 20, 5, $nummer, '', 0 );
+        $this->setXY( $x + 85, $y );
+        $this->Cell( 25, 5, 'Factuurdatum:', 0, 0, '', 0 );
+        $this->setXY( $x + 110, $y );
+        $this->Cell( 20, 5, $datum, '', 0 );
+    }
+
     public function addOrderDetail( $evt, $rdate, $nummer, $aantal, $prijsper, $totaal )
     {
         $x = 10;
-        $y = 70;
+        $y = 68;
         $this->SetFont( 'Helvetica', '', 9 );
         $this->Cell( 550 );
         $this->setXY( $x, $y );

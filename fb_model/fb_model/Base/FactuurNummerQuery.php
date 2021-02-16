@@ -22,6 +22,8 @@ use fb_model\fb_model\Map\FactuurNummerTableMap;
  *
  * @method     ChildFactuurNummerQuery orderById($order = Criteria::ASC) Order by the id column
  * @method     ChildFactuurNummerQuery orderByInschrijvingId($order = Criteria::ASC) Order by the inschrijving_id column
+ * @method     ChildFactuurNummerQuery orderByfactuurNummer($order = Criteria::ASC) Order by the factuurnummer column
+ * @method     ChildFactuurNummerQuery orderByverzonden($order = Criteria::ASC) Order by the verzonden column
  * @method     ChildFactuurNummerQuery orderByDatumGemaakt($order = Criteria::ASC) Order by the gemaakt_datum column
  * @method     ChildFactuurNummerQuery orderByGemaaktDoor($order = Criteria::ASC) Order by the gemaakt_door column
  * @method     ChildFactuurNummerQuery orderByDatumGewijzigd($order = Criteria::ASC) Order by the gewijzigd_datum column
@@ -29,6 +31,8 @@ use fb_model\fb_model\Map\FactuurNummerTableMap;
  *
  * @method     ChildFactuurNummerQuery groupById() Group by the id column
  * @method     ChildFactuurNummerQuery groupByInschrijvingId() Group by the inschrijving_id column
+ * @method     ChildFactuurNummerQuery groupByfactuurNummer() Group by the factuurnummer column
+ * @method     ChildFactuurNummerQuery groupByverzonden() Group by the verzonden column
  * @method     ChildFactuurNummerQuery groupByDatumGemaakt() Group by the gemaakt_datum column
  * @method     ChildFactuurNummerQuery groupByGemaaktDoor() Group by the gemaakt_door column
  * @method     ChildFactuurNummerQuery groupByDatumGewijzigd() Group by the gewijzigd_datum column
@@ -59,6 +63,8 @@ use fb_model\fb_model\Map\FactuurNummerTableMap;
  *
  * @method     ChildFactuurNummer findOneById(int $id) Return the first ChildFactuurNummer filtered by the id column
  * @method     ChildFactuurNummer findOneByInschrijvingId(int $inschrijving_id) Return the first ChildFactuurNummer filtered by the inschrijving_id column
+ * @method     ChildFactuurNummer findOneByfactuurNummer(string $factuurnummer) Return the first ChildFactuurNummer filtered by the factuurnummer column
+ * @method     ChildFactuurNummer findOneByverzonden(int $verzonden) Return the first ChildFactuurNummer filtered by the verzonden column
  * @method     ChildFactuurNummer findOneByDatumGemaakt(string $gemaakt_datum) Return the first ChildFactuurNummer filtered by the gemaakt_datum column
  * @method     ChildFactuurNummer findOneByGemaaktDoor(string $gemaakt_door) Return the first ChildFactuurNummer filtered by the gemaakt_door column
  * @method     ChildFactuurNummer findOneByDatumGewijzigd(string $gewijzigd_datum) Return the first ChildFactuurNummer filtered by the gewijzigd_datum column
@@ -69,6 +75,8 @@ use fb_model\fb_model\Map\FactuurNummerTableMap;
  *
  * @method     ChildFactuurNummer requireOneById(int $id) Return the first ChildFactuurNummer filtered by the id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildFactuurNummer requireOneByInschrijvingId(int $inschrijving_id) Return the first ChildFactuurNummer filtered by the inschrijving_id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildFactuurNummer requireOneByfactuurNummer(string $factuurnummer) Return the first ChildFactuurNummer filtered by the factuurnummer column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildFactuurNummer requireOneByverzonden(int $verzonden) Return the first ChildFactuurNummer filtered by the verzonden column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildFactuurNummer requireOneByDatumGemaakt(string $gemaakt_datum) Return the first ChildFactuurNummer filtered by the gemaakt_datum column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildFactuurNummer requireOneByGemaaktDoor(string $gemaakt_door) Return the first ChildFactuurNummer filtered by the gemaakt_door column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildFactuurNummer requireOneByDatumGewijzigd(string $gewijzigd_datum) Return the first ChildFactuurNummer filtered by the gewijzigd_datum column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -77,6 +85,8 @@ use fb_model\fb_model\Map\FactuurNummerTableMap;
  * @method     ChildFactuurNummer[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildFactuurNummer objects based on current ModelCriteria
  * @method     ChildFactuurNummer[]|ObjectCollection findById(int $id) Return ChildFactuurNummer objects filtered by the id column
  * @method     ChildFactuurNummer[]|ObjectCollection findByInschrijvingId(int $inschrijving_id) Return ChildFactuurNummer objects filtered by the inschrijving_id column
+ * @method     ChildFactuurNummer[]|ObjectCollection findByfactuurNummer(string $factuurnummer) Return ChildFactuurNummer objects filtered by the factuurnummer column
+ * @method     ChildFactuurNummer[]|ObjectCollection findByverzonden(int $verzonden) Return ChildFactuurNummer objects filtered by the verzonden column
  * @method     ChildFactuurNummer[]|ObjectCollection findByDatumGemaakt(string $gemaakt_datum) Return ChildFactuurNummer objects filtered by the gemaakt_datum column
  * @method     ChildFactuurNummer[]|ObjectCollection findByGemaaktDoor(string $gemaakt_door) Return ChildFactuurNummer objects filtered by the gemaakt_door column
  * @method     ChildFactuurNummer[]|ObjectCollection findByDatumGewijzigd(string $gewijzigd_datum) Return ChildFactuurNummer objects filtered by the gewijzigd_datum column
@@ -179,7 +189,7 @@ abstract class FactuurNummerQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT id, inschrijving_id, gemaakt_datum, gemaakt_door, gewijzigd_datum, gewijzigd_door FROM fb_factuur WHERE id = :p0';
+        $sql = 'SELECT id, inschrijving_id, factuurnummer, verzonden, gemaakt_datum, gemaakt_door, gewijzigd_datum, gewijzigd_door FROM fb_factuur WHERE id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -351,6 +361,72 @@ abstract class FactuurNummerQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(FactuurNummerTableMap::COL_INSCHRIJVING_ID, $inschrijvingId, $comparison);
+    }
+
+    /**
+     * Filter the query on the factuurnummer column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByfactuurNummer('fooValue');   // WHERE factuurnummer = 'fooValue'
+     * $query->filterByfactuurNummer('%fooValue%', Criteria::LIKE); // WHERE factuurnummer LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $factuurNummer The value to use as filter.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildFactuurNummerQuery The current query, for fluid interface
+     */
+    public function filterByfactuurNummer($factuurNummer = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($factuurNummer)) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(FactuurNummerTableMap::COL_FACTUURNUMMER, $factuurNummer, $comparison);
+    }
+
+    /**
+     * Filter the query on the verzonden column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByverzonden(1234); // WHERE verzonden = 1234
+     * $query->filterByverzonden(array(12, 34)); // WHERE verzonden IN (12, 34)
+     * $query->filterByverzonden(array('min' => 12)); // WHERE verzonden > 12
+     * </code>
+     *
+     * @param     mixed $verzonden The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildFactuurNummerQuery The current query, for fluid interface
+     */
+    public function filterByverzonden($verzonden = null, $comparison = null)
+    {
+        if (is_array($verzonden)) {
+            $useMinMax = false;
+            if (isset($verzonden['min'])) {
+                $this->addUsingAlias(FactuurNummerTableMap::COL_VERZONDEN, $verzonden['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($verzonden['max'])) {
+                $this->addUsingAlias(FactuurNummerTableMap::COL_VERZONDEN, $verzonden['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(FactuurNummerTableMap::COL_VERZONDEN, $verzonden, $comparison);
     }
 
     /**

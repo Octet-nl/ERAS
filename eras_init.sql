@@ -42,7 +42,7 @@ CREATE TABLE `fb_system` (
 --
 
 INSERT INTO `fb_system` (`naam`, `version_major`, `version_minor`, `valid`, `debug`, `deploy_directory`, `db_version_major`, `db_version_minor`, `gemaakt_datum`, `gemaakt_door`, `gewijzigd_datum`, `gewijzigd_door`) VALUES
-('eras', '1', '02', 0, 0, 'ERAS', '1', '01', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '');
+('eras', '1', '03', 0, 0, 'ERAS', '1', '02', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '');
 
 --
 -- Indexes for table `fb_system`
@@ -200,6 +200,8 @@ CREATE TABLE `fb_evenement_heeft_optie` (
 CREATE TABLE `fb_factuur` (
   `id` int(11) NOT NULL DEFAULT 1,
   `inschrijving_id` int(11) NOT NULL DEFAULT 0,
+  `factuurnummer` varchar(255) NOT NULL DEFAULT '0',
+  `verzonden` int(1) NOT NULL DEFAULT '0',
   `gemaakt_datum` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `gemaakt_door` varchar(255) NOT NULL DEFAULT '',
   `gewijzigd_datum` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',

@@ -145,18 +145,16 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
             "eMail:\n" .
             "Bank:\n" .
             "Ten name van:\n" .
-            "Wegens:\n" .
-            "Factuurnummer:\n" .
-            "Datum: \n",
+            "Wegens:\n",
             $ini['organisatie']['organisatienaam'] . "\n" .
             $ini['organisatie']['email'] . "\n" .
             "(IBAN) " . $ini['bank']['IBAN'] . " / (BIC) " . $ini['bank']['BIC'] . "\n" .
             $ini['bank']['ten_name_van'] . "\n" .
-            $inschrijfnummer . " " . $maakBevestiging->getEvenementnaam() . "\n" .
-            $inschrijfnummer . sprintf("-%04d", $factuur->getId() ) . "\n" .
-            date( "d-m-Y" ) . "\n"
+            $inschrijfnummer . " " . $maakBevestiging->getEvenementnaam() . "\n" 
         );
+
         $pdf->addTo( $maakBevestiging->getContactNaam() . "\n" . $maakBevestiging->getContactAdres() . "\n" . $maakBevestiging->getContactWoonplaats() );
+
         $pdf->addOrderDetail( $maakBevestiging->getEvenementnaam(),
             $maakBevestiging->getEvenementDatum(),
             $inschrijfnummer,
@@ -169,9 +167,28 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
         {
             mkdir( $facturenDirectory );
         }
-        $pdf->Output( "F", $facturenDirectory . $inschrijfnummer . sprintf("-%04d", $factuur->getId() ) . ".pdf" );
 
-        $logger->debug( "Factuur aangemaakt" );
+        if ( $ini['pdf_factuur']['verzenden'] == OPTIE_KEUZE_JA )
+        {
+            $pdf->addFactuurnr( $inschrijfnummer . sprintf("-%04d", $factuur->getId() ), date( "d-m-Y" ) );
+            $pdf->Output( "F", $facturenDirectory . $inschrijfnummer . sprintf("-%04d", $factuur->getId() ) . ".pdf" );
+
+            $factuur->setFactuurNummer( $inschrijfnummer . sprintf("-%04d", $factuur->getId() ));
+            $factuur->setVerzonden( 1 );
+            $factuur->save();
+
+            $logger->debug( "Factuur aangemaakt" );
+        }
+        else
+        {
+            $serial = serialize( $pdf );
+            file_put_contents( $facturenDirectory . $inschrijfnummer . sprintf("-%04d", $factuur->getId() ) . '.ser', $serial);
+
+            $factuur->setVerzonden( 0 );
+            $factuur->save();
+
+            $logger->debug( "Ruwe factuurinfo aangemaakt" );
+        }
     }
     else
     {
@@ -232,7 +249,8 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
                 $logger->debug( 'Factuur niet verzonden i.v.m. setting' );
             }
 
-            if ( !$email->send() )
+            //if ( !$email->send() )
+            if ( 1 )
             {
                 //The reason for failing to send will be in $mail->ErrorInfo
                 //but you shouldn't display errors to users - process the error, log it on your server.

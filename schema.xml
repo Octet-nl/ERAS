@@ -191,6 +191,8 @@
   <table name="fb_factuur" isCrossRef="true" idMethod="native" phpName="FactuurNummer" namespace="fb_model">
     <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="inschrijving_id" phpName="InschrijvingId" type="INTEGER" required="true"/>
+    <column name="factuurnummer" phpName="factuurNummer" type="VARCHAR" size="255" required="true"/>
+    <column name="verzonden" phpName="verzonden" type="INTEGER" size="1" required="true"/>
     <column name="gemaakt_datum" phpName="DatumGemaakt" type="TIMESTAMP" required="true"/>
     <column name="gemaakt_door" phpName="GemaaktDoor" type="VARCHAR" size="255" required="true"/>
     <column name="gewijzigd_datum" phpName="DatumGewijzigd" type="TIMESTAMP" required="true"/>

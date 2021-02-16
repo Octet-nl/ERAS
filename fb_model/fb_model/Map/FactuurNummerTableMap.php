@@ -58,7 +58,7 @@ class FactuurNummerTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 6;
+    const NUM_COLUMNS = 8;
 
     /**
      * The number of lazy-loaded columns
@@ -68,7 +68,7 @@ class FactuurNummerTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 6;
+    const NUM_HYDRATE_COLUMNS = 8;
 
     /**
      * the column name for the id field
@@ -79,6 +79,16 @@ class FactuurNummerTableMap extends TableMap
      * the column name for the inschrijving_id field
      */
     const COL_INSCHRIJVING_ID = 'fb_factuur.inschrijving_id';
+
+    /**
+     * the column name for the factuurnummer field
+     */
+    const COL_FACTUURNUMMER = 'fb_factuur.factuurnummer';
+
+    /**
+     * the column name for the verzonden field
+     */
+    const COL_VERZONDEN = 'fb_factuur.verzonden';
 
     /**
      * the column name for the gemaakt_datum field
@@ -112,11 +122,11 @@ class FactuurNummerTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Id', 'InschrijvingId', 'DatumGemaakt', 'GemaaktDoor', 'DatumGewijzigd', 'GewijzigdDoor', ),
-        self::TYPE_CAMELNAME     => array('id', 'inschrijvingId', 'datumGemaakt', 'gemaaktDoor', 'datumGewijzigd', 'gewijzigdDoor', ),
-        self::TYPE_COLNAME       => array(FactuurNummerTableMap::COL_ID, FactuurNummerTableMap::COL_INSCHRIJVING_ID, FactuurNummerTableMap::COL_GEMAAKT_DATUM, FactuurNummerTableMap::COL_GEMAAKT_DOOR, FactuurNummerTableMap::COL_GEWIJZIGD_DATUM, FactuurNummerTableMap::COL_GEWIJZIGD_DOOR, ),
-        self::TYPE_FIELDNAME     => array('id', 'inschrijving_id', 'gemaakt_datum', 'gemaakt_door', 'gewijzigd_datum', 'gewijzigd_door', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
+        self::TYPE_PHPNAME       => array('Id', 'InschrijvingId', 'factuurNummer', 'verzonden', 'DatumGemaakt', 'GemaaktDoor', 'DatumGewijzigd', 'GewijzigdDoor', ),
+        self::TYPE_CAMELNAME     => array('id', 'inschrijvingId', 'factuurNummer', 'verzonden', 'datumGemaakt', 'gemaaktDoor', 'datumGewijzigd', 'gewijzigdDoor', ),
+        self::TYPE_COLNAME       => array(FactuurNummerTableMap::COL_ID, FactuurNummerTableMap::COL_INSCHRIJVING_ID, FactuurNummerTableMap::COL_FACTUURNUMMER, FactuurNummerTableMap::COL_VERZONDEN, FactuurNummerTableMap::COL_GEMAAKT_DATUM, FactuurNummerTableMap::COL_GEMAAKT_DOOR, FactuurNummerTableMap::COL_GEWIJZIGD_DATUM, FactuurNummerTableMap::COL_GEWIJZIGD_DOOR, ),
+        self::TYPE_FIELDNAME     => array('id', 'inschrijving_id', 'factuurnummer', 'verzonden', 'gemaakt_datum', 'gemaakt_door', 'gewijzigd_datum', 'gewijzigd_door', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, )
     );
 
     /**
@@ -126,11 +136,11 @@ class FactuurNummerTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Id' => 0, 'InschrijvingId' => 1, 'DatumGemaakt' => 2, 'GemaaktDoor' => 3, 'DatumGewijzigd' => 4, 'GewijzigdDoor' => 5, ),
-        self::TYPE_CAMELNAME     => array('id' => 0, 'inschrijvingId' => 1, 'datumGemaakt' => 2, 'gemaaktDoor' => 3, 'datumGewijzigd' => 4, 'gewijzigdDoor' => 5, ),
-        self::TYPE_COLNAME       => array(FactuurNummerTableMap::COL_ID => 0, FactuurNummerTableMap::COL_INSCHRIJVING_ID => 1, FactuurNummerTableMap::COL_GEMAAKT_DATUM => 2, FactuurNummerTableMap::COL_GEMAAKT_DOOR => 3, FactuurNummerTableMap::COL_GEWIJZIGD_DATUM => 4, FactuurNummerTableMap::COL_GEWIJZIGD_DOOR => 5, ),
-        self::TYPE_FIELDNAME     => array('id' => 0, 'inschrijving_id' => 1, 'gemaakt_datum' => 2, 'gemaakt_door' => 3, 'gewijzigd_datum' => 4, 'gewijzigd_door' => 5, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
+        self::TYPE_PHPNAME       => array('Id' => 0, 'InschrijvingId' => 1, 'factuurNummer' => 2, 'verzonden' => 3, 'DatumGemaakt' => 4, 'GemaaktDoor' => 5, 'DatumGewijzigd' => 6, 'GewijzigdDoor' => 7, ),
+        self::TYPE_CAMELNAME     => array('id' => 0, 'inschrijvingId' => 1, 'factuurNummer' => 2, 'verzonden' => 3, 'datumGemaakt' => 4, 'gemaaktDoor' => 5, 'datumGewijzigd' => 6, 'gewijzigdDoor' => 7, ),
+        self::TYPE_COLNAME       => array(FactuurNummerTableMap::COL_ID => 0, FactuurNummerTableMap::COL_INSCHRIJVING_ID => 1, FactuurNummerTableMap::COL_FACTUURNUMMER => 2, FactuurNummerTableMap::COL_VERZONDEN => 3, FactuurNummerTableMap::COL_GEMAAKT_DATUM => 4, FactuurNummerTableMap::COL_GEMAAKT_DOOR => 5, FactuurNummerTableMap::COL_GEWIJZIGD_DATUM => 6, FactuurNummerTableMap::COL_GEWIJZIGD_DOOR => 7, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'inschrijving_id' => 1, 'factuurnummer' => 2, 'verzonden' => 3, 'gemaakt_datum' => 4, 'gemaakt_door' => 5, 'gewijzigd_datum' => 6, 'gewijzigd_door' => 7, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, )
     );
 
     /**
@@ -153,6 +163,8 @@ class FactuurNummerTableMap extends TableMap
         // columns
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
         $this->addForeignKey('inschrijving_id', 'InschrijvingId', 'INTEGER', 'fb_inschrijving', 'id', true, null, null);
+        $this->addColumn('factuurnummer', 'factuurNummer', 'VARCHAR', true, 255, null);
+        $this->addColumn('verzonden', 'verzonden', 'INTEGER', true, 1, null);
         $this->addColumn('gemaakt_datum', 'DatumGemaakt', 'TIMESTAMP', true, null, null);
         $this->addColumn('gemaakt_door', 'GemaaktDoor', 'VARCHAR', true, 255, null);
         $this->addColumn('gewijzigd_datum', 'DatumGewijzigd', 'TIMESTAMP', true, null, null);
@@ -329,6 +341,8 @@ class FactuurNummerTableMap extends TableMap
         if (null === $alias) {
             $criteria->addSelectColumn(FactuurNummerTableMap::COL_ID);
             $criteria->addSelectColumn(FactuurNummerTableMap::COL_INSCHRIJVING_ID);
+            $criteria->addSelectColumn(FactuurNummerTableMap::COL_FACTUURNUMMER);
+            $criteria->addSelectColumn(FactuurNummerTableMap::COL_VERZONDEN);
             $criteria->addSelectColumn(FactuurNummerTableMap::COL_GEMAAKT_DATUM);
             $criteria->addSelectColumn(FactuurNummerTableMap::COL_GEMAAKT_DOOR);
             $criteria->addSelectColumn(FactuurNummerTableMap::COL_GEWIJZIGD_DATUM);
@@ -336,6 +350,8 @@ class FactuurNummerTableMap extends TableMap
         } else {
             $criteria->addSelectColumn($alias . '.id');
             $criteria->addSelectColumn($alias . '.inschrijving_id');
+            $criteria->addSelectColumn($alias . '.factuurnummer');
+            $criteria->addSelectColumn($alias . '.verzonden');
             $criteria->addSelectColumn($alias . '.gemaakt_datum');
             $criteria->addSelectColumn($alias . '.gemaakt_door');
             $criteria->addSelectColumn($alias . '.gewijzigd_datum');
