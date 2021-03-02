@@ -125,6 +125,13 @@ abstract class Persoon implements ActiveRecordInterface
     protected $email;
 
     /**
+     * The value for the banknummer field.
+     *
+     * @var        string|null
+     */
+    protected $banknummer;
+
+    /**
      * The value for the telefoonnummer field.
      *
      * @var        string|null
@@ -563,6 +570,16 @@ abstract class Persoon implements ActiveRecordInterface
     }
 
     /**
+     * Get the [banknummer] column value.
+     *
+     * @return string|null
+     */
+    public function getBanknummer()
+    {
+        return $this->banknummer;
+    }
+
+    /**
      * Get the [telefoonnummer] column value.
      *
      * @return string|null
@@ -831,6 +848,26 @@ abstract class Persoon implements ActiveRecordInterface
 
         return $this;
     } // setEmail()
+
+    /**
+     * Set the value of [banknummer] column.
+     *
+     * @param string|null $v New value
+     * @return $this|\fb_model\fb_model\Persoon The current object (for fluent API support)
+     */
+    public function setBanknummer($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->banknummer !== $v) {
+            $this->banknummer = $v;
+            $this->modifiedColumns[PersoonTableMap::COL_BANKNUMMER] = true;
+        }
+
+        return $this;
+    } // setBanknummer()
 
     /**
      * Set the value of [telefoonnummer] column.
@@ -1112,43 +1149,46 @@ abstract class Persoon implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : PersoonTableMap::translateFieldName('Email', TableMap::TYPE_PHPNAME, $indexType)];
             $this->email = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : PersoonTableMap::translateFieldName('Telefoonnummer', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : PersoonTableMap::translateFieldName('Banknummer', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->banknummer = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : PersoonTableMap::translateFieldName('Telefoonnummer', TableMap::TYPE_PHPNAME, $indexType)];
             $this->telefoonnummer = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : PersoonTableMap::translateFieldName('Straat', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 9 + $startcol : PersoonTableMap::translateFieldName('Straat', TableMap::TYPE_PHPNAME, $indexType)];
             $this->straat = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 9 + $startcol : PersoonTableMap::translateFieldName('Huisnummer', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 10 + $startcol : PersoonTableMap::translateFieldName('Huisnummer', TableMap::TYPE_PHPNAME, $indexType)];
             $this->huisnummer = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 10 + $startcol : PersoonTableMap::translateFieldName('Toevoeging', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 11 + $startcol : PersoonTableMap::translateFieldName('Toevoeging', TableMap::TYPE_PHPNAME, $indexType)];
             $this->toevoeging = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 11 + $startcol : PersoonTableMap::translateFieldName('Postcode', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 12 + $startcol : PersoonTableMap::translateFieldName('Postcode', TableMap::TYPE_PHPNAME, $indexType)];
             $this->postcode = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 12 + $startcol : PersoonTableMap::translateFieldName('Woonplaats', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 13 + $startcol : PersoonTableMap::translateFieldName('Woonplaats', TableMap::TYPE_PHPNAME, $indexType)];
             $this->woonplaats = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 13 + $startcol : PersoonTableMap::translateFieldName('Landnaam', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 14 + $startcol : PersoonTableMap::translateFieldName('Landnaam', TableMap::TYPE_PHPNAME, $indexType)];
             $this->landnaam = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 14 + $startcol : PersoonTableMap::translateFieldName('DatumGemaakt', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 15 + $startcol : PersoonTableMap::translateFieldName('DatumGemaakt', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->gemaakt_datum = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 15 + $startcol : PersoonTableMap::translateFieldName('GemaaktDoor', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 16 + $startcol : PersoonTableMap::translateFieldName('GemaaktDoor', TableMap::TYPE_PHPNAME, $indexType)];
             $this->gemaakt_door = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 16 + $startcol : PersoonTableMap::translateFieldName('DatumGewijzigd', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 17 + $startcol : PersoonTableMap::translateFieldName('DatumGewijzigd', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->gewijzigd_datum = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 17 + $startcol : PersoonTableMap::translateFieldName('GewijzigdDoor', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 18 + $startcol : PersoonTableMap::translateFieldName('GewijzigdDoor', TableMap::TYPE_PHPNAME, $indexType)];
             $this->gewijzigd_door = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
@@ -1158,7 +1198,7 @@ abstract class Persoon implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 18; // 18 = PersoonTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 19; // 19 = PersoonTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\fb_model\\fb_model\\Persoon'), 0, $e);
@@ -1469,6 +1509,9 @@ abstract class Persoon implements ActiveRecordInterface
         if ($this->isColumnModified(PersoonTableMap::COL_EMAIL)) {
             $modifiedColumns[':p' . $index++]  = 'email';
         }
+        if ($this->isColumnModified(PersoonTableMap::COL_BANKNUMMER)) {
+            $modifiedColumns[':p' . $index++]  = 'banknummer';
+        }
         if ($this->isColumnModified(PersoonTableMap::COL_TELEFOONNUMMER)) {
             $modifiedColumns[':p' . $index++]  = 'telefoonnummer';
         }
@@ -1533,6 +1576,9 @@ abstract class Persoon implements ActiveRecordInterface
                         break;
                     case 'email':
                         $stmt->bindValue($identifier, $this->email, PDO::PARAM_STR);
+                        break;
+                    case 'banknummer':
+                        $stmt->bindValue($identifier, $this->banknummer, PDO::PARAM_STR);
                         break;
                     case 'telefoonnummer':
                         $stmt->bindValue($identifier, $this->telefoonnummer, PDO::PARAM_STR);
@@ -1651,36 +1697,39 @@ abstract class Persoon implements ActiveRecordInterface
                 return $this->getEmail();
                 break;
             case 7:
-                return $this->getTelefoonnummer();
+                return $this->getBanknummer();
                 break;
             case 8:
-                return $this->getStraat();
+                return $this->getTelefoonnummer();
                 break;
             case 9:
-                return $this->getHuisnummer();
+                return $this->getStraat();
                 break;
             case 10:
-                return $this->getToevoeging();
+                return $this->getHuisnummer();
                 break;
             case 11:
-                return $this->getPostcode();
+                return $this->getToevoeging();
                 break;
             case 12:
-                return $this->getWoonplaats();
+                return $this->getPostcode();
                 break;
             case 13:
-                return $this->getLandnaam();
+                return $this->getWoonplaats();
                 break;
             case 14:
-                return $this->getDatumGemaakt();
+                return $this->getLandnaam();
                 break;
             case 15:
-                return $this->getGemaaktDoor();
+                return $this->getDatumGemaakt();
                 break;
             case 16:
-                return $this->getDatumGewijzigd();
+                return $this->getGemaaktDoor();
                 break;
             case 17:
+                return $this->getDatumGewijzigd();
+                break;
+            case 18:
                 return $this->getGewijzigdDoor();
                 break;
             default:
@@ -1720,28 +1769,29 @@ abstract class Persoon implements ActiveRecordInterface
             $keys[4] => $this->getGeboorteDatum(),
             $keys[5] => $this->getGeslacht(),
             $keys[6] => $this->getEmail(),
-            $keys[7] => $this->getTelefoonnummer(),
-            $keys[8] => $this->getStraat(),
-            $keys[9] => $this->getHuisnummer(),
-            $keys[10] => $this->getToevoeging(),
-            $keys[11] => $this->getPostcode(),
-            $keys[12] => $this->getWoonplaats(),
-            $keys[13] => $this->getLandnaam(),
-            $keys[14] => $this->getDatumGemaakt(),
-            $keys[15] => $this->getGemaaktDoor(),
-            $keys[16] => $this->getDatumGewijzigd(),
-            $keys[17] => $this->getGewijzigdDoor(),
+            $keys[7] => $this->getBanknummer(),
+            $keys[8] => $this->getTelefoonnummer(),
+            $keys[9] => $this->getStraat(),
+            $keys[10] => $this->getHuisnummer(),
+            $keys[11] => $this->getToevoeging(),
+            $keys[12] => $this->getPostcode(),
+            $keys[13] => $this->getWoonplaats(),
+            $keys[14] => $this->getLandnaam(),
+            $keys[15] => $this->getDatumGemaakt(),
+            $keys[16] => $this->getGemaaktDoor(),
+            $keys[17] => $this->getDatumGewijzigd(),
+            $keys[18] => $this->getGewijzigdDoor(),
         );
         if ($result[$keys[4]] instanceof \DateTimeInterface) {
             $result[$keys[4]] = $result[$keys[4]]->format('c');
         }
 
-        if ($result[$keys[14]] instanceof \DateTimeInterface) {
-            $result[$keys[14]] = $result[$keys[14]]->format('c');
+        if ($result[$keys[15]] instanceof \DateTimeInterface) {
+            $result[$keys[15]] = $result[$keys[15]]->format('c');
         }
 
-        if ($result[$keys[16]] instanceof \DateTimeInterface) {
-            $result[$keys[16]] = $result[$keys[16]]->format('c');
+        if ($result[$keys[17]] instanceof \DateTimeInterface) {
+            $result[$keys[17]] = $result[$keys[17]]->format('c');
         }
 
         $virtualColumns = $this->virtualColumns;
@@ -1866,36 +1916,39 @@ abstract class Persoon implements ActiveRecordInterface
                 $this->setEmail($value);
                 break;
             case 7:
-                $this->setTelefoonnummer($value);
+                $this->setBanknummer($value);
                 break;
             case 8:
-                $this->setStraat($value);
+                $this->setTelefoonnummer($value);
                 break;
             case 9:
-                $this->setHuisnummer($value);
+                $this->setStraat($value);
                 break;
             case 10:
-                $this->setToevoeging($value);
+                $this->setHuisnummer($value);
                 break;
             case 11:
-                $this->setPostcode($value);
+                $this->setToevoeging($value);
                 break;
             case 12:
-                $this->setWoonplaats($value);
+                $this->setPostcode($value);
                 break;
             case 13:
-                $this->setLandnaam($value);
+                $this->setWoonplaats($value);
                 break;
             case 14:
-                $this->setDatumGemaakt($value);
+                $this->setLandnaam($value);
                 break;
             case 15:
-                $this->setGemaaktDoor($value);
+                $this->setDatumGemaakt($value);
                 break;
             case 16:
-                $this->setDatumGewijzigd($value);
+                $this->setGemaaktDoor($value);
                 break;
             case 17:
+                $this->setDatumGewijzigd($value);
+                break;
+            case 18:
                 $this->setGewijzigdDoor($value);
                 break;
         } // switch()
@@ -1946,37 +1999,40 @@ abstract class Persoon implements ActiveRecordInterface
             $this->setEmail($arr[$keys[6]]);
         }
         if (array_key_exists($keys[7], $arr)) {
-            $this->setTelefoonnummer($arr[$keys[7]]);
+            $this->setBanknummer($arr[$keys[7]]);
         }
         if (array_key_exists($keys[8], $arr)) {
-            $this->setStraat($arr[$keys[8]]);
+            $this->setTelefoonnummer($arr[$keys[8]]);
         }
         if (array_key_exists($keys[9], $arr)) {
-            $this->setHuisnummer($arr[$keys[9]]);
+            $this->setStraat($arr[$keys[9]]);
         }
         if (array_key_exists($keys[10], $arr)) {
-            $this->setToevoeging($arr[$keys[10]]);
+            $this->setHuisnummer($arr[$keys[10]]);
         }
         if (array_key_exists($keys[11], $arr)) {
-            $this->setPostcode($arr[$keys[11]]);
+            $this->setToevoeging($arr[$keys[11]]);
         }
         if (array_key_exists($keys[12], $arr)) {
-            $this->setWoonplaats($arr[$keys[12]]);
+            $this->setPostcode($arr[$keys[12]]);
         }
         if (array_key_exists($keys[13], $arr)) {
-            $this->setLandnaam($arr[$keys[13]]);
+            $this->setWoonplaats($arr[$keys[13]]);
         }
         if (array_key_exists($keys[14], $arr)) {
-            $this->setDatumGemaakt($arr[$keys[14]]);
+            $this->setLandnaam($arr[$keys[14]]);
         }
         if (array_key_exists($keys[15], $arr)) {
-            $this->setGemaaktDoor($arr[$keys[15]]);
+            $this->setDatumGemaakt($arr[$keys[15]]);
         }
         if (array_key_exists($keys[16], $arr)) {
-            $this->setDatumGewijzigd($arr[$keys[16]]);
+            $this->setGemaaktDoor($arr[$keys[16]]);
         }
         if (array_key_exists($keys[17], $arr)) {
-            $this->setGewijzigdDoor($arr[$keys[17]]);
+            $this->setDatumGewijzigd($arr[$keys[17]]);
+        }
+        if (array_key_exists($keys[18], $arr)) {
+            $this->setGewijzigdDoor($arr[$keys[18]]);
         }
     }
 
@@ -2039,6 +2095,9 @@ abstract class Persoon implements ActiveRecordInterface
         }
         if ($this->isColumnModified(PersoonTableMap::COL_EMAIL)) {
             $criteria->add(PersoonTableMap::COL_EMAIL, $this->email);
+        }
+        if ($this->isColumnModified(PersoonTableMap::COL_BANKNUMMER)) {
+            $criteria->add(PersoonTableMap::COL_BANKNUMMER, $this->banknummer);
         }
         if ($this->isColumnModified(PersoonTableMap::COL_TELEFOONNUMMER)) {
             $criteria->add(PersoonTableMap::COL_TELEFOONNUMMER, $this->telefoonnummer);
@@ -2165,6 +2224,7 @@ abstract class Persoon implements ActiveRecordInterface
         $copyObj->setGeboorteDatum($this->getGeboorteDatum());
         $copyObj->setGeslacht($this->getGeslacht());
         $copyObj->setEmail($this->getEmail());
+        $copyObj->setBanknummer($this->getBanknummer());
         $copyObj->setTelefoonnummer($this->getTelefoonnummer());
         $copyObj->setStraat($this->getStraat());
         $copyObj->setHuisnummer($this->getHuisnummer());
@@ -3340,6 +3400,7 @@ abstract class Persoon implements ActiveRecordInterface
         $this->geboortedatum = null;
         $this->geslacht = null;
         $this->email = null;
+        $this->banknummer = null;
         $this->telefoonnummer = null;
         $this->straat = null;
         $this->huisnummer = null;

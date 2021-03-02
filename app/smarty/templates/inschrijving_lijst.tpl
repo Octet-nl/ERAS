@@ -24,7 +24,7 @@
       {else}
         <br/>Geen evenementen gevonden voor deze criteria<br/>
       {/if}
-    {else} 
+    {else}
     <table>
         <thead>
             <tr>

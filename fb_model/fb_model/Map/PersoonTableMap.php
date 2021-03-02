@@ -58,7 +58,7 @@ class PersoonTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 18;
+    const NUM_COLUMNS = 19;
 
     /**
      * The number of lazy-loaded columns
@@ -68,7 +68,7 @@ class PersoonTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 18;
+    const NUM_HYDRATE_COLUMNS = 19;
 
     /**
      * the column name for the id field
@@ -104,6 +104,11 @@ class PersoonTableMap extends TableMap
      * the column name for the email field
      */
     const COL_EMAIL = 'fb_persoon.email';
+
+    /**
+     * the column name for the banknummer field
+     */
+    const COL_BANKNUMMER = 'fb_persoon.banknummer';
 
     /**
      * the column name for the telefoonnummer field
@@ -172,11 +177,11 @@ class PersoonTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Id', 'Voornaam', 'Tussenvoegsel', 'Achternaam', 'GeboorteDatum', 'Geslacht', 'Email', 'Telefoonnummer', 'Straat', 'Huisnummer', 'Toevoeging', 'Postcode', 'Woonplaats', 'Landnaam', 'DatumGemaakt', 'GemaaktDoor', 'DatumGewijzigd', 'GewijzigdDoor', ),
-        self::TYPE_CAMELNAME     => array('id', 'voornaam', 'tussenvoegsel', 'achternaam', 'geboorteDatum', 'geslacht', 'email', 'telefoonnummer', 'straat', 'huisnummer', 'toevoeging', 'postcode', 'woonplaats', 'landnaam', 'datumGemaakt', 'gemaaktDoor', 'datumGewijzigd', 'gewijzigdDoor', ),
-        self::TYPE_COLNAME       => array(PersoonTableMap::COL_ID, PersoonTableMap::COL_VOORNAAM, PersoonTableMap::COL_TUSSENVOEGSEL, PersoonTableMap::COL_ACHTERNAAM, PersoonTableMap::COL_GEBOORTEDATUM, PersoonTableMap::COL_GESLACHT, PersoonTableMap::COL_EMAIL, PersoonTableMap::COL_TELEFOONNUMMER, PersoonTableMap::COL_STRAAT, PersoonTableMap::COL_HUISNUMMER, PersoonTableMap::COL_TOEVOEGING, PersoonTableMap::COL_POSTCODE, PersoonTableMap::COL_WOONPLAATS, PersoonTableMap::COL_LANDNAAM, PersoonTableMap::COL_GEMAAKT_DATUM, PersoonTableMap::COL_GEMAAKT_DOOR, PersoonTableMap::COL_GEWIJZIGD_DATUM, PersoonTableMap::COL_GEWIJZIGD_DOOR, ),
-        self::TYPE_FIELDNAME     => array('id', 'voornaam', 'tussenvoegsel', 'achternaam', 'geboortedatum', 'geslacht', 'email', 'telefoonnummer', 'straat', 'huisnummer', 'toevoeging', 'postcode', 'woonplaats', 'landnaam', 'gemaakt_datum', 'gemaakt_door', 'gewijzigd_datum', 'gewijzigd_door', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, )
+        self::TYPE_PHPNAME       => array('Id', 'Voornaam', 'Tussenvoegsel', 'Achternaam', 'GeboorteDatum', 'Geslacht', 'Email', 'Banknummer', 'Telefoonnummer', 'Straat', 'Huisnummer', 'Toevoeging', 'Postcode', 'Woonplaats', 'Landnaam', 'DatumGemaakt', 'GemaaktDoor', 'DatumGewijzigd', 'GewijzigdDoor', ),
+        self::TYPE_CAMELNAME     => array('id', 'voornaam', 'tussenvoegsel', 'achternaam', 'geboorteDatum', 'geslacht', 'email', 'banknummer', 'telefoonnummer', 'straat', 'huisnummer', 'toevoeging', 'postcode', 'woonplaats', 'landnaam', 'datumGemaakt', 'gemaaktDoor', 'datumGewijzigd', 'gewijzigdDoor', ),
+        self::TYPE_COLNAME       => array(PersoonTableMap::COL_ID, PersoonTableMap::COL_VOORNAAM, PersoonTableMap::COL_TUSSENVOEGSEL, PersoonTableMap::COL_ACHTERNAAM, PersoonTableMap::COL_GEBOORTEDATUM, PersoonTableMap::COL_GESLACHT, PersoonTableMap::COL_EMAIL, PersoonTableMap::COL_BANKNUMMER, PersoonTableMap::COL_TELEFOONNUMMER, PersoonTableMap::COL_STRAAT, PersoonTableMap::COL_HUISNUMMER, PersoonTableMap::COL_TOEVOEGING, PersoonTableMap::COL_POSTCODE, PersoonTableMap::COL_WOONPLAATS, PersoonTableMap::COL_LANDNAAM, PersoonTableMap::COL_GEMAAKT_DATUM, PersoonTableMap::COL_GEMAAKT_DOOR, PersoonTableMap::COL_GEWIJZIGD_DATUM, PersoonTableMap::COL_GEWIJZIGD_DOOR, ),
+        self::TYPE_FIELDNAME     => array('id', 'voornaam', 'tussenvoegsel', 'achternaam', 'geboortedatum', 'geslacht', 'email', 'banknummer', 'telefoonnummer', 'straat', 'huisnummer', 'toevoeging', 'postcode', 'woonplaats', 'landnaam', 'gemaakt_datum', 'gemaakt_door', 'gewijzigd_datum', 'gewijzigd_door', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, )
     );
 
     /**
@@ -186,11 +191,11 @@ class PersoonTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Id' => 0, 'Voornaam' => 1, 'Tussenvoegsel' => 2, 'Achternaam' => 3, 'GeboorteDatum' => 4, 'Geslacht' => 5, 'Email' => 6, 'Telefoonnummer' => 7, 'Straat' => 8, 'Huisnummer' => 9, 'Toevoeging' => 10, 'Postcode' => 11, 'Woonplaats' => 12, 'Landnaam' => 13, 'DatumGemaakt' => 14, 'GemaaktDoor' => 15, 'DatumGewijzigd' => 16, 'GewijzigdDoor' => 17, ),
-        self::TYPE_CAMELNAME     => array('id' => 0, 'voornaam' => 1, 'tussenvoegsel' => 2, 'achternaam' => 3, 'geboorteDatum' => 4, 'geslacht' => 5, 'email' => 6, 'telefoonnummer' => 7, 'straat' => 8, 'huisnummer' => 9, 'toevoeging' => 10, 'postcode' => 11, 'woonplaats' => 12, 'landnaam' => 13, 'datumGemaakt' => 14, 'gemaaktDoor' => 15, 'datumGewijzigd' => 16, 'gewijzigdDoor' => 17, ),
-        self::TYPE_COLNAME       => array(PersoonTableMap::COL_ID => 0, PersoonTableMap::COL_VOORNAAM => 1, PersoonTableMap::COL_TUSSENVOEGSEL => 2, PersoonTableMap::COL_ACHTERNAAM => 3, PersoonTableMap::COL_GEBOORTEDATUM => 4, PersoonTableMap::COL_GESLACHT => 5, PersoonTableMap::COL_EMAIL => 6, PersoonTableMap::COL_TELEFOONNUMMER => 7, PersoonTableMap::COL_STRAAT => 8, PersoonTableMap::COL_HUISNUMMER => 9, PersoonTableMap::COL_TOEVOEGING => 10, PersoonTableMap::COL_POSTCODE => 11, PersoonTableMap::COL_WOONPLAATS => 12, PersoonTableMap::COL_LANDNAAM => 13, PersoonTableMap::COL_GEMAAKT_DATUM => 14, PersoonTableMap::COL_GEMAAKT_DOOR => 15, PersoonTableMap::COL_GEWIJZIGD_DATUM => 16, PersoonTableMap::COL_GEWIJZIGD_DOOR => 17, ),
-        self::TYPE_FIELDNAME     => array('id' => 0, 'voornaam' => 1, 'tussenvoegsel' => 2, 'achternaam' => 3, 'geboortedatum' => 4, 'geslacht' => 5, 'email' => 6, 'telefoonnummer' => 7, 'straat' => 8, 'huisnummer' => 9, 'toevoeging' => 10, 'postcode' => 11, 'woonplaats' => 12, 'landnaam' => 13, 'gemaakt_datum' => 14, 'gemaakt_door' => 15, 'gewijzigd_datum' => 16, 'gewijzigd_door' => 17, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, )
+        self::TYPE_PHPNAME       => array('Id' => 0, 'Voornaam' => 1, 'Tussenvoegsel' => 2, 'Achternaam' => 3, 'GeboorteDatum' => 4, 'Geslacht' => 5, 'Email' => 6, 'Banknummer' => 7, 'Telefoonnummer' => 8, 'Straat' => 9, 'Huisnummer' => 10, 'Toevoeging' => 11, 'Postcode' => 12, 'Woonplaats' => 13, 'Landnaam' => 14, 'DatumGemaakt' => 15, 'GemaaktDoor' => 16, 'DatumGewijzigd' => 17, 'GewijzigdDoor' => 18, ),
+        self::TYPE_CAMELNAME     => array('id' => 0, 'voornaam' => 1, 'tussenvoegsel' => 2, 'achternaam' => 3, 'geboorteDatum' => 4, 'geslacht' => 5, 'email' => 6, 'banknummer' => 7, 'telefoonnummer' => 8, 'straat' => 9, 'huisnummer' => 10, 'toevoeging' => 11, 'postcode' => 12, 'woonplaats' => 13, 'landnaam' => 14, 'datumGemaakt' => 15, 'gemaaktDoor' => 16, 'datumGewijzigd' => 17, 'gewijzigdDoor' => 18, ),
+        self::TYPE_COLNAME       => array(PersoonTableMap::COL_ID => 0, PersoonTableMap::COL_VOORNAAM => 1, PersoonTableMap::COL_TUSSENVOEGSEL => 2, PersoonTableMap::COL_ACHTERNAAM => 3, PersoonTableMap::COL_GEBOORTEDATUM => 4, PersoonTableMap::COL_GESLACHT => 5, PersoonTableMap::COL_EMAIL => 6, PersoonTableMap::COL_BANKNUMMER => 7, PersoonTableMap::COL_TELEFOONNUMMER => 8, PersoonTableMap::COL_STRAAT => 9, PersoonTableMap::COL_HUISNUMMER => 10, PersoonTableMap::COL_TOEVOEGING => 11, PersoonTableMap::COL_POSTCODE => 12, PersoonTableMap::COL_WOONPLAATS => 13, PersoonTableMap::COL_LANDNAAM => 14, PersoonTableMap::COL_GEMAAKT_DATUM => 15, PersoonTableMap::COL_GEMAAKT_DOOR => 16, PersoonTableMap::COL_GEWIJZIGD_DATUM => 17, PersoonTableMap::COL_GEWIJZIGD_DOOR => 18, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'voornaam' => 1, 'tussenvoegsel' => 2, 'achternaam' => 3, 'geboortedatum' => 4, 'geslacht' => 5, 'email' => 6, 'banknummer' => 7, 'telefoonnummer' => 8, 'straat' => 9, 'huisnummer' => 10, 'toevoeging' => 11, 'postcode' => 12, 'woonplaats' => 13, 'landnaam' => 14, 'gemaakt_datum' => 15, 'gemaakt_door' => 16, 'gewijzigd_datum' => 17, 'gewijzigd_door' => 18, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, )
     );
 
     /**
@@ -217,6 +222,7 @@ class PersoonTableMap extends TableMap
         $this->addColumn('geboortedatum', 'GeboorteDatum', 'DATE', false, null, null);
         $this->addColumn('geslacht', 'Geslacht', 'CHAR', true, 1, null);
         $this->addColumn('email', 'Email', 'VARCHAR', false, 255, null);
+        $this->addColumn('banknummer', 'Banknummer', 'VARCHAR', false, 255, null);
         $this->addColumn('telefoonnummer', 'Telefoonnummer', 'VARCHAR', false, 255, null);
         $this->addColumn('straat', 'Straat', 'VARCHAR', true, 255, null);
         $this->addColumn('huisnummer', 'Huisnummer', 'INTEGER', true, null, null);
@@ -426,6 +432,7 @@ class PersoonTableMap extends TableMap
             $criteria->addSelectColumn(PersoonTableMap::COL_GEBOORTEDATUM);
             $criteria->addSelectColumn(PersoonTableMap::COL_GESLACHT);
             $criteria->addSelectColumn(PersoonTableMap::COL_EMAIL);
+            $criteria->addSelectColumn(PersoonTableMap::COL_BANKNUMMER);
             $criteria->addSelectColumn(PersoonTableMap::COL_TELEFOONNUMMER);
             $criteria->addSelectColumn(PersoonTableMap::COL_STRAAT);
             $criteria->addSelectColumn(PersoonTableMap::COL_HUISNUMMER);
@@ -445,6 +452,7 @@ class PersoonTableMap extends TableMap
             $criteria->addSelectColumn($alias . '.geboortedatum');
             $criteria->addSelectColumn($alias . '.geslacht');
             $criteria->addSelectColumn($alias . '.email');
+            $criteria->addSelectColumn($alias . '.banknummer');
             $criteria->addSelectColumn($alias . '.telefoonnummer');
             $criteria->addSelectColumn($alias . '.straat');
             $criteria->addSelectColumn($alias . '.huisnummer');

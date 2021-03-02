@@ -27,6 +27,7 @@ use fb_model\fb_model\Map\PersoonTableMap;
  * @method     ChildPersoonQuery orderByGeboorteDatum($order = Criteria::ASC) Order by the geboortedatum column
  * @method     ChildPersoonQuery orderByGeslacht($order = Criteria::ASC) Order by the geslacht column
  * @method     ChildPersoonQuery orderByEmail($order = Criteria::ASC) Order by the email column
+ * @method     ChildPersoonQuery orderByBanknummer($order = Criteria::ASC) Order by the banknummer column
  * @method     ChildPersoonQuery orderByTelefoonnummer($order = Criteria::ASC) Order by the telefoonnummer column
  * @method     ChildPersoonQuery orderByStraat($order = Criteria::ASC) Order by the straat column
  * @method     ChildPersoonQuery orderByHuisnummer($order = Criteria::ASC) Order by the huisnummer column
@@ -46,6 +47,7 @@ use fb_model\fb_model\Map\PersoonTableMap;
  * @method     ChildPersoonQuery groupByGeboorteDatum() Group by the geboortedatum column
  * @method     ChildPersoonQuery groupByGeslacht() Group by the geslacht column
  * @method     ChildPersoonQuery groupByEmail() Group by the email column
+ * @method     ChildPersoonQuery groupByBanknummer() Group by the banknummer column
  * @method     ChildPersoonQuery groupByTelefoonnummer() Group by the telefoonnummer column
  * @method     ChildPersoonQuery groupByStraat() Group by the straat column
  * @method     ChildPersoonQuery groupByHuisnummer() Group by the huisnummer column
@@ -118,6 +120,7 @@ use fb_model\fb_model\Map\PersoonTableMap;
  * @method     ChildPersoon findOneByGeboorteDatum(string $geboortedatum) Return the first ChildPersoon filtered by the geboortedatum column
  * @method     ChildPersoon findOneByGeslacht(string $geslacht) Return the first ChildPersoon filtered by the geslacht column
  * @method     ChildPersoon findOneByEmail(string $email) Return the first ChildPersoon filtered by the email column
+ * @method     ChildPersoon findOneByBanknummer(string $banknummer) Return the first ChildPersoon filtered by the banknummer column
  * @method     ChildPersoon findOneByTelefoonnummer(string $telefoonnummer) Return the first ChildPersoon filtered by the telefoonnummer column
  * @method     ChildPersoon findOneByStraat(string $straat) Return the first ChildPersoon filtered by the straat column
  * @method     ChildPersoon findOneByHuisnummer(int $huisnummer) Return the first ChildPersoon filtered by the huisnummer column
@@ -140,6 +143,7 @@ use fb_model\fb_model\Map\PersoonTableMap;
  * @method     ChildPersoon requireOneByGeboorteDatum(string $geboortedatum) Return the first ChildPersoon filtered by the geboortedatum column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildPersoon requireOneByGeslacht(string $geslacht) Return the first ChildPersoon filtered by the geslacht column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildPersoon requireOneByEmail(string $email) Return the first ChildPersoon filtered by the email column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildPersoon requireOneByBanknummer(string $banknummer) Return the first ChildPersoon filtered by the banknummer column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildPersoon requireOneByTelefoonnummer(string $telefoonnummer) Return the first ChildPersoon filtered by the telefoonnummer column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildPersoon requireOneByStraat(string $straat) Return the first ChildPersoon filtered by the straat column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildPersoon requireOneByHuisnummer(int $huisnummer) Return the first ChildPersoon filtered by the huisnummer column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -160,6 +164,7 @@ use fb_model\fb_model\Map\PersoonTableMap;
  * @method     ChildPersoon[]|ObjectCollection findByGeboorteDatum(string $geboortedatum) Return ChildPersoon objects filtered by the geboortedatum column
  * @method     ChildPersoon[]|ObjectCollection findByGeslacht(string $geslacht) Return ChildPersoon objects filtered by the geslacht column
  * @method     ChildPersoon[]|ObjectCollection findByEmail(string $email) Return ChildPersoon objects filtered by the email column
+ * @method     ChildPersoon[]|ObjectCollection findByBanknummer(string $banknummer) Return ChildPersoon objects filtered by the banknummer column
  * @method     ChildPersoon[]|ObjectCollection findByTelefoonnummer(string $telefoonnummer) Return ChildPersoon objects filtered by the telefoonnummer column
  * @method     ChildPersoon[]|ObjectCollection findByStraat(string $straat) Return ChildPersoon objects filtered by the straat column
  * @method     ChildPersoon[]|ObjectCollection findByHuisnummer(int $huisnummer) Return ChildPersoon objects filtered by the huisnummer column
@@ -269,7 +274,7 @@ abstract class PersoonQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT id, voornaam, tussenvoegsel, achternaam, geboortedatum, geslacht, email, telefoonnummer, straat, huisnummer, toevoeging, postcode, woonplaats, landnaam, gemaakt_datum, gemaakt_door, gewijzigd_datum, gewijzigd_door FROM fb_persoon WHERE id = :p0';
+        $sql = 'SELECT id, voornaam, tussenvoegsel, achternaam, geboortedatum, geslacht, email, banknummer, telefoonnummer, straat, huisnummer, toevoeging, postcode, woonplaats, landnaam, gemaakt_datum, gemaakt_door, gewijzigd_datum, gewijzigd_door FROM fb_persoon WHERE id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -566,6 +571,31 @@ abstract class PersoonQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(PersoonTableMap::COL_EMAIL, $email, $comparison);
+    }
+
+    /**
+     * Filter the query on the banknummer column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByBanknummer('fooValue');   // WHERE banknummer = 'fooValue'
+     * $query->filterByBanknummer('%fooValue%', Criteria::LIKE); // WHERE banknummer LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $banknummer The value to use as filter.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildPersoonQuery The current query, for fluid interface
+     */
+    public function filterByBanknummer($banknummer = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($banknummer)) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(PersoonTableMap::COL_BANKNUMMER, $banknummer, $comparison);
     }
 
     /**

@@ -387,6 +387,7 @@
     <column name="geboortedatum" phpName="GeboorteDatum" type="DATE" required="false"/>
     <column name="geslacht" phpName="Geslacht" type="CHAR" size="1" required="true"/>
     <column name="email" phpName="Email" type="VARCHAR" size="255" required="false"/>
+    <column name="banknummer" phpName="Banknummer" type="VARCHAR" size="255" required="false"/>
     <column name="telefoonnummer" phpName="Telefoonnummer" type="VARCHAR" size="255" required="false"/>
     <column name="straat" phpName="Straat" type="VARCHAR" size="255" required="true"/>
     <column name="huisnummer" phpName="Huisnummer" type="INTEGER" required="true"/>
