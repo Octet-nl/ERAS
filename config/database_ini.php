@@ -1,7 +1,7 @@
 <?php
 #
 define("DB_VERSION_MAJOR", "1");
-define("DB_VERSION_MINOR", "01");
+define("DB_VERSION_MINOR", "02");
 #
 define("DB_HOST", "localhost");
 define("DB_NAME", "eras");
