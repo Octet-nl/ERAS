@@ -4,12 +4,16 @@
 
 <form id="form_id" method="post" action="{$SCRIPT_NAME}">
     <h2>Openstaande facturen</h2>
+    {if sizeof($factuur_lijst) == 0 }
+    <h3>Er zijn geen openstaande facturen.</h3>
+    {else}
     <table>
         <thead>
             <tr>
                 <th>Inschrijfnummer</th>
                 <th>Evenement</th>
                 <th>Contact</th>
+                <th>Bedrag</th>
                 <th>Verzenden</th>
             </tr>
         </thead>
@@ -26,16 +30,20 @@
                 {$factuur.naam}<br />
             </td>
             <td>
+                &euro; {$factuur.bedrag}<br />
+            </td>
+            <td>
                 {if $factuur.Err != "" }
-                  <button type="button" name="factuurid" value="{$factuur.id}" disabled>Factuur verzenden</button>
+                <button type="button" name="factuurid" value="{$factuur.id}" disabled>Factuur verzenden</button>
                 {else}
-                  <button type="button" name="factuurid" value="{$factuur.id}" onclick="myFunction('{$factuur.id}', '{$factuur.evenement}', '{$factuur.inschrijving}', '{$factuur.serialnaam}', '{$factuur.email}', '{$factuur.naam}')">Factuur verzenden</button>
+                <button type="button" name="factuurid" value="{$factuur.id}" onclick="myFunction('{$factuur.id}', '{$factuur.bedrag}', '{$factuur.evenement}', '{$factuur.inschrijving}', '{$factuur.serialnaam}', '{$factuur.email}', '{$factuur.naam}')">Factuur verzenden</button>
                 {/if}
                 <span class="error">{$factuur.Err}</span>
             </td>
         </tr>
         {/foreach}
     </table>
+    {/if}
 
     <button name="terug">Terug</button>
     <input type="hidden" id="verzend">
@@ -51,9 +59,9 @@
 {include file="statusregel.tpl"}
 
 <script>
-  function myFunction( id, evenement, nummer, serialnaam, emailadres, naam ) 
+  function myFunction( id, bedrag, evenement, nummer, serialnaam, emailadres, naam ) 
   {
-      var factuurnr = prompt( "Geef factuurnummer voor:\n  Evenement: " + evenement + "\n  inschrijfnummer: " + nummer + "\n  van: " + naam, "");
+      var factuurnr = prompt( "Geef factuurnummer voor:\n  Evenement: " + evenement + "\n  inschrijfnummer: " + nummer + "\n  van: " + naam + "\nten bedrage van \u20AC " + bedrag, "");
       if (factuurnr != null) 
       {
         document.getElementById("factuurnummer").value = factuurnr;

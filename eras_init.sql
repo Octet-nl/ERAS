@@ -616,7 +616,8 @@ ALTER TABLE `fb_evenement_heeft_optie`
 -- Indexen voor tabel `fb_factuur`
 --
 ALTER TABLE `fb_factuur`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `uk_factuur_nummer` (`factuurnummer`);
 
 --
 -- Indexen voor tabel `fb_gebruiker`

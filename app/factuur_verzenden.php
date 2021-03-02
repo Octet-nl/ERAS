@@ -132,6 +132,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
                 else
                 {
                     $fct_lijst["id"] = $factuur->getId();
+                    $fct_lijst["bedrag"] = $inschrijving->getTotaalbedrag();
                     $fct_lijst["inschrijving"] = $inschrijving->getId();
                     $fct_lijst["naam"] = $persoon->getVoornaam() . " " . $persoon->getTussenvoegsel() . " " . $persoon->getAchternaam();
                     $fct_lijst["evenement"] = $evenement->getNaam();
