@@ -232,7 +232,7 @@ class ZeggeNl extends Numbers_Words
         // strip excessive zero signs and spaces
         $num = trim($num);
         $num = preg_replace('/^0+/', '', $num);
-echo $num . "<br/>";
+
         if (strlen($num) > 3) {
             $maxp = strlen($num)-1;
             $curp = $maxp;
@@ -264,7 +264,7 @@ echo $num . "<br/>";
                 return $ret;
             }
         } elseif ($num == 0 || $num == '') {
-            return $this->_sep1 . $this->_digits[0];
+            return $this->_sep . $this->_digits[0];
         }
 
         $h = $t = $d = 0;
@@ -286,7 +286,14 @@ echo $num . "<br/>";
         }
 
         if ($h) {
-            $ret .= $this->_sep . $this->_digits[$h] . $this->_sep . 'honderd ';
+            if ( $h == 1 )
+            {
+                $ret .= $this->_sep . 'honderd';
+            }
+            else
+            {
+                $ret .= $this->_sep . $this->_digits[$h] . $this->_sep . 'honderd';
+            }
         }
 
          // add digits only in <0>,<1,9> and <21,inf>
@@ -387,8 +394,9 @@ echo $num . "<br/>";
             $ret .= $this->_sep . $powsuffix;
         }
 
-        $ret = str_replace( "tweee", "tweeë", $ret );
-        $ret = str_replace( "driee", "drieë", $ret );
+        $ret = str_replace( "eenduizend", "duizend", $ret );
+        $ret = str_replace( "tweeen", "tweeën", $ret );
+        $ret = str_replace( "drieen", "drieën", $ret );
         return $ret;
     }
 
@@ -432,7 +440,11 @@ echo $num . "<br/>";
 
         if ($fraction !== false) {
             if ($convert_fraction) {
-                $ret .= " en " . trim($this->_toWords($fraction));
+                // onderdruk 0 cent
+                if ( $fraction != 0)
+                {
+                    $ret .= " en " . trim($this->_toWords($fraction));
+                }
             } else {
                 $ret .= $this->_sep . $fraction;
             }
@@ -441,7 +453,11 @@ echo $num . "<br/>";
                 if (count($curr_names[1]) > 1) {
                     $ret .= $this->_sep . $curr_names[1][$lev];
                 } else {
-                    $ret .= $this->_sep . $curr_names[1][0] . ' ';
+                    // onderdruk 0 cent
+                    if ( $fraction != 0 )
+                    {
+                        $ret .= $this->_sep . $curr_names[1][0] . ' ';
+                    }
                 }
             } else {
                 $ret .= $this->_sep . $curr_names[1][0];

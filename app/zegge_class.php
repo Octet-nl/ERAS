@@ -102,8 +102,13 @@ class Numbers_Words
      * @since  PHP 4.2.3
      * @return string  The corresponding word representation
      */
-    function toWords($num, $locale = '', $options = array())
+    function toWords($num, $locale = 'nl_NL', $options = array())
     {
+        if ( strlen(strval($num)) > strlen(strval(PHP_INT_MAX)) - 1 )
+        {
+            return "Overflow";
+        }
+
         if (empty($locale) && isset($this) && $this instanceof Numbers_Words) {
             $locale = $this->locale;
         }
@@ -159,6 +164,10 @@ class Numbers_Words
      */
     function toCurrency($num, $locale = 'nl_NL', $intCurr = '', $decimalPoint = null)
     {
+        if ( strlen(strval($num)) > strlen(strval(PHP_INT_MAX)) - 1 )
+        {
+            return "Overflow";
+        }
         $ret = $num;
 
         $classname = self::loadLocale($locale, 'toCurrencyWords');
