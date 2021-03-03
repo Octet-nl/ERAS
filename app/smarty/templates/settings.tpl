@@ -175,6 +175,9 @@
                 <span class=setting_label>Tekst op de bevestigingsmail bij betaling per incasso</span><br/>
                 <textarea rows="10" cols="90" name="betalingIncassoTekst" id="betalingIncassoTekst">{$betalingIncassoTekst}</textarea>
                 <span class="error">{$betalingIncassoTekstErr}</span>
+                <span class=setting_label>Aantal termijnen bij betaling per incasso</span><br/>
+                <input type="number" name="betalingIncassoTermijnen" id="betalingIncassoTermijnen" value="{$betalingIncassoTermijnen}">
+                <span class="error">{$betalingIncassoTermijnenErr}</span>
                 <span class=setting_label>Tekst op de bevestigingsmail bij contante betaling</span><br/>
                 <textarea rows="10" cols="90" name="betalingContantTekst" id="betalingContantTekst">{$betalingContantTekst}</textarea>
                 <span class="error">{$betalingContantTekstErr}</span>

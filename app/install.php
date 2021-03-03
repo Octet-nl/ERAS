@@ -478,6 +478,10 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                                                 }
                                                 else
                                                 {
+                                                    $sql = "UPDATE fb_system SET valid='0' WHERE naam='eras'";
+                                                    $result = mysqli_query($conn, $sql);
+                                                    mysqli_query($conn, "COMMIT");
+
                                                     $logger->error( "Er is iets misgegaan bij het laden van de database: " . mysqli_error( $conn ) );
                                                     alert( "Er is iets misgegaan bij het laden van de database: " . mysqli_error( $conn ) . "\nZie ERAS.log voor meer informatie. \nMaak de database leeg voor nieuwe poging." );
                                                     $createErr = "Laden database is mislukt: " . mysqli_error( $conn ) . "<br/>Zie ERAS.log voor meer informatie.";
@@ -485,6 +489,10 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                                             }
                                             catch ( Exception $ex )
                                             {
+                                                $sql = "UPDATE fb_system SET valid='0' WHERE naam='eras'";
+                                                $result = mysqli_query($conn, $sql);
+                                                mysqli_query($conn, "COMMIT");
+
                                                 $logger->error( 'Exceptie bij uitvoeren query in regel ' . $regelnummer . ' bij uitvoeren query ' . $statement . ': ' . mysqli_error( $conn ) );
                                                 $logger->errordump( $ex );
                                                 alert( "Er is iets misgegaan bij het laden van de database: " . $ex->getMessage() );

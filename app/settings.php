@@ -85,6 +85,7 @@ $idealStatusFailure = "";
 $idealStatusPending = "";
 $betalingVoorwaarden = "";
 $betalingIncassoTekst = "";
+$betalingIncassoTermijnen = "";
 $betalingContantTekst = "";
 $settingLogDirectory = "";
 $settingTempDirectory = "";
@@ -133,6 +134,7 @@ $idealStatusFailureErr = "";
 $idealStatusPendingErr = "";
 $betalingVoorwaardenErr = "";
 $betalingIncassoTekstErr = "";
+$betalingIncassoTermijnenErr = "";
 $betalingContantTekstErr = "";
 $settingLogDirectoryErr = "";
 $settingTempDirectoryErr = "";
@@ -211,6 +213,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
 
     $betalingVoorwaarden = $ini['betaling']['voorwaarden'];
     $betalingIncassoTekst = $ini['betaling']['incasso_tekst'];
+    $betalingIncassoTermijnen = $ini['betaling']['incasso_termijnen'];
     $betalingContantTekst = $ini['betaling']['contant_tekst'];
     
     $enableVerzekering = $ini['verzekering']['toestaan'];
@@ -441,6 +444,11 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             ->formatter( 'stripQuotes' )
             ->required( true )
             ->go();
+        $validateOk += $setVar->name( $betalingIncassoTermijnen )
+            ->onerror( $betalingIncassoTermijnenErr )
+            ->validator( v::number()->min(1)->max(99) )
+            ->required( true )
+            ->go();
         $validateOk += $setVar->name( $settingLogDirectory )
             ->validator( v::callback( 'dirIsWritable' ) )
             ->formatter( 'trimDir' )
@@ -564,6 +572,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
             fprintf( $fp, ';' . "\n" );
             fprintf( $fp, '[betaling]' . "\n" );
             fprintf( $fp, 'incasso_tekst="%s"' . "\n", $betalingIncassoTekst );
+            fprintf( $fp, 'incasso_termijnen="%s"' . "\n", $betalingIncassoTermijnen );
             fprintf( $fp, 'contant_tekst="%s"' . "\n", $betalingContantTekst );
             fprintf( $fp, 'voorwaarden="%s"' . "\n", $betalingVoorwaarden );
             fprintf( $fp, ';' . "\n" );
@@ -700,6 +709,8 @@ $smarty->assign( 'betalingVoorwaarden', $betalingVoorwaarden );
 $smarty->assign( 'betalingVoorwaardenErr', $betalingVoorwaardenErr );
 $smarty->assign( 'betalingIncassoTekst', $betalingIncassoTekst );
 $smarty->assign( 'betalingIncassoTekstErr', $betalingIncassoTekstErr );
+$smarty->assign( 'betalingIncassoTermijnen', $betalingIncassoTermijnen );
+$smarty->assign( 'betalingIncassoTermijnenErr', $betalingIncassoTermijnenErr );
 $smarty->assign( 'betalingContantTekst', $betalingContantTekst );
 $smarty->assign( 'betalingContantTekstErr', $betalingContantTekstErr );
 

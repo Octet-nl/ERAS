@@ -42,7 +42,7 @@ CREATE TABLE `fb_system` (
 --
 
 INSERT INTO `fb_system` (`naam`, `version_major`, `version_minor`, `valid`, `debug`, `deploy_directory`, `db_version_major`, `db_version_minor`, `gemaakt_datum`, `gemaakt_door`, `gewijzigd_datum`, `gewijzigd_door`) VALUES
-('eras', '1', '03', 0, 0, 'ERAS', '1', '03', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '');
+('eras', '1', '03', 1, 0, 'ERAS', '1', '03', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '');
 
 --
 -- Indexes for table `fb_system`
@@ -617,14 +617,14 @@ ALTER TABLE `fb_evenement_heeft_optie`
 --
 ALTER TABLE `fb_factuur`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `uk_factuur_nummer` (`factuurnummer`);
+  ADD UNIQUE (`factuurnummer`);
 
 --
 -- Indexen voor tabel `fb_gebruiker`
 --
 ALTER TABLE `fb_gebruiker`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `userid` (`userid`);
+  ADD UNIQUE KEY `uk_userid` (`userid`);
 
 --
 -- Indexen voor tabel `fb_inschrijving`
@@ -653,7 +653,7 @@ ALTER TABLE `fb_mailinglist`
 --
 ALTER TABLE `fb_voucher`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `fk_voucher_code` (`code`);
+  ADD UNIQUE KEY `uk_voucher_code` (`code`);
 
 --
 -- Indexen voor tabel `fb_categorie`
@@ -667,7 +667,7 @@ ALTER TABLE `fb_categorie`
 --
 ALTER TABLE `fb_keuzes`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `ix_type_code` (`keuzetype`,`code`);
+  ADD UNIQUE KEY `uk_type_code` (`keuzetype`,`code`);
 
 --
 -- Indexen voor tabel `fb_contactlog``

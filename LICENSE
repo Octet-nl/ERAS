@@ -35,17 +35,20 @@ Big thanks to the authors of the following packages:
     License: MIT
     Link: https://github.com/pytesNET/tail.DateTime
   the-datepicker
-    License: (niet vermeld)
+    License: MIT
     Link: https://github.com/thedatepicker/thedatepicker
   nicEdit
     License: MIT
     Link: http://nicedit.com/
   FPDF
-    License: (niet vermeld)
-    Link: http://www.fpdf.org/nl/home.php
+    License: FPDF is released under a permissive license: there is no usage restriction.
+    Link: http://www.fpdf.org
   PHPMailer
     License: LGPL-2.1
     Link: https://github.com/PHPMailer/PHPMailer
+  NumbersWords
+    License: http://www.php.net/license/3_01.txt
+    Link: http://pear.php.net/package/Numbers_Words  
   Menu/submenu
     Article by Ray Messina
     Link: https://css-tricks.com/targetting-menu-elements-submenus-navigation-bar/
