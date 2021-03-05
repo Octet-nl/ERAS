@@ -13,13 +13,16 @@
     </ul>
     <strong><i>De werking verandert echter niet.</i></strong> <br/>
     <br/>
-    -De beschrijving van code 8 heeft dus alleen effect op de tekst die getoond wordt. <br/>
-    -Code 8 zal echter altijd een contante betaling zijn.<br/>
-    -De incassotermijnen (code 4) kunnen zonder bezwaar aangepast worden, maar het blijft een incasso.<br/>
-    -Er kan een betaalwijze worden toegevoegd (door Gereserveerd te vervangen door iets anders). 
+    Opmerkingen
+    <ul style="list-style-type: square;">
+    <li>De beschrijving van code 8 heeft dus alleen effect op de tekst die getoond wordt.<br/>
+    Code 8 zal echter altijd een contante betaling zijn.</li>
+    <li>Het aantal incassotermijnen bij (code 4) wordt aangegeven door de variabele {literal}{aantal}{/literal}. Deze variabele wordt later vervangen door het aantal termijnen dat in de instellingen is opgegeven.</li>
+    <li>Er kan een betaalwijze worden toegevoegd (door Gereserveerd te vervangen door iets anders). 
     Dit wordt dan getoond bij de inschrijving en eventueel op de factuur, maar er vindt geen berekening plaats.
-    De nieuwe betaalwijze wordt simpelweg (nog) niet herkend in de programmacode.
-    
+    De nieuwe betaalwijze wordt simpelweg (nog) niet herkend in de programmacode.</li>
+    </ul>
+
 </div>
 
 <form method="post" action="{$SCRIPT_NAME}">

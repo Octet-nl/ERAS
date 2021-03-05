@@ -532,7 +532,16 @@ try
             {
                 continue;
             }
-            $betaalwijzeArray[$dbbetaling->getCode()] = $dbbetaling->getNaam();
+            $betalingNaam = $dbbetaling->getNaam();
+            if ( $dbbetaling->getCode() == BETAALWIJZE_INCASSO )
+            {
+                require_once "zegge_class.php";
+                $zegge = new Zegge();
+                $ini = parse_ini_file( CONFIG_FILENAME, true );
+                $aantalTermijnen = $zegge->toWords( $ini['betaling']['incasso_termijnen'] );
+                $betalingNaam = str_replace( "{aantal}", $aantalTermijnen, $betalingNaam );
+            }
+            $betaalwijzeArray[$dbbetaling->getCode()] = $betalingNaam;
         }
         $logger->debug( "Betaalwijze array geladen" );
     }

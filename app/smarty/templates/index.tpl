@@ -6,7 +6,7 @@
 {include file="closeheader.tpl"}
 
   <!--form method="post" action="{$SCRIPT_NAME}" -->
-    <div class="window_color" style="width: 80%; margin: 0 auto;">
+    <div class="window_color" style="width: 90%; margin: 0 auto;">
       <div class="menuregel">
         <nav style="display: inline;">
           <ul class="nav">
@@ -99,7 +99,28 @@
                   </ul>
                 </li>
                 <li><a href=evenement_statistiek.php>Statistiek</a></li>
+
+                <li><a href="#">Over</a>
+                  <ul>
+                    <a><br/>
+                      <img src="res/images/ErasLogoSmall.png" height="50px"><br/><br/>
+                      <span style="font-size: 0.8em">
+                      Eenvoudig evenementregistratie opzetten <br/>
+                      {if file_exists("smarty/templates/version.tpl")}
+                        {include file="version.tpl" nocache}
+                      {/if}
+                      <br/>
+                      (c) 2019-2021<br/>
+                      Hans de Rijck<br/><br/>
+                      ERAS is open source software.<br/>
+                      <a style="font-size: 0.8em" href="https://github.com/Octet-nl/ERAS" target="_blank">https://github.com/Octet-nl/ERAS</a>
+                    </span>
+                    </a>
+                  </ul>
+                </li>
+  
               </ul>
+    
             </li>
           {/if}
 
@@ -129,10 +150,6 @@
 
       <div class="window_back_80">
       <h1>{$organisatie_naam} Inschrijvingen</h1>
-
-      {if file_exists("smarty/templates/version.tpl")}
-        {include file="version.tpl" nocache}
-      {/if}
 
       {if file_exists("smarty/templates/message.tpl")}
         {include file="message.tpl" nocache}

@@ -43,6 +43,7 @@ require_once 'PHPMailer/Exception.php';
 require_once 'PHPMailer/PHPMailer.php';
 require_once 'PHPMailer/SMTP.php';
 
+use fb_model\fb_model\Base\FactuurNummerQuery;
 use fb_model\fb_model\FactuurNummer;
 
 use PHPMailer\PHPMailer\Exception;
@@ -121,7 +122,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
 
     $ini = parse_ini_file( CONFIG_FILENAME, true );
 
-    if ( $ini['pdf_factuur']['aanmaken']  == OPTIE_KEUZE_JA )
+    if ( $ini['pdf_factuur']['aanmaken'] == OPTIE_KEUZE_JA )
     {
         /////////////////////////////////////////
         //  Aanmaken factuur
@@ -135,8 +136,18 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
         $pdf->SetFillColor( 214, 214, 214 );
         $pdf->AddPage();
 
+        $oudeFacturen = FactuurNummerQuery::create()->filterByverzonden("0")->findByInschrijvingId( $inschrijfnummer );
+        foreach( $oudeFacturen as $oudeFactuur )
+        {
+            $oudeFactuur->setVerzonden(-1);
+            $oudeFactuur->save();
+            $factuurNummer = $inschrijfnummer . sprintf("-%04d", $oudeFactuur->getId() );
+            rename( $facturenDirectory . $factuurNummer . '.ser', $facturenDirectory . $factuurNummer . '.obs');
+        }
+
         $factuur = new FactuurNummer();
         $factuur->setInschrijvingId( $inschrijfnummer );
+        $factuur->setFactuurNummer( null );
         $factuur->setGemaaktDoor( $autorisatie->getUserId() );
         $factuur->setGewijzigdDoor( $autorisatie->getUserId() );
         $factuur->save();
@@ -182,7 +193,8 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
         else
         {
             $serial = serialize( $pdf );
-            file_put_contents( $facturenDirectory . $inschrijfnummer . sprintf("-%04d", $factuur->getId() ) . '.ser', $serial);
+            $factuurNummer = $inschrijfnummer . sprintf("-%04d", $factuur->getId() );
+            file_put_contents( $facturenDirectory . $factuurNummer . '.ser', $serial);
 
             $factuur->setVerzonden( 0 );
             $factuur->save();
@@ -249,8 +261,8 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
                 $logger->debug( 'Factuur niet verzonden i.v.m. setting' );
             }
 
-            //if ( !$email->send() )
-            if ( 1 )
+            if ( !$email->send() )
+            //if ( 1 )
             {
                 //The reason for failing to send will be in $mail->ErrorInfo
                 //but you shouldn't display errors to users - process the error, log it on your server.

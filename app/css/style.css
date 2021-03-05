@@ -190,6 +190,10 @@ td {
   font-size: 0.8em;
 }
 
+.small{
+  font-size: 0.6em;
+}
+
 input, textarea, select{
   color: var(--input-voorgrond-kleur);
   background-color: var(--input-achtergrond-kleur);

@@ -130,7 +130,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                 $validateOk += $setVar->nameval( $key )
                     ->onerror( $naamErr )
                     ->errormessage( 'Naam van code ' . $nummer . ', waarde "' . $value . '" is niet correct.' )
-                    ->validator( v::alpha( '/()éá&.,   ' ) )
+                    ->validator( v::alpha( '{}/()éá&.,   ' ) )
                     ->go();
                 if ( $validateOk == 0 )
                 {

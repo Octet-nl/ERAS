@@ -172,7 +172,12 @@
             <h3 style="display: inline-block;">Betaling</h3>
             <fieldset id="betaling" class="setting_input">
                 <button type="button" class="bareleft" onClick="toggleBetalingVoorwaarden();">HTML</button>
-                <span class=setting_label>Tekst op de bevestigingsmail bij betaling per incasso</span><br/>
+                <span class=setting_label>Tekst op de bevestigingsmail bij betaling per incasso
+                    <div class="tooltip">?
+                        <span class="tooltiptext right">De variabele {literal}{aantal}{/literal} wordt later vervangen door het daadwerkelijk aantal termijnen.</span>
+                    </div>
+                </span>
+                <br/>
                 <textarea rows="10" cols="90" name="betalingIncassoTekst" id="betalingIncassoTekst">{$betalingIncassoTekst}</textarea>
                 <span class="error">{$betalingIncassoTekstErr}</span>
                 <span class=setting_label>Aantal termijnen bij betaling per incasso</span><br/>

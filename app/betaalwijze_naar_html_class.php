@@ -150,8 +150,17 @@ class betalingNaarHtml
                             $kosten = " (&euro; " . $betaalwijze->getKosten() . ")";
                         }
         
+                        $naam = $betaalwijze->getNaam();
+                        if ( $waarde == BETAALWIJZE_INCASSO )
+                        {
+                            require_once "zegge_class.php";
+                            $zegge = new Zegge();
+                            $ini = parse_ini_file( CONFIG_FILENAME, true );
+                            $aantalTermijnen = $zegge->toWords( $ini['betaling']['incasso_termijnen'] );
+                            $naam = str_replace( "{aantal}", $aantalTermijnen, $naam );
+                        }
                         $this->htmlTotal .= '
-                           <input type="radio" name="betaalwijze" id="extra_keuze' . $i . '" value="' . $betaalwijze->getCode() . '" ' . $geenChecked . ' onclick="berekenAlles()">' . $betaalwijze->getNaam() . $kosten . '
+                           <input type="radio" name="betaalwijze" id="extra_keuze' . $i . '" value="' . $betaalwijze->getCode() . '" ' . $geenChecked . ' onclick="berekenAlles()">' . $naam . $kosten . '
                            <label id="asGeen"></label><br/>
                            <input type="hidden" id="extra_keuze_prijs' . $i . '" value="' . $betaalwijze->getKosten() . '">
                            ';

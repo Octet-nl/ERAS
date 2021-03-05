@@ -200,7 +200,7 @@ CREATE TABLE `fb_evenement_heeft_optie` (
 CREATE TABLE `fb_factuur` (
   `id` int(11) NOT NULL DEFAULT 1,
   `inschrijving_id` int(11) NOT NULL DEFAULT 0,
-  `factuurnummer` varchar(255) NOT NULL DEFAULT '0',
+  `factuurnummer` varchar(255) DEFAULT NULL,
   `verzonden` int(1) NOT NULL DEFAULT '0',
   `gemaakt_datum` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `gemaakt_door` varchar(255) NOT NULL DEFAULT '',
