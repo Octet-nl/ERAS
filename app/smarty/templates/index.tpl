@@ -41,6 +41,7 @@
                 {if $autorisatie >= $SUPERVISOR}
                   <li><a href=mailing_verzenden.php>Mailing</a></li>
                   <li><a href=voucher_aanmaken.php>Voucher</a></li>
+                  <li><a href=factuur_verzenden.php>Facturen</a></li>
                 {/if}
               </ul>
             </li>
@@ -102,7 +103,7 @@
 
                 <li><a href="#">Over</a>
                   <ul>
-                    <a><br/>
+                    <li>
                       <img src="res/images/ErasLogoSmall.png" ><br/><br/>
                       <span style="font-size: 0.8em">
                       Evenementregistratie: Snel en eenvoudig<br/>
@@ -115,7 +116,7 @@
                       ERAS is open source software.<br/>
                       <a style="font-size: 0.8em" href="https://github.com/Octet-nl/ERAS" target="_blank">https://github.com/Octet-nl/ERAS</a>
                     </span>
-                    </a>
+                  </li>
                   </ul>
                 </li>
   
@@ -134,12 +135,12 @@
         </ul>
         <span style="font-family: Arial, Helvetica, sans-serif;float: right;font-size: 1.1em;margin-right:2em;">
         {if !$loggedin}
-          <a href=login.php title="Aanmelden" ><img src="res/icons/login.png" alt="Login" height="36" width="36">Aanmelden</a>
+          <a href=login.php title="Aanmelden" ><img src="res/icons/login.png" alt="Login" height="34" width="34">Aanmelden</a>
         {else}
           {if $autorisatie > $KLANT}
             <a href=klant_zoeken.php title="Klant zoeken" style="margin-right:2em;"><img src="res/icons/search.png" alt="Klant zoeken" height="36" width="36">Zoeken</a>
           {/if}
-          <a href=logout.php title="Afmelden" ><img src="res/icons/logout.png" alt="Logout" height="36" width="36">Afmelden</a>
+          <a href=logout.php title="Afmelden" ><img src="res/icons/logout.png" alt="Logout" height="34" width="34">Afmelden</a>
         {/if}
         </span>
       </nav>
