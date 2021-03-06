@@ -103,9 +103,9 @@
                 <li><a href="#">Over</a>
                   <ul>
                     <a><br/>
-                      <img src="res/images/ErasLogoSmall.png" height="50px"><br/><br/>
+                      <img src="res/images/ErasLogoSmall.png" ><br/><br/>
                       <span style="font-size: 0.8em">
-                      Eenvoudig evenementregistratie opzetten <br/>
+                      Evenementregistratie: Snel en eenvoudig<br/>
                       {if file_exists("smarty/templates/version.tpl")}
                         {include file="version.tpl" nocache}
                       {/if}
