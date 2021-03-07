@@ -41,7 +41,9 @@
                 {if $autorisatie >= $SUPERVISOR}
                   <li><a href=mailing_verzenden.php>Mailing</a></li>
                   <li><a href=voucher_aanmaken.php>Voucher</a></li>
-                  <li><a href=factuur_verzenden.php>Facturen</a></li>
+                  {if $factuurmaken != ""}
+                    <li><a href=factuur_verzenden.php>Facturen</a></li>
+                  {/if}
                 {/if}
               </ul>
             </li>

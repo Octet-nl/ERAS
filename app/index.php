@@ -181,6 +181,16 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
 
 // Deel 3, wordt altijd uitgevoerd.
 
+$ini = parse_ini_file( CONFIG_FILENAME, true );
+$f_aanmaken = $ini['pdf_factuur']['aanmaken'];
+$f_verzenden = $ini['pdf_factuur']['verzenden'];
+
+$factuurmaken = "";
+if ( $f_aanmaken == OPTIE_KEUZE_JA && $f_verzenden == OPTIE_KEUZE_NEE )
+{
+    $factuurmaken = OPTIE_KEUZE_JA;
+}
+
 $smarty->assign( 'doctitle', $doctitle );
 $smarty->assign( 'organisatie_naam', $systeem->getOrganisatieNaam() );
 
@@ -204,6 +214,7 @@ $smarty->assign( 'lopendeEvenementen', $lopend_evenement_lijst );
 $smarty->assign( 'komendeEvenementen', $komend_evenement_lijst );
 
 $smarty->assign( 'autorisatie', $autorisatie->getRol() );
+$smarty->assign( 'factuurmaken', $factuurmaken );
 
 $smarty->assign( 'KLANT', AUTORISATIE_STATUS_KLANT );
 $smarty->assign( 'MEDEWERKER', AUTORISATIE_STATUS_MEDEWERKER );
