@@ -590,10 +590,20 @@ class InschrijvingBevestiging
         $messageRegel = "";
         if ( rondNul( $this->nogTeBetalenBedrag ) > 0 )
         {
-            $tekstwijze = "Betaalwijze: " . $wijze->getNaam();
+            $naam = $wijze->getNaam();
+            if ( $wijze->getCode() == BETAALWIJZE_INCASSO )
+            {
+                require_once "zegge_class.php";
+                $zegge = new Zegge();
+                $ini = parse_ini_file( CONFIG_FILENAME, true );
+                $aantalTermijnen = $zegge->toWords( $ini['betaling']['incasso_termijnen'] );
+                $naam = str_replace( "{aantal}", $aantalTermijnen, $naam );
+            }
+            $tekstwijze = "Betaalwijze: " . $naam;
         }
         if ( $wijze->getKosten() > 0 )
         {
+            $naam = "";
             if ( $wijze->getCode() == BETAALWIJZE_INCASSO )
             {
                 $naam = "Incassokosten:";

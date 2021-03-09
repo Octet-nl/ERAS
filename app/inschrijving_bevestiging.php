@@ -254,7 +254,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" )
             if ( $ini['pdf_factuur']['verzenden'] == OPTIE_KEUZE_JA )
             {
                 $file_to_attach = $facturenDirectory . $inschrijfnummer . sprintf("-%04d", $factuur->getId() ) . ".pdf";
-                $email->AddAttachment( $file_to_attach, "Factuur " . $inschrijfnummer );
+                $email->AddAttachment( $file_to_attach, "Factuur " . $inschrijfnummer . sprintf("-%04d", $factuur->getId() ) );
             }
             else
             {
