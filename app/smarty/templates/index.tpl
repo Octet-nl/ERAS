@@ -10,7 +10,7 @@
       <div class="menuregel">
         <nav style="display: inline;">
           <ul class="nav">
-          {if $autorisatie > $KLANT}
+            {if $autorisatie > $KLANT}
             <li><a href="#">Evenement</a>
               <ul>
                  <li><a href="#">Nieuw</a>
@@ -108,7 +108,7 @@
                     <li>
                       <img src="res/images/ErasLogoSmall.png" ><br/><br/>
                       <span style="font-size: 0.8em">
-                      Evenementregistratie: Snel en eenvoudig<br/>
+                      Registratie van gebeurtenissen<br/><br/>
                       {if file_exists("smarty/templates/version.tpl")}
                         {include file="version.tpl" nocache}
                       {/if}

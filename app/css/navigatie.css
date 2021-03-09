@@ -23,6 +23,7 @@ nav ul {
   position: relative;
   font-weight: 200;
   font-family: var(--button-font);
+  height: 1.2em;
 }
 .nav{  
   vertical-align: top; 

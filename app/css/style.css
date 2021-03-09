@@ -108,7 +108,7 @@ td {
 }
 
 .menuRegel{
-  position: fixed;
+  position: fixed;  
   left: 0em;
   padding-left: 20em;
   border-bottom: 1px solid var(--status-voorgrond-kleur);

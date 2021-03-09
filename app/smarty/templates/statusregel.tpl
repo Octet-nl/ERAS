@@ -10,6 +10,7 @@
         </span>
 
         <span class="eras">
+          <img src="res/icons/ErasIcon.png" alt="ErasIcon" height="16px">
           ERAS by HdR
         </span>
 
