@@ -780,7 +780,7 @@ class InschrijvingBevestiging
             $this->logger->error( "Totaalprijs ruw = " . $totaalprijs . ", prijs bij inschrijving ruw = " . $inschrijving->getTotaalbedrag() );
             $this->logger->error( $this->messageBody );
 
-            $this->errorTekst = "Berekeningsfout bij het opstellen van uw factuur. Neem a.u.b. contact met ons op.";
+            $this->errorTekst = "Er is een fout opgetreden bij het opstellen van uw factuur. Neem a.u.b. contact met ons op.";
             return null;
         }
 
