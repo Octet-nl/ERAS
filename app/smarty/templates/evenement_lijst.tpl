@@ -35,7 +35,7 @@
               </td>
               <td style="text-align:center">
               {if $evenement.deleted == "1" }<del>{/if}
-              {$evenement.naam}
+               <a href=evenement_opvoeren.php?evt={$evenement.id}>{$evenement.naam}</a>
               {if $evenement.deleted == "1" }</del>{/if}
               </td>
               <td style="text-align:center">

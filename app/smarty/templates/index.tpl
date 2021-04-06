@@ -106,7 +106,7 @@
                 <li><a href="#">Over</a>
                   <ul>
                     <li>
-                      <img src="res/images/ErasLogoSmall.png" ><br/><br/>
+                      <img src="res/images/ErasLogoSmall.png" style="width:12em;" ><br/><br/>
                       <span style="font-size: 0.8em">
                       Registratie van gebeurtenissen<br/><br/>
                       {if file_exists("smarty/templates/version.tpl")}
