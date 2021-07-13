@@ -101,7 +101,7 @@
     <div id="tekst">
         <div id="tekstVoorInput">
             <label for="tekstVoor">Tekst:</label>
-            <textarea rows="1" cols="50" maxlength="256" id="tekstVoor_inp" name="tekstVoor">{$tekstVoor}</textarea>
+            <span style="display: inline-block;"><textarea rows="1" cols="50" maxlength="255" id="tekstVoor_inp" name="tekstVoor">{$tekstVoor}</textarea></span>
             <button type="button" class="bareleft" id="htmlTekst" onClick="setNic();">Opmaak</button>
             <div class="tooltip">?
                 <span class="tooltiptext">Tekst die getoond wordt op website.<br/><br/>- Bij tekstvelden is dat vóór het invulveld,<br/><br/>- Bij radiobuttons en checkboxen achter het vinkje.<br/><br/>- Bij Koptekst, Vaste Tekst of Akkoord de inhoud van de koptekst, de tekst of de akkoordverklaring. Hierbij is ook opmaak mogelijk.</span>
@@ -111,7 +111,7 @@
         <div id="tekstExtra">
             <div>
                 <label for="tekstAchter">Uitleg:</label>
-                <textarea rows="1" cols="50" maxlength="256" id="tekstAchter_inp" name="tekstAchter">{$tekstAchter}</textarea>
+                <textarea rows="1" cols="50" maxlength="255" id="tekstAchter_inp" name="tekstAchter">{$tekstAchter}</textarea>
                 <div class="tooltip">?
                     <span class="tooltiptext">Deze tekst wordt achter of onder de optie getoond, bij invulvelden in het veld als placeholder (hint)</span>
                 </div>
@@ -119,7 +119,7 @@
             </div>
             <div>
                 <label for="tooltipTekst">Eventueel Tooltip tekst:</label>
-                <textarea rows="1" cols="50" maxlength="256" id="tooltipTekst_inp" name="tooltipTekst">{$tooltipTekst}</textarea>
+                <textarea rows="1" cols="50" maxlength="255" id="tooltipTekst_inp" name="tooltipTekst">{$tooltipTekst}</textarea>
                 <div class="tooltip">?
                     <span class="tooltiptext">Dit is tooltip tekst, dus een stukje help informatie dat zichtbaar wordt als je
                         er met de muis overheen gaat"
@@ -256,6 +256,7 @@
         if( ( !tekstveld && value ) ) 
         {
             tekstveld = new nicEditor(  ).panelInstance('tekstVoor_inp' );
+            tekstveld().className( "bareleft" );
         } 
         else 
         {

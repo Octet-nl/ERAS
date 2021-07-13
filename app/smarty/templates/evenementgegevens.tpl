@@ -22,17 +22,18 @@
             <span class="error">{$categorieErr}</span>
         </div>
 
+        
 
         <div>
             <label for="korteOmschrijving">Korte omschrijving:</label>
-            <textarea rows="5" cols="90" name="korteOmschrijving" id="korteOmschrijving" maxlength="512">{$korteOmschrijving}</textarea>
+            <span style="display: inline-block;vertical-align:middle;"><textarea rows="5" cols="90" name="korteOmschrijving" id="korteOmschrijving" maxlength="512">{$korteOmschrijving}</textarea></span>
             <button type="button" class="bareleft" onClick="toggleKorteOmschrijving();">HTML</button>
             <span class="error">{$korteOmschrijvingErr}</span>
         </div>
 
         <div>
             <label for="langeOmschrijving">Lange omschrijving:</label>
-            <textarea rows="10" cols="90" name="langeOmschrijving" id="langeOmschrijving">{$langeOmschrijving}</textarea>
+            <span style="display: inline-block;vertical-align:middle"><textarea rows="10" cols="90" name="langeOmschrijving" id="langeOmschrijving">{$langeOmschrijving}</textarea></span>
             <button type="button" class="bareleft" onClick="toggleLangeOmschrijving();">HTML</button>
             <span class="error">{$langeOmschrijvingErr}</span>
         </div>

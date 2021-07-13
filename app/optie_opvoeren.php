@@ -244,7 +244,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                 $validateOk += $setVar->name( $tekstVoor )
                 ->onerror( $tekstVoorErr )
                 ->noHtmlCleaning()
-                ->validator( v::alwaysValid()->length( 1, 512 ) )
+                ->validator( v::alwaysValid()->length( 1, 255 ) )
                 ->errormessage( "De tekst is te lang" )
                 ->required( true )
                 ->go();

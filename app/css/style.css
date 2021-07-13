@@ -466,9 +466,10 @@ label {
 textarea {
    vertical-align:middle;
    display: inline-block;
- }
+  }
 
 .textareaSans {
+  vertical-align:middle;
   font-family: sans-serif;
   font-weight: normal;
   font-size: 0.9em;
