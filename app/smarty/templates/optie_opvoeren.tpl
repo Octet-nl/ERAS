@@ -2,9 +2,6 @@
 <script type="text/javascript" src="js/nicEdit.js"></script> 
 {include file="closeheader.tpl"}
 
-<!--ToDo: opties en radios in commentaar verwijderen.
--->
-
 {* Smarty functions *}
 {function my_radios}
 <label class="textlabel">{$tekst}</label>
@@ -76,11 +73,7 @@
         </div>
 
         <div>
-<!--            <label class="textlabel" for="isDefault">Is default in groep:</label>
-            {html_radios name='isDefault' options=$defaultKeus selected=$isDefault labels=FALSE}
--->
             {my_radios naam='isDefault' options=$defaultKeus selected=$isDefault tekst='Is default in groep:'}
-
             <div class="tooltip">?
                 <span class="tooltiptext">De default optie in een groep wordt standaard geselecteerd.<br/> Aangezien niet gecontroleerd kan worden of er een optie gekozen is, is het verstandig om een van de opties in de groep default te maken. Dan weet je in ieder geval zeker dat er iets gekozen is.</span>
             </div>
@@ -131,8 +124,6 @@
     </div>
 
     <div id="lijn">
-<!--        <label for="horizontaleLijn">Horizontale lijn:</label>
-        {html_radios name='heeftHorLijn' options=$horizontaleLijn selected=$heeft_hor_lijn separator='' labels=FALSE} -->
         {my_radios naam='heeftHorLijn' options=$horizontaleLijn selected=$heeft_hor_lijn tekst='Horizontale lijn:'}
         <div class="tooltip">?
             <span class="tooltiptext right">Moet er een horizontale lijn (afscheiding) boven of onder deze optie komen?</span>
@@ -141,9 +132,6 @@
     </div>
 
     <div id="perDeelnemer">
-<!--        <label class="textlabel" for="perDeelnemer">Optie is per deelnemer:</label>
-        {html_radios name='perDeelnemer' options=$perDeelnemerKeus selected=$perDeelnemer separator='' labels=FALSE}
--->        
         {my_radios naam='perDeelnemer' options=$perDeelnemerKeus selected=$perDeelnemer tekst='Optie is per deelnemer:'}
         <div class="tooltip">?
             <span class="tooltiptext right">'Ja' betekent dat deze optie per deelnemer geldt, 'Nee' betekent dat de optie voor de gehele inschrijving geldt.</span>
@@ -152,32 +140,15 @@
     </div>
 
     <div id="intern">
-<!--        <label class="textlabel" for="isInternGebruik">Optie is alleen voor intern gebruik:</label>
-        {html_radios name='isInternGebruik' label_ids=true options=$internGebruikKeus selected=$isInternGebruik labels=FALSE}
--->        
         {my_radios naam='isInternGebruik' options=$internGebruikKeus selected=$isInternGebruik tekst='Optie is alleen voor intern gebruik:'}
         <div class="tooltip">?
             <span class="tooltiptext right">Verschijnt bij 'ja' niet op het inschrijfformulier van de klant. Kan later wel door medewerker in de inschrijving gebruikt worden.</span>
         </div>
         <span class="error">{$isInternGebruikErr}</span>
     </div>
-<!--
-    <div id="klantWijzigen">
-        <label class="textlabel" for="isKlantWijzigen">Optie kan door klant gewijzigd worden:</label>
-        {html_radios name='isKlantWijzigen' options=$klantWijzigenKeus selected=$isKlantWijzigen labels=FALSE}
-        <div class="tooltip">?
-            <span class="tooltiptext right">Als de inschrijving definitief is mogen de meeste opties later door de klant niet meer worden aangepast omdat dit financiële gevolgen heeft. Geef hier aan of optie wel door de klant aangepast mag worden als de inschrijving definitief is.</span>
-        </div>
-        <span class="error">{$isKlantWijzigenErr}</span>
-    </div>
--->
-<div id="klantWijzigen"></div>
 
     <div id="selectLabel">
         <div>
-<!--            <label class="textlabel" for="selectLabel">Afhankelijk van:</label>
-            {html_options name=selectLabel label_ids=true options=$labelLijst selected=$selectLabel}
--->            
             {my_options naam='selectLabel' options=$labelLijst selected=$selectLabel tekst='Afhankelijk van:'}
             <div class="tooltip">?
                 <span class="tooltiptext right">Deze optie wordt alleen getoond als de voorwaarde waar deze optie van afhankelijk is met "ja" wordt beantwoord. "</span>
@@ -192,9 +163,6 @@
     </div>
 
     <div>
-<!--        <label class="textlabel" for="status">Status:</label>
-        {html_options name=status label_ids=true options=$statusLijst selected=$status}
--->        
         {my_options naam='status' options=$statusLijst selected=$status tekst='Status:'}
         <span class="error">{$statusErr}</span>
     </div>
