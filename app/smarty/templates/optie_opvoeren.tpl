@@ -1,4 +1,6 @@
-{include file="header.tpl"}
+{include file="openheader.tpl"}
+<script type="text/javascript" src="js/nicEdit.js"></script> 
+{include file="closeheader.tpl"}
 
 <!--ToDo: opties en radios in commentaar verwijderen.
 -->
@@ -97,11 +99,12 @@
     </div>
 
     <div id="tekst">
-        <div>
+        <div id="tekstVoorInput">
             <label for="tekstVoor">Tekst:</label>
             <textarea rows="1" cols="50" maxlength="256" id="tekstVoor_inp" name="tekstVoor">{$tekstVoor}</textarea>
+            <button type="button" class="bareleft" id="htmlTekst" onClick="setNic();">Opmaak</button>
             <div class="tooltip">?
-                <span class="tooltiptext">Tekst die getoond wordt op website.<br/>- Bij tekstvelden is dat vóór het invulveld,<br/>- Bij radiobuttons en checkboxen achter het vinkje.<br/>- Bij Labels of Vaste Tekst de inhoud van Label of Tekst.</span>
+                <span class="tooltiptext">Tekst die getoond wordt op website.<br/><br/>- Bij tekstvelden is dat vóór het invulveld,<br/><br/>- Bij radiobuttons en checkboxen achter het vinkje.<br/><br/>- Bij Koptekst, Vaste Tekst of Akkoord de inhoud van de koptekst, de tekst of de akkoordverklaring. Hierbij is ook opmaak mogelijk.</span>
             </div>
             <span class="error">{$tekstVoorErr}</span>
         </div>
@@ -241,8 +244,25 @@
         {
             showAll();
             switchThem( this.value );
+            setNic( false );
         };
     }());
+
+    const content = document.getElementById("tekstVoorInput").innerHTML;
+    var tekstveld = null;
+    function setNic( value = true ) 
+    {
+// NicEditor voor koptekst en vaste tekst opmaak.
+        if( ( !tekstveld && value ) ) 
+        {
+            tekstveld = new nicEditor(  ).panelInstance('tekstVoor_inp' );
+        } 
+        else 
+        {
+            tekstveld.removeInstance('tekstVoor_inp');
+            tekstveld = null;
+            document.getElementById("tekstVoorInput").innerHTML = content;        }
+    }
 
     function switchThem( value )
     {
@@ -306,6 +326,7 @@
         document.getElementById("groepid").className = "show";
         document.getElementById("label").className = "show";
         document.getElementById("selectLabel").className = "show";
+        document.getElementById("htmlTekst").className = "hide";
 
         document.getElementById("tekstVoor_inp").disabled = false;
         document.getElementById("tekstAchter_inp").disabled = false;
@@ -359,14 +380,6 @@
         document.getElementById("lijn").className = "hide";
     }
 
-    function hideTekstExtra()
-    {
-        document.getElementById("tekstExtra").className = "hide";
-        document.getElementById("tooltipTekst_inp").className = "hide";
-        document.getElementById("tekstAchter_inp").disabled = true;
-        document.getElementById("tooltipTekst_inp").disabled = true;
-    }
-
     function hideIntern()
     {
         document.getElementById("intern").className = "hide";
@@ -384,6 +397,7 @@
         //document.getElementById("tooltipTekst").className = "hide";
         document.getElementById("tekstAchter_inp").disabled = true;
         document.getElementById("tooltipTekst_inp").disabled = true;
+        document.getElementById("htmlTekst").className = "bareleft";
     }
 
 </script>

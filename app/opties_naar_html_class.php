@@ -537,10 +537,16 @@ class optiesNaarHtml
 
                 $this->logger->verbose( "Optie_Label Naam: " . $naam . " optieId: " . $optie->getId() );
 
-                $html1 = '<div ' . $labelTekst . '>
-                          '.$witregel.'
-                          <h3>' . $optie->getTekstVoor() . ' </h3>
-                          </div>';
+                $html1 = '<div ' . $labelTekst . '>' . $witregel;
+                if ( !strContains( $optie->getTekstVoor(), "<") )
+                {
+                    $html1 .= '<h3>' . $optie->getTekstVoor() . ' </h3>';
+                }
+                else
+                {
+                    $html1 .= $optie->getTekstVoor();
+                }
+                $html1 .= '</div>';
                 
                 $this->htmlTotal .= $this->compressHtml( $html1 );
                 array_push( $this->optieArray, array( "naam" => $naam, "id" => $optie->getId(), "type" => $optie->getOptieType(), "prijs" => $optie->getPrijs() ) );
@@ -552,8 +558,7 @@ class optiesNaarHtml
                 $this->logger->verbose( "Optie_Vaste_Tekst Naam: " . $naam . " optieId: " . $optie->getId() );
 
                 $html1 = '<div ' . $labelTekst . '>
-                            '.$witregel.'
-                            <label class="wide" for="' . $naam . '"><strong>' . $optie->getTekstVoor() . '</strong></label>
+                            <label class="wide">' . $optie->getTekstVoor() . '</label>
                           </div>
                           ';
                 $this->htmlTotal .= $this->compressHtml( $html1 );

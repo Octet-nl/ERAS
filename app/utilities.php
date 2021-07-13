@@ -1239,6 +1239,12 @@ function trimDir( $dirName )
     return $dirName;
 }
 
+// returns true if $needle is a substring of $haystack
+function strContains( $haystack, $needle )
+{
+    return strpos($haystack, $needle) !== false;
+}
+
 // /Formatters
 
 function isNul( $bedrag )
@@ -1296,6 +1302,10 @@ function cleanOptieNaam( $tekst )
 {
     $naam = str_replace( " ", "_", $tekst );
     $naam = str_replace( ".", "_", $naam );
+    $naam = str_replace( ">", "", $naam );
+    $naam = str_replace( "<", "", $naam );
+    $naam = str_replace( "\"", "", $naam );
+    $naam = str_replace( "'", "", $naam );
     return $naam;
 }
 

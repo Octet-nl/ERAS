@@ -154,6 +154,7 @@ td {
   float: left;
   position: absolute;
   left: 45%;
+  font-size: 0.8em;
 }
 
 .loggedin { 

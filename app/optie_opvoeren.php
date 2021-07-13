@@ -239,12 +239,25 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" )
                 $requiredMeerdere = true;
             }
 
-            $validateOk += $setVar->name( $tekstVoor )
+            if ( $type == OPTIETYPE_KOPTEKST || $type == OPTIETYPE_AKKOORD || $type == OPTIETYPE_VASTE_TEKST )
+            {
+                $validateOk += $setVar->name( $tekstVoor )
+                ->onerror( $tekstVoorErr )
+                ->noHtmlCleaning()
+                ->validator( v::alwaysValid()->length( 1, 512 ) )
+                ->errormessage( "De tekst is te lang" )
+                ->required( true )
+                ->go();
+            }
+            else
+            {
+                $validateOk += $setVar->name( $tekstVoor )
                 ->onerror( $tekstVoorErr )
                 ->validator( v::alnum( 'áéíóúäëïöüûâçñÁÉÍÓÚÄËÏÖÜÇÑÛÂ.-?!/ ()' )->length( 1, 255 ) )
                 ->errormessage( "Alleen lettertekens, vraagteken, spatie, dash, slash, ronde haken en punt zijn toegestaan" )
                 ->required( true )
                 ->go();
+            }
             $validateOk += $setVar->name( $tekstAchter )
                 ->onerror( $tekstAchterErr )
                 ->validator( v::alwaysValid() )
