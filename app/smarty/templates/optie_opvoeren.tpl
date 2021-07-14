@@ -83,10 +83,10 @@
 
     <div>
         <label for="optieNaam_naam">Naam:</label>
-        <textarea rows="1" cols="50" maxlength="64" id="optieNaam" name="optieNaam">{$optieNaam}</textarea>
+        <textarea rows="1" cols="40" maxlength="64" id="optieNaam" name="optieNaam">{$optieNaam}</textarea>
         <div class="tooltip">?
             <span class="tooltiptext">Beschrijving van de optie in de optielijst. Wordt niet op het inschrijfformulier
-                getoond.</span>
+                getoond.<br/>Kies een betekenisvolle naam (bijv. met een code voor het evenement er in).<br/> Dit is later nodig om de optie terug te kunnen vinden.</span>
         </div>
         <span class="error">{$optieNaamErr}</span>
     </div>
@@ -94,13 +94,17 @@
     <div id="tekst">
         <div id="tekstVoorInput">
             <label for="tekstVoor">Tekst:</label>
-            <span style="display: inline-block;"><textarea rows="1" cols="50" maxlength="255" id="tekstVoor_inp" name="tekstVoor">{$tekstVoor}</textarea></span>
+            <span style="display: inline-block;vertical-align:middle;"><textarea onkeyup="console.log(this.value.length)" rows="2" cols="60" maxlength="255" id="tekstVoor_inp" name="tekstVoor">{$tekstVoor}</textarea></span>
             <button type="button" class="bareleft" id="htmlTekst" onClick="setNic();">Opmaak</button>
             <div class="tooltip">?
                 <span class="tooltiptext">Tekst die getoond wordt op website.<br/><br/>- Bij tekstvelden is dat vóór het invulveld,<br/><br/>- Bij radiobuttons en checkboxen achter het vinkje.<br/><br/>- Bij Koptekst, Vaste Tekst of Akkoord de inhoud van de koptekst, de tekst of de akkoordverklaring. Hierbij is ook opmaak mogelijk.</span>
             </div>
             <span class="error">{$tekstVoorErr}</span>
+
+            <div id="gebruikt"></div>
+
         </div>
+
         <div id="tekstExtra">
             <div>
                 <label for="tekstAchter">Uitleg:</label>
@@ -216,21 +220,19 @@
         };
     }());
 
-    const content = document.getElementById("tekstVoorInput").innerHTML;
     var tekstveld = null;
     function setNic( value = true ) 
     {
-// NicEditor voor koptekst en vaste tekst opmaak.
+        // NicEditor voor koptekst en vaste tekst opmaak.
         if( ( !tekstveld && value ) ) 
         {
             tekstveld = new nicEditor(  ).panelInstance('tekstVoor_inp' );
-            tekstveld().className( "bareleft" );
         } 
         else 
         {
             tekstveld.removeInstance('tekstVoor_inp');
             tekstveld = null;
-            document.getElementById("tekstVoorInput").innerHTML = content;        }
+        }
     }
 
     function switchThem( value )
@@ -289,7 +291,6 @@
         document.getElementById("perDeelnemer").className = "show";
         document.getElementById("lijn").className = "show";
         document.getElementById("intern").className = "show";
-        document.getElementById("klantWijzigen").className = "show";
         document.getElementById("beschikbaarheid").className = "show";
         document.getElementById("prijs").className = "show";
         document.getElementById("groepid").className = "show";
@@ -352,7 +353,6 @@
     function hideIntern()
     {
         document.getElementById("intern").className = "hide";
-        document.getElementById("klantWijzigen").className = "hide";
     }
 
     function hidePerDeelnemer()

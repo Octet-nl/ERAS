@@ -720,4 +720,8 @@ input::-webkit-inner-spin-button {
 	border-color: green;
 }
 
-
+/* Make NicEdit textarea resizeable */
+.nicEdit-main {
+  resize:vertical;
+  overflow:auto;
+}
