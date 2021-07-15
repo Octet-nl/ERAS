@@ -94,7 +94,8 @@ td {
 .zweven{
     position: fixed;
     right: +0.625em;
-}
+    background-color: var(--body-achtergrond-transparant);
+  }
 
 .linkszweven{
   position: fixed;

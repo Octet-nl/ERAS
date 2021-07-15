@@ -1,5 +1,6 @@
 :root {
     --body-achtergrond-kleur: #f1f6fb;
+    --body-achtergrond-transparant: rgba(241,246,251,0.8);
     --body-voorgrond-kleur: navy;
     --table-achtergrond-kleur: #d9e9fa;
     --table-voorgrond-kleur: navy;

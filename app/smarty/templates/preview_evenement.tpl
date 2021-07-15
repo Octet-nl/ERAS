@@ -39,7 +39,7 @@
                   <br/>
                   <i>De voorbeeldlayout (preview) wordt in een nieuwe tab/window getoond.<br/>
                    De preview heeft een automatische verversing ({$refresh} sec) zodat u alle wijzigingen live kunt volgen.</i><br/><br/>
-                  <a class="linkbutton" href="preview_deelnemer.php?evt={$evenement.id}" target="_blank">Toon layout</a>
+                  <a class="linkbutton" href="preview_deelnemer.php?evt={$evenement.id}" target="_blank">Toon layout in nieuwe tab/window</a>
                   <br/>
                   <br/>
                 {/if}

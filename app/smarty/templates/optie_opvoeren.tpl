@@ -94,7 +94,7 @@
     <div id="tekst">
         <div id="tekstVoorInput">
             <label for="tekstVoor">Tekst:</label>
-            <span style="display: inline-block;vertical-align:middle;"><textarea onkeyup="console.log(this.value.length)" rows="2" cols="60" maxlength="255" id="tekstVoor_inp" name="tekstVoor">{$tekstVoor}</textarea></span>
+            <span style="display: inline-block;vertical-align:middle;"><textarea onkeyup="console.log(this.value.length)" rows="2" cols="60" maxlength="4096" id="tekstVoor_inp" name="tekstVoor">{$tekstVoor}</textarea></span>
             <button type="button" class="bareleft" id="htmlTekst" onClick="setNic();">Opmaak</button>
             <div class="tooltip">?
                 <span class="tooltiptext">Tekst die getoond wordt op website.<br/><br/>- Bij tekstvelden is dat vóór het invulveld,<br/><br/>- Bij radiobuttons en checkboxen achter het vinkje.<br/><br/>- Bij Koptekst, Vaste Tekst of Akkoord de inhoud van de koptekst, de tekst of de akkoordverklaring. Hierbij is ook opmaak mogelijk.</span>

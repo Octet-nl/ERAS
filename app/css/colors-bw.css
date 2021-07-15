@@ -1,5 +1,6 @@
 :root {
     --body-achtergrond-kleur: #fafafa;
+    --body-achtergrond-transparant: rgba(250,250,250,0.8);
     --body-voorgrond-kleur: rgb(51, 51, 51);
     --table-achtergrond-kleur: #cecece;
     --table-voorgrond-kleur: rgb(73, 73, 73);

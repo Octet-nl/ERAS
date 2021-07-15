@@ -351,7 +351,7 @@
     <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="per_deelnemer" phpName="PerDeelnemer" type="INTEGER" size="1"/>
     <column name="naam" phpName="Naam" type="VARCHAR" size="255" required="true"/>
-    <column name="tekst_voor" phpName="TekstVoor" type="VARCHAR" size="255"/>
+    <column name="tekst_voor" phpName="TekstVoor" type="LONGVARCHAR" required="true"/>
     <column name="tekst_achter" phpName="TekstAchter" type="VARCHAR" size="255"/>
     <column name="tooltip_tekst" phpName="TooltipTekst" type="VARCHAR" size="255"/>
     <column name="heeft_hor_lijn" phpName="HeeftHorizontaleLijn" type="INTEGER" size="2" required="true"/>

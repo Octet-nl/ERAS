@@ -42,7 +42,7 @@ CREATE TABLE `fb_system` (
 --
 
 INSERT INTO `fb_system` (`naam`, `version_major`, `version_minor`, `valid`, `debug`, `deploy_directory`, `db_version_major`, `db_version_minor`, `gemaakt_datum`, `gemaakt_door`, `gewijzigd_datum`, `gewijzigd_door`) VALUES
-('eras', '1', '03', 1, 0, 'ERAS', '1', '03', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '');
+('eras', '1', '04', 1, 0, 'ERAS', '1', '04', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '');
 
 --
 -- Indexes for table `fb_system`
@@ -432,7 +432,7 @@ CREATE TABLE `fb_optie` (
   `id` int(11) NOT NULL DEFAULT 0,
   `per_deelnemer` int(1) NOT NULL DEFAULT 0,
   `naam` varchar(255) NOT NULL DEFAULT '',
-  `tekst_voor` varchar(255) NOT NULL DEFAULT '',
+  `tekst_voor` text NOT NULL DEFAULT '',
   `tekst_achter` varchar(255) NOT NULL DEFAULT '',
   `tooltip_tekst` varchar(255) DEFAULT NULL,
   `heeft_hor_lijn` int(11) NOT NULL DEFAULT '0',

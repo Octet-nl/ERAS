@@ -1,5 +1,6 @@
 :root {
   --body-achtergrond-kleur: #2e2e2e;
+  --body-achtergrond-transparant: rgba(46,46,46,0.8);
   --body-voorgrond-kleur: #dadadc;
   --font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   --table-achtergrond-kleur: #656b76;
