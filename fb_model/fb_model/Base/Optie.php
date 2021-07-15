@@ -105,7 +105,7 @@ abstract class Optie implements ActiveRecordInterface
     /**
      * The value for the tekst_voor field.
      *
-     * @var        string|null
+     * @var        string
      */
     protected $tekst_voor;
 
@@ -617,7 +617,7 @@ abstract class Optie implements ActiveRecordInterface
     /**
      * Get the [tekst_voor] column value.
      *
-     * @return string|null
+     * @return string
      */
     public function getTekstVoor()
     {
@@ -867,7 +867,7 @@ abstract class Optie implements ActiveRecordInterface
     /**
      * Set the value of [tekst_voor] column.
      *
-     * @param string|null $v New value
+     * @param string $v New value
      * @return $this|\fb_model\fb_model\Optie The current object (for fluent API support)
      */
     public function setTekstVoor($v)

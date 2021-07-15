@@ -223,7 +223,7 @@ class OptieTableMap extends TableMap
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
         $this->addColumn('per_deelnemer', 'PerDeelnemer', 'INTEGER', false, 1, null);
         $this->addColumn('naam', 'Naam', 'VARCHAR', true, 255, null);
-        $this->addColumn('tekst_voor', 'TekstVoor', 'VARCHAR', false, 255, null);
+        $this->addColumn('tekst_voor', 'TekstVoor', 'LONGVARCHAR', true, null, null);
         $this->addColumn('tekst_achter', 'TekstAchter', 'VARCHAR', false, 255, null);
         $this->addColumn('tooltip_tekst', 'TooltipTekst', 'VARCHAR', false, 255, null);
         $this->addColumn('heeft_hor_lijn', 'HeeftHorizontaleLijn', 'INTEGER', true, 2, null);
